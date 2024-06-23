@@ -1,9 +1,9 @@
-package org.teamvoided.template.data.gen
+package org.teamvoided.AstralArsenal.data.gen
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.registry.RegistrySetBuilder
-import org.teamvoided.template.Template.log
+import org.teamvoided.AstralArsenal.Template.log
 
 @Suppress("unused")
 class TemplateData : DataGeneratorEntrypoint {

@@ -1,4 +1,4 @@
-package org.teamvoided.template
+package org.teamvoided.AstralArsenal
 
 import net.minecraft.util.Identifier
 import org.slf4j.Logger

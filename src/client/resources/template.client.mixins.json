@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.teamvoided.template.mixin",
+  "package": "org.teamvoided.AstralArsenal.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
     "ExampleMixin"

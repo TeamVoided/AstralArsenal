@@ -1,6 +1,6 @@
-package org.teamvoided.template
+package org.teamvoided.AstralArsenal
 
-import org.teamvoided.template.Template.log
+import org.teamvoided.AstralArsenal.Template.log
 
 @Suppress("unused")
 object TemplateClient{
