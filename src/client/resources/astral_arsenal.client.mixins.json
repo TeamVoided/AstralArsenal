@@ -4,7 +4,7 @@
   "package": "org.teamvoided.astral_arsenal.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "org.teamvoided.astral_arsenal.mixin.ExampleMixin"
+    "ExampleMixin"
   ],
   "injectors": {
     "defaultRequire": 1
