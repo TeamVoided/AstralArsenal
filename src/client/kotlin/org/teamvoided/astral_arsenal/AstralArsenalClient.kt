@@ -1,10 +1,11 @@
 package org.teamvoided.astral_arsenal
 
-import org.teamvoided.astral_arsenal.AstralArsenal.log
+import net.minecraft.client.gui.screen.ingame.HandledScreens
 
 @Suppress("unused")
-object AstralArsenalClient{
+object AstralArsenalClient {
+
     fun init() {
-        log.info("Hello from Client")
+        HandledScreens.register(ModRegistry.COSMIC_TABLE_SCREEN_HANDLER_TYPE, ::CosmicTableScreen)
     }
 }
