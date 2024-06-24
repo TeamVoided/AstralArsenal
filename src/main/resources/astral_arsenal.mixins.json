@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.teamvoided.AstralArsenal.mixin",
+  "package": "org.teamvoided.astral_arsenal.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "injectors": {
