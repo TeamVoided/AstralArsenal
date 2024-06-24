@@ -9,12 +9,14 @@ import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.screen.ScreenHandlerType
+import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.astral_arsenal.blocks.CosmicTableBlock
 
 object ModRegistry {
 
     val COSMIC_TABLE: Block =
-        registerBlock("cosmic_table", CosmicTableBlock(AbstractBlock.Settings.copy(Blocks.CRAFTING_TABLE)))
+        registerBlock("cosmic_table", CosmicTableBlock(AbstractBlock.Settings.copy(Blocks.CRAFTING_TABLE).sounds(
+            BlockSoundGroup.LODESTONE)))
 
     val COSMIC_TABLE_SCREEN_HANDLER_TYPE =
         registryScreenHandlerType(
