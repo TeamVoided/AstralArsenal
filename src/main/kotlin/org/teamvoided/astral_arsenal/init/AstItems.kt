@@ -19,8 +19,9 @@ object AstItems {
     val CONCENTRATED_AMETHYST_BLEND = register("concentrated_amethyst_blend", Item(Item.Settings()))
     val AMETHYST = register("amethyst", Item(Item.Settings()))
     val KOSMIK_GEM = register("kosmic_gem", Item(Item.Settings()))
+
     // Done this so that you just have to add the items here, then they will be given translation provider etc.
-    val AstItemss = listOf(
+    val AstItems = listOf(
         AMETHYST_DUST,
         EMERALD_DUST,
         LAPIS_DUST,
@@ -31,8 +32,10 @@ object AstItems {
         AMERALD,
         CONCENTRATED_AMETHYST_BLEND,
         AMETHYST,
-        KOSMIK_GEM
+        KOSMIK_GEM,
+        AsBlocks.COSMIC_TABLE
     )
+
     fun register(id: String, item: Item): Item {
         return Registry.register(Registries.ITEM, id(id), item)
     }

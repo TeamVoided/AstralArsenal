@@ -11,7 +11,8 @@ import net.minecraft.network.codec.PacketEncoder
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.screen.slot.Slot
-import org.teamvoided.astral_arsenal.ModRegistry.COSMIC_TABLE_SCREEN_HANDLER_TYPE
+import org.teamvoided.astral_arsenal.init.AsBlocks
+import org.teamvoided.astral_arsenal.init.AsScreenHandlers.COSMIC_TABLE_SCREEN_HANDLER_TYPE
 
 class CosmicTableScreenHandler(
     syncId: Int,
@@ -57,7 +58,7 @@ class CosmicTableScreenHandler(
     }
 
     override fun canUse(player: PlayerEntity): Boolean {
-        return canUse(context, player, ModRegistry.COSMIC_TABLE)
+        return canUse(context, player, AsBlocks.COSMIC_TABLE)
     }
 }
 

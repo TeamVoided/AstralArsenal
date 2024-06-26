@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture
 
 class EnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricLanguageProvider(o, r) {
-    val items = AstItems.AstItemss
+    val items = AstItems.AstItems
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         items.forEach { gen.add(it, genLang(it.id)) }
         // You will have to add the same for blocks, effects, or anything else you wanna datagen this for.
