@@ -33,7 +33,6 @@ object AstItems {
         CONCENTRATED_AMETHYST_BLEND,
         AMETHYST,
         KOSMIK_GEM,
-        AsBlocks.COSMIC_TABLE
     )
 
     fun register(id: String, item: Item): Item {

@@ -11,10 +11,8 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {}
 
-    val items = AstItems.AstItems
-
     override fun generateItemModels(gen: ItemModelGenerator) {
-        items.forEach {
+        AstItems.AstItems.forEach {
             gen.register(it, Models.SINGLE_LAYER_ITEM)
         }
     }

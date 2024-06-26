@@ -10,7 +10,8 @@ class AstralArsenalData : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {
         log.info("Hello from DataGen")
         val pack = gen.createPack()
-
+        pack.addProvider(::EnTranslationProvider)
+        pack.addProvider(::ModelProvider)
 //        pack.addProvider(::TemplateWorldGenerator)
     }
 
