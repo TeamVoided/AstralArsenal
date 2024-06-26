@@ -3,6 +3,7 @@ package org.teamvoided.astral_arsenal
 import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.teamvoided.AstralArsenal.init.AstItems
 
 @Suppress("unused")
 object AstralArsenal {
@@ -13,6 +14,7 @@ object AstralArsenal {
 
     fun init() {
         ModRegistry.init()
+        AstItems.init()
     }
 
     fun id(path: String) = Identifier.of(MODID, path)
