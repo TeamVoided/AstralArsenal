@@ -49,7 +49,7 @@ object ModRegistry {
     }
 
     private fun registerBlock(name: String, block: Block): Block {
-        val instance = Registry.register(Registries.BLOCK, name, block)
+        val instance = Registry.register(Registries.BLOCK, AstralArsenal.id(name), block)
         Registry.register(Registries.ITEM, AstralArsenal.id(name), BlockItem(instance, Item.Settings()))
         return instance
     }
