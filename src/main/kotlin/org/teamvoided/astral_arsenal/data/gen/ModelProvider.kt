@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.BlockStateModelGenerator
 import net.minecraft.data.client.model.Models
-import org.teamvoided.AstralArsenal.init.AstItems
+import org.teamvoided.astral_arsenal.init.AstItems
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 

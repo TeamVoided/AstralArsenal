@@ -9,7 +9,7 @@ import net.minecraft.item.Item
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
-import org.teamvoided.AstralArsenal.init.AstItems
+import org.teamvoided.astral_arsenal.init.AstItems
 import java.util.concurrent.CompletableFuture
 
 class EnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :

@@ -3,7 +3,7 @@ package org.teamvoided.astral_arsenal
 import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.teamvoided.AstralArsenal.init.AstItems
+import org.teamvoided.astral_arsenal.init.AstItems
 
 @Suppress("unused")
 object AstralArsenal {

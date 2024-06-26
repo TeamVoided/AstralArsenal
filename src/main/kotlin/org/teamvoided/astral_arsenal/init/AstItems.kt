@@ -1,4 +1,4 @@
-package org.teamvoided.AstralArsenal.init
+package org.teamvoided.astral_arsenal.init
 
 import net.minecraft.item.Item
 import net.minecraft.registry.Registries
