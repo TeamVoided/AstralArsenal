@@ -10,7 +10,7 @@ object AstItems {
     fun init() {}
     val AMETHYST_DUST = register("amethyst_dust", Item(Item.Settings()))
     val EMERALD_DUST = register("emerald_dust", Item(Item.Settings()))
-    val LAPIS_DUST = register("lapis_dust", Item(Item.Settings()))
+    val LAPIS_LAZULI_DUST = register("lapis_lazuli_dust", Item(Item.Settings()))
     val QUARTZ_DUST = register("quartz_dust", Item(Item.Settings()))
     val LAZULICA_BLEND = register("lazulica_blend", Item(Item.Settings()))
     val LAZULICA = register("lazulica", Item(Item.Settings()))
@@ -24,7 +24,7 @@ object AstItems {
     val AstItems = listOf(
         AMETHYST_DUST,
         EMERALD_DUST,
-        LAPIS_DUST,
+        LAPIS_LAZULI_DUST,
         QUARTZ_DUST,
         LAZULICA_BLEND,
         LAZULICA,
