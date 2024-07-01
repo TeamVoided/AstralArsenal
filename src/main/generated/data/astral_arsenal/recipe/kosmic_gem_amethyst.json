@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "astral_arsenal:lazulica"
+    },
+    {
+      "item": "astral_arsenal:amethyst"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "astral_arsenal:kosmic_gem"
+  }
+}

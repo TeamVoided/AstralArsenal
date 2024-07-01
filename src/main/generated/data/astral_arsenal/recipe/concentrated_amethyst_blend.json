@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "astral_arsenal:amethyst_dust"
+    },
+    {
+      "item": "astral_arsenal:amethyst_dust"
+    },
+    {
+      "item": "astral_arsenal:amethyst_dust"
+    },
+    {
+      "item": "astral_arsenal:amethyst_dust"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "astral_arsenal:concentrated_amethyst_blend"
+  }
+}

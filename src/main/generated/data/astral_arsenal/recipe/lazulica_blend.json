@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "astral_arsenal:lapis_lazuli_dust"
+    },
+    {
+      "item": "astral_arsenal:quartz_dust"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "astral_arsenal:lazulica_blend"
+  }
+}
