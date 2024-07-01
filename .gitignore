@@ -4,9 +4,6 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### TeamVoided
-src/main/generated/
-
 ### IntelliJ IDEA ###
 /.idea/
 *.iws
@@ -43,3 +40,5 @@ bin/
 
 /run/
 .env
+
+src/main/generated/.cache/

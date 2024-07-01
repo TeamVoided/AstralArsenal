@@ -28,9 +28,9 @@ repositories {
 println("Task: " + gradle.startParameter.taskNames.joinToString(","))
 
 modSettings {
-    entrypoint("main", "org.teamvoided.astral_arsenal.AstralArsenal::init")
-    entrypoint("client", "org.teamvoided.astral_arsenal.AstralArsenalClient::init")
-    entrypoint("fabric-datagen", "org.teamvoided.astral_arsenal.data.gen.AstralArsenalData")
+    entrypoint("main", "org.teamvoided.astralarsenal.AstralArsenal::init")
+    entrypoint("client", "org.teamvoided.astralarsenal.AstralArsenalClient::init")
+    entrypoint("fabric-datagen", "org.teamvoided.astralarsenal.data.gen.AstralArsenalData")
 
     mixinFile("${modId()}.client.mixins.json")
 //    mixinFile("${modId()}.mixins.json")
@@ -74,6 +74,10 @@ tasks {
 
     withType<KotlinCompile>().all {
         compilerOptions.jvmTarget = JvmTarget.JVM_21
+
+        compilerOptions {
+            freeCompilerArgs.add("-Xcontext-receivers")
+        }
     }
 
     java {
