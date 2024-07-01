@@ -3,11 +3,11 @@ kotlin = "2.0.0"
 fabric-loom = "1.6-SNAPSHOT"
 iridium = "3.3.1"
 
-#farrow = "1.0.0+arrow.1.2.4"
+farrow = "1.0.0+arrow.1.2.4"
 modmenu = "11.0.0-beta.1"
 
 [libraries]
-#farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
+farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 
 [plugins]

@@ -18,8 +18,7 @@ class CosmicTableScreenHandler(
     syncId: Int,
     playerInventory: PlayerInventory,
     private val context: ScreenHandlerContext
-) :
-    ScreenHandler(COSMIC_TABLE_SCREEN_HANDLER_TYPE, syncId) {
+) : ScreenHandler(COSMIC_TABLE_SCREEN_HANDLER_TYPE, syncId) {
 
     private val inventory = object: SimpleInventory(2) {
         override fun markDirty() {
@@ -63,7 +62,6 @@ class CosmicTableScreenHandler(
 }
 
 class CosmicTableData {
-
     companion object {
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, CosmicTableData> =
             PacketCodec.create(PacketEncoder { _: RegistryByteBuf, _: CosmicTableData -> }) { CosmicTableData() }

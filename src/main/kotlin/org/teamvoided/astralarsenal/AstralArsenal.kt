@@ -1,12 +1,12 @@
 package org.teamvoided.astralarsenal
 
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.minecraft.server.command.CommandManager.literal
 import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.teamvoided.astralarsenal.init.AstralBlocks
-import org.teamvoided.astralarsenal.init.AstralItems
-import org.teamvoided.astralarsenal.init.AstralScreenHandlers
-import org.teamvoided.astralarsenal.init.AstralTabs
+import org.teamvoided.astralarsenal.command.KosmogliphCommand
+import org.teamvoided.astralarsenal.init.*
 
 @Suppress("unused")
 object AstralArsenal {
@@ -19,8 +19,15 @@ object AstralArsenal {
         //Referencing object will initialize them
         AstralBlocks
         AstralItems
+        AstralItemComponents
         AstralScreenHandlers
         AstralTabs
+        AstralKosmogliphs
+
+        CommandRegistrationCallback.EVENT.register { dispatcher, ctx, env ->
+            val root = dispatcher.register(literal("astral"))
+            KosmogliphCommand.apply(root, ctx, env)
+        }
     }
 
     fun id(path: String): Identifier =

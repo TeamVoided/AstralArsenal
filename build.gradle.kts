@@ -33,13 +33,14 @@ modSettings {
     entrypoint("fabric-datagen", "org.teamvoided.astralarsenal.data.gen.AstralArsenalData")
 
     mixinFile("${modId()}.client.mixins.json")
-//    mixinFile("${modId()}.mixins.json")
+    mixinFile("${modId()}.mixins.json")
 //    accessWidener("${modId()}.accesswidener")
 }
 
 dependencies {
     modImplementation(fileTree("libs"))
     modImplementation(libs.modmenu)
+    modImplementation(libs.farrow)
 }
 
 loom {
