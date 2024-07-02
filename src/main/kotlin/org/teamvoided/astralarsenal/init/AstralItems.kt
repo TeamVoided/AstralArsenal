@@ -53,8 +53,10 @@ object AstralItems {
 
     private fun Stream<Holder.Reference<Item>>.astItems(): Set<Item> {
         return this.filter { it.registryKey.value.namespace == AstralArsenal.MOD_ID }
+            .toList()
+            .distinctBy { it.registryKey.value }
             .map { it.value() }
-            .toList().toSet()
+            .toSet()
     }
 
     fun <T: Item> register(id: String, item: T): T {
