@@ -13,6 +13,7 @@ class AstralArsenalData : DataGeneratorEntrypoint {
         pack.addProvider(::AstralEnTranslationProvider)
         pack.addProvider(::AstralModelProvider)
         pack.addProvider(::AstralRecipeProvider)
+        pack.addProvider(::AstralBlockTagProvider)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) { }

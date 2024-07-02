@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.item.kosmogliph.logic
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -30,7 +31,7 @@ fun Set<BlockPos>.breakAndDropStacksAt(
     }
 }
 
-fun Item.canSafelyBreak(world: World, stack: ItemStack, state: BlockState, pos: BlockPos): Boolean {
-    val speed = getMiningSpeedMultiplier(stack, state)
-    return speed >= 0 && world.getBlockEntity(pos) == null
+fun ItemStack.canSafelyBreak(world: World, state: BlockState, pos: BlockPos): Boolean {
+    val toolComponent = this.get(DataComponentTypes.TOOL) ?: return false
+    return toolComponent.isCorrectForDrops(state) && world.getBlockEntity(pos) == null
 }

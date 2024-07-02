@@ -40,7 +40,7 @@ object HammerKosmogliphLogic {
         val aoe = areaOfAffect(pos, raycast.side)
 
         aoe.allInside().forEach {
-            if (stack.item.canSafelyBreak(world, stack, world.getBlockState(it), it))
+            if (stack.canSafelyBreak(world, world.getBlockState(it), it))
                 minablePositions.add(it)
         }
 

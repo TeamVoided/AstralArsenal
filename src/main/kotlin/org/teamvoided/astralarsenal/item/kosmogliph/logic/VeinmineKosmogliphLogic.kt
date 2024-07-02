@@ -8,6 +8,7 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.block.tag.AstralBlockTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 
@@ -24,13 +25,15 @@ object VeinmineKosmogliphLogic {
         val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS)!!
         if (!kosmogliphs.contains(AstralKosmogliphs.VEIN_MINER)) return
 
-        val mineablePositions = queryMinablePositions(world, state, pos, 30.0, (64).coerceAtMost(stack.maxDamage - stack.damage))
+        val mineablePositions =
+            queryMinablePositions(stack, world, state, pos, 30.0, (64).coerceAtMost(stack.maxDamage - stack.damage))
         mineablePositions.breakAndDropStacksAt(world, pos, miner)
 
         stack.damageEquipment(mineablePositions.size, miner, EquipmentSlot.MAINHAND)
     }
 
     fun queryMinablePositions(
+        stack: ItemStack,
         world: World,
         state: BlockState,
         pos: BlockPos,
@@ -45,9 +48,14 @@ object VeinmineKosmogliphLogic {
             val newPos = queue.removeFirst()
             val block = state.block
             val neighbors = newPos.neighbors()
-                .filter { world.getBlockState(it).isOf(block) }
-                .filter { it.isWithinDistance(pos, maximumDistance) }
-                .filter { !set.contains(it) }
+                .filter {
+                    val itState = world.getBlockState(it)
+                    itState.isOf(block) &&
+                            itState.isIn(AstralBlockTags.VEIN_MINEABLE) &&
+                            stack.canSafelyBreak(world, state, pos)
+                            it.isWithinDistance(pos, maximumDistance) &&
+                            !set.contains(it)
+                }
 
             if (set.size + neighbors.size >= maximumBlocks) {
                 val difference = maximumBlocks - set.size
