@@ -17,10 +17,6 @@ class CosmicTableScreen(
 ) : HandledScreen<CosmicTableMenu>(handler, inventory, title) {
     private val currentWidgets = mutableListOf<KosmogliphWidget>()
 
-    override fun init() {
-        super.init()
-    }
-
     override fun handledScreenTick() {
         if (!handler.getSlot(0).hasStack()) {
             currentWidgets.forEach(::remove)
@@ -53,6 +49,8 @@ class CosmicTableScreen(
     }
 
     private fun determineWidgetPositions(count: Int, offset: Vector2i, gap: Int): List<Vector2i> {
+        if (count <= 0) return emptyList()
+
         val xSpan = 160
         val ySpan = 28
         var count = count
