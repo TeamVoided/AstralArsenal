@@ -16,7 +16,14 @@ fun Set<BlockPos>.breakAndDropStacksAt(
 ) {
     forEach { otherPos ->
         if (otherPos != pos) {
-            val stacks = Block.getDroppedStacks(world.getBlockState(otherPos), world as ServerWorld, otherPos, world.getBlockEntity(otherPos), miner, ItemStack.EMPTY)
+            val stacks = Block.getDroppedStacks(
+                world.getBlockState(otherPos),
+                world as ServerWorld,
+                otherPos,
+                world.getBlockEntity(otherPos),
+                miner,
+                miner.mainHandStack
+            )
             stacks.forEach { stack -> Block.dropStack(world, pos, stack) }
         }
         world.breakBlock(otherPos, false, miner)

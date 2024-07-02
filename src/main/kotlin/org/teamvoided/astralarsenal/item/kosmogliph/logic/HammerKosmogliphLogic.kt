@@ -33,7 +33,7 @@ object HammerKosmogliphLogic {
     }
 
     fun queryMinablePositions(stack: ItemStack, world: World, pos: BlockPos, miner: LivingEntity): Set<BlockPos> {
-        val minablePositions = mutableSetOf<BlockPos>(pos)
+        val minablePositions = mutableSetOf(pos)
 
         //raycast always return a BlockHitResult
         val raycast = miner.raycast(20.0, 0f, false) as BlockHitResult

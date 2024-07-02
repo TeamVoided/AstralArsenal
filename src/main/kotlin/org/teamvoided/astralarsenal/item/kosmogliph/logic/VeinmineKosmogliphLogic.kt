@@ -42,9 +42,9 @@ object VeinmineKosmogliphLogic {
         queue.add(pos)
 
         while (queue.isNotEmpty()) {
-            val pos = queue.removeFirst()
+            val newPos = queue.removeFirst()
             val block = state.block
-            val neighbors = pos.neighbors()
+            val neighbors = newPos.neighbors()
                 .filter { world.getBlockState(it).isOf(block) }
                 .filter { it.isWithinDistance(pos, maximumDistance) }
                 .filter { !set.contains(it) }
