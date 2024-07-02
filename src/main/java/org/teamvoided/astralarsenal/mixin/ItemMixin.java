@@ -14,7 +14,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.astralarsenal.init.AstralItemComponents;
-import org.teamvoided.astralarsenal.item.kosmogliph.LogicKt;
+import org.teamvoided.astralarsenal.item.kosmogliph.logic.HammerKosmogliphLogic;
+import org.teamvoided.astralarsenal.item.kosmogliph.logic.VeinmineKosmogliphLogic;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +32,7 @@ public abstract class ItemMixin {
 
     @Inject(method = "postMine", at = @At("TAIL"))
     public void kosmogliphVeinMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner, CallbackInfoReturnable<Boolean> cir) {
-        LogicKt.veinMine(stack, world, state, pos, miner);
+        VeinmineKosmogliphLogic.INSTANCE.veinMine(stack, world, state, pos, miner);
+        HammerKosmogliphLogic.INSTANCE.hammer(stack, world, state, pos, miner);
     }
 }

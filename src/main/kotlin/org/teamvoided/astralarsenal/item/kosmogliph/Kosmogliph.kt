@@ -17,12 +17,15 @@ import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent.Compani
 
 interface Kosmogliph {
     fun modifyItemTooltip(stack: ItemStack, ctx: Item.TooltipContext, tooltip: MutableList<Text>, config: TooltipConfig)
+    fun canBeAppliedTo(stack: ItemStack): Boolean
     fun apply(stack: ItemStack): Either<ApplicationFailure, ItemStack> = addToComponent(stack)
+
+    fun id() = REGISTRY.getId(this)!!
 
     fun addToComponent(stack: ItemStack): Either<ApplicationFailure, ItemStack> {
         val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS)
         if (kosmogliphs == null) return ApplicationFailure(Text.translatable("kosmogliph.error.missing_component")).left()
-
+        AstralArsenal.LOGGER.info("applied thingy: ${id()}")
         val mutableClone = kosmogliphs.toMutableSet()
         mutableClone.add(this)
         stack.set(AstralItemComponents.KOSMOGLIPHS, mutableClone.toComponent())

@@ -21,6 +21,7 @@ object AstralArsenal {
         AstralItems
         AstralItemComponents
         AstralScreenHandlers
+        AstralMenus
         AstralTabs
         AstralKosmogliphs
 

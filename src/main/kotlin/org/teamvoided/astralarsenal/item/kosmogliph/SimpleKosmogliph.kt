@@ -22,6 +22,10 @@ class SimpleKosmogliph(
         tooltip += Text.translatable(id.toTranslationKey("kosmogliph.tooltip"))
     }
 
+    override fun canBeAppliedTo(stack: ItemStack): Boolean {
+        return applicationPredicate(stack)
+    }
+
     override fun apply(stack: ItemStack): Either<Kosmogliph.ApplicationFailure, ItemStack> {
         if (!applicationPredicate(stack)) return Kosmogliph.ApplicationFailure(Text.translatable("kosmogliph.error.inapplicable")).left()
         return super.apply(stack)

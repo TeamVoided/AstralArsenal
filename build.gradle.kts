@@ -20,8 +20,9 @@ val modrinth_id: String? by project
 val curse_id: String? by project
 
 repositories {
-    maven("https://teamvoided.org/releases")
+    maven("https://maven.teamvoided.org/releases")
     maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
+    maven("https://maven.isxander.dev/releases") { name = "Xander Maven" }
     mavenCentral()
 }
 
@@ -41,6 +42,10 @@ dependencies {
     modImplementation(fileTree("libs"))
     modImplementation(libs.modmenu)
     modImplementation(libs.farrow)
+
+    if (org.gradle.internal.os.OperatingSystem.current().isLinux) {
+        modRuntimeOnly(libs.waygl)
+    }
 }
 
 loom {

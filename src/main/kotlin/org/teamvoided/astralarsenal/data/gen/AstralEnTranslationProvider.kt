@@ -12,7 +12,6 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import java.util.concurrent.CompletableFuture
 
 @Suppress("unused")
@@ -28,9 +27,10 @@ class AstralEnTranslationProvider(
         lookup.getLookupOrThrow(Kosmogliph.REGISTRY_KEY)
             .holders()
             .toList()
-            .mapNotNull { it.value() as? SimpleKosmogliph }
+            .map { it.value() }
             .forEach { kosmogliph ->
-                gen.add(kosmogliph.id.toTranslationKey("kosmogliph.tooltip"), "Kosmogliph - ${kosmogliph.id.path.titleCase()}")
+                gen.add(kosmogliph.id().toTranslationKey("kosmogliph.tooltip"), "Kosmogliph - ${kosmogliph.id().path.titleCase()}")
+                gen.add(kosmogliph.id().toTranslationKey("ksomogliph.name"), kosmogliph.id().path.titleCase())
             }
     }
 

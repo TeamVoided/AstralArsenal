@@ -5,9 +5,11 @@ iridium = "3.3.1"
 
 farrow = "1.0.0+arrow.1.2.4"
 modmenu = "11.0.0-beta.1"
+waygl = "1.1.2+1.21"
 
 [libraries]
 farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
+waygl = { module = "net.wiredtomato:waygl", version.ref = "waygl" }
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 
 [plugins]

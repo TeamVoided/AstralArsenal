@@ -5,9 +5,10 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
+import org.teamvoided.astralarsenal.menu.CosmicTableMenu
 
-class CosmicTableScreen(handler: CosmicTableScreenHandler, inventory: PlayerInventory, title: Text) :
-    HandledScreen<CosmicTableScreenHandler>(handler, inventory, title) {
+class CosmicTableScreen(handler: CosmicTableMenu, inventory: PlayerInventory, title: Text) :
+    HandledScreen<CosmicTableMenu>(handler, inventory, title) {
 
     companion object {
         val TEXTURE: Identifier = AstralArsenal.id("textures/gui/container/cosmic_table.png")
