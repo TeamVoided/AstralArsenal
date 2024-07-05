@@ -24,8 +24,7 @@ interface Kosmogliph {
 
     fun addToComponent(stack: ItemStack): Either<ApplicationFailure, ItemStack> {
         val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS)
-        if (kosmogliphs == null) return ApplicationFailure(Text.translatable("kosmogliph.error.missing_component")).left()
-        AstralArsenal.LOGGER.info("applied thingy: ${id()}")
+            ?: return ApplicationFailure(Text.translatable("kosmogliph.error.missing_component")).left()
         val mutableClone = kosmogliphs.toMutableSet()
         mutableClone.add(this)
         stack.set(AstralItemComponents.KOSMOGLIPHS, mutableClone.toComponent())

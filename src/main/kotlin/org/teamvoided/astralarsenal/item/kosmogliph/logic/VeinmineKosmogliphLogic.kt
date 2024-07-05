@@ -52,7 +52,7 @@ object VeinmineKosmogliphLogic {
                     val itState = world.getBlockState(it)
                     itState.isOf(block) &&
                             itState.isIn(AstralBlockTags.VEIN_MINEABLE) &&
-                            stack.canSafelyBreak(world, state, pos)
+                            stack.canSafelyBreak(world, state, pos) &&
                             it.isWithinDistance(pos, maximumDistance) &&
                             !set.contains(it)
                 }

@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.screens
 
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screen.ingame.HandledScreen
+import net.minecraft.client.texture.SpriteAtlasTexture
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.Text
 import org.joml.Vector2i
@@ -103,6 +104,9 @@ class CosmicTableScreen(
         mouseX: Int,
         mouseY: Int
     ) {
+        val atlas = client!!.textureManager.getTexture(AstralArsenal.id("textures/atlas/kosmogliph.png")) as SpriteAtlasTexture
+        AstralArsenal.LOGGER.info("atlas size ${atlas.sprites.size}")
+
         val x = (this.width - this.backgroundWidth) / 2
         val y = (this.height - this.backgroundHeight) / 2
         graphics.drawTexture(TEXTURE, x, y, 0, 0, WIDTH, HEIGHT)

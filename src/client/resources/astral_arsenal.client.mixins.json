@@ -3,9 +3,7 @@
   "minVersion": "0.8",
   "package": "org.teamvoided.astralarsenal.mixin",
   "compatibilityLevel": "JAVA_21",
-  "client": [
-    "ExampleMixin"
-  ],
+  "client": [ ],
   "injectors": {
     "defaultRequire": 1
   }
