@@ -17,7 +17,7 @@ object AstralEntities {
         SpawnGroup.MISC,
         EntityType.EntityFactory(:: CannonballEntity)
     )
-        .dimensions(EntityDimensions.fixed(0.25f, 0.25f))
+        .dimensions(EntityDimensions.fixed(1.0f, 1.0f))
         .trackRangeBlocks(4).trackedUpdateRate(10).build()
 )
 
