@@ -24,6 +24,7 @@ object AstralArsenal {
         AstralMenus
         AstralTabs
         AstralKosmogliphs
+        AstralEntities.serverInit()
 
         CommandRegistrationCallback.EVENT.register { dispatcher, ctx, env ->
             val root = dispatcher.register(literal("astral"))

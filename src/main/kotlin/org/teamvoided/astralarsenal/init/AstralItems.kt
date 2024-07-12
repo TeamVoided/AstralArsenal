@@ -10,6 +10,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.AstralArsenal.id
+import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import java.util.stream.Stream
 
 @Suppress("unused")
@@ -26,7 +27,7 @@ object AstralItems {
     val AMETHYST = register("amethyst", Item(Item.Settings()))
     val KOSMIK_GEM = register("kosmic_gem", Item(Item.Settings()))
     val COSMIC_TABLE = register("cosmic_table", BlockItem(AstralBlocks.COSMIC_TABLE, Item.Settings()))
-    val ASTRAL_GREATHAMMER = register("astral_greathammer", SwordItem(ToolMaterials.NETHERITE, (Item.Settings()).fireproof().attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 6, -3F))))
+    val ASTRAL_GREATHAMMER = register("astral_greathammer", AstralGreathammerItem((Item.Settings()).fireproof().attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 20, -3.5F))))
 
     @Deprecated(
         "Replaced with automatic fetching",
