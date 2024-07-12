@@ -105,7 +105,7 @@ class CosmicTableScreen(
         mouseY: Int
     ) {
         val atlas = client!!.textureManager.getTexture(AstralArsenal.id("textures/atlas/kosmogliph.png")) as SpriteAtlasTexture
-        AstralArsenal.LOGGER.info("atlas size ${atlas.sprites.size}")
+        //AstralArsenal.LOGGER.info("atlas size ${atlas.sprites.size}")
 
         val x = (this.width - this.backgroundWidth) / 2
         val y = (this.height - this.backgroundHeight) / 2

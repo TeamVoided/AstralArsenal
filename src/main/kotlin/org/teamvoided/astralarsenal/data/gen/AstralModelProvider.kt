@@ -22,7 +22,6 @@ class AstralModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             if (it is BlockItem) return@forEach
             gen.register(it, Models.SINGLE_LAYER_ITEM)
         }
-
         gen.registerBlockParented(AstralItems.COSMIC_TABLE)
     }
 

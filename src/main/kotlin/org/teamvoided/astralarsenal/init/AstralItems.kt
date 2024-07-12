@@ -2,6 +2,8 @@ package org.teamvoided.astralarsenal.init
 
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
+import net.minecraft.item.SwordItem
+import net.minecraft.item.ToolMaterials
 import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderLookup.RegistryLookup
 import net.minecraft.registry.Registries
@@ -24,6 +26,7 @@ object AstralItems {
     val AMETHYST = register("amethyst", Item(Item.Settings()))
     val KOSMIK_GEM = register("kosmic_gem", Item(Item.Settings()))
     val COSMIC_TABLE = register("cosmic_table", BlockItem(AstralBlocks.COSMIC_TABLE, Item.Settings()))
+    val ASTRAL_GREATHAMMER = register("astral_greathammer", SwordItem(ToolMaterials.NETHERITE, (Item.Settings()).fireproof().attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 6, -3F))))
 
     @Deprecated(
         "Replaced with automatic fetching",
