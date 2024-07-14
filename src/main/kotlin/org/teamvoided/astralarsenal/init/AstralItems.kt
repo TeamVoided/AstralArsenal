@@ -26,13 +26,15 @@ object AstralItems {
     val CONCENTRATED_AMETHYST_BLEND = register("concentrated_amethyst_blend", Item(Item.Settings()))
     val AMETHYST = register("amethyst", Item(Item.Settings()))
     val KOSMIK_GEM = register("kosmic_gem", Item(Item.Settings()))
+    val CANNONBALL = register("cannonball", Item(Item.Settings()))
     val COSMIC_TABLE = register("cosmic_table", BlockItem(AstralBlocks.COSMIC_TABLE, Item.Settings()))
-    val ASTRAL_GREATHAMMER = register("astral_greathammer", AstralGreathammerItem((Item.Settings()).fireproof().attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 20, -3.5F))))
+    val ASTRAL_GREATHAMMER = register("astral_greathammer", AstralGreathammerItem((Item.Settings()).fireproof().attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.5F))))
 
     @Deprecated(
         "Replaced with automatic fetching",
         ReplaceWith("AstralItems.items()"),
     )
+
     val AstItems = listOf(
         AMETHYST_DUST,
         EMERALD_DUST,
@@ -45,6 +47,7 @@ object AstralItems {
         CONCENTRATED_AMETHYST_BLEND,
         AMETHYST,
         KOSMIK_GEM,
+        CANNONBALL,
     )
 
     fun items(): Set<Item> {
