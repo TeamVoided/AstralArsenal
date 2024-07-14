@@ -9,9 +9,13 @@ import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundEvents
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
+import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
+import net.minecraft.world.World.ExplosionSourceType
+import net.minecraft.world.explosion.Explosion
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities
@@ -112,6 +116,47 @@ class CannonballEntity : ThrownItemEntity {
             )
         }
         super.tick()
+    }
+
+    override fun onBlockHit(blockHitResult: BlockHitResult?) {
+        when (blockHitResult?.side){
+            Direction.DOWN, Direction.UP ->{ this.setVelocity(this.getVelocity().multiply(1.0,-0.5,1.0))
+
+            val p: Int = this.getDmg() - 1
+            this.setDmg(p)
+                this.playSound(SoundEvents.BLOCK_HEAVY_CORE_PLACE)
+            if (this.getDmg() < 1){
+                for(i in 1..100){
+                    this.world.addParticle(
+                        ParticleTypes.CAMPFIRE_SIGNAL_SMOKE,
+                        true,
+                        this.x,
+                        this.y,
+                        this.z,
+                        random.nextDouble().times(2).minus(1).times(0.1),
+                        random.nextDouble().times(0.15),
+                        random.nextDouble().times(2).minus(1).times(0.1))
+                    if (i == 100){this.discard()}}
+            }}
+            Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH ->{
+                for(i in 1..100){
+                this.world.addParticle(
+                    ParticleTypes.CAMPFIRE_SIGNAL_SMOKE,
+                    true,
+                    this.x,
+                    this.y,
+                    this.z,
+                    random.nextDouble().times(2).minus(1).times(0.1),
+                    random.nextDouble().times(0.15),
+                    random.nextDouble().times(2).minus(1).times(0.1)
+                )}
+                this.playSound(SoundEvents.BLOCK_HEAVY_CORE_PLACE)
+                this.discard()
+            }
+            else -> println("You should kill yourself. NOW")
+
+        }
+        super.onBlockHit(blockHitResult)
     }
 
     fun setDmg(dmg: Int) {

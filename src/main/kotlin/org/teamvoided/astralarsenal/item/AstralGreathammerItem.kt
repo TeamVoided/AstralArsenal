@@ -22,6 +22,7 @@ class AstralGreathammerItem(settings: Item.Settings) : SwordItem(ToolMaterials.N
             snowballEntity.setProperties(user, user.pitch, user.yaw, 0.0f, 0.1f, 0.0f)
             snowballEntity.addVelocity(0.0, 0.1, 0.0)
             world.spawnEntity(snowballEntity)
+            world.playSound(user.x,user.y,user.z,SoundEvents.BLOCK_BARREL_OPEN,SoundCategory.PLAYERS,1.0F,1.0F, false)
             if (!user.isCreative) {
                 user.itemCooldownManager.set(this, 100)
             }
