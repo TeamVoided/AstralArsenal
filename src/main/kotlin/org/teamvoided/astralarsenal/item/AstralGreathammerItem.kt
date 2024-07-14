@@ -14,7 +14,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralEntities
 
-// Please change the summoning functionality into a kosmogliph for cannonball.json and keep the sound functionality
+// Please change the summoning functionality into a kosmogliph for cannonball and keep the sound functionality
 class AstralGreathammerItem(settings: Item.Settings) : SwordItem(ToolMaterials.NETHERITE, settings) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         if (!world.isClient) {
