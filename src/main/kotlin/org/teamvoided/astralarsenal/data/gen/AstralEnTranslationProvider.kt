@@ -32,6 +32,7 @@ class AstralEnTranslationProvider(
                 gen.add(kosmogliph.id().toTranslationKey("kosmogliph.tooltip"), "Kosmogliph - ${kosmogliph.id().path.titleCase()}")
                 gen.add(kosmogliph.id().toTranslationKey("ksomogliph.name"), kosmogliph.id().path.titleCase())
             }
+//        gen.add("death.attack.substance_concoction", "%s was kill by a strong brew")
     }
 
     private fun genLang(identifier: Identifier): String =

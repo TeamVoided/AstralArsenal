@@ -24,6 +24,7 @@ object AstralArsenal {
         AstralMenus
         AstralTabs
         AstralKosmogliphs
+        AstralDamageTypes
         AstralEntities.serverInit()
 
         CommandRegistrationCallback.EVENT.register { dispatcher, ctx, env ->

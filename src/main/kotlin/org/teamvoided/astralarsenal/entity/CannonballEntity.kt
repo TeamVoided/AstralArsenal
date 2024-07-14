@@ -7,10 +7,13 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
+import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralItems
 
@@ -31,11 +34,19 @@ class CannonballEntity : ThrownItemEntity {
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         super.onEntityHit(entityHitResult)
-        entityHitResult.entity.damage(this.damageSources.thrown(this, owner), this.getDmg().toFloat())
-        this.playSound(SoundEvents.ITEM_MACE_SMASH_AIR)
+        entityHitResult.entity.customDamage(AstralDamageTypes.CANNONBALL,this.getDmg().toFloat())
+        if(this.getDmg() in 20..39){
+            this.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
+        }
+        else if(this.getDmg() >= 40){
+            this.playSound((SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY))
+        }
+        else {
+            this.playSound(SoundEvents.ITEM_MACE_SMASH_AIR)
+        }
         val i: Int = this.getDmg() + 5
         this.setDmg(i)
-        if(entityHitResult.entity.isAlive) {
+        if (entityHitResult.entity.isAlive) {
             this.setVelocity(this.getVelocity().multiply(-0.1, 0.0, -0.1))
             this.addVelocity(0.0, 0.2, 0.0)
         }
@@ -73,6 +84,34 @@ class CannonballEntity : ThrownItemEntity {
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
         builder.add(DMG, 5)
+    }
+
+    override fun tick() {
+        if (this.getDmg() in 20..39) {
+            world.addParticle(
+                ParticleTypes.ELECTRIC_SPARK,
+                true,
+                this.x + random.rangeInclusive(-1, 1).times(0.1),
+                this.y + random.rangeInclusive(-1, 1).times(0.1),
+                this.z + random.rangeInclusive(-1, 1).times(0.1),
+                random.nextDouble().times(2).minus(1).times(0.01),
+                random.nextDouble().times(0.1),
+                random.nextDouble().times(2).minus(1).times(0.01)
+            )
+        }
+        else if(this.getDmg() >= 40){
+            world.addParticle(
+                ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                true,
+                this.x + random.rangeInclusive(-1, 1).times(0.1),
+                this.y + random.rangeInclusive(-1, 1).times(0.1),
+                this.z + random.rangeInclusive(-1, 1).times(0.1),
+                random.nextDouble().times(2).minus(1).times(0.01),
+                random.nextDouble().times(0.1),
+                random.nextDouble().times(2).minus(1).times(0.01)
+            )
+        }
+        super.tick()
     }
 
     fun setDmg(dmg: Int) {
