@@ -15,7 +15,6 @@ import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralEntities
 
 // Please change the summoning functionality into a kosmogliph for cannonball and keep the sound functionality
-//Incomplete, still needs to push the cannonball up and in front a small ammount
 class AstralGreathammerItem(settings: Item.Settings) : SwordItem(ToolMaterials.NETHERITE, settings) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         if (!world.isClient) {
@@ -38,7 +37,7 @@ class AstralGreathammerItem(settings: Item.Settings) : SwordItem(ToolMaterials.N
             target.z,
             SoundEvents.ITEM_MACE_SMASH_GROUND,
             SoundCategory.PLAYERS,
-            10000000.0F,
+            1.0F,
             1.0F
         )
         return super.postHit(stack, target, attacker)

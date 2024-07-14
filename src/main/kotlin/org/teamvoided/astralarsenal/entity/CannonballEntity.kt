@@ -33,12 +33,13 @@ class CannonballEntity : ThrownItemEntity {
         super.onEntityHit(entityHitResult)
         entityHitResult.entity.damage(this.damageSources.thrown(this, owner), this.getDmg().toFloat())
         this.playSound(SoundEvents.ITEM_MACE_SMASH_AIR)
+        val i: Int = this.getDmg() + 5
+        this.setDmg(i)
         if(entityHitResult.entity.isAlive) {
             this.setVelocity(this.getVelocity().multiply(-0.1, 0.0, -0.1))
             this.addVelocity(0.0, 0.2, 0.0)
         }
     }
-
 
     override fun method_59859(
         projectileDeflector: ProjectileDeflector,
@@ -63,11 +64,6 @@ class CannonballEntity : ThrownItemEntity {
                     projectileEntity.velocity = vec3d
                     projectileEntity.velocityDirty = true
                     projectileEntity.playSound(SoundEvents.ITEM_MACE_SMASH_AIR)
-                    if (projectileEntity is CannonballEntity) {
-                        val i: Int = projectileEntity.getDmg() + 5
-                        projectileEntity.setDmg(i)
-                    }
-
                 }
             }
         private val DMG: TrackedData<Int>? =
