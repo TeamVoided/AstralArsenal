@@ -35,7 +35,7 @@ class CosmicTableMenu(
     override fun onButtonClick(player: PlayerEntity, id: Int): Boolean {
         val applicable = applicableKosmogliphs()
         val kosmogliph = applicable[id]
-        val result = kosmogliph.apply(getSlot(0).stack)
+        val result = Kosmogliph.addToComponent(getSlot(0).stack, kosmogliph)
 
         return result.isRight()
     }

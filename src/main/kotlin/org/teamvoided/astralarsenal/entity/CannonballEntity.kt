@@ -1,6 +1,9 @@
 package org.teamvoided.astralarsenal.entity
 
-import net.minecraft.entity.*
+import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.ProjectileDeflector
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
@@ -14,8 +17,6 @@ import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
-import net.minecraft.world.World.ExplosionSourceType
-import net.minecraft.world.explosion.Explosion
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities

@@ -2,21 +2,20 @@ package org.teamvoided.astralarsenal.init
 
 import arrow.core.Predicate
 import net.minecraft.item.ItemStack
-import net.minecraft.item.PickaxeItem
 import net.minecraft.registry.Registry
+import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal
-import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.*
 
 @Suppress("unused")
 object AstralKosmogliphs {
-    val VEIN_MINER = registerSimple("vein_miner") { it.item is PickaxeItem }
-    val HAMMER = registerSimple("hammer") { it.item is PickaxeItem }
-    val SMELTER = registerSimple("smelter") { it.item is PickaxeItem }
+    val VEIN_MINER = register("vein_miner", ::VeinmineKosmogliph)
+    val HAMMER = register("hammer", ::HammerKosmogliph)
+    val SMELTER = register("smelter", ::SmelterKosmogliph)
 
-    fun <T: Kosmogliph> register(name: String, kosmogliph: T): T =
-        Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliph)
+    fun <T: Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
+        Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))
 
     fun registerSimple(name: String, applicationPredicate: Predicate<ItemStack>): SimpleKosmogliph =
-        register(name, SimpleKosmogliph(AstralArsenal.id(name), applicationPredicate))
+        register(name) { SimpleKosmogliph(it, applicationPredicate) }
 }

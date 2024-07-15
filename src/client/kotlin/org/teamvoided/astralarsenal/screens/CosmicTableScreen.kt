@@ -42,7 +42,7 @@ class CosmicTableScreen(
         val widgets = positions.mapIndexed { index, position ->
             KosmogliphWidget(position.x, position.y, 22, 22, Text.empty(), applicableKosmogliphs[index]) { x, y ->
                 client!!.interactionManager!!.clickButton(handler.syncId, index)
-                kosmogliph.apply(handler.getSlot(0).stack)
+                Kosmogliph.addToComponent(handler.getSlot(0).stack, kosmogliph)
             }
         }
 

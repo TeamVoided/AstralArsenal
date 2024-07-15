@@ -9,8 +9,10 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.teamvoided.astralarsenal.item.kosmogliph.logic.SmelterKosmogliphLogic;
+import org.teamvoided.astralarsenal.init.AstralItemComponents;
+import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent;
 
 @Mixin(AbstractBlock.class)
 public class AbstractBlockMixin {
@@ -18,6 +20,19 @@ public class AbstractBlockMixin {
     private ObjectArrayList<ItemStack> modifyLoot(LootTable instance, LootContextParameterSet parameterSet, Operation<ObjectArrayList<ItemStack>> original) {
         var world = parameterSet.getWorld();
         var stack = parameterSet.getParameterOrNull(LootContextParameters.TOOL);
-        return SmelterKosmogliphLogic.INSTANCE.smelt(world, stack, original.call(instance, parameterSet));
+        if (stack == null) return original.call(instance, parameterSet);
+        var kosmogliphs = astralArsenal$getKosmogliphs(stack);
+        if (kosmogliphs.isEmpty()) return original.call(instance, parameterSet);
+        var priority = kosmogliphs.stream().toList().getFirst();
+        var modifiedLoot = priority.modifyBlockBreakLoot(instance, parameterSet, world, stack, original.call(instance, parameterSet));
+        var mlArray = modifiedLoot.toArray(new ItemStack[0]);
+        return ObjectArrayList.wrap(mlArray);
+    }
+
+    @Unique
+    private KosmogliphsComponent astralArsenal$getKosmogliphs(ItemStack stack) {
+        var component = stack.getComponents().get(AstralItemComponents.INSTANCE.getKOSMOGLIPHS());
+        if (component == null) return new KosmogliphsComponent();
+        return component;
     }
 }

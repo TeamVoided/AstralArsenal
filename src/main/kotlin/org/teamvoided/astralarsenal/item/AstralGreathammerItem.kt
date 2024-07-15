@@ -2,17 +2,16 @@ package org.teamvoided.astralarsenal.item
 
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.projectile.thrown.EnderPearlEntity
-import net.minecraft.entity.projectile.thrown.SnowballEntity
-import net.minecraft.item.*
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraft.item.SwordItem
+import net.minecraft.item.ToolMaterials
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
-import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.CannonballEntity
-import org.teamvoided.astralarsenal.init.AstralEntities
 
 // Please change the summoning functionality into a kosmogliph for cannonball and keep the sound functionality
 class AstralGreathammerItem(settings: Item.Settings) : SwordItem(ToolMaterials.NETHERITE, settings) {

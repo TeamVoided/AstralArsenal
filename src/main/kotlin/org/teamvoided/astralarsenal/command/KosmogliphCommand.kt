@@ -5,9 +5,7 @@ import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.tree.LiteralCommandNode
 import net.minecraft.command.CommandBuildContext
 import net.minecraft.command.argument.IdentifierArgumentType
-import net.minecraft.server.command.CommandManager.RegistrationEnvironment
-import net.minecraft.server.command.CommandManager.argument
-import net.minecraft.server.command.CommandManager.literal
+import net.minecraft.server.command.CommandManager.*
 import net.minecraft.server.command.ServerCommandSource
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 
@@ -37,7 +35,8 @@ object KosmogliphCommand {
         val id = IdentifierArgumentType.getIdentifier(ctx, "kosmogliph")
         val kosmogliph = Kosmogliph.REGISTRY.get(id) ?: return -1
         val player = ctx.source.player ?: return -1
-        val result = kosmogliph.apply(player.mainHandStack)
+        if (!kosmogliph.canBeAppliedTo(player.mainHandStack)) return -1
+        val result = Kosmogliph.addToComponent(player.mainHandStack, kosmogliph)
 
         if (result.isLeft()) return -1
 

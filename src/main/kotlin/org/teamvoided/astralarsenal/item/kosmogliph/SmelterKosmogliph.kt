@@ -1,25 +1,24 @@
-package org.teamvoided.astralarsenal.item.kosmogliph.logic
+package org.teamvoided.astralarsenal.item.kosmogliph
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.item.ItemStack
+import net.minecraft.item.PickaxeItem
+import net.minecraft.loot.LootTable
+import net.minecraft.loot.context.LootContextParameterSet
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.SingleRecipeInput
 import net.minecraft.server.world.ServerWorld
-import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.init.AstralKosmogliphs
+import net.minecraft.util.Identifier
 import kotlin.jvm.optionals.getOrNull
 
-object SmelterKosmogliphLogic {
-    fun smelt(
+class SmelterKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is PickaxeItem }) {
+    override fun modifyBlockBreakLoot(
+        table: LootTable,
+        parameters: LootContextParameterSet,
         world: ServerWorld,
-        stack: ItemStack?,
-        original: ObjectArrayList<ItemStack>,
-    ): ObjectArrayList<ItemStack> {
-        if (stack == null) return original
-        if (!stack.components.contains(AstralItemComponents.KOSMOGLIPHS)) return original
-        val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS)!!
-        if (!kosmogliphs.contains(AstralKosmogliphs.SMELTER)) return original
-
+        stack: ItemStack,
+        original: ObjectArrayList<ItemStack>
+    ): List<ItemStack> {
         val smeltedStacks = original.map {
             val recipe = world.recipeManager.getFirstMatch(RecipeType.SMELTING, SingleRecipeInput(it), world).getOrNull()
             if (recipe == null) {
@@ -31,6 +30,6 @@ object SmelterKosmogliphLogic {
             }
         }
 
-        return ObjectArrayList.of(*smeltedStacks.toTypedArray())
+        return smeltedStacks
     }
 }
