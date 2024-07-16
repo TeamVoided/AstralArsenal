@@ -11,6 +11,8 @@ import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
+import org.teamvoided.astralarsenal.item.CannonballItem
+import org.teamvoided.astralarsenal.item.MorterItem
 import java.util.stream.Stream
 
 @Suppress("unused")
@@ -26,7 +28,8 @@ object AstralItems {
     val CONCENTRATED_AMETHYST_BLEND = register("concentrated_amethyst_blend", Item(Item.Settings()))
     val AMETHYST = register("amethyst", Item(Item.Settings()))
     val KOSMIK_GEM = register("kosmic_gem", Item(Item.Settings()))
-    val CANNONBALL = register("cannonball", Item(Item.Settings()))
+    val CANNONBALL = register("cannonball", CannonballItem(Item.Settings()))
+    val MORTER = register("morter", MorterItem(Item.Settings()))
     val COSMIC_TABLE = register("cosmic_table", BlockItem(AstralBlocks.COSMIC_TABLE, Item.Settings()))
     val ASTRAL_GREATHAMMER = register("astral_greathammer", AstralGreathammerItem((Item.Settings()).fireproof().attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.5F))))
 
@@ -48,6 +51,7 @@ object AstralItems {
         AMETHYST,
         KOSMIK_GEM,
         CANNONBALL,
+        MORTER,
     )
 
     fun items(): Set<Item> {

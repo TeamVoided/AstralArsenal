@@ -9,6 +9,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.entity.MorterEntity
 
 object AstralEntities {
     val CANNONBALL_ENTITY = register(
@@ -18,8 +19,17 @@ object AstralEntities {
         EntityType.EntityFactory(:: CannonballEntity)
     )
         .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
-        .trackRangeBlocks(4).trackedUpdateRate(10).build()
+        .trackRangeBlocks(4).build()
 )
+    val MORTER_ENTITY = register(
+        "morter",
+        FabricEntityTypeBuilder.create(
+            SpawnGroup.MISC,
+            EntityType.EntityFactory(::MorterEntity)
+        )
+            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+            .trackRangeBlocks(4).build()
+    )
 
     fun serverInit() {
 
