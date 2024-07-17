@@ -33,7 +33,9 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is ArmorIt
     var offCooldown = 0
     var cooldown = 30
     var cooling = 0
-    override fun tick(player: PlayerEntity){
+
+    //I know tick here does nothing, but i need it to do something and IDK how
+    fun tick(player: PlayerEntity){
         if(player.isOnGround){
             maxUses = 3
         }

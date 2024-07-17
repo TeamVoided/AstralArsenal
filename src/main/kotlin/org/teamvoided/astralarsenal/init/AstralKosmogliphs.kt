@@ -13,6 +13,7 @@ object AstralKosmogliphs {
     val HAMMER = register("hammer", ::HammerKosmogliph)
     val SMELTER = register("smelter", ::SmelterKosmogliph)
     val CANNONBALL = register("cannonball", ::CannonballKosmogliph)
+    val MORTER = register("morter", ::MorterKosmogliph)
     val JUMP = register("jump", ::JumpKosmogliph)
 
     fun <T: Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
