@@ -1,0 +1,12 @@
+{
+  "entity.beam_of_light.strike": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "astral_arsenal:entities/beam_of_light/strike",
+        "stream": true,
+        "volume": 0.75
+      }
+    ]
+  }
+  }

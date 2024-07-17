@@ -9,6 +9,7 @@ import org.teamvoided.astralarsenal.AstralArsenal.id
 
 object AstralDamageTypes {
     val CANNONBALL: RegistryKey<DamageType> = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("cannonball"))
+    val BEAM_OF_LIGHT: RegistryKey<DamageType> = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, id("beam_of_light"))
 
     fun Entity.customDamage(type:RegistryKey<DamageType>, amount: Float) {
         this.damage(this.damageSources.create(type), amount)

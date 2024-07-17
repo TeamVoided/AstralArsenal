@@ -11,6 +11,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 
 // Please change the summoning functionality into a kosmogliph for cannonball and keep the sound functionality
@@ -26,6 +27,24 @@ class AstralGreathammerItem(settings: Item.Settings) : SwordItem(ToolMaterials.N
             1.0F,
             1.0F
         )
+        hitTimes++
+        if(hitTimes >= 3){
+            val beam = BeamOfLightEntity(attacker.world, attacker)
+            beam.setPosition(target.pos)
+            beam.WINDUP = 20
+            beam.TIMEACTIVE = 20
+            beam.side = 1
+            beam.THRUST = 1.0
+            attacker.world.spawnEntity(beam)
+            hitTimes = 0
+        }
         return super.postHit(stack, target, attacker)
     }
+
+    override fun isEnchantable(stack: ItemStack?): Boolean {
+        return true
+    }
+    // I need someone to take all the hitTimes logic, apply it to a kosmogliph,
+    // and make it work per itemstack pls thx <3
+    var hitTimes = 0
 }

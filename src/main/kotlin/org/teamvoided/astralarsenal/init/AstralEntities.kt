@@ -8,6 +8,7 @@ import net.minecraft.entity.SpawnGroup
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
+import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MorterEntity
 
@@ -26,6 +27,15 @@ object AstralEntities {
         FabricEntityTypeBuilder.create(
             SpawnGroup.MISC,
             EntityType.EntityFactory(::MorterEntity)
+        )
+            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+            .trackRangeBlocks(4).build()
+    )
+    val BEAM_OF_LIGHT = register(
+        "beam_of_light",
+        FabricEntityTypeBuilder.create(
+            SpawnGroup.MISC,
+            EntityType.EntityFactory(::BeamOfLightEntity)
         )
             .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
             .trackRangeBlocks(4).build()
