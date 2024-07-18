@@ -10,6 +10,7 @@ object AstralSounds {
     val BEAM_BOOM = register("entity.beam_of_light.strike")
     val BEAM_VIBRATE = register("entity.beam_of_light.vibrate")
     val BEAM_WIND = register("entity.beam_of_light.wind")
+    val CHARGE = register("entity.beam_of_light.charge")
     fun init() {
     }
 

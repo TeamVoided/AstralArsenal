@@ -28,5 +28,15 @@
         "volume": 500
       }
     ]
+  },
+  "entity.beam_of_light.charge": {
+    "category": "entity",
+    "sounds": [
+      {
+        "name": "astral_arsenal:entities/beam_of_light/charge",
+        "stream": true,
+        "volume": 1
+      }
+    ]
   }
   }

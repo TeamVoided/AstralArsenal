@@ -10,9 +10,8 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralSounds
 
-// I need some help changing this into a boots kosmogliph that constantly ticks the cooldowns and does
-// the extra jump functionality when space is clicked.
 
 class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
@@ -38,7 +37,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
                 SoundCategory.PLAYERS,
                 1.0F,
                 1.0F)
-            stack.set(AstralItemComponents.JUMP_DATA, Data(data.uses - 1, data.cooldown, 0))
+            stack.set(AstralItemComponents.JUMP_DATA, Data(data.uses - 1, data.cooldown, 0, data.maxUses - 1))
         }
     }
 
@@ -46,30 +45,43 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         val data = stack.get(AstralItemComponents.JUMP_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
         var lastJump = data.lastJump
+        var maxUses = data.maxUses
         if (uses >= 3) return
         var cooldown = data.cooldown
-        if(entity.isOnGround) cooldown--
+        if(entity.isOnGround) maxUses = 3
+        if(uses < maxUses) cooldown--
 
         if (cooldown <= 0) {
             uses++
-            cooldown = 30
+            val x : Float = (uses * 0.5).toFloat()
+            cooldown = 20
+            world.playSound(
+                null,
+                entity.x,
+                entity.y,
+                entity.z,
+                AstralSounds.CHARGE,
+                SoundCategory.PLAYERS,
+                1.0F,
+                x)
         }
 
         if (lastJump < 20) lastJump++
 
-        stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, lastJump))
+        stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, lastJump, maxUses))
     }
 
     data class Data(
         val uses: Int,
         val cooldown: Int,
-        val lastJump: Int
+        val lastJump: Int,
+        val maxUses: Int
     ) {
         companion object {
             val CODEC = Codecs.NONNEGATIVE_INT.listOf()
                 .xmap(
-                    { list -> Data(list[0], list[1], list.getOrNull(2) ?: 0) },
-                    { data -> listOf(data.uses, data.cooldown, data.lastJump) }
+                    { list -> Data(list[0], list[1], list.getOrNull(2) ?: 0, list[3]) },
+                    { data -> listOf(data.uses, data.cooldown, data.lastJump, data.maxUses) }
                 )
         }
     }
