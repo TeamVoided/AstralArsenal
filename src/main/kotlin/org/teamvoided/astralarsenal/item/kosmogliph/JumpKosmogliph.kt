@@ -11,7 +11,10 @@ import net.minecraft.world.World
 // I need some help changing this into a boots kosmogliph that constantly ticks the cooldowns and does
 // the extra jump functionality when space is clicked.
 
-class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is ArmorItem }) {
+class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
+    val item = it.item
+    item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.BOOTS
+}) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         if(offCooldown > 0 && !player.isOnGround){
             player.setVelocity(player.velocity.x,0.5,player.velocity.z)
@@ -27,20 +30,20 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is ArmorIt
             offCooldown --
             maxUses --
         }
-        super.onUse(world, player, hand)
     }
+
     var maxUses = 3
     var offCooldown = 0
     var cooldown = 30
     var cooling = 0
 
     //I know tick here does nothing, but i need it to do something and IDK how
-    fun tick(player: PlayerEntity){
+    fun tick(player: PlayerEntity) {
         if(player.isOnGround){
             maxUses = 3
         }
         cooling ++
-        if(cooling == cooldown && offCooldown > maxUses){
+        if(cooling == cooldown && offCooldown > maxUses) {
             cooling = 0
             offCooldown ++
         }

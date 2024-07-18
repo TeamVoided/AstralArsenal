@@ -25,9 +25,12 @@ abstract class KosmogliphWidget(
         mouseY: Int,
         delta: Float
     ) {
+        val stack = graphics.matrices
+        stack.push()
         graphics.drawTexture(if (active) ACTIVE_TEXTURE else INACTIVE_TEXTURE, x, y, 0, 0, width, height)
         // TODO Get textures and uncomment line
         //graphics.drawTexture(kosmogliphTexture, x, y, 0, 0, width, height)
+        stack.pop()
     }
 
     override fun updateNarration(builder: NarrationMessageBuilder) {

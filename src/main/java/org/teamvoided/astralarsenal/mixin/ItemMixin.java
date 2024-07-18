@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.mixin;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipConfig;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -55,6 +56,16 @@ public abstract class ItemMixin {
     @Inject(method = "postHit", at = @At("TAIL"))
     public void kosmogliphPostHit(ItemStack stack, LivingEntity target, LivingEntity attacker, CallbackInfoReturnable<Boolean> cir) {
         astralArsenal$getKosmogliphs(stack).forEach((kosmogliph) -> kosmogliph.postHit(stack, target, attacker));
+    }
+
+    @Inject(method = "inventoryTick", at = @At("TAIL"))
+    public void kosmogliphInvTick(ItemStack stack, World world, Entity entity, int slot, boolean selected, CallbackInfo ci) {
+        astralArsenal$getKosmogliphs(stack).forEach((kosmogliph) -> kosmogliph.inventoryTick(stack, world, entity, slot, selected));
+    }
+
+    @Inject(method = "usageTick", at = @At("TAIL"))
+    public void kosmogliphUsageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks, CallbackInfo ci) {
+        astralArsenal$getKosmogliphs(stack).forEach((kosmogliph) -> kosmogliph.usageTick(world, user, stack, remainingUseTicks));
     }
 
     @Unique

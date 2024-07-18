@@ -7,6 +7,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.minecraft.block.BlockState
 import net.minecraft.client.item.TooltipConfig
+import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
@@ -36,6 +37,8 @@ interface Kosmogliph {
     fun onUseOnEntity(stack: ItemStack, player: PlayerEntity, entity: LivingEntity, hand: Hand) {}
     fun postMine(stack: ItemStack, world: World, state: BlockState, pos: BlockPos, miner: LivingEntity) {}
     fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {}
+    fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {}
+    fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {}
     fun modifyBlockBreakLoot(
         table: LootTable,
         parameters: LootContextParameterSet,
