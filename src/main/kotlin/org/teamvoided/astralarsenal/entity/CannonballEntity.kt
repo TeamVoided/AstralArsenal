@@ -169,7 +169,7 @@ class CannonballEntity : ThrownItemEntity {
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
         if(this.getDmg() < 20){this.setDmg(20)}
-        world.createExplosion(this, damageSources.explosion(this,this.owner), KnockbackExplosionBehavior(),this.x,this.y,this.z,this.getDmg().times(0.2).toFloat(),false,World.ExplosionSourceType.TNT)
+        world.createExplosion(this, damageSources.explosion(this,this.owner), KnockbackExplosionBehavior(),this.x,this.y,this.z,2.0f,false,World.ExplosionSourceType.TNT)
         this.discard()
         super.onBlockHit(blockHitResult)
 }
