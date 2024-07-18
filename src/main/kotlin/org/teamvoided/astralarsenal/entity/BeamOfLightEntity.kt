@@ -46,6 +46,7 @@ class BeamOfLightEntity : Entity {
     var side = 1
     var entitiesHit = mutableListOf<Entity>()
     var targetEntity : Entity? = null
+    var trackTime = 0
 
     override fun tick() {
         incrementTime()
@@ -64,7 +65,7 @@ class BeamOfLightEntity : Entity {
                     0.0
                 )
             }
-            if (targetEntity != null){
+            if (targetEntity != null && this.getTime() < trackTime){
                 this.setPosition(targetEntity!!.pos)
             }
         }
