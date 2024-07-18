@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.entity
 
+import arrow.core.raise.nullable
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
@@ -15,6 +16,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities
+import org.teamvoided.astralarsenal.init.AstralSounds
 
 class BeamOfLightEntity : Entity {
 
@@ -36,13 +38,14 @@ class BeamOfLightEntity : Entity {
             DataTracker.registerData(BeamOfLightEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
     }
 
-    var WINDUP = 20
-    var TIMEACTIVE = 20
+    var WINDUP = 1
+    var TIMEACTIVE = 1
     var DOT = false
     var THRUST = 2.0
-    var DMG = 10
+    var DMG = 1
     var side = 1
     var entitiesHit = mutableListOf<Entity>()
+    var targetEntity : Entity? = null
 
     override fun tick() {
         incrementTime()
@@ -61,20 +64,24 @@ class BeamOfLightEntity : Entity {
                     0.0
                 )
             }
+            if (targetEntity != null){
+                this.setPosition(targetEntity!!.pos)
+            }
         }
-        else if(this.getTime() == WINDUP){this.playSound(SoundEvents.BLOCK_BEACON_ACTIVATE, 1.0f, 1.0f)}
+        else if(this.getTime() == WINDUP){this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)}
         else if(this.getTime() in WINDUP..(TIMEACTIVE+WINDUP)){
             if (!DOT){
             if (!world.isClient) {
+                if(this.getTime() % 2 == 0){this.playSound(AstralSounds.BEAM_VIBRATE,2.0f,1.0f)}
                 val serverWorld = world as ServerWorld
                 serverWorld.spawnParticles(
                     ParticleTypes.ELECTRIC_SPARK,
                     this.x,
                     this.y,
                     this.z,
-                    100,
+                    250,
                     random.nextDouble().minus(0.5).times(2).times(side),
-                    random.nextDouble().minus(0.5).times(100),
+                    random.nextDouble().minus(0.5).times(25),
                     random.nextDouble().minus(0.5).times(2).times(side),
                     0.0
                 )
@@ -100,9 +107,9 @@ class BeamOfLightEntity : Entity {
                 serverWorld.spawnParticles(
                     ParticleTypes.ELECTRIC_SPARK,
                     side.times(0.5),
-                    100.0,
+                    10.0,
                     side.times(0.5),
-                    10000000,
+                    250,
                     0.0,
                     0.0,
                     0.0,
@@ -111,10 +118,10 @@ class BeamOfLightEntity : Entity {
                 val entities = world.getOtherEntities(
                     null, Box(
                         pos.x + side.times(0.5),
-                        pos.y + 50.0,
+                        pos.y + 10.0,
                         pos.z + side.times(0.5),
                         pos.x + side.times(-0.5),
-                        pos.y - 50,
+                        pos.y - 10,
                         pos.z + side.times(-0.5)
                     ))
                 for (entity in entities) {
@@ -123,7 +130,7 @@ class BeamOfLightEntity : Entity {
                 }}
         }
         else if (this.getTime() > (TIMEACTIVE + WINDUP)){
-            this.playSound(SoundEvents.BLOCK_BEACON_DEACTIVATE, 1.0f, 1.0f)
+            this.playSound(AstralSounds.BEAM_WIND, 3.0f, 1.0f)
             this.discard()
         }
         super.tick()

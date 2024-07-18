@@ -15,10 +15,16 @@
   "item.astral_arsenal.lazulica_blend": "Lazulica Blend",
   "item.astral_arsenal.morter": "Morter",
   "item.astral_arsenal.quartz_dust": "Quartz Dust",
+  "kosmogliph.tooltip.astral_arsenal.cannonball": "Kosmogliph - Cannonball",
   "kosmogliph.tooltip.astral_arsenal.hammer": "Kosmogliph - Hammer",
+  "kosmogliph.tooltip.astral_arsenal.jump": "Kosmogliph - Jump",
+  "kosmogliph.tooltip.astral_arsenal.morter": "Kosmogliph - Morter",
   "kosmogliph.tooltip.astral_arsenal.smelter": "Kosmogliph - Smelter",
   "kosmogliph.tooltip.astral_arsenal.vein_miner": "Kosmogliph - Vein Miner",
+  "ksomogliph.name.astral_arsenal.cannonball": "Cannonball",
   "ksomogliph.name.astral_arsenal.hammer": "Hammer",
+  "ksomogliph.name.astral_arsenal.jump": "Jump",
+  "ksomogliph.name.astral_arsenal.morter": "Morter",
   "ksomogliph.name.astral_arsenal.smelter": "Smelter",
   "ksomogliph.name.astral_arsenal.vein_miner": "Vein Miner"
 }

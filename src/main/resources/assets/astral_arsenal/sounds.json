@@ -1,11 +1,31 @@
 {
   "entity.beam_of_light.strike": {
-    "category": "block",
+    "category": "entity",
     "sounds": [
       {
         "name": "astral_arsenal:entities/beam_of_light/strike",
         "stream": true,
-        "volume": 0.75
+        "volume": 1
+      }
+    ]
+  },
+  "entity.beam_of_light.vibrate": {
+    "category": "entity",
+    "sounds": [
+      {
+        "name": "astral_arsenal:entities/beam_of_light/vibrate",
+        "stream": true,
+        "volume": 1
+      }
+    ]
+  },
+  "entity.beam_of_light.wind": {
+    "category": "entity",
+    "sounds": [
+      {
+        "name": "astral_arsenal:entities/beam_of_light/wind",
+        "stream": true,
+        "volume": 500
       }
     ]
   }
