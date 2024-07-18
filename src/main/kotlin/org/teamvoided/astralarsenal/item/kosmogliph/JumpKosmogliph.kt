@@ -44,7 +44,9 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         var lastJump = data.lastJump
         if (uses >= 3) return
         var cooldown = data.cooldown
-        if (--cooldown <= 0) {
+        if(entity.isOnGround) cooldown--;
+
+        if (cooldown <= 0) {
             uses++
             cooldown = 30
         }
