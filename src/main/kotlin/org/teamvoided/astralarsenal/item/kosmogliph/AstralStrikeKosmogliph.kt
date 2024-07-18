@@ -23,7 +23,6 @@ class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
             }
         }
-        super.onUse(world, player, hand)
     }
 
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {

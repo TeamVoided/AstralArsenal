@@ -1,8 +1,6 @@
 package org.teamvoided.astralarsenal.item.kosmogliph
 
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
@@ -20,6 +18,5 @@ class CannonballKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is A
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
             }
         }
-        super.onUse(world, player, hand)
     }
 }

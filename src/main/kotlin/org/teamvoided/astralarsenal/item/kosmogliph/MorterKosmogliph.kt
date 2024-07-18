@@ -18,6 +18,5 @@ class MorterKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is Astra
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
             }
         }
-        super.onUse(world, player, hand)
     }
 }

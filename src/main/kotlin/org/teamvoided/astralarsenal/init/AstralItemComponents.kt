@@ -3,19 +3,26 @@ package org.teamvoided.astralarsenal.init
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.component.DataComponentMap
 import net.minecraft.component.DataComponentType
+import net.minecraft.item.ArmorItem
 import net.minecraft.item.Item
 import net.minecraft.item.ToolItem
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.item.kosmogliph.JumpKosmogliph
 
 object AstralItemComponents {
     private val mods = mutableSetOf<DataComponentTypeModificationContext<*>>()
 
     val KOSMOGLIPHS: DataComponentType<KosmogliphsComponent> =
-        register("kosmogliphs", { it is ToolItem }, { KosmogliphsComponent() }) { builder ->
+        register("kosmogliphs", { it is ToolItem || it is ArmorItem }, { KosmogliphsComponent() }) { builder ->
             builder.codec(KosmogliphsComponent.CODEC).build()
+        }
+
+    val JUMP_DATA: DataComponentType<JumpKosmogliph.Data> =
+        register("jump_data", { it is ArmorItem || it is ToolItem }, { JumpKosmogliph.Data(0, 0, 0) }) { builder ->
+            builder.codec(JumpKosmogliph.Data.CODEC).build()
         }
 
     fun <T> register(
