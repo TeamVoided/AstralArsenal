@@ -1,6 +1,5 @@
-package org.teamvoided.astralarsenal.item.kosmogliph
+package org.teamvoided.astralarsenal.item.kosmogliph.armor
 
-import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
@@ -9,10 +8,8 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
-import net.minecraft.util.dynamic.Codecs
-import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.init.AstralSounds
+import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import java.lang.Math.random
 
 class SlideKosmogliph (id: Identifier) : SimpleKosmogliph(id, {

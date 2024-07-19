@@ -8,6 +8,9 @@ import net.minecraft.registry.tag.ItemTags
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.kosmogliph.*
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
+import org.teamvoided.astralarsenal.item.kosmogliph.melee.*
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.*
 
 @Suppress("unused")
 object AstralKosmogliphs {

@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.item.kosmogliph
+package org.teamvoided.astralarsenal.item.kosmogliph.tools
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.item.ItemStack
@@ -9,6 +9,7 @@ import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.SingleRecipeInput
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
+import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import kotlin.jvm.optionals.getOrNull
 
 class SmelterKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is PickaxeItem }) {

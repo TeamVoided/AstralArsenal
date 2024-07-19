@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.item.kosmogliph
+package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
@@ -11,6 +11,8 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+
 // I will fix this - Astra
 class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {

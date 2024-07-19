@@ -10,7 +10,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
-import org.teamvoided.astralarsenal.item.kosmogliph.DashKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.JumpKosmogliph
 
 object AstralItemComponents {

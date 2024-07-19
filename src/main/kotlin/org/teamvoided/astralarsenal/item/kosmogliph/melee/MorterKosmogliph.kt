@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.item.kosmogliph
+package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.Hand
@@ -6,6 +6,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.MorterEntity
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
+import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class MorterKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is AstralGreathammerItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {

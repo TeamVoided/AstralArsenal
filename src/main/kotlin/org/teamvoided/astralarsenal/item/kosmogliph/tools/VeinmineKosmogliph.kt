@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.item.kosmogliph
+package org.teamvoided.astralarsenal.item.kosmogliph.tools
 
 import net.minecraft.block.BlockState
 import net.minecraft.entity.EquipmentSlot
@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.block.tag.AstralBlockTags
+import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.breakAndDropStacksAt
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.canSafelyBreak
 
