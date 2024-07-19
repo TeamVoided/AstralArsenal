@@ -11,7 +11,7 @@ import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.JumpKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.JumpKosmogliph
 
 object AstralItemComponents {
     private val mods = mutableSetOf<DataComponentTypeModificationContext<*>>()
