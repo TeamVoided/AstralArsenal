@@ -15,57 +15,53 @@ import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralSounds
 import java.lang.Math.random
 
-
-class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
+class DashKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
-    item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.BOOTS
+    item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.LEGGINGS
 }) {
     // Change this to change how much boost is given when double-jumping.
-    val JUMP_FORWARD_BOOST = 0.3
+    val JUMP_FORWARD_BOOST = 1.0
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
-        val data = stack.get(AstralItemComponents.JUMP_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.get(AstralItemComponents.DASH_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world
 
-        if(data.uses > 0 && !player.isOnGround) {
+        if(data.uses > 0) {
             val boost = player.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(JUMP_FORWARD_BOOST)
-            player.setVelocity(player.velocity.x + boost.x,0.5, player.velocity.z + boost.z)
+            player.setVelocity(player.velocity.x + boost.x,0.1, player.velocity.z + boost.z)
             player.velocityModified = true
             world.playSound(
                 null,
                 player.x,
                 player.y,
                 player.z,
-                SoundEvents.BLOCK_ROOTED_DIRT_PLACE,
+                AstralSounds.DODGE,
                 SoundCategory.PLAYERS,
                 1.0F,
                 1.0F)
             if(!world.isClient){
                 val serverWorld = world as ServerWorld
                 serverWorld.spawnParticles(
-                    ParticleTypes.SPIT,
+                    ParticleTypes.ELECTRIC_SPARK,
                     player.x,
-                    player.y - 1,
+                    player.y,
                     player.z,
                     20,
                     random().minus(0.5).times(2),
-                    0.0,
+                    random().minus(0.5).times(2),
                     random().minus(0.5).times(2),
                     0.0)
             }
-            stack.set(AstralItemComponents.JUMP_DATA, Data(data.uses - 1, data.cooldown, 0, data.maxUses - 1))
+            stack.set(AstralItemComponents.DASH_DATA, Data(data.uses - 1, data.cooldown))
         }
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralItemComponents.JUMP_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.get(AstralItemComponents.DASH_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
-        var lastJump = data.lastJump
-        var maxUses = data.maxUses
         if (uses >= 3) return
         var cooldown = data.cooldown
-        if(entity.isOnGround) maxUses = 3
-        if(uses < maxUses) cooldown--
+        cooldown--
 
         if (cooldown <= 0) {
             uses++
@@ -82,22 +78,18 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
                 x)
         }
 
-        if (lastJump < 20) lastJump++
-
-        stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, lastJump, maxUses))
+        stack.set(AstralItemComponents.DASH_DATA, Data(uses, cooldown))
     }
 
     data class Data(
         val uses: Int,
-        val cooldown: Int,
-        val lastJump: Int,
-        val maxUses: Int
+        val cooldown: Int
     ) {
         companion object {
             val CODEC = Codecs.NONNEGATIVE_INT.listOf()
                 .xmap(
-                    { list -> Data(list[0], list[1], list.getOrNull(2) ?: 0, list[3]) },
-                    { data -> listOf(data.uses, data.cooldown, data.lastJump, data.maxUses) }
+                    { list -> Data(list[0], list[1]) },
+                    { data -> listOf(data.uses, data.cooldown) }
                 )
         }
     }

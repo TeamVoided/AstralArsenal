@@ -10,6 +10,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.item.kosmogliph.DashKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.JumpKosmogliph
 
 object AstralItemComponents {
@@ -23,6 +24,10 @@ object AstralItemComponents {
     val JUMP_DATA: DataComponentType<JumpKosmogliph.Data> =
         register("jump_data", { it is ArmorItem || it is ToolItem }, { JumpKosmogliph.Data(0, 0, 0, 0) }) { builder ->
             builder.codec(JumpKosmogliph.Data.CODEC).build()
+        }
+    val DASH_DATA: DataComponentType<DashKosmogliph.Data> =
+        register("dash_data", { it is ArmorItem || it is ToolItem }, { DashKosmogliph.Data(0, 0) }) { builder ->
+            builder.codec(DashKosmogliph.Data.CODEC).build()
         }
 
     fun <T> register(

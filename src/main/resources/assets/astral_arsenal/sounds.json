@@ -38,5 +38,25 @@
         "volume": 1
       }
     ]
+  },
+  "entity.kosmogliph.dodge": {
+    "category": "entity",
+    "sounds": [
+      {
+        "name": "astral_arsenal:entities/kosmogliph/dodge",
+        "stream": true,
+        "volume": 0.5
+      },
+      {
+        "name": "astral_arsenal:entities/kosmogliph/dodge2",
+        "stream": true,
+        "volume": 0.5
+      },
+      {
+        "name": "astral_arsenal:entities/kosmogliph/dodge3",
+        "stream": true,
+        "volume": 0.5
+      }
+    ]
   }
   }
