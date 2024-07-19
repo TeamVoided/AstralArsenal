@@ -8,10 +8,7 @@ import net.minecraft.entity.SpawnGroup
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
-import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
-import org.teamvoided.astralarsenal.entity.CannonballEntity
-import org.teamvoided.astralarsenal.entity.MorterEntity
-import org.teamvoided.astralarsenal.entity.SlashEntity
+import org.teamvoided.astralarsenal.entity.*
 
 object AstralEntities {
     val CANNONBALL_ENTITY = register(
@@ -46,6 +43,24 @@ object AstralEntities {
         FabricEntityTypeBuilder.create(
             SpawnGroup.MISC,
             EntityType.EntityFactory(::SlashEntity)
+        )
+            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+            .trackRangeBlocks(4).build()
+    )
+    val BOOM_SHOOTER_ENTITY = register(
+        "boom_shooter_entity",
+        FabricEntityTypeBuilder.create(
+            SpawnGroup.MISC,
+            EntityType.EntityFactory(::BoomShooterEntity)
+        )
+            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+            .trackRangeBlocks(4).build()
+    )
+    val BOOM_ENTITY = register(
+        "boom_entity",
+        FabricEntityTypeBuilder.create(
+            SpawnGroup.MISC,
+            EntityType.EntityFactory(::BoomEntity)
         )
             .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
             .trackRangeBlocks(4).build()

@@ -23,6 +23,7 @@ object AstralKosmogliphs {
     val DASH = register("dash", ::DashKosmogliph)
     val SLIDE = register("slide", ::SlideKosmogliph)
     val ASTRAL_STRIKE = register("astral_strike", ::AstralStrikeKosmogliph)
+    val BLAST = register("blast", ::BlastKosmogliph)
 
     val REFLECTIVE = register(
         "reflective"
