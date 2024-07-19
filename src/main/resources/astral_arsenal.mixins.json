@@ -5,8 +5,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AbstractBlockMixin",
+    "DamageReductionMixin",
     "ItemMixin",
-    "DamageReductionMixin"
+    "ToolItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
