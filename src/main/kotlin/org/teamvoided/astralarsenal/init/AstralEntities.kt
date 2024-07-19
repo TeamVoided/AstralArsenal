@@ -11,6 +11,7 @@ import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MorterEntity
+import org.teamvoided.astralarsenal.entity.SlashEntity
 
 object AstralEntities {
     val CANNONBALL_ENTITY = register(
@@ -36,6 +37,15 @@ object AstralEntities {
         FabricEntityTypeBuilder.create(
             SpawnGroup.MISC,
             EntityType.EntityFactory(::BeamOfLightEntity)
+        )
+            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+            .trackRangeBlocks(4).build()
+    )
+    val SLASH_ENTITY = register(
+        "slash_entity",
+        FabricEntityTypeBuilder.create(
+            SpawnGroup.MISC,
+            EntityType.EntityFactory(::SlashEntity)
         )
             .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
             .trackRangeBlocks(4).build()
