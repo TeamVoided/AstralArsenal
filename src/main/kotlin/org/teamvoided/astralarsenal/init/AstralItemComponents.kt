@@ -12,6 +12,7 @@ import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.JumpKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
 
 object AstralItemComponents {
     private val mods = mutableSetOf<DataComponentTypeModificationContext<*>>()
@@ -29,6 +30,10 @@ object AstralItemComponents {
     val DASH_DATA: DataComponentType<DashKosmogliph.Data> =
         register("dash_data", { it is ArmorItem || it is ToolItem }, { DashKosmogliph.Data(0, 0) }) { builder ->
             builder.codec(DashKosmogliph.Data.CODEC).build()
+        }
+    val ASTRAL_STRIKE_DATA: DataComponentType<AstralStrikeKosmogliph.Data> =
+        register("dash_data", { it is ArmorItem || it is ToolItem }, { AstralStrikeKosmogliph.Data(0) }) { builder ->
+            builder.codec(AstralStrikeKosmogliph.Data.CODEC).build()
         }
 
     fun <T> register(

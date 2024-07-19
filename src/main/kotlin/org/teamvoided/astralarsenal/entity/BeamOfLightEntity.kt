@@ -127,6 +127,7 @@ class BeamOfLightEntity : Entity {
                     ))
                 for (entity in entities) {
                         entity.customDamage(AstralDamageTypes.CANNONBALL,this.DMG.toFloat())
+                    // Here is where I need the damage to ignore immunity frames
                     }
                 }}
         }
