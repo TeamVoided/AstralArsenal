@@ -12,6 +12,7 @@ import org.teamvoided.astralarsenal.command.KosmogliphCommand
 import org.teamvoided.astralarsenal.init.*
 import org.teamvoided.astralarsenal.networking.DashKosmogliphPayload
 import org.teamvoided.astralarsenal.networking.JumpKosmogliphPayload
+import org.teamvoided.astralarsenal.networking.SlideKosmogliphPayload
 
 @Suppress("unused")
 object AstralArsenal {
@@ -53,6 +54,14 @@ object AstralArsenal {
             val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
             if (!kosmogliphs.contains(AstralKosmogliphs.DASH)) return@registerGlobalReceiver
             AstralKosmogliphs.DASH.handleJump(stack, player)
+        }
+        PayloadTypeRegistry.playC2S().register(SlideKosmogliphPayload.ID, SlideKosmogliphPayload.CODEC)
+        ServerPlayNetworking.registerGlobalReceiver(SlideKosmogliphPayload.ID) { _, ctx ->
+            val player = ctx.player()
+            val stack = player.getEquippedStack(EquipmentSlot.LEGS)
+            val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
+            if (!kosmogliphs.contains(AstralKosmogliphs.SLIDE)) return@registerGlobalReceiver
+            AstralKosmogliphs.SLIDE.handleJump(stack, player)
         }
     }
 
