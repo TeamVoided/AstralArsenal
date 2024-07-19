@@ -36,10 +36,10 @@ class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is
                 attacker.world.spawnEntity(beam)
                 hitTimes = 0
             }
+        println("im working")
         stack.set(AstralItemComponents.ASTRAL_STRIKE_DATA, Data(hitTimes))
             return super.postHit(stack, target, attacker)
         }
-    var hitTimes = 0
     data class Data(
         val hitTimes: Int,
     ) {
