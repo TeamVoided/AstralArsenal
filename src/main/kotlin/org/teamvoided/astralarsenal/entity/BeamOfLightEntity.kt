@@ -97,7 +97,7 @@ class BeamOfLightEntity : Entity {
                     ))
                 for (entity in entities) {
                     if(!entitiesHit.contains(entity)){
-                    entity.customDamage(AstralDamageTypes.CANNONBALL,this.DMG.toFloat())
+                    entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT,this.DMG.toFloat())
                     entity.addVelocity(0.0,THRUST,0.0)
                         entitiesHit.add(entity)
                     }
@@ -126,7 +126,7 @@ class BeamOfLightEntity : Entity {
                         pos.z + side.times(-0.5)
                     ))
                 for (entity in entities) {
-                        entity.customDamage(AstralDamageTypes.CANNONBALL,this.DMG.toFloat())
+                        entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT,this.DMG.toFloat())
                     // Here is where I need the damage to ignore immunity frames
                     }
                 }}
