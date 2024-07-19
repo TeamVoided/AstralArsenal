@@ -25,6 +25,7 @@ object AstralItemComponents {
         register("jump_data", { it is ArmorItem || it is ToolItem }, { JumpKosmogliph.Data(0, 0, 0, 0) }) { builder ->
             builder.codec(JumpKosmogliph.Data.CODEC).build()
         }
+
     val DASH_DATA: DataComponentType<DashKosmogliph.Data> =
         register("dash_data", { it is ArmorItem || it is ToolItem }, { DashKosmogliph.Data(0, 0) }) { builder ->
             builder.codec(DashKosmogliph.Data.CODEC).build()
