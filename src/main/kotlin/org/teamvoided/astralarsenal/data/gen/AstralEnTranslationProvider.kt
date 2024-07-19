@@ -29,9 +29,10 @@ class AstralEnTranslationProvider(
             .toList()
             .map { it.value() }
             .forEach { kosmogliph ->
-                gen.add(kosmogliph.id().toTranslationKey("kosmogliph.tooltip"), "Kosmogliph - ${kosmogliph.id().path.titleCase()}")
+                gen.add(kosmogliph.id().toTranslationKey("kosmogliph.tooltip"), kosmogliph.id().path.titleCase())
                 gen.add(kosmogliph.id().toTranslationKey("ksomogliph.name"), kosmogliph.id().path.titleCase())
             }
+        //can someone make it so that the kosmogliphs have a dull purple colour in text?
         gen.add("death.attack.cannonball", "%s was dunked on by %s")
     }
 
