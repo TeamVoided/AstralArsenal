@@ -38,21 +38,23 @@ class SlashEntity : ThrownItemEntity {
         return Items.AIR
     }
 
-    override fun onEntityHit(entityHitResult: EntityHitResult) {
-        super.onEntityHit(entityHitResult)
-    }
-
     companion object {
         private val DMG: TrackedData<Int>? =
+            DataTracker.registerData(CannonballEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
+        private val time: TrackedData<Int>? =
             DataTracker.registerData(CannonballEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
     }
 
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
         builder.add(DMG, 5)
+        builder.add(time,0)
     }
 
+    init{this.setNoGravity(true)}
+
     override fun tick() {
+
         super.tick()
     }
 
