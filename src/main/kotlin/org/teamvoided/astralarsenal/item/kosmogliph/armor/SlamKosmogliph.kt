@@ -39,7 +39,7 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         equipmentSlot: EquipmentSlot
     ): Float {
         val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return damage
-        return if (data.slamming && source.isTypeIn(DamageTypeTags.IS_FALL)) 0f else damage
+        return if (data.slamming && source.isTypeIn(DamageTypeTags.IS_FALL)) damage / 2 else damage
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
