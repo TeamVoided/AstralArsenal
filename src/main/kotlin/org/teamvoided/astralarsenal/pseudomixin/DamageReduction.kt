@@ -11,7 +11,7 @@ fun kosmogliphDamageReductionCall(entity: LivingEntity, damage: Float, source: D
     var resultingDamage = damage
     stacks.forEach { (slot, stack) ->
         val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
-        kosmogliphs.forEach { resultingDamage = it.modifyDamage(stack, resultingDamage, source, slot) }
+        kosmogliphs.forEach { resultingDamage = it.modifyDamage(stack, entity, resultingDamage, source, slot) }
     }
 
     return resultingDamage

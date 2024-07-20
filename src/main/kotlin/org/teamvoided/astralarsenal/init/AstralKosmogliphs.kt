@@ -7,6 +7,7 @@ import net.minecraft.registry.tag.DamageTypeTags
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal
+import org.teamvoided.astralarsenal.item.kosmogliph.AttributeModificationKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.DamageReductionKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
@@ -33,6 +34,7 @@ object AstralKosmogliphs {
     val ASTRAL_STRIKE = register("astral_strike", ::AstralStrikeKosmogliph)
     val BLAST = register("blast", ::BlastKosmogliph)
     val SLAM = register("slam", ::SlamKosmogliph)
+    //val BOOST = register("boost", ::AttributeModificationKosmogliph)
 
     val REFLECTIVE = register(
         "reflective"

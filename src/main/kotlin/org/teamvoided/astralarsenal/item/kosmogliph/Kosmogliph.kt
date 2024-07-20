@@ -41,7 +41,7 @@ interface Kosmogliph {
     fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {}
     fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {}
     fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {}
-    fun modifyDamage(stack: ItemStack, damage: Float, source: DamageSource, equipmentSlot: EquipmentSlot): Float = damage
+    fun modifyDamage(stack: ItemStack, entity: LivingEntity, damage: Float, source: DamageSource, equipmentSlot: EquipmentSlot): Float = damage
     fun modifyBlockBreakLoot(
         table: LootTable,
         parameters: LootContextParameterSet,
