@@ -48,6 +48,7 @@ object AstralKosmogliphs {
         )
     }
     val SCORCH_PROOF = register("scorch-proof", ::ScorchProofKosmogliph)
+    val ANTIDOTE = register("antidote", ::AntidoteKosmogliph)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))
