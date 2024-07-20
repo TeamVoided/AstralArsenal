@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.client.MinecraftClient
 import org.teamvoided.astralarsenal.networking.DashKosmogliphPayload
+import org.teamvoided.astralarsenal.networking.DodgeKosmogliphPayload
 import org.teamvoided.astralarsenal.networking.JumpKosmogliphPayload
 import org.teamvoided.astralarsenal.networking.SlideKosmogliphPayload
 
@@ -12,6 +13,7 @@ class AstralSprintKeyHandler : ClientTickEvents.EndTick {
 
     fun jump() {
         ClientPlayNetworking.send(DashKosmogliphPayload)
+        ClientPlayNetworking.send(DodgeKosmogliphPayload)
     }
     fun slide(){
         ClientPlayNetworking.send(SlideKosmogliphPayload)

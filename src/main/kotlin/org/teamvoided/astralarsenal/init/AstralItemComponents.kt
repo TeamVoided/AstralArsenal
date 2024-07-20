@@ -11,6 +11,7 @@ import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.DodgeKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.JumpKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.SlamKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
@@ -32,6 +33,11 @@ object AstralItemComponents {
         register("dash_data", { it is ArmorItem || it is ToolItem }, { DashKosmogliph.Data(0, 0) }) { builder ->
             builder.codec(DashKosmogliph.Data.CODEC).build()
         }
+    val DODGE_DATA: DataComponentType<DodgeKosmogliph.Data> =
+        register("dodge_data", { it is ArmorItem || it is ToolItem }, { DodgeKosmogliph.Data(0, 0) }) { builder ->
+            builder.codec(DodgeKosmogliph.Data.CODEC).build()
+        }
+
     val ASTRAL_STRIKE_DATA: DataComponentType<AstralStrikeKosmogliph.Data> =
         register("dash_data", { it is ArmorItem || it is ToolItem }, { AstralStrikeKosmogliph.Data(0) }) { builder ->
             builder.codec(AstralStrikeKosmogliph.Data.CODEC).build()

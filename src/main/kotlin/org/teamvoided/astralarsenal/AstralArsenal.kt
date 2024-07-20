@@ -10,10 +10,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.astralarsenal.command.KosmogliphCommand
 import org.teamvoided.astralarsenal.init.*
-import org.teamvoided.astralarsenal.networking.DashKosmogliphPayload
-import org.teamvoided.astralarsenal.networking.JumpKosmogliphPayload
-import org.teamvoided.astralarsenal.networking.SlamKosmogliphPayload
-import org.teamvoided.astralarsenal.networking.SlideKosmogliphPayload
+import org.teamvoided.astralarsenal.networking.*
 
 @Suppress("unused")
 object AstralArsenal {
@@ -55,6 +52,14 @@ object AstralArsenal {
             val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
             if (!kosmogliphs.contains(AstralKosmogliphs.DASH)) return@registerGlobalReceiver
             AstralKosmogliphs.DASH.handleJump(stack, player)
+        }
+        PayloadTypeRegistry.playC2S().register(DodgeKosmogliphPayload.ID, DodgeKosmogliphPayload.CODEC)
+        ServerPlayNetworking.registerGlobalReceiver(DodgeKosmogliphPayload.ID) { _, ctx ->
+            val player = ctx.player()
+            val stack = player.getEquippedStack(EquipmentSlot.LEGS)
+            val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
+            if (!kosmogliphs.contains(AstralKosmogliphs.DODGE)) return@registerGlobalReceiver
+            AstralKosmogliphs.DODGE.handleJump(stack, player)
         }
         PayloadTypeRegistry.playC2S().register(SlideKosmogliphPayload.ID, SlideKosmogliphPayload.CODEC)
         ServerPlayNetworking.registerGlobalReceiver(SlideKosmogliphPayload.ID) { _, ctx ->
