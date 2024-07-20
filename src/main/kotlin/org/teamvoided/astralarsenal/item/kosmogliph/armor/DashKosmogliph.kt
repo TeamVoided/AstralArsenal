@@ -28,7 +28,7 @@ class DashKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
 
         if(data.uses > 0) {
             val boost = player.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(JUMP_FORWARD_BOOST)
-            player.setVelocity(player.velocity.x + boost.x,0.1, player.velocity.z + boost.z)
+            player.setVelocity(player.velocity.x + boost.x, 0.1, player.velocity.z + boost.z)
             player.velocityModified = true
             world.playSound(
                 null,

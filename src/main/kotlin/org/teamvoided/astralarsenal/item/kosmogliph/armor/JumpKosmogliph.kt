@@ -29,9 +29,11 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         val world = player.world
 
         if(data.uses > 0 && !player.isOnGround) {
-            val boost = player.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(JUMP_FORWARD_BOOST)
+            var boost = player.rotationVector.multiply(0.0,0.0,0.0)
+            if(player.velocity.x > 0.0 || player.velocity.z > 0.0){boost = player.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(JUMP_FORWARD_BOOST)}
             player.setVelocity(player.velocity.x + boost.x,0.5, player.velocity.z + boost.z)
             player.velocityModified = true
+            player.hungerManager.add(0,-0.1f)
             world.playSound(
                 null,
                 player.x,

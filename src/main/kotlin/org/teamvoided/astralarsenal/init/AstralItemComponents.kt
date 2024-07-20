@@ -12,6 +12,7 @@ import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.JumpKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.SlamKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
 
 object AstralItemComponents {

@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.minecraft.client.MinecraftClient
+import org.teamvoided.astralarsenal.handlers.AstralCrouchKeyHandler
 import org.teamvoided.astralarsenal.handlers.AstralJumpKeyHandler
 import org.teamvoided.astralarsenal.handlers.AstralSprintKeyHandler
 import org.teamvoided.astralarsenal.init.AstralEntitiesClient
@@ -17,5 +18,6 @@ object AstralArsenalClient {
 
         ClientTickEvents.END_CLIENT_TICK.register(AstralJumpKeyHandler())
         ClientTickEvents.END_CLIENT_TICK.register(AstralSprintKeyHandler())
+        ClientTickEvents.END_CLIENT_TICK.register(AstralCrouchKeyHandler())
     }
 }
