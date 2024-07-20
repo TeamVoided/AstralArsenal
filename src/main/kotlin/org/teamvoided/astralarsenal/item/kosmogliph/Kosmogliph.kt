@@ -8,7 +8,9 @@ import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.minecraft.block.BlockState
 import net.minecraft.client.item.TooltipConfig
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -39,6 +41,7 @@ interface Kosmogliph {
     fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {}
     fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {}
     fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {}
+    fun modifyDamage(stack: ItemStack, damage: Float, source: DamageSource, equipmentSlot: EquipmentSlot): Float = damage
     fun modifyBlockBreakLoot(
         table: LootTable,
         parameters: LootContextParameterSet,
