@@ -26,7 +26,7 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return
         if (!player.isOnGround && !data.slamming) {
             stack.set(AstralItemComponents.SLAM_DATA, Data(data.lastFallDistance, true))
-            player.setVelocity(0.0,-100.0, 0.0)
+            player.setVelocity(0.0,-30.0, 0.0)
             player.velocityModified = true
         }
     }
@@ -52,7 +52,7 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             entity.addStatusEffect(StatusEffectInstance(
                 StatusEffects.JUMP_BOOST,
                 10,
-                (data.lastFallDistance / 2).toInt(),
+                (data.lastFallDistance * 0.5).toInt(),
                 false,
                 false,
                 true
