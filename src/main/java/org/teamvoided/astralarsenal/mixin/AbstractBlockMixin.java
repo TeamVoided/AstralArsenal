@@ -25,6 +25,7 @@ public class AbstractBlockMixin {
         if (kosmogliphs.isEmpty()) return original.call(instance, parameterSet);
         var priority = kosmogliphs.stream().toList().getFirst();
         var modifiedLoot = priority.modifyBlockBreakLoot(instance, parameterSet, world, stack, original.call(instance, parameterSet));
+        if (modifiedLoot instanceof ObjectArrayList<ItemStack> oal) return oal;
         var mlArray = modifiedLoot.toArray(new ItemStack[0]);
         return ObjectArrayList.wrap(mlArray);
     }
