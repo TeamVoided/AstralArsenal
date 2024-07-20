@@ -1,6 +1,8 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.armor
 
 import net.minecraft.entity.Entity
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
@@ -67,12 +69,27 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         if (uses >= 3) return
         var cooldown = data.cooldown
         if(entity.isOnGround) maxUses = 3
-        if(uses < maxUses) cooldown--
+        if(entity is PlayerEntity){
+            if(entity.hungerManager.foodLevel > 6){
+                if(uses < maxUses) cooldown--
+            }
+        }
+        else{cooldown--}
 
         if (cooldown <= 0) {
             uses++
             val x : Float = (uses * 0.5).toFloat()
-            cooldown = 20
+            var time = 20
+            if(entity is LivingEntity){
+                val y = entity.statusEffects.filter {it.effectType == StatusEffects.SLOWNESS}
+                if(y.isNotEmpty()){
+                    for(t in y){
+                        time += (t.amplifier * 20)
+                        println(time)
+                    }
+                }
+            }
+            cooldown = time
             world.playSound(
                 null,
                 entity.x,
