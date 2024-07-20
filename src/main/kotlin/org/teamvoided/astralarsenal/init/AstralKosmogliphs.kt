@@ -5,12 +5,8 @@ import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registry
-import net.minecraft.registry.tag.DamageTypeTags
-import net.minecraft.registry.tag.ItemTags
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal
-import org.teamvoided.astralarsenal.item.kosmogliph.AttributeModificationKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.DamageReductionKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
@@ -49,17 +45,7 @@ object AstralKosmogliphs {
             0 // 0 is boots
         )
     }
-
-    val REFLECTIVE = register(
-        "reflective"
-    ) { identifier: Identifier ->
-        DamageReductionKosmogliph(
-            identifier,
-            0.2f,
-            { stack -> stack.isIn(ItemTags.CHEST_ARMOR) },
-            DamageTypeTags.IS_PROJECTILE
-        )
-    }
+    val SCORCH_PROOF = register("scorch-proof", ::ScorchProofKosmogliph)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))
