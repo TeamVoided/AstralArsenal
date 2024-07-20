@@ -1,16 +1,11 @@
 package org.teamvoided.astralarsenal.world.explosion
 
-import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
-import net.minecraft.fluid.FluidState
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockView
 import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.ExplosionBehavior
-import java.util.*
 
 class KnockbackExplosionBehavior : ExplosionBehavior() {
 

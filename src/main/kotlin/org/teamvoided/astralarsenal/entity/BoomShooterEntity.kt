@@ -6,11 +6,6 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
-import net.minecraft.entity.projectile.TridentEntity
-import net.minecraft.entity.projectile.thrown.SnowballEntity
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity
-import net.minecraft.item.Item
-import net.minecraft.item.Items
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralEntities

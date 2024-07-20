@@ -7,10 +7,17 @@ import net.minecraft.registry.tag.DamageTypeTags
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal
-import org.teamvoided.astralarsenal.item.kosmogliph.*
+import org.teamvoided.astralarsenal.item.kosmogliph.DamageReductionKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
-import org.teamvoided.astralarsenal.item.kosmogliph.melee.*
-import org.teamvoided.astralarsenal.item.kosmogliph.tools.*
+import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.melee.BlastKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.melee.CannonballKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.melee.MorterKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.HammerKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.SmelterKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.VeinmineKosmogliph
 
 @Suppress("unused")
 object AstralKosmogliphs {

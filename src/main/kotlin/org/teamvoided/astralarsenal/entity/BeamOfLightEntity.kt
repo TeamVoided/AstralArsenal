@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.entity
 
-import arrow.core.raise.nullable
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
@@ -10,7 +9,6 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralDamageTypes

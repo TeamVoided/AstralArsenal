@@ -3,8 +3,6 @@ package org.teamvoided.astralarsenal.item
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.item.SwordItem
-import net.minecraft.item.ToolMaterials
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
@@ -12,7 +10,7 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 
-class CannonballItem (settings: Item.Settings) : Item(settings) {
+class CannonballItem (settings: Settings) : Item(settings) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         if (!world.isClient) {
             val snowballEntity = CannonballEntity(world, user)
