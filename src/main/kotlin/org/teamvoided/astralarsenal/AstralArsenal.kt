@@ -15,6 +15,7 @@ import org.teamvoided.astralarsenal.networking.*
 @Suppress("unused")
 object AstralArsenal {
     const val MOD_ID = "astral_arsenal"
+    const val DEFAULT_KEY_CATEGORY = "key.category.${MOD_ID}.key_bindings"
 
     @JvmField
     val LOGGER: Logger = LoggerFactory.getLogger(AstralArsenal::class.simpleName)

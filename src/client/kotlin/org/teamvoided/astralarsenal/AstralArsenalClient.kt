@@ -11,6 +11,7 @@ object AstralArsenalClient {
 
     fun init() {
         AstralHandledScreens
+        AstralKeyBindings
         AstralEntitiesClient.clientInit()
         MinecraftClient.getInstance()
 

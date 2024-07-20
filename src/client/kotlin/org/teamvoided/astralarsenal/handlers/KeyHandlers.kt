@@ -5,6 +5,7 @@ import kotlinx.atomicfu.atomic
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.client.MinecraftClient
+import org.teamvoided.astralarsenal.AstralKeyBindings
 import org.teamvoided.astralarsenal.networking.*
 import kotlin.reflect.full.declaredMemberProperties
 
@@ -41,14 +42,14 @@ object KeyHandlers {
         }
     }
 
-    private fun sprintKeyHandler(holdingSprint: AtomicBoolean) = ClientCtxInvokable { client ->
-        if (!client.options.sprintKey.isPressed) {
+    private fun sprintKeyHandler(holdingSprint: AtomicBoolean) = ClientCtxInvokable {
+        if (!AstralKeyBindings.dashAbility.isPressed) {
             holdingSprint.value = false
-        } else if (client.options.sprintKey.isPressed && !holdingSprint.value) {
+        } else if (AstralKeyBindings.dashAbility.isPressed && !holdingSprint.value) {
             ClientPlayNetworking.send(DashKosmogliphPayload)
             ClientPlayNetworking.send(DodgeKosmogliphPayload)
             holdingSprint.value = true
-        } else if (client.options.sprintKey.isPressed) {
+        } else if (AstralKeyBindings.dashAbility.isPressed) {
             ClientPlayNetworking.send(SlideKosmogliphPayload)
         }
     }
