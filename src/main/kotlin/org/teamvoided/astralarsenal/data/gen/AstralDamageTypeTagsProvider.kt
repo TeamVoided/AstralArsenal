@@ -8,6 +8,7 @@ import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.DamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import java.util.concurrent.CompletableFuture
 
 class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
@@ -38,6 +39,10 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.STING)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_PLASMA)
+            .add(DamageTypes.LIGHTNING_BOLT)
+            .add(AstralDamageTypes.BEAM_OF_LIGHT)
+
+        // Lasers, Beams of light, Etc should go here
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_EXPLOSION)
             .add(DamageTypes.EXPLOSION)
@@ -47,6 +52,11 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.WITHER_SKULL)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_PROJECTILE)
+            .add(DamageTypes.MOB_PROJECTILE)
+            .add(DamageTypes.ARROW)
+            .add(DamageTypes.LLAMA_SPIT)
+            .add(DamageTypes.WIND_CHARGE)
+            .add(AstralDamageTypes.CANNONBALL)
 
     }
 }
