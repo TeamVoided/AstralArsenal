@@ -17,11 +17,36 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_MAGIC)
             .add(DamageTypes.DRAGON_BREATH)
             .add(DamageTypes.INDIRECT_MAGIC)
-            .add(DamageTypes.STING)
-            .add(DamageTypes.WITHER_SKULL)
             .add(DamageTypes.MAGIC)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_FIRE)
             .forceAddTag(DamageTypeTags.IS_FIRE)
+
+        getOrCreateTagBuilder(AstralDamageTypeTags.IS_ICE)
+
+        getOrCreateTagBuilder(AstralDamageTypeTags.IS_MELEE)
+            .add(DamageTypes.THORNS)
+            .add(DamageTypes.STING)
+            .add(DamageTypes.CACTUS)
+            .add(DamageTypes.FLY_INTO_WALL)
+            .add(DamageTypes.FALLING_ANVIL)
+            .add(DamageTypes.FALLING_BLOCK)
+            .add(DamageTypes.PLAYER_ATTACK)
+            .add(DamageTypes.FALLING_STALACTITE)
+            .add(DamageTypes.MOB_ATTACK)
+            .add(DamageTypes.MOB_ATTACK_NO_AGGRO)
+            .add(DamageTypes.STING)
+
+        getOrCreateTagBuilder(AstralDamageTypeTags.IS_PLASMA)
+
+        getOrCreateTagBuilder(AstralDamageTypeTags.IS_EXPLOSION)
+            .add(DamageTypes.EXPLOSION)
+            .add(DamageTypes.PLAYER_ATTACK)
+            .add(DamageTypes.FIREWORKS)
+            .add(DamageTypes.SONIC_BOOM)
+            .add(DamageTypes.WITHER_SKULL)
+
+        getOrCreateTagBuilder(AstralDamageTypeTags.IS_PROJECTILE)
+
     }
 }

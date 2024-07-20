@@ -49,6 +49,11 @@ object AstralKosmogliphs {
     }
     val SCORCH_PROOF = register("scorch-proof", ::ScorchProofKosmogliph)
     val ANTIDOTE = register("antidote", ::AntidoteKosmogliph)
+    val ENDURACE = register("endurance", ::EnduranceKosmogliph)
+    val CAPACITANCE = register("capacitance", ::CapacitanceKosmogliph)
+    val THERMAL = register("thermal", ::ThermalKosmogliph)
+    val HEAVY = register("heavy", ::HeavyKosmogliph)
+    val REFLECTIVE = register("reflective", ::ReflectiveKosmogliph)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))
