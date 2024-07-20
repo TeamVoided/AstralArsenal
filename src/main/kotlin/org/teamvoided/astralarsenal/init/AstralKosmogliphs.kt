@@ -1,6 +1,8 @@
 package org.teamvoided.astralarsenal.init
 
 import arrow.core.Predicate
+import net.minecraft.entity.attribute.EntityAttributeModifier
+import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registry
 import net.minecraft.registry.tag.DamageTypeTags
@@ -34,7 +36,19 @@ object AstralKosmogliphs {
     val ASTRAL_STRIKE = register("astral_strike", ::AstralStrikeKosmogliph)
     val BLAST = register("blast", ::BlastKosmogliph)
     val SLAM = register("slam", ::SlamKosmogliph)
-    //val BOOST = register("boost", ::AttributeModificationKosmogliph)
+
+    val BOOST = register("boost") { id ->
+        AttributeModificationKosmogliph(
+            id,
+            { it.isIn(ItemTags.FOOT_ARMOR) },
+            EntityAttributes.GENERIC_JUMP_STRENGTH,
+            id.extendPath("_modifier"),
+            0.42,
+            EntityAttributeModifier.Operation.ADD_VALUE,
+            true,
+            0 // 0 is boots
+        )
+    }
 
     val REFLECTIVE = register(
         "reflective"

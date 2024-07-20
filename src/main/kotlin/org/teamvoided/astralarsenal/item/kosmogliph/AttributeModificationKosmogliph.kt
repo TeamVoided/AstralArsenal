@@ -27,7 +27,7 @@ class AttributeModificationKosmogliph(
 
         if (isArmor && entity.inventory.armor.contains(stack) && entity.inventory.armor.indexOf(stack) == slotId) {
             applyModifier(attributeInst)
-        } else if (slot == slotId) {
+        } else if (!isArmor && slot == slotId) {
             applyModifier(attributeInst)
         } else removeModifier(attributeInst)
     }
