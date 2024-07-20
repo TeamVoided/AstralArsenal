@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.mixin
+package org.teamvoided.astralarsenal.pseudomixin
 
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity

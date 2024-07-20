@@ -17,7 +17,7 @@ open class SimpleKosmogliph(
         tooltip: MutableList<Text>,
         config: TooltipConfig
     ) {
-        tooltip += Text.translatable(id.toTranslationKey("kosmogliph.tooltip"))
+        tooltip += Text.translatable(id.toTranslationKey("kosmogliph.tooltip")).setColor(0x54326b)
     }
 
     override fun canBeAppliedTo(stack: ItemStack): Boolean {

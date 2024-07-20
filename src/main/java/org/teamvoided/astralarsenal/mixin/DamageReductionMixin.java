@@ -5,6 +5,7 @@ import net.minecraft.entity.damage.DamageSource;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.teamvoided.astralarsenal.pseudomixin.DamageReductionKt;
 
 @Mixin(LivingEntity.class)
 public class DamageReductionMixin {
