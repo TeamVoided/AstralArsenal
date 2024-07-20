@@ -58,28 +58,32 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralItemComponents.DODGE_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
-        var uses = data.uses
-        if (uses >= 3) return
-        var cooldown = data.cooldown
-        cooldown--
+        if (slot == 2) {
+            val data = stack.get(AstralItemComponents.DODGE_DATA)
+                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+            var uses = data.uses
+            if (uses >= 3) return
+            var cooldown = data.cooldown
+            cooldown--
 
-        if (cooldown <= 0) {
-            uses++
-            val x : Float = (uses * 0.5).toFloat()
-            cooldown = 20
-            world.playSound(
-                null,
-                entity.x,
-                entity.y,
-                entity.z,
-                AstralSounds.CHARGE,
-                SoundCategory.PLAYERS,
-                1.0F,
-                x)
+            if (cooldown <= 0) {
+                uses++
+                val x: Float = (uses * 0.5).toFloat()
+                cooldown = 20
+                world.playSound(
+                    null,
+                    entity.x,
+                    entity.y,
+                    entity.z,
+                    AstralSounds.CHARGE,
+                    SoundCategory.PLAYERS,
+                    1.0F,
+                    x
+                )
+            }
+
+            stack.set(AstralItemComponents.DODGE_DATA, Data(uses, cooldown))
         }
-
-        stack.set(AstralItemComponents.DODGE_DATA, Data(uses, cooldown))
     }
 
     data class Data(

@@ -8,6 +8,7 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
+import net.minecraft.screen.slot.Slot
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
@@ -31,6 +32,7 @@ class ThermalKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
     }
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
+        if (slot == 2){
         if(entity is LivingEntity) {
             if (!entity.world.isClient) {
                 val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
@@ -41,7 +43,7 @@ class ThermalKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                 }
             }
         }
-        entity.frozenTicks = 0
+        entity.frozenTicks = 0}
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 

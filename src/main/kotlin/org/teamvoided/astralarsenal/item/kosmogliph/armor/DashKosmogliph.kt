@@ -59,43 +59,48 @@ class DashKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralItemComponents.DASH_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
-        var uses = data.uses
-        if (uses >= 3) return
-        var cooldown = data.cooldown
-        if(entity is PlayerEntity){
-            if(entity.hungerManager.foodLevel > 6){
+        if (slot == 2) {
+            val data = stack.get(AstralItemComponents.DASH_DATA)
+                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+            var uses = data.uses
+            if (uses >= 3) return
+            var cooldown = data.cooldown
+            if (entity is PlayerEntity) {
+                if (entity.hungerManager.foodLevel > 6) {
+                    cooldown--
+                }
+            } else {
                 cooldown--
             }
-        }
-        else{cooldown--}
 
-        if (cooldown <= 0) {
-            uses++
-            val x : Float = (uses * 0.5).toFloat()
-            var time = 20
-            if(entity is LivingEntity){
-                val y = entity.statusEffects.filter {it.effectType == StatusEffects.SLOWNESS}
-                if(y.isNotEmpty()){
-                    for(t in y){
-                        time += (t.amplifier * 20)
-                        println(time)
+            if (cooldown <= 0) {
+                uses++
+                val x: Float = (uses * 0.5).toFloat()
+                var time = 20
+                if (entity is LivingEntity) {
+                    val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
+                    if (y.isNotEmpty()) {
+                        for (t in y) {
+                            time += (t.amplifier * 20)
+                            println(time)
+                        }
                     }
                 }
+                cooldown = time
+                world.playSound(
+                    null,
+                    entity.x,
+                    entity.y,
+                    entity.z,
+                    AstralSounds.CHARGE,
+                    SoundCategory.PLAYERS,
+                    1.0F,
+                    x
+                )
             }
-            cooldown = time
-            world.playSound(
-                null,
-                entity.x,
-                entity.y,
-                entity.z,
-                AstralSounds.CHARGE,
-                SoundCategory.PLAYERS,
-                1.0F,
-                x)
-        }
 
-        stack.set(AstralItemComponents.DASH_DATA, Data(uses, cooldown))
+            stack.set(AstralItemComponents.DASH_DATA, Data(uses, cooldown))
+        }
     }
 
     data class Data(

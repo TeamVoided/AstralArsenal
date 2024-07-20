@@ -39,22 +39,26 @@ class AntidoteKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     )
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        if(entity is LivingEntity){
-            if (!entity.world.isClient) {
-                val x = entity.statusEffects.filter { !it.effectType.value().isBeneficial &&
-                        !blacklist.contains(it.effectType)}
-                if (x.isNotEmpty()) {
-                    for (balls in x) {
-                        entity.statusEffects.remove(balls)
-                        entity.addStatusEffect(
-                            StatusEffectInstance(
-                            balls.effectType,
-                            balls.duration - 1, balls.amplifier,
-                            balls.isAmbient, balls.shouldShowParticles(), balls.shouldShowIcon()
-                        )
-                        )
+        if (slot == 2) {
+            if (entity is LivingEntity) {
+                if (!entity.world.isClient) {
+                    val x = entity.statusEffects.filter {
+                        !it.effectType.value().isBeneficial &&
+                                !blacklist.contains(it.effectType)
                     }
+                    if (x.isNotEmpty()) {
+                        for (balls in x) {
+                            entity.statusEffects.remove(balls)
+                            entity.addStatusEffect(
+                                StatusEffectInstance(
+                                    balls.effectType,
+                                    balls.duration - 1, balls.amplifier,
+                                    balls.isAmbient, balls.shouldShowParticles(), balls.shouldShowIcon()
+                                )
+                            )
+                        }
 
+                    }
                 }
             }
         }

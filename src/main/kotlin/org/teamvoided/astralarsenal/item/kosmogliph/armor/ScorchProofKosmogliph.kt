@@ -31,7 +31,7 @@ class ScorchProofKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        entity.extinguish()
+        if (slot == 2){entity.extinguish()}
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 }

@@ -62,48 +62,53 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralItemComponents.JUMP_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
-        var uses = data.uses
-        var lastJump = data.lastJump
-        var maxUses = data.maxUses
-        if (uses >= 3) return
-        var cooldown = data.cooldown
-        if(entity.isOnGround) maxUses = 3
-        if(entity is PlayerEntity){
-            if(entity.hungerManager.foodLevel > 6){
-                if(uses < maxUses) cooldown--
+        if (slot == 0) {
+            val data = stack.get(AstralItemComponents.JUMP_DATA)
+                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+            var uses = data.uses
+            var lastJump = data.lastJump
+            var maxUses = data.maxUses
+            if (uses >= 3) return
+            var cooldown = data.cooldown
+            if (entity.isOnGround) maxUses = 3
+            if (entity is PlayerEntity) {
+                if (entity.hungerManager.foodLevel > 6) {
+                    if (uses < maxUses) cooldown--
+                }
+            } else {
+                cooldown--
             }
-        }
-        else{cooldown--}
 
-        if (cooldown <= 0) {
-            uses++
-            val x : Float = (uses * 0.5).toFloat()
-            var time = 20
-            if(entity is LivingEntity){
-                val y = entity.statusEffects.filter {it.effectType == StatusEffects.SLOWNESS}
-                if(y.isNotEmpty()){
-                    for(t in y){
-                        time += (t.amplifier * 20)
-                        println(time)
+            if (cooldown <= 0) {
+                uses++
+                val x: Float = (uses * 0.5).toFloat()
+                var time = 20
+                if (entity is LivingEntity) {
+                    val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
+                    if (y.isNotEmpty()) {
+                        for (t in y) {
+                            time += (t.amplifier * 20)
+                            println(time)
+                        }
                     }
                 }
+                cooldown = time
+                world.playSound(
+                    null,
+                    entity.x,
+                    entity.y,
+                    entity.z,
+                    AstralSounds.CHARGE,
+                    SoundCategory.PLAYERS,
+                    1.0F,
+                    x
+                )
             }
-            cooldown = time
-            world.playSound(
-                null,
-                entity.x,
-                entity.y,
-                entity.z,
-                AstralSounds.CHARGE,
-                SoundCategory.PLAYERS,
-                1.0F,
-                x)
+
+            if (lastJump < 20) lastJump++
+
+            stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, lastJump, maxUses))
         }
-
-        if (lastJump < 20) lastJump++
-
-        stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, lastJump, maxUses))
     }
 
     data class Data(
