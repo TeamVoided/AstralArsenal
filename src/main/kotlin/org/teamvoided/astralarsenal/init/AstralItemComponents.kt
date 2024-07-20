@@ -13,6 +13,7 @@ import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.DodgeKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.JumpKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.SlamKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
 
 object AstralItemComponents {
@@ -32,9 +33,15 @@ object AstralItemComponents {
         register("dash_data", { it is ArmorItem || it is ToolItem }, { DashKosmogliph.Data(0, 0) }) { builder ->
             builder.codec(DashKosmogliph.Data.CODEC).build()
         }
+
     val DODGE_DATA: DataComponentType<DodgeKosmogliph.Data> =
         register("dodge_data", { it is ArmorItem || it is ToolItem }, { DodgeKosmogliph.Data(0, 0) }) { builder ->
             builder.codec(DodgeKosmogliph.Data.CODEC).build()
+        }
+
+    val SLAM_DATA: DataComponentType<SlamKosmogliph.Data> =
+        register("slam_data", { it is ArmorItem }, { SlamKosmogliph.Data(0f, false) }) { builder ->
+            builder.codec(SlamKosmogliph.Data.CODEC).build()
         }
 
     val ASTRAL_STRIKE_DATA: DataComponentType<AstralStrikeKosmogliph.Data> =
