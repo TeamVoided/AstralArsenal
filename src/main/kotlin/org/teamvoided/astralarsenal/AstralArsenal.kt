@@ -31,7 +31,8 @@ object AstralArsenal {
         AstralKosmogliphs
         AstralDamageTypes
         AstralSounds
-        AstralEntities.serverInit()
+        AstralEffects.init()
+        AstralEntities.init()
 
         CommandRegistrationCallback.EVENT.register { dispatcher, ctx, env ->
             val root = dispatcher.register(literal("astral"))
