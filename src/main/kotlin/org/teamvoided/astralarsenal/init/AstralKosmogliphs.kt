@@ -62,6 +62,9 @@ object AstralKosmogliphs {
 
     val RAILGUN = register("railgun", ::RailgunKosmogliph)
     val EXPLOSIVE_BEAM = register("explosive_beam", ::ExplosiveBeamKosmogliph)
+    val RAY_OF_FROST = register("ray_of_frost", ::RayofFrostKosmogliph)
+    val FLAME_THROWER = register("flame_thrower", ::FlameThrowerKosmogliph)
+    val RANCID_BREW = register("rancid_brew", ::RancidBrewKosmogliph)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))

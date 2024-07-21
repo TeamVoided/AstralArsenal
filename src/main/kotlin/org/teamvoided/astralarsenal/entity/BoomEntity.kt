@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.entity
 
+import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.data.DataTracker
@@ -7,11 +8,10 @@ import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.particle.ParticleTypes
-import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralEntities
-import org.teamvoided.astralarsenal.world.explosion.PenopticonExplosionBehavior
 
 class BoomEntity : ThrownItemEntity {
 
@@ -29,6 +29,8 @@ class BoomEntity : ThrownItemEntity {
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
+        super.onEntityHit(entityHitResult)
+        entityHitResult.entity.setOnFireFor(50)
     }
 
 
@@ -52,19 +54,4 @@ class BoomEntity : ThrownItemEntity {
         )
         super.tick()
     }
-
-    override fun onBlockHit(blockHitResult: BlockHitResult?) {
-        world.createExplosion(this,
-            damageSources.explosion(this,this.owner),
-            PenopticonExplosionBehavior(),
-            this.x,
-            this.y,
-            this.z,
-            3f,
-            true,
-            World.ExplosionSourceType.TNT)
-        this.discard()
-        super.onBlockHit(blockHitResult)
-    }
-
 }
