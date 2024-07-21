@@ -30,7 +30,8 @@ class GrappleKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
 
         if(jumps > 0 && !player.isOnGround) {
             if(player.horizontalCollision){
-
+                player.setVelocity(player.velocity.x,0.5, player.velocity.z)
+                jumps--
             }
             stack.set(AstralItemComponents.GRAPPLE_DATA, Data(jumps))
         }
