@@ -1,6 +1,7 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
 import net.minecraft.entity.LivingEntity
+import net.minecraft.item.AxeItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.SwordItem
 import net.minecraft.particle.ParticleTypes
@@ -10,7 +11,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class FreezeKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem }) {
+class FreezeKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem || it.item is AxeItem }) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         if(target.frozenTicks <= 140){target.frozenTicks += 500}
         else{target.frozenTicks += 100 }

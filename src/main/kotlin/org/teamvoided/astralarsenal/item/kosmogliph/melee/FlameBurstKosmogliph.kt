@@ -1,6 +1,7 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
 import net.minecraft.entity.LivingEntity
+import net.minecraft.item.AxeItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.SwordItem
 import net.minecraft.particle.ParticleTypes
@@ -13,7 +14,7 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class FlameBurstKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem }) {
+class FlameBurstKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem || it.item is AxeItem }) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         target.setOnFireFor(200)
         if(!target.isAlive){
