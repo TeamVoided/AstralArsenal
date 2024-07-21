@@ -1,14 +1,12 @@
-package org.teamvoided.astralarsenal.item.kosmogliph.armor
+package org.teamvoided.astralarsenal.item.kosmogliph.armor.defensive
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
-import net.minecraft.screen.slot.Slot
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags

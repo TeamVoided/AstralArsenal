@@ -10,10 +10,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.DodgeKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.JumpKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.SlamKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
 
 object AstralItemComponents {
@@ -45,8 +42,13 @@ object AstralItemComponents {
         }
 
     val ASTRAL_STRIKE_DATA: DataComponentType<AstralStrikeKosmogliph.Data> =
-        register("dash_data", { it is ArmorItem || it is ToolItem }, { AstralStrikeKosmogliph.Data(0) }) { builder ->
+        register("astral_strike_data", { it is ArmorItem || it is ToolItem }, { AstralStrikeKosmogliph.Data(0) }) { builder ->
             builder.codec(AstralStrikeKosmogliph.Data.CODEC).build()
+        }
+
+    val GRAPPLE_DATA: DataComponentType<GrappleKosmogliph.Data> =
+        register("grapple_data", { it is ArmorItem || it is ToolItem }, { GrappleKosmogliph.Data(0) }) { builder ->
+            builder.codec(GrappleKosmogliph.Data.CODEC).build()
         }
 
     fun <T> register(

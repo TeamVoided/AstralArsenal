@@ -20,16 +20,16 @@ import org.teamvoided.astralarsenal.world.explosion.KnockbackExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 
-class MorterEntity : ThrownItemEntity {
+class MortarEntity : ThrownItemEntity {
 
-    constructor(entityType: EntityType<out MorterEntity?>?, world: World?) :
+    constructor(entityType: EntityType<out MortarEntity?>?, world: World?) :
             super(entityType as EntityType<out ThrownItemEntity?>?, world)
 
     constructor(world: World?, owner: LivingEntity?) :
-            super(AstralEntities.MORTER_ENTITY as EntityType<out ThrownItemEntity?>, owner, world)
+            super(AstralEntities.MORTAR_ENTITY as EntityType<out ThrownItemEntity?>, owner, world)
 
     constructor(world: World?, x: Double, y: Double, z: Double) :
-            super(AstralEntities.MORTER_ENTITY as EntityType<out ThrownItemEntity?>, x, y, z, world)
+            super(AstralEntities.MORTAR_ENTITY as EntityType<out ThrownItemEntity?>, x, y, z, world)
 
     override fun getDefaultItem(): Item {
         return AstralItems.MORTER

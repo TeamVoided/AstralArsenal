@@ -8,7 +8,7 @@ import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 object AstralEntitiesClient {
     fun clientInit() {
         EntityRendererRegistry.register(AstralEntities.CANNONBALL_ENTITY, ::FlyingItemEntityRenderer)
-        EntityRendererRegistry.register(AstralEntities.MORTER_ENTITY, ::FlyingItemEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.MORTAR_ENTITY, ::FlyingItemEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BEAM_OF_LIGHT, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.SLASH_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BOOM_SHOOTER_ENTITY, ::EmptyEntityRenderer)

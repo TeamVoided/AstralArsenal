@@ -26,6 +26,7 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         val data = stack.get(AstralItemComponents.DODGE_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world
         println("velX: " + player.velocity.x + " velZ: " + player.velocity.z)
+        //this is broken and I don't know why, please help
         if(data.uses > 0 && !world.isClient) {
             val boost = player.velocity.multiply(1.0, 0.0, 1.0).multiply(JUMP_FORWARD_BOOST)
             println("velX: " + player.velocity.x + " velZ: " + player.velocity.z + " boostX: " + boost.x + " boost z: " + boost.z)

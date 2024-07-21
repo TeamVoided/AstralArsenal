@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.item.kosmogliph.armor
+package org.teamvoided.astralarsenal.item.kosmogliph.armor.defensive
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot

@@ -4,14 +4,14 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.entity.MorterEntity
+import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class MorterKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is AstralGreathammerItem }) {
+class MortarKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is AstralGreathammerItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         if (!world.isClient) {
-            val snowballEntity = MorterEntity(world, player)
+            val snowballEntity = MortarEntity(world, player)
             snowballEntity.setProperties(player, player.pitch, player.yaw, 0.0f, 0.1f, 0.0f)
             snowballEntity.addVelocity(0.0, 0.1, 0.0)
             world.spawnEntity(snowballEntity)

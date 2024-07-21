@@ -24,6 +24,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .forceAddTag(DamageTypeTags.IS_FIRE)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_ICE)
+            .add(DamageTypes.FREEZE)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_MELEE)
             .add(DamageTypes.THORNS)

@@ -17,9 +17,9 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::CannonballEntity), SpawnGroup.MISC)
             .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
-    val MORTER_ENTITY = register(
-        "morter",
-        EntityType.Builder.create(EntityType.EntityFactory(::MorterEntity), SpawnGroup.MISC)
+    val MORTAR_ENTITY = register(
+        "mortar",
+        EntityType.Builder.create(EntityType.EntityFactory(::MortarEntity), SpawnGroup.MISC)
             .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
     val BEAM_OF_LIGHT = register(

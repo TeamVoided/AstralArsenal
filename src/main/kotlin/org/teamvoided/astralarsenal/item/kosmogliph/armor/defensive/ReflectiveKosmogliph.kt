@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.item.kosmogliph.armor
+package org.teamvoided.astralarsenal.item.kosmogliph.armor.defensive
 
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class CapacitanceKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
+class ReflectiveKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.CHESTPLATE
 }) {
@@ -21,7 +21,7 @@ class CapacitanceKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         equipmentSlot: EquipmentSlot
     ): Float {
         var outputDamage = damage
-        if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)){
+        if (source.isTypeIn(AstralDamageTypeTags.IS_PROJECTILE)){
             outputDamage = (outputDamage * 0.2).toFloat()
         }
         return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
