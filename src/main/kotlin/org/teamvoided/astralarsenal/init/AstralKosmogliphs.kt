@@ -12,28 +12,28 @@ import org.teamvoided.astralarsenal.item.kosmogliph.AttributeModificationKosmogl
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
-import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.melee.BlastKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.melee.CannonballKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.melee.MorterKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.tools.HammerKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.tools.SmelterKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.tools.VeinmineKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.melee.*
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.*
 
 @Suppress("unused")
 object AstralKosmogliphs {
     val VEIN_MINER = register("vein_miner", ::VeinmineKosmogliph)
     val HAMMER = register("hammer", ::HammerKosmogliph)
     val SMELTER = register("smelter", ::SmelterKosmogliph)
+
     val CANNONBALL = register("cannonball", ::CannonballKosmogliph)
     val MORTER = register("morter", ::MorterKosmogliph)
+
     val JUMP = register("jump", ::JumpKosmogliph)
     val DASH = register("dash", ::DashKosmogliph)
     val DODGE = register("dodge", ::DodgeKosmogliph)
     val SLIDE = register("slide", ::SlideKosmogliph)
+    val SLAM = register("slam", ::SlamKosmogliph)
+
     val ASTRAL_STRIKE = register("astral_strike", ::AstralStrikeKosmogliph)
     val BLAST = register("blast", ::BlastKosmogliph)
-    val SLAM = register("slam", ::SlamKosmogliph)
+    val FREEZE = register("freeze", ::FreezeKosmogliph)
+    val FLAME_BURST = register("flame_burst", ::FlameBurstKosmogliph)
 
     val BOOST = register("boost") { id ->
         AttributeModificationKosmogliph(

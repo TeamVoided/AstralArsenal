@@ -15,8 +15,10 @@ import net.minecraft.registry.tag.DamageTypeTags
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+import kotlin.math.roundToInt
 
 class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
@@ -26,7 +28,7 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return
         if (!player.isOnGround && !data.slamming) {
             stack.set(AstralItemComponents.SLAM_DATA, Data(data.lastFallDistance, true))
-            player.setVelocity(0.0,-30.0, 0.0)
+            player.setVelocity(0.0,-20.0, 0.0)
             player.velocityModified = true
         }
     }
@@ -50,9 +52,9 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
 
         if (slamming && currentFallDistance <= 0f && data.lastFallDistance > 0f) {
             entity.addStatusEffect(StatusEffectInstance(
-                StatusEffects.JUMP_BOOST,
-                10,
-                (data.lastFallDistance * 0.5).toInt(),
+                AstralEffects.SLAM_JUMP,
+                5,
+                (data.lastFallDistance + 1.5).roundToInt(),
                 false,
                 false,
                 true

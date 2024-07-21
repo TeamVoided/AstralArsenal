@@ -16,7 +16,7 @@ object AstralEffects {
         "slam_jump", AstralStatusEffect(StatusEffectType.BENEFICIAL, 6684672)
             .addAttributeModifier(
                 EntityAttributes.GENERIC_JUMP_STRENGTH, id("effect.jump"),
-                1.0, EntityAttributeModifier.Operation.ADD_VALUE
+                0.1, EntityAttributeModifier.Operation.ADD_VALUE
             )
     )
 
