@@ -95,7 +95,7 @@ class DashKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                     AstralSounds.CHARGE,
                     SoundCategory.PLAYERS,
                     1.0F,
-                    x
+                    1.0f
                 )
             }
 

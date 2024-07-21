@@ -19,6 +19,13 @@ object AstralEffects {
                 0.1, EntityAttributeModifier.Operation.ADD_VALUE
             )
     )
+    val UNHEALABLE_DAMAGE = register(
+        "unhealable_damage", AstralStatusEffect(StatusEffectType.NEUTRAL, 6684672)
+            .addAttributeModifier(
+                EntityAttributes.GENERIC_MAX_HEALTH, id("effect.unhealable"),
+                -1.0, EntityAttributeModifier.Operation.ADD_VALUE
+            )
+    )
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
         Registries.STATUS_EFFECT.registerHolder(id(id), entry)

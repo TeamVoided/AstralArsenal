@@ -14,6 +14,8 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.defensive.*
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.*
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.*
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams.*
 import org.teamvoided.astralarsenal.item.kosmogliph.tools.*
 
 @Suppress("unused")
@@ -35,6 +37,8 @@ object AstralKosmogliphs {
     val ASTRAL_STRIKE = register("astral_strike", ::AstralStrikeKosmogliph)
     val FREEZE = register("freeze", ::FreezeKosmogliph)
     val FLAME_BURST = register("flame_burst", ::FlameBurstKosmogliph)
+    val ASTRAL_SLASH = register("astral_slash", ::AstralSlashKosmogliph)
+    val DEEP_WOUNDS = register("deep_wounds", ::DeepWoundsKosmogliph)
 
     val STEP_UP = register("step_up") { id ->
         AttributeModificationKosmogliph(
@@ -55,6 +59,9 @@ object AstralKosmogliphs {
     val THERMAL = register("thermal", ::ThermalKosmogliph)
     val HEAVY = register("heavy", ::HeavyKosmogliph)
     val REFLECTIVE = register("reflective", ::ReflectiveKosmogliph)
+
+    val RAILGUN = register("railgun", ::RailgunKosmogliph)
+    val EXPLOSIVE_BEAM = register("explosive_beam", ::ExplosiveBeamKosmogliph)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))

@@ -58,5 +58,20 @@
         "volume": 0.5
       }
     ]
+  },
+  "entity.railgun.shoot": {
+    "category": "entity",
+    "sounds": [
+      {
+        "name": "astral_arsenal:entities/railgun/railcannon1",
+        "stream": true,
+        "volume": 0.5
+      },
+      {
+        "name": "astral_arsenal:entities/railgun/railcannon2",
+        "stream": true,
+        "volume": 0.5
+      }
+    ]
   }
   }

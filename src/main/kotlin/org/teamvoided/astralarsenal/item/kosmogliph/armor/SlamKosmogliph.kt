@@ -13,6 +13,7 @@ import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.tag.DamageTypeTags
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralEffects
@@ -51,6 +52,7 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         var slamming = data.slamming
 
         if (slamming && currentFallDistance <= 0f && data.lastFallDistance > 0f) {
+            entity.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
             entity.addStatusEffect(StatusEffectInstance(
                 AstralEffects.SLAM_JUMP,
                 5,

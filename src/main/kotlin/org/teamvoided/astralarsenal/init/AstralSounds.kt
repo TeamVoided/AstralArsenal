@@ -12,6 +12,7 @@ object AstralSounds {
     val BEAM_WIND = register("entity.beam_of_light.wind")
     val CHARGE = register("entity.beam_of_light.charge")
     val DODGE = register("entity.kosmogliph.dodge")
+    val RAILGUN = register("entity.railgun.shoot")
     fun init() {
     }
 
