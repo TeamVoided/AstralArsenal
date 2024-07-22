@@ -21,7 +21,7 @@ class CosmicTableBlockEntity(
     pos: BlockPos,
     state: BlockState,
 ) : LootableContainerBlockEntity(AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY, pos, state), ExtendedScreenHandlerFactory<CosmicTableData> {
-    private val inventory = DefaultedList.ofSize<ItemStack>(2, ItemStack.EMPTY)
+    private val inventory = DefaultedList.ofSize(2, ItemStack.EMPTY)
 
     override fun getContainerName(): Text = Text.translatable("container.cosmic_table")
 

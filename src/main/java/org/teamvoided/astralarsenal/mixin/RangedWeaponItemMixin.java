@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Mixin(RangedWeaponItem.class)
 public class RangedWeaponItemMixin {
-    @Inject(method = "method_57393", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "shootAll", at = @At("HEAD"), cancellable = true)
     private void preFire(ServerWorld world, LivingEntity livingEntity, Hand hand, ItemStack stack, List<ItemStack> list, float f, float g, boolean bl, @Nullable LivingEntity livingEntity2, CallbackInfo ci) {
         AtomicBoolean shouldCancel = new AtomicBoolean(false);
         UtilKt.getKosmogliphsOnStack(stack).forEach((kosmogliph) -> {

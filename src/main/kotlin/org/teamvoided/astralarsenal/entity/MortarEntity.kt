@@ -75,7 +75,7 @@ class MortarEntity : ThrownItemEntity {
         super.onEntityHit(entityHitResult)
     }
 
-    override fun method_59859(
+    override fun deflect(
         projectileDeflector: ProjectileDeflector,
         entity2: Entity?,
         entity: Entity?,
@@ -84,7 +84,7 @@ class MortarEntity : ThrownItemEntity {
         if (!world.isClient) {
             deflecting.deflect(this, entity2, this.random)
             this.owner = entity
-            this.method_59525(entity2, bl)
+            this.onDeflected(entity2, bl)
         }
 
         return true

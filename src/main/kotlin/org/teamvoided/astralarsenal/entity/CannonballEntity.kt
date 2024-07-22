@@ -59,7 +59,7 @@ class CannonballEntity : ThrownItemEntity {
         }
     }
 
-    override fun method_59859(
+    override fun deflect(
         projectileDeflector: ProjectileDeflector,
         entity2: Entity?,
         entity: Entity?,
@@ -68,7 +68,7 @@ class CannonballEntity : ThrownItemEntity {
         if (!world.isClient) {
             deflecting.deflect(this, entity2, this.random)
             this.owner = entity
-            this.method_59525(entity2, bl)
+            this.onDeflected(entity2, bl)
         }
 
         return true

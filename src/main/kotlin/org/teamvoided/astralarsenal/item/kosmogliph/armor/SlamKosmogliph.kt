@@ -7,12 +7,10 @@ import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.tag.DamageTypeTags
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
@@ -63,11 +61,6 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             ))
 
             slamming = false
-
-            if (entity !is ServerPlayerEntity) return
-            entity.currentExplosionImpactPos = entity.pos
-            entity.method_60984(true)
-
         }
 
         if (entity.velocity.y >= 0) {
