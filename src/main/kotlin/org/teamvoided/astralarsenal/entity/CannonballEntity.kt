@@ -90,7 +90,7 @@ class CannonballEntity : ThrownItemEntity {
 
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
-        builder.add(DMG, 5)
+        builder.add(DMG, 10)
     }
 
     override fun tick() {

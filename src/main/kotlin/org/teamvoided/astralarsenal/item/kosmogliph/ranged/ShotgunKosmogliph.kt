@@ -4,6 +4,7 @@ import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.ChargedProjectilesComponent
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ArrowEntity
+import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.item.CrossbowItem
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -24,13 +25,14 @@ class ShotgunKosmogliph (
         val chargedProjectiles = stack.get(DataComponentTypes.CHARGED_PROJECTILES)
         if (chargedProjectiles != null && !chargedProjectiles.isEmpty) {
             repeat(10){
-            val snowballEntity = ArrowEntity(world, player, chargedProjectiles.projectiles[0], stack)
-            snowballEntity.setProperties(player,
-                player.pitch + world.random.nextDouble().minus(0.5).times(30).toFloat(),
-                player.yaw + world.random.nextDouble().minus(0.5).times(30).toFloat(),
+                val snowballEntity = ArrowEntity(world, player, chargedProjectiles.projectiles[0], stack)
+                snowballEntity.setProperties(player,
+                player.pitch + world.random.nextDouble().minus(0.5).times(15).toFloat(),
+                player.yaw + world.random.nextDouble().minus(0.5).times(15).toFloat(),
                 0.0f, 3.0f, 0.0f)
-            snowballEntity.addVelocity(0.0, 0.0, 0.0)
-            world.spawnEntity(snowballEntity)
+                snowballEntity.addVelocity(0.0, 0.0, 0.0)
+                snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY
+                world.spawnEntity(snowballEntity)
             }
             world.playSound(
                 null,

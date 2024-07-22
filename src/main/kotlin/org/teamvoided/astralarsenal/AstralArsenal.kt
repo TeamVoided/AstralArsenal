@@ -81,6 +81,14 @@ object AstralArsenal {
             if (!kosmogliphs.contains(AstralKosmogliphs.SLAM)) return@registerGlobalReceiver
             AstralKosmogliphs.SLAM.handleSlam(stack, player)
         }
+        PayloadTypeRegistry.playC2S().register(GrappleKosmogliphPayload.ID, GrappleKosmogliphPayload.CODEC)
+        ServerPlayNetworking.registerGlobalReceiver(GrappleKosmogliphPayload.ID) { _, ctx ->
+            val player = ctx.player()
+            val stack = player.getEquippedStack(EquipmentSlot.HEAD)
+            val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
+            if (!kosmogliphs.contains(AstralKosmogliphs.GRAPPLE)) return@registerGlobalReceiver
+            AstralKosmogliphs.GRAPPLE.handleJump(stack, player)
+        }
     }
 
     fun id(path: String): Identifier =

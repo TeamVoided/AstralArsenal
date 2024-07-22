@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.client.MinecraftClient
 import org.lwjgl.glfw.GLFW
 import org.teamvoided.astralarsenal.AstralKeyBindings
+import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.networking.*
 import kotlin.reflect.full.declaredMemberProperties
 
@@ -29,8 +30,15 @@ object KeyHandlers {
         } else if (!jumpKey.isPressed) {
             holdingJump.value = false
         } else if (!holdingJump.value) {
-            ClientPlayNetworking.send(JumpKosmogliphPayload)
-            holdingJump.value = true
+            val data = player.inventory.armor.get(3).get(AstralItemComponents.GRAPPLE_DATA)?.jumps
+            if(player.horizontalCollision && data != null && data > 0){
+                ClientPlayNetworking.send(GrappleKosmogliphPayload)
+                holdingJump.value = true
+            }
+            else{
+                ClientPlayNetworking.send(JumpKosmogliphPayload)
+                holdingJump.value = true
+            }
         }
     }
 

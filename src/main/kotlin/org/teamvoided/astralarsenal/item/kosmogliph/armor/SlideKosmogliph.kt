@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.armor
 
+import net.minecraft.entity.EntityPose
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
@@ -48,6 +49,7 @@ class SlideKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                     random().minus(0.5).times(2),
                     0.1)
             }
+            player.pose = EntityPose.SLIDING
         }
     }
 }

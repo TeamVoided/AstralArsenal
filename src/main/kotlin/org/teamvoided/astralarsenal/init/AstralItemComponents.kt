@@ -50,7 +50,7 @@ object AstralItemComponents {
         }
 
     val GRAPPLE_DATA: DataComponentType<GrappleKosmogliph.Data> =
-        register("grapple_data", { it is ArmorItem || it is ToolItem }, { GrappleKosmogliph.Data(0) }) { builder ->
+        register("grapple_data", { it is ArmorItem || it is ToolItem }, { GrappleKosmogliph.Data(0, 0) }) { builder ->
             builder.codec(GrappleKosmogliph.Data.CODEC).build()
         }
 

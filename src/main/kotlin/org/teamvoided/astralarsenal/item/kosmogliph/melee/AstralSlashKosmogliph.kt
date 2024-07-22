@@ -16,7 +16,7 @@ class AstralSlashKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is
             repeat(20){
                 val snowballEntity = SlashEntity(world, player)
                 snowballEntity.setDmg(10f)
-                snowballEntity.setProperties(player, player.pitch, player.yaw + w, 0.0f, 0.5f, 0.0f)
+                snowballEntity.setProperties(player, player.pitch, player.yaw + w, 0.0f, 2.0f, 0.0f)
                 world.spawnEntity(snowballEntity)
                 w += 2
             }
