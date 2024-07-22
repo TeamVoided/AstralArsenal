@@ -3,6 +3,7 @@ package org.teamvoided.astralarsenal.item.kosmogliph.ranged
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.ChargedProjectilesComponent
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.projectile.ArrowEntity
 import net.minecraft.item.CrossbowItem
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -11,10 +12,9 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.entity.CannonballEntity
-import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class CannonballLauncherKosmogliph(
+class ShotgunKosmogliph (
     id: Identifier,
 ) : SimpleKosmogliph(id, { AstralArsenal.LOGGER.info("{}", it.item is CrossbowItem); it.item is CrossbowItem }), RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
@@ -22,26 +22,29 @@ class CannonballLauncherKosmogliph(
 
         val stack = player.getStackInHand(hand)
         val chargedProjectiles = stack.get(DataComponentTypes.CHARGED_PROJECTILES)
-        val fireBall = chargedProjectiles != null && !chargedProjectiles.isEmpty
-        if (fireBall) {
-            stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
-            val snowballEntity = CannonballEntity(world, player)
-            snowballEntity.setProperties(player, player.pitch, player.yaw, 0.0f, 3.0f, 0.0f)
+        if (chargedProjectiles != null && !chargedProjectiles.isEmpty) {
+            repeat(10){
+            val snowballEntity = ArrowEntity(world, player, chargedProjectiles.projectiles[0], stack)
+            snowballEntity.setProperties(player,
+                player.pitch + world.random.nextDouble().minus(0.5).times(30).toFloat(),
+                player.yaw + world.random.nextDouble().minus(0.5).times(30).toFloat(),
+                0.0f, 3.0f, 0.0f)
             snowballEntity.addVelocity(0.0, 0.0, 0.0)
             world.spawnEntity(snowballEntity)
-            if (!player.isCreative) {
-                player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
-        }
+            }
             world.playSound(
                 null,
                 player.x,
                 player.y,
                 player.z,
-                SoundEvents.BLOCK_HEAVY_CORE_PLACE,
+                SoundEvents.ITEM_CROSSBOW_SHOOT,
                 SoundCategory.PLAYERS,
                 1.0F,
                 1.0f
             )
+            stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
+        }
+
+
+        }
     }
-}
-}
