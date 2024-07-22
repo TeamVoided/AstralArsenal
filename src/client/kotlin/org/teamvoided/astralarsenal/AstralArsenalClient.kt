@@ -1,10 +1,13 @@
 package org.teamvoided.astralarsenal
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.client.MinecraftClient
 import org.teamvoided.astralarsenal.handlers.KeyHandlers
+import org.teamvoided.astralarsenal.handlers.LaserBeamPayloadHandler
 import org.teamvoided.astralarsenal.init.AstralEntitiesClient
 import org.teamvoided.astralarsenal.init.AstralHandledScreens
+import org.teamvoided.astralarsenal.networking.LaserBeamPayload
 
 @Suppress("unused")
 object AstralArsenalClient {
@@ -16,5 +19,7 @@ object AstralArsenalClient {
         MinecraftClient.getInstance()
 
         ClientTickEvents.END_CLIENT_TICK.register(KeyHandlers.compileHandlers())
+
+        ClientPlayNetworking.registerGlobalReceiver(LaserBeamPayload.ID, LaserBeamPayloadHandler::handle)
     }
 }

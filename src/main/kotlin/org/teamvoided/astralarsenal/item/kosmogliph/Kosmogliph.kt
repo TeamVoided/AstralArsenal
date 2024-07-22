@@ -34,6 +34,7 @@ interface Kosmogliph {
     fun canBeAppliedTo(stack: ItemStack): Boolean
     fun onApply(stack: ItemStack) {}
     fun onUnapply(stack: ItemStack) {}
+    fun preUse(world: World, player: PlayerEntity, hand: Hand) {}
     fun onUse(world: World, player: PlayerEntity, hand: Hand) {}
     fun onUseOnBlock(ctx: ItemUsageContext) {}
     fun onUseOnEntity(stack: ItemStack, player: PlayerEntity, entity: LivingEntity, hand: Hand) {}

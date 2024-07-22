@@ -34,6 +34,8 @@ object AstralArsenal {
         AstralEffects.init()
         AstralEntities.init()
 
+        PayloadTypeRegistry.playS2C().register(LaserBeamPayload.ID, LaserBeamPayload.CODEC)
+
         CommandRegistrationCallback.EVENT.register { dispatcher, ctx, env ->
             val root = dispatcher.register(literal("astral"))
             KosmogliphCommand.apply(root, ctx, env)

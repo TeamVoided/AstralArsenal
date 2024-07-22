@@ -14,9 +14,11 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.defensive.*
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.*
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.*
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams.*
-import org.teamvoided.astralarsenal.item.kosmogliph.tools.*
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.BeamKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.HammerKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.SmelterKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.VeinmineKosmogliph
 
 @Suppress("unused")
 object AstralKosmogliphs {
@@ -33,6 +35,7 @@ object AstralKosmogliphs {
     val SLIDE = register("slide", ::SlideKosmogliph)
     val SLAM = register("slam", ::SlamKosmogliph)
     val GRAPPLE = register("grapple", ::GrappleKosmogliph)
+    val BEAM = register("beam", ::BeamKosmogliph)
 
     val ASTRAL_STRIKE = register("astral_strike", ::AstralStrikeKosmogliph)
     val FREEZE = register("freeze", ::FreezeKosmogliph)

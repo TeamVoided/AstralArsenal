@@ -32,6 +32,11 @@ public abstract class ItemMixin {
         UtilKt.getKosmogliphsOnStack(stack).forEach(kosmogliph -> kosmogliph.modifyItemTooltip(stack, context, tooltip, config));
     }
 
+    @Inject(method = "use", at = @At("HEAD"))
+    public void kosmogliphPreUse(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
+        UtilKt.getKosmogliphsOnStack(user.getStackInHand(hand)).forEach((kosmogliph) -> kosmogliph.preUse(world, user, hand));
+    }
+
     @Inject(method = "use", at = @At("TAIL"))
     public void kosmogliphOnUse(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         UtilKt.getKosmogliphsOnStack(user.getStackInHand(hand)).forEach((kosmogliph) -> kosmogliph.onUse(world, user, hand));

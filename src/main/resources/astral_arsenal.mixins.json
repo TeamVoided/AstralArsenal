@@ -5,8 +5,10 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AbstractBlockMixin",
+    "CrossbowKosmogliphUseEvents",
     "DamageReductionMixin",
     "ItemMixin",
+    "RangedWeaponItemMixin",
     "ToolItemMixin"
   ],
   "injectors": {
