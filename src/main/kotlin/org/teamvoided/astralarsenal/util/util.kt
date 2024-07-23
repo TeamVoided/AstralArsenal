@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.util
 
+import arrow.core.Predicate
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
@@ -18,4 +19,8 @@ fun getKosmogliphsOnStack(stack: ItemStack): KosmogliphsComponent {
     val component = stack.components.get(KOSMOGLIPHS)
         ?: return KosmogliphsComponent()
     return component
+}
+
+fun interface BPredicate<T>: Predicate<T>, java.util.function.Predicate<T> {
+    override fun test(t: T): Boolean = this(t)
 }
