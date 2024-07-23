@@ -3,9 +3,10 @@ package org.teamvoided.astralarsenal.screens.widget
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder
 import net.minecraft.client.gui.screen.narration.NarrationPart
+import net.minecraft.client.gui.tooltip.Tooltip
 import net.minecraft.client.gui.widget.ClickableWidget
 import net.minecraft.text.Text
-import org.teamvoided.astralarsenal.AstralArsenal
+import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 
 abstract class KosmogliphWidget(
@@ -15,8 +16,11 @@ abstract class KosmogliphWidget(
     val kosmogliph: Kosmogliph
 ) : ClickableWidget(x, y, width, height, message) {
     var active = false
-    val kosmogliphTexture by lazy {
-        kosmogliph.id().withPrefix("textures/gui/kosmogliph/")
+    val kosmogliphTexture = kosmogliph.id().withPrefix("kosmogliph/")
+
+
+    init {
+        tooltip = Tooltip.create(Text.translatable(kosmogliph.translationKey(true)))
     }
 
     override fun drawWidget(
@@ -27,9 +31,8 @@ abstract class KosmogliphWidget(
     ) {
         val stack = graphics.matrices
         stack.push()
-        graphics.drawTexture(if (active) ACTIVE_TEXTURE else INACTIVE_TEXTURE, x, y, 0, 0, width, height)
-        // TODO Get textures and uncomment line
-        //graphics.drawTexture(kosmogliphTexture, x, y, 0, 0, width, height)
+        graphics.drawGuiTexture(if (active) ACTIVE_TEXTURE else INACTIVE_TEXTURE, x, y, width, height)
+        graphics.drawGuiTexture(kosmogliphTexture, x + 2, y + 2, (width / 1.2).toInt(), (height / 1.2).toInt())
         stack.pop()
     }
 
@@ -38,16 +41,13 @@ abstract class KosmogliphWidget(
     }
 
     companion object {
-        val INACTIVE_TEXTURE = AstralArsenal.id("textures/gui/widget/kosmogliph_inactive.png")
-        val ACTIVE_TEXTURE = AstralArsenal.id("textures/gui/widget/kosmogliph_active.png")
+        val INACTIVE_TEXTURE = id("widget/kosmogliph/inactive")
+        val ACTIVE_TEXTURE = id("widget/kosmogliph/active")
     }
 }
 
 fun KosmogliphWidget(
-    x: Int, y: Int,
-    width: Int, height: Int,
-    message: Text,
-    kosmogliph: Kosmogliph,
+    x: Int, y: Int, width: Int, height: Int, message: Text, kosmogliph: Kosmogliph,
     onWidgetClick: KosmogliphWidget.(x: Double, y: Double) -> Unit
 ): KosmogliphWidget = object : KosmogliphWidget(x, y, width, height, message, kosmogliph) {
     override fun onClick(mouseX: Double, mouseY: Double) {
