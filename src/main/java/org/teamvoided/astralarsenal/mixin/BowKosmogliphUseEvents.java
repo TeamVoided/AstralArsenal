@@ -1,6 +1,7 @@
 package org.teamvoided.astralarsenal.mixin;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -12,8 +13,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.astralarsenal.util.UtilKt;
 
-@Mixin(CrossbowItem.class)
-public class CrossbowKosmogliphUseEvents {
+@Mixin({CrossbowItem.class, BowItem.class})
+public class BowKosmogliphUseEvents {
     @Inject(method = "use", at = @At("HEAD"))
     public void kosmogliphPreUse(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         UtilKt.getKosmogliphsOnStack(user.getStackInHand(hand)).forEach((kosmogliph) -> kosmogliph.preUse(world, user, hand));
