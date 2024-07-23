@@ -27,6 +27,11 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::BeamOfLightEntity), SpawnGroup.MISC)
             .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
+    val BEAM_OF_LIGHT_ARROW = register(
+        "beam_of_light_arrow",
+        EntityType.Builder.create(EntityType.EntityFactory(::BeamOfLightArrowEntity), SpawnGroup.MISC)
+            .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
+    )
     val SLASH_ENTITY = register(
         "slash_entity",
         EntityType.Builder.create(EntityType.EntityFactory(::SlashEntity), SpawnGroup.MISC)

@@ -52,14 +52,14 @@ class BeamOfLightEntity : Entity {
             if (!world.isClient) {
                 val serverWorld = world as ServerWorld
                 serverWorld.spawnParticles(
-                    ParticleTypes.ELECTRIC_SPARK,
+                    ParticleTypes.END_ROD,
                     this.x,
                     this.y,
                     this.z,
                     10,
-                    random.nextDouble().minus(0.5).times(2).times(side),
+                    random.nextDouble().minus(0.5).times(side).times(0.5),
                     0.0,
-                    random.nextDouble().minus(0.5).times(2).times(side),
+                    random.nextDouble().minus(0.5).times(side).times(0.5),
                     0.0
                 )
             }
@@ -71,19 +71,20 @@ class BeamOfLightEntity : Entity {
         else if(this.getTime() in WINDUP..(TIMEACTIVE+WINDUP)){
             if (!DOT){
             if (!world.isClient) {
-                if(this.getTime() % 2 == 0){this.playSound(AstralSounds.BEAM_VIBRATE,2.0f,1.0f)}
+                if(this.getTime() % 5 == 0){this.playSound(AstralSounds.BEAM_VIBRATE,2.0f,1.0f)}
                 val serverWorld = world as ServerWorld
+                for(i in 0..100){
                 serverWorld.spawnParticles(
-                    ParticleTypes.ELECTRIC_SPARK,
+                    ParticleTypes.END_ROD,
                     this.x,
-                    this.y,
+                    (this.y + (i * 0.5)) - 5,
                     this.z,
-                    250,
-                    random.nextDouble().minus(0.5).times(2).times(side),
-                    random.nextDouble().minus(0.5).times(25),
-                    random.nextDouble().minus(0.5).times(2).times(side),
+                    3,
+                    random.nextDouble().minus(0.5).times(side).times(0.5),
+                    random.nextDouble().minus(0.5).times(1),
+                    random.nextDouble().minus(0.5).times(side).times(0.5),
                     0.0
-                )
+                )}
                 val entities = world.getOtherEntities(
                     null, Box(
                         pos.x + side.times(0.5),
@@ -102,18 +103,20 @@ class BeamOfLightEntity : Entity {
                 }}
             }
             else{if (!world.isClient) {
+                if(this.getTime() % 5 == 0){this.playSound(AstralSounds.BEAM_VIBRATE,2.0f,1.0f)}
                 val serverWorld = world as ServerWorld
-                serverWorld.spawnParticles(
-                    ParticleTypes.ELECTRIC_SPARK,
-                    side.times(0.5),
-                    10.0,
-                    side.times(0.5),
-                    250,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.5
-                )
+                for(i in 0..100){
+                    serverWorld.spawnParticles(
+                        ParticleTypes.END_ROD,
+                        this.x,
+                        (this.y + (i * 0.5)) - 5,
+                        this.z,
+                        10,
+                        random.nextDouble().minus(0.5).times(side).times(0.5),
+                        random.nextDouble().minus(0.5).times(1),
+                        random.nextDouble().minus(0.5).times(side).times(0.5),
+                        0.0
+                    )}
                 val entities = world.getOtherEntities(
                     null, Box(
                         pos.x + side.times(0.5),
@@ -125,13 +128,31 @@ class BeamOfLightEntity : Entity {
                     ))
                 for (entity in entities) {
                         entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT,this.DMG.toFloat())
-                    // Here is where I need the damage to ignore immunity frames
                     }
                 }}
         }
         else if (this.getTime() > (TIMEACTIVE + WINDUP)){
             this.playSound(AstralSounds.BEAM_WIND, 3.0f, 1.0f)
             this.discard()
+        }
+        if (this.getTime() in trackTime..WINDUP){
+            val times = (this.getTime() - trackTime) + 1
+            if (!world.isClient) {
+                for(i in 0..times) {
+                    val serverWorld = world as ServerWorld
+                    serverWorld.spawnParticles(
+                        ParticleTypes.CRIT,
+                        this.x,
+                        this.y + (i * 0.3),
+                        this.z,
+                        10,
+                        random.nextDouble().minus(0.5).times(side).times(0.5),
+                        0.0,
+                        random.nextDouble().minus(0.5).times(side).times(0.5),
+                        0.0
+                    )
+                }
+            }
         }
         super.tick()
     }
