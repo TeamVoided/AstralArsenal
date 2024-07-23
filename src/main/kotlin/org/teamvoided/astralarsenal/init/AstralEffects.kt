@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.init
 
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffect
@@ -26,7 +27,18 @@ object AstralEffects {
                 -1.0, EntityAttributeModifier.Operation.ADD_VALUE
             )
     )
+    val REDUCE = register(
+        "reduce", AstralStatusEffect(StatusEffectType.HARMFUL, 6684672)
+    )
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
         Registries.STATUS_EFFECT.registerHolder(id(id), entry)
+
+    fun modifyDamage(entity: LivingEntity, damage: Float): Float {
+        var output = damage
+        if(entity.hasStatusEffect(REDUCE))
+            output *= 2
+
+        return output
+    }
 }

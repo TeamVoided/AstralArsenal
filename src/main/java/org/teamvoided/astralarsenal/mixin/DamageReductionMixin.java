@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.teamvoided.astralarsenal.init.AstralEffects;
 import org.teamvoided.astralarsenal.pseudomixin.DamageReductionKt;
 
 @Mixin(LivingEntity.class)
@@ -14,6 +15,7 @@ public class DamageReductionMixin {
     @ModifyVariable(method = "damage", at = @At(value = "HEAD", ordinal = 0), argsOnly = true)
     private float modifyDamageType(float damage, DamageSource source) {
         var self = (LivingEntity) (Object) this;
+        damage = AstralEffects.INSTANCE.modifyDamage(self, damage);
         return DamageReductionKt.kosmogliphDamageReductionCall(self, damage, source);
     }
 
