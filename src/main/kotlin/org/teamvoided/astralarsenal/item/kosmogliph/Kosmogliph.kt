@@ -1,7 +1,6 @@
 package org.teamvoided.astralarsenal.item.kosmogliph
 
 import arrow.core.Either
-import arrow.core.left
 import arrow.core.right
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
@@ -27,6 +26,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent.Companion.toComponent
 
 interface Kosmogliph {
@@ -66,8 +66,7 @@ interface Kosmogliph {
         val PACKET_CODEC = PacketCodecs.fromCodec(REGISTRY.codec)
 
         fun addToComponent(stack: ItemStack, kosmogliph: Kosmogliph): Either<Failure, ItemStack> {
-            val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS)
-                ?: return Failure(Text.translatable("kosmogliph.error.missing_component")).left()
+            val kosmogliphs = stack.getOrDefault(AstralItemComponents.KOSMOGLIPHS, KosmogliphsComponent())
             val mutableClone = kosmogliphs.toMutableSet()
             mutableClone.add(kosmogliph)
             stack.set(AstralItemComponents.KOSMOGLIPHS, mutableClone.toComponent())
@@ -77,8 +76,7 @@ interface Kosmogliph {
         }
 
         fun removeFromComponent(stack: ItemStack, kosmogliph: Kosmogliph): Either<Failure, ItemStack> {
-            val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS)
-                ?: return Failure(Text.translatable("kosmogliph.error.missing_component")).left()
+            val kosmogliphs = stack.getOrDefault(AstralItemComponents.KOSMOGLIPHS, KosmogliphsComponent())
             val mutableClone = kosmogliphs.toMutableSet()
             mutableClone.remove(kosmogliph)
             stack.set(AstralItemComponents.KOSMOGLIPHS, mutableClone.toComponent())

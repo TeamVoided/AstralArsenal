@@ -17,6 +17,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.melee.*
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams.*
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.*
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.*
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.trident.TridentReduceKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.tools.*
 
 @Suppress("unused")
@@ -76,6 +77,8 @@ object AstralKosmogliphs {
     val DEVISTATE = register("devistate", ::DevistateKosmogliph)
     val LOCK_OFF = register("lock_off", ::LockOffKosmogliph)
     val TIME_BOMB = register("time_bomb", ::TimeBombKosmogliph)
+
+    val TRIDENT_REDUCE = register("trident_reduce", ::TridentReduceKosmogliph)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))

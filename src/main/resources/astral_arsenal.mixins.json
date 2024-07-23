@@ -9,7 +9,8 @@
     "DamageReductionMixin",
     "ItemMixin",
     "RangedWeaponItemMixin",
-    "ToolItemMixin"
+    "ToolItemMixin",
+    "TridentMixin"
   ],
   "injectors": {
     "defaultRequire": 1
