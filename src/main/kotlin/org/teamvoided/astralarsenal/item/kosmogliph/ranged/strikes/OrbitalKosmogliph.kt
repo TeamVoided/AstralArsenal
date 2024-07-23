@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes
 
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.ChargedProjectilesComponent
+import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BowItem
 import net.minecraft.item.CrossbowItem
@@ -37,7 +38,6 @@ class OrbitalKosmogliph (
             snowballEntity.WINDUP = 120
             snowballEntity.DMG = 5
             snowballEntity.trackTime = 100
-            println(snowballEntity)
             world.spawnEntity(snowballEntity)
             world.playSound(
                 null,
@@ -49,6 +49,11 @@ class OrbitalKosmogliph (
                 1.0F,
                 1.0f
             )
+            if (hand == Hand.MAIN_HAND){
+                stack.damageEquipment(1, player, EquipmentSlot.MAINHAND)}
+            else if (hand == Hand.OFF_HAND){
+                stack.damageEquipment(1, player, EquipmentSlot.OFFHAND)
+            }
         }
     }
 }

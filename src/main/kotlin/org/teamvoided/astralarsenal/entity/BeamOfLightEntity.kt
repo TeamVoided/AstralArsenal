@@ -64,7 +64,7 @@ class BeamOfLightEntity : Entity {
                 )
             }
             if (targetEntity != null && this.getTime() < trackTime){
-                this.setPosition(targetEntity!!.pos)
+                this.setPosition(targetEntity!!.pos.x, targetEntity!!.pos.y + 1, targetEntity!!.pos.z)
             }
         }
         else if(this.getTime() == WINDUP){this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)}
