@@ -13,6 +13,7 @@ import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
+import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
@@ -20,7 +21,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class ExplosiveBeamKosmogliph (id: Identifier) :
-    SimpleKosmogliph(id, { it.item is SwordItem && it.item !is AstralGreathammerItem }) {
+    SimpleKosmogliph(id, { it.item is RailgunItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         val result = player.raycast(100.0, 1f, false)
         val distance = sqrt(sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + (player.eyePos.y - result.pos.y).pow(2))

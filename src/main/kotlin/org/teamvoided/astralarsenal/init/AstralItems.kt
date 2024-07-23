@@ -28,7 +28,7 @@ object AstralItems {
     val AMERALD = register("amerald", Item(Item.Settings()))
     val CONCENTRATED_AMETHYST_BLEND = register("concentrated_amethyst_blend", Item(Item.Settings()))
     val AMETHYST = register("amethyst", Item(Item.Settings()))
-    val KOSMIK_GEM = register("kosmic_gem", Item(Item.Settings()))
+    val KOSMIC_GEM = register("kosmic_gem", Item(Item.Settings()))
     val CANNONBALL = register("cannonball", CannonballItem(Item.Settings()))
     val MORTER = register("morter", MorterItem(Item.Settings()))
     val COSMIC_TABLE = register("cosmic_table", BlockItem(AstralBlocks.COSMIC_TABLE, Item.Settings()))
@@ -51,7 +51,7 @@ object AstralItems {
         AMERALD,
         CONCENTRATED_AMETHYST_BLEND,
         AMETHYST,
-        KOSMIK_GEM,
+        KOSMIC_GEM,
         CANNONBALL,
         MORTER,
     )

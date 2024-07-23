@@ -28,7 +28,7 @@ class AstralRecipeProvider(
             .pattern("ONO")
             .pattern("COC")
             .ingredient('D', Items.DIAMOND_BLOCK)
-            .ingredient('E', Items.END_CRYSTAL)
+            .ingredient('E', AstralItems.KOSMIC_GEM)
             .ingredient('O', Items.OBSIDIAN)
             .ingredient('N', Items.NETHERITE_INGOT)
             .ingredient('C', Items.CRYING_OBSIDIAN)
@@ -54,16 +54,16 @@ class AstralRecipeProvider(
         ).offerTo(this)
 
         simpleShapeless(
-            AstralItems.KOSMIK_GEM,
+            AstralItems.KOSMIC_GEM,
             RecipeCategory.REDSTONE, 1,
             listOf(AstralItems.LAZULICA, AstralItems.AMERALD, Items.DIAMOND)
         ).offerTo(this)
 
         simpleShapeless(
-            AstralItems.KOSMIK_GEM,
+            AstralItems.KOSMIC_GEM,
             RecipeCategory.REDSTONE, 1,
             listOf(AstralItems.LAZULICA, AstralItems.AMETHYST, Items.DIAMOND)
-        ).offerTo(this, AstralItems.KOSMIK_GEM.id.extendPath("_amethyst"))
+        ).offerTo(this, AstralItems.KOSMIC_GEM.id.extendPath("_amethyst"))
 
         simpleShapeless(
             AstralItems.AMETHYST_DUST,

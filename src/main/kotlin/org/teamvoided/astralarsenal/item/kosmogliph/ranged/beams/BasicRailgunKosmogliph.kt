@@ -1,34 +1,28 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams
 
 import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.CrossbowItem
-import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
+import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import net.minecraft.util.math.Box
 import org.joml.Math.lerp
-import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.RailgunKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.RangedWeaponKosmogliph
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class BasicRailgunKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { AstralArsenal.LOGGER.info("{}", it.item is RailgunItem); it.item is RailgunItem }),
-    RailgunKosmogliph {
+    SimpleKosmogliph(id, { it.item is RailgunItem }){
 
-    override fun shoot(stack: ItemStack, world: World, player: LivingEntity) {
+    override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         val result = player.raycast(100.0, 1f, false)
         val distance = sqrt(sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + (player.eyePos.y - result.pos.y).pow(2))
         val entities = mutableListOf<Entity>()
@@ -75,10 +69,8 @@ class BasicRailgunKosmogliph(id: Identifier) :
         for (entity in entities) {
             entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, 10f)
         }
-        if (player is PlayerEntity) {
             if(!player.isCreative){
-            player.itemCooldownManager.set(stack.item, 400)
-            }
+                player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
         }
     }
 

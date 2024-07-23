@@ -1,24 +1,24 @@
 package org.teamvoided.astralarsenal.item
 
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
+import net.minecraft.util.Hand
+import net.minecraft.util.TypedActionResult
+import net.minecraft.util.UseAction
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.RailgunKosmogliph
+import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
 
 class RailgunItem(settings: Settings) : Item(settings) {
-    override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
-        getKosmogliphsOnStack(stack).forEach { (it as? RailgunKosmogliph)?.shoot(stack, world, user) }
-        println("balls")
-        return stack
+    override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
+        return super.use(world, user, hand)
     }
 
-    override fun isUsedOnRelease(stack: ItemStack): Boolean {
-        return stack.isOf(this)
-    }
-
-    override fun getUseTicks(stack: ItemStack, entity: LivingEntity): Int {
-        return 20
+    override fun getUseAction(stack: ItemStack?): UseAction {
+        return UseAction.CROSSBOW
     }
 }
