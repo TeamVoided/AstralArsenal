@@ -18,7 +18,7 @@ class AstralModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     }
 
     override fun generateItemModels(gen: ItemModelGenerator) {
-        val excludelist = listOf(AstralItems.ASTRAL_GREATHAMMER)
+        val excludelist = listOf(AstralItems.ASTRAL_GREATHAMMER, AstralItems.RAILGUN)
         AstralItems.items().filter{!excludelist.contains(it)}.forEach {
             if (it is BlockItem) return@forEach
             gen.register(it, Models.SINGLE_LAYER_ITEM)
