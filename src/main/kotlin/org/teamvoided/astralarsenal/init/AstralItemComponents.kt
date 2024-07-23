@@ -11,6 +11,7 @@ import net.minecraft.item.ToolItem
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
+import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
@@ -20,7 +21,7 @@ object AstralItemComponents {
     private val mods = mutableSetOf<DataComponentTypeModificationContext<*>>()
 
     val KOSMOGLIPHS: DataComponentType<KosmogliphsComponent> =
-        register("kosmogliphs", { it is ToolItem || it is ArmorItem || it is RangedWeaponItem }, { KosmogliphsComponent() }) { builder ->
+        register("kosmogliphs", { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem }, { KosmogliphsComponent() }) { builder ->
             builder.codec(KosmogliphsComponent.CODEC).build()
         }
 
