@@ -26,16 +26,12 @@ object KeyHandlers {
 
         if (!jumpKey.isPressed) {
             holdingJump.value = false
-        } else {
-            if (!holdingJump.value) {
-                val data = player.inventory.armor[3].get(AstralItemComponents.GRAPPLE_DATA)
-                if (player.horizontalCollision && data != null){
-                    ClientPlayNetworking.send(GrappleKosmogliphPayload)
-                    holdingJump.value = true
-                } else if (player.isOnGround && !player.isCreative && !player.isSpectator) {
-                    ClientPlayNetworking.send(JumpKosmogliphPayload)
-                    holdingJump.value = true
-                }
+        } else if (!holdingJump.value) {
+            val data = player.inventory.armor[3].get(AstralItemComponents.GRAPPLE_DATA)
+            if (player.horizontalCollision && data != null) {
+                ClientPlayNetworking.send(GrappleKosmogliphPayload)
+            } else if (player.isOnGround && !player.isCreative && !player.isSpectator) {
+                ClientPlayNetworking.send(JumpKosmogliphPayload)
             }
 
             holdingJump.value = true

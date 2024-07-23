@@ -18,7 +18,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.ranged.RangedWeaponKosmoglip
 
 class TimeBombKosmogliph (
     id: Identifier,
-) : SimpleKosmogliph(id, { AstralArsenal.LOGGER.info("{}", it.item is CrossbowItem || it.item is BowItem); it.item is CrossbowItem || it.item is BowItem }),
+) : SimpleKosmogliph(id, { it.item is CrossbowItem || it.item is BowItem }),
     RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
         if (world.isClient) return

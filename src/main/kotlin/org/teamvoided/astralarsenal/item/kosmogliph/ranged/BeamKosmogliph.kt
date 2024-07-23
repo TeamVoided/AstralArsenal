@@ -29,7 +29,7 @@ import org.teamvoided.astralarsenal.networking.LaserBeamPayload
 
 class BeamKosmogliph(
     id: Identifier,
-) : SimpleKosmogliph(id, { AstralArsenal.LOGGER.info("{}", it.item is CrossbowItem); it.item is CrossbowItem }), RangedWeaponKosmogliph {
+) : SimpleKosmogliph(id, { it.item is CrossbowItem }), RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
         if (world.isClient) return
 
