@@ -1,6 +1,10 @@
 package org.teamvoided.astralarsenal
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.asCoroutineDispatcher
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.entity.EquipmentSlot
@@ -9,6 +13,8 @@ import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.astralarsenal.command.KosmogliphCommand
+import org.teamvoided.astralarsenal.coroutine.mcCoroutineDispatcher
+import org.teamvoided.astralarsenal.coroutine.mcCoroutineScope
 import org.teamvoided.astralarsenal.init.*
 import org.teamvoided.astralarsenal.networking.*
 
@@ -33,6 +39,11 @@ object AstralArsenal {
         AstralSounds
         AstralEffects.init()
         AstralEntities.init()
+
+        ServerLifecycleEvents.SERVER_STARTING.register { server ->
+            mcCoroutineDispatcher = server.asCoroutineDispatcher()
+            mcCoroutineScope = CoroutineScope(SupervisorJob() + mcCoroutineDispatcher)
+        }
 
         PayloadTypeRegistry.playS2C().register(LaserBeamPayload.ID, LaserBeamPayload.CODEC)
 
