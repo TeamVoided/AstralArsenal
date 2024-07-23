@@ -62,7 +62,7 @@ object AstralKosmogliphs {
     val HEAVY = register("heavy", ::HeavyKosmogliph)
     val REFLECTIVE = register("reflective", ::ReflectiveKosmogliph)
 
-    val RAILGUN = register("railgun", ::RailgunKosmogliph)
+    val BASIC_RAILGUN = register("basic_railgun", ::BasicRailgunKosmogliph)
     val EXPLOSIVE_BEAM = register("explosive_beam", ::ExplosiveBeamKosmogliph)
     val RAY_OF_FROST = register("ray_of_frost", ::RayofFrostKosmogliph)
     val FLAME_THROWER = register("flame_thrower", ::FlameThrowerKosmogliph)

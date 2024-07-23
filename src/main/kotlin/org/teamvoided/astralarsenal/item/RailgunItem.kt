@@ -10,6 +10,7 @@ import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
 class RailgunItem(settings: Settings) : Item(settings) {
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
         getKosmogliphsOnStack(stack).forEach { (it as? RailgunKosmogliph)?.shoot(stack, world, user) }
+        println("balls")
         return stack
     }
 

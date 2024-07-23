@@ -13,6 +13,7 @@ import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.item.CannonballItem
 import org.teamvoided.astralarsenal.item.MorterItem
+import org.teamvoided.astralarsenal.item.RailgunItem
 import java.util.stream.Stream
 
 @Suppress("unused")
@@ -32,6 +33,7 @@ object AstralItems {
     val MORTER = register("morter", MorterItem(Item.Settings()))
     val COSMIC_TABLE = register("cosmic_table", BlockItem(AstralBlocks.COSMIC_TABLE, Item.Settings()))
     val ASTRAL_GREATHAMMER = register("astral_greathammer", AstralGreathammerItem((Item.Settings()).fireproof().attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.5F))))
+    val RAILGUN = register("railgun", RailgunItem(Item.Settings()))
 
     @Deprecated(
         "Replaced with automatic fetching",
