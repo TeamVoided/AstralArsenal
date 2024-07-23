@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.screens
 
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screen.ingame.HandledScreen
+import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.Text
 import org.joml.Vector2i
@@ -92,7 +93,7 @@ class CosmicTableScreen(
         }
 
         val ucPositions = listOf(::ucPos1, ::ucPos2, ::ucPos3, ::ucPos4)
-        ucPositions[underCount-1]()
+        ucPositions[underCount - 1]()
 
         return positions
     }
@@ -103,12 +104,10 @@ class CosmicTableScreen(
         mouseX: Int,
         mouseY: Int
     ) {
-        val stack = graphics.matrices
-        stack.push()
         val x = (this.width - this.backgroundWidth) / 2
         val y = (this.height - this.backgroundHeight) / 2
+        graphics.fillRenderLayer(RenderLayer.getEndPortal(), x + 5, y + 5, x + (WIDTH - 5), y + (HEIGHT / 2), 0);
         graphics.drawTexture(TEXTURE, x, y, 0, 0, WIDTH, HEIGHT)
-        stack.pop()
     }
 
     override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
