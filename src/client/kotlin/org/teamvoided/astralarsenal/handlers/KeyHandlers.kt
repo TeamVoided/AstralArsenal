@@ -5,7 +5,6 @@ import kotlinx.atomicfu.atomic
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.client.MinecraftClient
-import org.lwjgl.glfw.GLFW
 import org.teamvoided.astralarsenal.AstralKeyBindings
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.networking.*
@@ -25,20 +24,21 @@ object KeyHandlers {
         val player = client.player ?: return@ClientCtxInvokable
         val jumpKey = client.options.jumpKey
 
-        if (player.isOnGround || player.isCreative || player.isSpectator) {
-            holdingJump.value = true
-        } else if (!jumpKey.isPressed) {
+        if (!jumpKey.isPressed) {
             holdingJump.value = false
-        } else if (!holdingJump.value) {
-            val data = player.inventory.armor.get(3).get(AstralItemComponents.GRAPPLE_DATA)?.jumps
-            if(player.horizontalCollision && data != null && data > 0){
-                ClientPlayNetworking.send(GrappleKosmogliphPayload)
-                holdingJump.value = true
+        } else {
+            if (!holdingJump.value) {
+                val data = player.inventory.armor[3].get(AstralItemComponents.GRAPPLE_DATA)
+                if (player.horizontalCollision && data != null){
+                    ClientPlayNetworking.send(GrappleKosmogliphPayload)
+                    holdingJump.value = true
+                } else if (player.isOnGround && !player.isCreative && !player.isSpectator) {
+                    ClientPlayNetworking.send(JumpKosmogliphPayload)
+                    holdingJump.value = true
+                }
             }
-            else{
-                ClientPlayNetworking.send(JumpKosmogliphPayload)
-                holdingJump.value = true
-            }
+
+            holdingJump.value = true
         }
     }
 

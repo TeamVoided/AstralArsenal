@@ -1,23 +1,16 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.armor
 
 import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
-import java.lang.Math.random
 
 class GrappleKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
@@ -32,8 +25,8 @@ class GrappleKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         if(jumps > 0){
             println("inside")
             timer += 20
-            player.addVelocity(1.0,0.6, 1.0)
-            player.velocityModified
+            player.setVelocity(player.movement.x, 0.6, player.movement.z)
+            player.velocityModified = true
             jumps--
             stack.set(AstralItemComponents.GRAPPLE_DATA, Data(jumps, timer))
     }}
@@ -46,8 +39,8 @@ class GrappleKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             var timer = data.timer
             if (entity.isOnGround) jumps = 2
             if(jumps > 0 && !entity.isOnGround && entity.horizontalCollision && entity.velocity.y < -0.1 && timer < 1) {
-                entity.setVelocity(entity.velocity.x,-0.1,entity.velocity.z)
-                entity.velocityModified
+                entity.setVelocity(0.0, (entity.movement.y - 0.006).coerceAtLeast(-0.1), 0.0)
+                entity.velocityModified = true
                 entity.resetFallDistance()
             }
             if (jumps < 1){
