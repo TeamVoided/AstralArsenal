@@ -25,12 +25,10 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
         val data = stack.get(AstralItemComponents.DODGE_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world
-        println("velX: " + player.velocity.x + " velZ: " + player.velocity.z)
         //this is broken and I don't know why, please help
         if(data.uses > 0 && !world.isClient) {
-            val boost = player.velocity.multiply(1.0, 0.0, 1.0).multiply(JUMP_FORWARD_BOOST)
-            println("velX: " + player.velocity.x + " velZ: " + player.velocity.z + " boostX: " + boost.x + " boost z: " + boost.z)
-            player.setVelocity(player.velocity.x + boost.x, 0.1, player.velocity.z + boost.z)
+            val boost = player.movement.multiply(1.0, 0.0, 1.0).multiply(JUMP_FORWARD_BOOST)
+            player.addVelocity(boost)
             player.velocityModified = true
             world.playSound(
                 null,
@@ -59,7 +57,7 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        if (slot == 2) {
+        if ((entity is PlayerEntity) && entity.inventory.armor.contains(stack) && slot == 1) {
             val data = stack.get(AstralItemComponents.DODGE_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
             var uses = data.uses
