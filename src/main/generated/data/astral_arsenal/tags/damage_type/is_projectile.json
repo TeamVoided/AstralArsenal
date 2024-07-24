@@ -3,6 +3,7 @@
     "minecraft:mob_projectile",
     "minecraft:arrow",
     "minecraft:spit",
-    "minecraft:wind_charge"
+    "minecraft:wind_charge",
+    "astral_arsenal:cannonball"
   ]
 }

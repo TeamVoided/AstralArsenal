@@ -13,6 +13,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.init.AstralItems
+import org.teamvoided.astralarsenal.init.AstralTabs
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import java.util.concurrent.CompletableFuture
 
@@ -36,6 +37,9 @@ class AstralEnTranslationProvider(
             }
         //can someone make it so that the kosmogliphs have a dull purple colour in text?
         gen.add("death.attack.cannonball", "%s was dunked on by %s")
+        gen.add("death.attack.bleed", "%s bled to death.")
+
+        gen.add(AstralTabs.TAB, "Astral Arsenal")
 
         gen.add(AstralArsenal.DEFAULT_KEY_CATEGORY, "Astral Arsenal Keys")
         keybinds.forEach { (id, name) ->
