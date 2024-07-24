@@ -12,6 +12,7 @@ import net.minecraft.item.BowItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.item.PotionItem
 import net.minecraft.registry.Registries
 import net.minecraft.screen.slot.Slot
 import net.minecraft.text.CommonTexts
@@ -35,6 +36,7 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
         reference: StackReference
     ): Boolean {
         val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return false
+        if (other.item !is PotionItem) return false
         val potionContent = other.get(DataComponentTypes.POTION_CONTENTS) ?: return false
         var thisPotion = data.potion
         var charges = data.charges
