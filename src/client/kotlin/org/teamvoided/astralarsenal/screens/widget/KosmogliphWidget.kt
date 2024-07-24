@@ -8,19 +8,21 @@ import net.minecraft.client.gui.widget.ClickableWidget
 import net.minecraft.text.Text
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.menu.CosmicTableMenu
 
 abstract class KosmogliphWidget(
     x: Int, y: Int,
     width: Int, height: Int,
     message: Text,
-    val kosmogliph: Kosmogliph
+    val kosmogliph: Kosmogliph,
+    val handler: CosmicTableMenu
 ) : ClickableWidget(x, y, width, height, message) {
-    var active = false
+    var compatible = !handler.isIncompatible(kosmogliph, handler.getSlot(0).stack)
     val kosmogliphTexture = kosmogliph.id().withPrefix("kosmogliph/")
 
 
     init {
-        tooltip = Tooltip.create(Text.translatable(kosmogliph.translationKey(true)))
+        tooltip = Tooltip.create(handler.createKosmogliphTooltip(kosmogliph))
     }
 
     override fun drawWidget(
@@ -31,7 +33,7 @@ abstract class KosmogliphWidget(
     ) {
         val stack = graphics.matrices
         stack.push()
-        graphics.drawGuiTexture(if (active) ACTIVE_TEXTURE else INACTIVE_TEXTURE, x, y, width, height)
+        graphics.drawGuiTexture(if (compatible) COMPATIBLE_TEXTURE else INCOMPATIBLE_TEXTURE, x, y, width, height)
         graphics.drawGuiTexture(kosmogliphTexture, x + 2, y + 2, (width / 1.2).toInt(), (height / 1.2).toInt())
         stack.pop()
     }
@@ -41,17 +43,17 @@ abstract class KosmogliphWidget(
     }
 
     companion object {
-        val INACTIVE_TEXTURE = id("widget/kosmogliph/inactive")
-        val ACTIVE_TEXTURE = id("widget/kosmogliph/active")
+        val INCOMPATIBLE_TEXTURE = id("widget/kosmogliph/incompatible")
+        val COMPATIBLE_TEXTURE = id("widget/kosmogliph/compatible")
 
         const val SIZE = 22
     }
 }
 
 fun KosmogliphWidget(
-    x: Int, y: Int, width: Int, height: Int, message: Text, kosmogliph: Kosmogliph,
+    x: Int, y: Int, width: Int, height: Int, message: Text, kosmogliph: Kosmogliph, handler: CosmicTableMenu,
     onWidgetClick: KosmogliphWidget.(x: Double, y: Double) -> Unit
-): KosmogliphWidget = object : KosmogliphWidget(x, y, width, height, message, kosmogliph) {
+): KosmogliphWidget = object : KosmogliphWidget(x, y, width, height, message, kosmogliph, handler) {
     override fun onClick(mouseX: Double, mouseY: Double) {
         onWidgetClick(mouseX, mouseY)
     }

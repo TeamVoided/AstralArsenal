@@ -53,7 +53,7 @@ class CosmicTableScreen(
         //determineWidgetPositions(applicableKosmogliphs.size, Vector2i(x + 8, y + 14), 2)
 
         val widgets = positions.mapIndexed { index, position ->
-            KosmogliphWidget(position.x, position.y, SIZE, SIZE, Text.empty(), applicableKosmogliphs[index]) { x, y ->
+            KosmogliphWidget(position.x, position.y, SIZE, SIZE, Text.empty(), applicableKosmogliphs[index], handler) { x, y ->
                 client!!.interactionManager!!.clickButton(handler.syncId, index)
                 Kosmogliph.addToComponent(handler.getSlot(0).stack, kosmogliph)
             }
@@ -160,7 +160,7 @@ class CosmicTableScreen(
     ) {
         val x = (this.width - this.backgroundWidth) / 2
         val y = (this.height - this.backgroundHeight) / 2
-        graphics.fillRenderLayer(RenderLayer.getEndPortal(), x + 5, y + 5, x + (WIDTH - 5), y + (HEIGHT / 2), 0);
+        graphics.fillRenderLayer(RenderLayer.getEndPortal(), x + 5, y + 5, x + (WIDTH - 5), y + (HEIGHT / 2), 0)
         graphics.drawTexture(TEXTURE, x, y, 0, 0, WIDTH, HEIGHT)
     }
 

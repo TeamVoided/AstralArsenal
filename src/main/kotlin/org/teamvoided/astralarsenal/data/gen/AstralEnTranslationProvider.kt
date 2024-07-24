@@ -47,6 +47,10 @@ class AstralEnTranslationProvider(
         }
 
         gen.add("kosmogliph.alchemist.charges", "Charges: %s")
+        gen.add("cosmic_table.enchantments.missing", "Missing: ")
+        gen.add("cosmic_table.enchantments.incompatible", "Incompatible: ")
+        gen.add("comic_table.message.missing", "Your %s is missing enchantments!")
+        gen.add("comic_table.message.incompatible", "Your %s has incompatible enchantments!")
     }
 
     private fun genLang(identifier: Identifier): String =

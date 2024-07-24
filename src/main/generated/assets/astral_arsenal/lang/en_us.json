@@ -1,5 +1,9 @@
 {
   "block.astral_arsenal.cosmic_table": "Cosmic Table",
+  "comic_table.message.incompatible": "Your %s has incompatible enchantments!",
+  "comic_table.message.missing": "Your %s is missing enchantments!",
+  "cosmic_table.enchantments.incompatible": "Incompatible: ",
+  "cosmic_table.enchantments.missing": "Missing: ",
   "death.attack.bleed": "%s bled to death.",
   "death.attack.cannonball": "%s was dunked on by %s",
   "item.astral_arsenal.amerald": "Amerald",
