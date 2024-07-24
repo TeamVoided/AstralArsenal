@@ -43,7 +43,6 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.LIGHTNING_BOLT)
             .add(AstralDamageTypes.BEAM_OF_LIGHT)
 
-        // Lasers, Beams of light, Etc should go here
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_EXPLOSION)
             .add(DamageTypes.EXPLOSION)

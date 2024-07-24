@@ -59,7 +59,7 @@ class FlameThrowerKosmogliph(id: Identifier) :
                             (lerp(player.eyePos.x, result.pos.x, j / interval)),
                             (lerp(player.eyePos.y, result.pos.y, j / interval)),
                             (lerp(player.eyePos.z, result.pos.z, j / interval)),
-                            2,
+                            1,
                             0.2,
                             0.2,
                             0.2,

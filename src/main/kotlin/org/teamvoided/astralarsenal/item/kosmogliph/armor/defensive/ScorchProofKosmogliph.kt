@@ -5,6 +5,7 @@ import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.item.ArmorItem
+import net.minecraft.item.ElytraItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
@@ -13,7 +14,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class ScorchProofKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
-    item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.CHESTPLATE
+    (item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.CHESTPLATE) || item is ElytraItem
 }) {
     override fun modifyDamage(
         stack: ItemStack,

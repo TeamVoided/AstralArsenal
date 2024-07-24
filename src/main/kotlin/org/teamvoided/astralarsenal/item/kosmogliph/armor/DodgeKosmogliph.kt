@@ -20,7 +20,7 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.LEGGINGS
 }) {
     // change this to change how much boost they get :3
-    val JUMP_FORWARD_BOOST = 1.0
+    val JUMP_FORWARD_BOOST = 5.0
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
         val data = stack.get(AstralItemComponents.DODGE_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")

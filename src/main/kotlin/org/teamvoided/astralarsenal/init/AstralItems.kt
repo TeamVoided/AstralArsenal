@@ -8,6 +8,7 @@ import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderLookup.RegistryLookup
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.util.Rarity
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
@@ -28,12 +29,12 @@ object AstralItems {
     val AMERALD = register("amerald", Item(Item.Settings()))
     val CONCENTRATED_AMETHYST_BLEND = register("concentrated_amethyst_blend", Item(Item.Settings()))
     val AMETHYST = register("amethyst", Item(Item.Settings()))
-    val KOSMIC_GEM = register("kosmic_gem", Item(Item.Settings()))
+    val KOSMIC_GEM = register("kosmic_gem", Item(Item.Settings().rarity(Rarity.RARE)))
     val CANNONBALL = register("cannonball", CannonballItem(Item.Settings()))
     val MORTER = register("morter", MorterItem(Item.Settings()))
     val COSMIC_TABLE = register("cosmic_table", BlockItem(AstralBlocks.COSMIC_TABLE, Item.Settings()))
-    val ASTRAL_GREATHAMMER = register("astral_greathammer", AstralGreathammerItem((Item.Settings()).fireproof().attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.5F))))
-    val RAILGUN = register("railgun", RailgunItem(Item.Settings()))
+    val ASTRAL_GREATHAMMER = register("astral_greathammer", AstralGreathammerItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.5F))))
+    val RAILGUN = register("railgun", RailgunItem(Item.Settings().fireproof().maxCount(1).rarity(Rarity.EPIC)))
 
     @Deprecated(
         "Replaced with automatic fetching",

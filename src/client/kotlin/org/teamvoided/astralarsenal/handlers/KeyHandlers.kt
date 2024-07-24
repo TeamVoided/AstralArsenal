@@ -24,17 +24,13 @@ object KeyHandlers {
         val player = client.player ?: return@ClientCtxInvokable
         val jumpKey = client.options.jumpKey
 
-        if (!jumpKey.isPressed) {
+        if (player.isOnGround || player.isCreative || player.isSpectator) {
+            holdingJump.value = true
+        } else if (!jumpKey.isPressed) {
             holdingJump.value = false
         } else if (!holdingJump.value) {
-            val data = player.inventory.armor[3].get(AstralItemComponents.GRAPPLE_DATA)
-            if (player.horizontalCollision && data != null) {
-                ClientPlayNetworking.send(GrappleKosmogliphPayload)
-            } else if (player.isOnGround && !player.isCreative && !player.isSpectator) {
                 ClientPlayNetworking.send(JumpKosmogliphPayload)
-            }
-
-            holdingJump.value = true
+                holdingJump.value = true
         }
     }
 
@@ -58,9 +54,10 @@ object KeyHandlers {
             ClientPlayNetworking.send(DashKosmogliphPayload)
             ClientPlayNetworking.send(DodgeKosmogliphPayload)
             holdingSprint.value = true
-        } else if (key.isPressed) {
-            ClientPlayNetworking.send(SlideKosmogliphPayload)
         }
+//        else if (key.isPressed) {
+//            ClientPlayNetworking.send(SlideKosmogliphPayload)
+//        }
     }
 
     fun interface ClientCtxInvokable : ClientTickEvents.EndTick {
