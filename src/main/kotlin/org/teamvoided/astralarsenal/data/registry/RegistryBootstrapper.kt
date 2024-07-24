@@ -1,10 +1,13 @@
 package org.teamvoided.astralarsenal.data.registry
 
 import net.minecraft.registry.BootstrapContext
+import net.minecraft.registry.DynamicRegistryManager
+import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal.id
+import kotlin.jvm.optionals.getOrNull
 
 abstract class RegistryBootstrapper<V>(val registryKey: RegistryKey<Registry<V>>) {
     protected val toRegister: MutableMap<RegistryKey<V>, Bootstrapper<V>> = mutableMapOf()
@@ -24,6 +27,10 @@ abstract class RegistryBootstrapper<V>(val registryKey: RegistryKey<Registry<V>>
         }
 
         toRegister.clear()
+    }
+
+    fun getHolder(manager: DynamicRegistryManager, key: RegistryKey<V>): Holder<V>? {
+        return manager.get(registryKey).getHolder(key).getOrNull()
     }
 
     fun interface Bootstrapper<V> {
