@@ -14,6 +14,7 @@ import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import java.lang.Math.random
+import kotlin.math.sqrt
 
 class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
@@ -21,6 +22,8 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
 }) {
     // change this to change how much boost they get :3
     val JUMP_FORWARD_BOOST = 5.0
+    val SPEED_CAP = 10.0
+    val SPEED_MULT = sqrt(2 * SPEED_CAP * SPEED_CAP)
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
         val data = stack.get(AstralItemComponents.DODGE_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
@@ -29,6 +32,9 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         if(data.uses > 0 && !world.isClient) {
             val boost = player.movement.multiply(1.0, 0.0, 1.0).multiply(JUMP_FORWARD_BOOST)
             player.addVelocity(boost)
+            if(player.velocity.horizontalLength() > SPEED_CAP)
+                player.velocity = boost.normalize().multiply(SPEED_MULT)
+
             player.velocityModified = true
             world.playSound(
                 null,
