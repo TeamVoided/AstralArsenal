@@ -10,4 +10,7 @@ class TridentReduceKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id) {
     override fun onHit(attacker: Entity?, victim: LivingEntity) {
         victim.addStatusEffect(StatusEffectInstance(AstralEffects.REDUCE, 600), attacker)
     }
+
+    override fun translationText(tooltip: Boolean) =
+        "Reduce"
 }

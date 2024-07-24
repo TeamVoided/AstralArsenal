@@ -53,6 +53,8 @@ interface Kosmogliph {
     ): List<ItemStack> = original
 
     fun id() = REGISTRY.getId(this)!!
+    fun translationText(tooltip: Boolean = false) =
+        id().path.toString()
     fun translationKey(tooltip: Boolean = false) =
         id().toTranslationKey("kosmogliph${if (tooltip) ".tooltip" else ".name"}")
 
