@@ -37,6 +37,7 @@ object AstralKosmogliphs {
     val SLAM = register("slam", ::SlamKosmogliph)
     val GRAPPLE = register("grapple", ::GrappleKosmogliph)
     val BEAM = register("beam", ::BeamKosmogliph)
+    val ALCHEMIST = register("alchemist", ::AlchemistKosmogliph)
 
     val ASTRAL_STRIKE = register("astral_strike", ::AstralStrikeKosmogliph)
     val FREEZE = register("freeze", ::FreezeKosmogliph)

@@ -8,6 +8,7 @@
     "BowKosmogliphUseEvents",
     "DamageReductionMixin",
     "ItemMixin",
+    "PlayerEntityMixin",
     "RangedWeaponItemMixin",
     "ToolItemMixin",
     "TridentMixin"

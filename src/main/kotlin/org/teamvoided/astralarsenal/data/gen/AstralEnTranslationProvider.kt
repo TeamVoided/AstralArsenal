@@ -41,6 +41,8 @@ class AstralEnTranslationProvider(
         keybinds.forEach { (id, name) ->
             gen.add(id.toTranslationKey("key"), name.titleCase())
         }
+
+        gen.add("kosmogliph.alchemist.charges", "Charges: %s")
     }
 
     private fun genLang(identifier: Identifier): String =

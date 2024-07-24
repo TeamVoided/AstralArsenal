@@ -5,11 +5,14 @@ import net.minecraft.client.item.TooltipConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ClickType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +26,7 @@ import org.teamvoided.astralarsenal.init.AstralItemComponents;
 import org.teamvoided.astralarsenal.util.UtilKt;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Mixin(Item.class)
 public abstract class ItemMixin {
@@ -50,6 +54,18 @@ public abstract class ItemMixin {
     @Inject(method = "useOnEntity", at = @At("TAIL"))
     public void kosmogliphOnUseOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         UtilKt.getKosmogliphsOnStack(stack).forEach((kosmogliph) -> kosmogliph.onUseOnEntity(stack, user, entity, hand));
+    }
+
+    @Inject(method = "onClicked", at = @At("TAIL"), cancellable = true)
+    public void kosmogliphOnClicked(ItemStack thisStack, ItemStack otherStack, Slot thisSlot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference, CallbackInfoReturnable<Boolean> cir) {
+        AtomicBoolean actionPerformed = new AtomicBoolean(false);
+        UtilKt.getKosmogliphsOnStack(thisStack).forEach((kosmogliph) -> {
+            if (kosmogliph.onStackClicked(thisStack, otherStack, thisSlot, clickType, player, cursorStackReference)) {
+                actionPerformed.set(true);
+            }
+        });
+
+        if (actionPerformed.get()) cir.setReturnValue(true);
     }
 
     @Inject(method = "postMine", at = @At("TAIL"))

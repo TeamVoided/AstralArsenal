@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.component.DataComponentMap
 import net.minecraft.component.DataComponentType
 import net.minecraft.item.ArmorItem
+import net.minecraft.item.BowItem
 import net.minecraft.item.CrossbowItem
 import net.minecraft.item.Item
 import net.minecraft.item.RangedWeaponItem
@@ -15,7 +16,9 @@ import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.AlchemistKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.BeamKosmogliph
+import java.util.*
 
 object AstralItemComponents {
     private val mods = mutableSetOf<DataComponentTypeModificationContext<*>>()
@@ -53,6 +56,11 @@ object AstralItemComponents {
     val GRAPPLE_DATA: DataComponentType<GrappleKosmogliph.Data> =
         register("grapple_data", { it is ArmorItem || it is ToolItem }, { GrappleKosmogliph.Data(0, 0, false) }) { builder ->
             builder.codec(GrappleKosmogliph.Data.CODEC).build()
+        }
+
+    val ALCHEMIST_DATA: DataComponentType<AlchemistKosmogliph.Data> =
+        register("alchemist_data", { it is BowItem }, { AlchemistKosmogliph.Data(Optional.empty(), 0f) }) { builder ->
+            builder.codec(AlchemistKosmogliph.Data.CODEC).build()
         }
 
     val BEAM_DATA: DataComponentType<BeamKosmogliph.Data> =

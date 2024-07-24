@@ -9,6 +9,8 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.RangedWeaponKosmogliph
 
 fun <T, R : Registry<T>> RegistryKey<R>.tag(id: Identifier) = TagKey.of(this, id)
 
@@ -23,4 +25,12 @@ fun getKosmogliphsOnStack(stack: ItemStack): KosmogliphsComponent {
 
 fun interface BPredicate<T>: Predicate<T>, java.util.function.Predicate<T> {
     override fun test(t: T): Boolean = this(t)
+}
+
+fun Iterable<Kosmogliph>.findFirstRanged(): RangedWeaponKosmogliph? {
+    forEach { kosmogliph ->
+        if (kosmogliph is RangedWeaponKosmogliph) return kosmogliph
+    }
+
+    return null
 }

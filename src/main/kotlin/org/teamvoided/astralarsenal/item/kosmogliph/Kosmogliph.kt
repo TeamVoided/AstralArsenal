@@ -11,6 +11,7 @@ import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.StackReference
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
@@ -19,8 +20,10 @@ import net.minecraft.loot.context.LootContextParameterSet
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
+import net.minecraft.screen.slot.Slot
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
+import net.minecraft.util.ClickType
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -44,6 +47,7 @@ interface Kosmogliph {
     fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {}
     fun shouldNegateDamage(stack: ItemStack, entity: LivingEntity, source: DamageSource, equipmentSlot: EquipmentSlot): Boolean = false
     fun modifyDamage(stack: ItemStack, entity: LivingEntity, damage: Float, source: DamageSource, equipmentSlot: EquipmentSlot): Float = damage
+    fun onStackClicked(stack: ItemStack, other: ItemStack, slot: Slot, clickType: ClickType, player: PlayerEntity, reference: StackReference): Boolean = false
     fun modifyBlockBreakLoot(
         table: LootTable,
         parameters: LootContextParameterSet,
