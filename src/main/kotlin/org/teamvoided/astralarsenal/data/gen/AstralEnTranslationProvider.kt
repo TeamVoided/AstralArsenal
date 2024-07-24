@@ -35,7 +35,6 @@ class AstralEnTranslationProvider(
                 gen.add(kosmogliph.translationKey(true), kosmogliph.translationText(true).titleCase())
                 gen.add(kosmogliph.translationKey(), kosmogliph.translationText().titleCase())
             }
-        //can someone make it so that the kosmogliphs have a dull purple colour in text?
         gen.add("death.attack.cannonball", "%s was dunked on by %s")
         gen.add("death.attack.bleed", "%s bled to death.")
 
@@ -51,6 +50,11 @@ class AstralEnTranslationProvider(
         gen.add("cosmic_table.enchantments.incompatible", "Incompatible: ")
         gen.add("comic_table.message.missing", "Your %s is missing enchantments!")
         gen.add("comic_table.message.incompatible", "Your %s has incompatible enchantments!")
+
+        gen.add("effect.astral_arsenal.unhealable_damage","Hard Damage")
+        gen.add("effect.astral_arsenal.slam_jump","Slam Jump")
+        gen.add("effect.astral_arsenal.reduce","Reduce")
+        gen.add("effect.astral_arsenal.bleed","Bleed")
     }
 
     private fun genLang(identifier: Identifier): String =
