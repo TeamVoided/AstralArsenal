@@ -22,7 +22,9 @@ class BeamOfLightEntity : Entity {
             super(entityType as EntityType<out Entity?>?, world)
 
     constructor(world: World?, owner: LivingEntity?) :
-            super(AstralEntities.BEAM_OF_LIGHT as EntityType<out Entity?>, world)
+            super(AstralEntities.BEAM_OF_LIGHT as EntityType<out Entity?>, world) {
+                this.owner = owner
+            }
 
     constructor(world: World?, x: Double, y: Double, z: Double) :
             super(AstralEntities.BEAM_OF_LIGHT as EntityType<out Entity?>, world)
@@ -45,6 +47,7 @@ class BeamOfLightEntity : Entity {
     var entitiesHit = mutableListOf<Entity>()
     var targetEntity : Entity? = null
     var trackTime = 0
+    var owner: Entity? = null
 
     override fun tick() {
         incrementTime()
@@ -96,7 +99,7 @@ class BeamOfLightEntity : Entity {
                     ))
                 for (entity in entities) {
                     if(!entitiesHit.contains(entity)){
-                    entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT,this.DMG.toFloat())
+                    entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), owner)
                     entity.addVelocity(0.0,THRUST,0.0)
                         entitiesHit.add(entity)
                     }
@@ -127,7 +130,7 @@ class BeamOfLightEntity : Entity {
                         pos.z + side.times(-0.5)
                     ))
                 for (entity in entities) {
-                        entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT,this.DMG.toFloat())
+                        entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), owner)
                     }
                 }}
         }
