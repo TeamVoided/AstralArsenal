@@ -2,6 +2,7 @@
   "values": [
     "minecraft:dragon_breath",
     "minecraft:indirect_magic",
-    "minecraft:magic"
+    "minecraft:magic",
+    "minecraft:wither"
   ]
 }

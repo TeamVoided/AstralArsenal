@@ -51,6 +51,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.SONIC_BOOM)
             .add(DamageTypes.WITHER_SKULL)
             .add(DamageTypes.PLAYER_EXPLOSION)
+            .add(DamageTypes.EXPLOSION)
             .add(DamageTypes.BAD_RESPAWN_POINT)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_PROJECTILE)
