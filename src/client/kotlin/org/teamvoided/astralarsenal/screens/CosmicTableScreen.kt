@@ -4,6 +4,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screen.ingame.HandledScreen
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 import org.joml.Vector2i
 import org.teamvoided.astralarsenal.AstralArsenal
@@ -16,6 +17,7 @@ class CosmicTableScreen(
     handler: CosmicTableMenu, inventory: PlayerInventory, title: Text
 ) : HandledScreen<CosmicTableMenu>(handler, inventory, title) {
     private val currentWidgets = mutableListOf<KosmogliphWidget>()
+    private var lastTickStack = ItemStack.EMPTY
 
 
     // opening with is 160px
@@ -29,13 +31,18 @@ class CosmicTableScreen(
     }
 
     override fun handledScreenTick() {
-        if (!handler.getSlot(0).hasStack()) {
+        val applicationSlot = handler.getSlot(0)
+        val gemSlot = handler.getSlot(1)
+
+        if (!(applicationSlot.hasStack() && gemSlot.hasStack() && (lastTickStack == applicationSlot.stack))) {
             currentWidgets.forEach(::remove)
             currentWidgets.clear()
         } else if (currentWidgets.isEmpty()) {
             createWidgets()
             currentWidgets.forEach { addDrawableSelectableElement(it) }
         }
+
+        lastTickStack = handler.getSlot(0).stack
     }
 
     private fun createWidgets() {

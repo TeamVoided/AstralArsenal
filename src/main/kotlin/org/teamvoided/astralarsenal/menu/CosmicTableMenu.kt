@@ -9,7 +9,10 @@ import net.minecraft.network.PacketByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.slot.Slot
+import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralMenus
+import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 
 class CosmicTableMenu(
@@ -18,8 +21,12 @@ class CosmicTableMenu(
     val data: CosmicTableData = CosmicTableData(SimpleInventory(2)),
 ) : ScreenHandler(AstralMenus.COSMIC_TABLE, syncId) {
     init {
-        addSlot(Slot(data.inventory, 0, 70, 55))
-        addSlot(Slot(data.inventory, 1, 90, 55))
+        addSlot(object : Slot(data.inventory, 0, 70, 55) {
+            override fun canInsert(stack: ItemStack) = kosmogliphCanBeApplied(stack)
+        })
+        addSlot(object : Slot(data.inventory, 1, 90, 55) {
+            override fun canInsert(stack: ItemStack) = stack.isOf(AstralItems.KOSMIC_GEM)
+        })
 
         for (i in 0..<3) {
             for (j in 0..<9) {
@@ -33,11 +40,18 @@ class CosmicTableMenu(
     }
 
     override fun onButtonClick(player: PlayerEntity, id: Int): Boolean {
+        val kosmicGemSlot = getSlot(1)
+        if (!kosmicGemSlot.hasStack() || !kosmicGemSlot.stack.isOf(AstralItems.KOSMIC_GEM)) return false
+
+        val stack = getSlot(0).stack
+        val kosmicGemStack = kosmicGemSlot.stack
         val applicable = applicableKosmogliphs()
         val kosmogliph = applicable[id]
-        val result = Kosmogliph.addToComponent(getSlot(0).stack, kosmogliph)
 
-        return result.isRight()
+        stack.set(AstralItemComponents.KOSMOGLIPHS, KosmogliphsComponent(setOf(kosmogliph)))
+        kosmicGemStack.count--
+
+        return true
     }
 
     fun applicableKosmogliphs(): List<Kosmogliph> {
@@ -47,11 +61,34 @@ class CosmicTableMenu(
             .filter { it.canBeAppliedTo(getSlot(0).stack) }
     }
 
+    fun kosmogliphCanBeApplied(stack: ItemStack) = stack.get(AstralItemComponents.KOSMOGLIPHS) != null
+    fun isKosmikGem(stack: ItemStack) = stack.isOf(AstralItems.KOSMIC_GEM)
+
     override fun quickTransfer(
         player: PlayerEntity,
         fromIndex: Int
     ): ItemStack {
-        return ItemStack.EMPTY
+        var newStack = ItemStack.EMPTY
+        val slot = slots[fromIndex]
+        if (!slot.hasStack()) return newStack
+
+        val originalStack = slot.stack
+        newStack = originalStack.copy()
+        if (fromIndex < data.inventory.size()) {
+            if (!this.insertItem(originalStack, data.inventory.size(), slots.size, true)) {
+                return ItemStack.EMPTY
+            }
+        } else if (!this.insertItem(originalStack, 0, data.inventory.size(), false)) {
+            return ItemStack.EMPTY
+        }
+
+        if (originalStack.isEmpty) {
+            slot.stack = ItemStack.EMPTY
+        } else {
+            slot.markDirty()
+        }
+
+        return newStack
     }
 
     override fun canUse(player: PlayerEntity): Boolean = true
