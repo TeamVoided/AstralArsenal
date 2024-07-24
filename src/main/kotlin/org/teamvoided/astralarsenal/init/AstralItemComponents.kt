@@ -59,7 +59,7 @@ object AstralItemComponents {
         }
 
     val ALCHEMIST_DATA: DataComponentType<AlchemistKosmogliph.Data> =
-        register("alchemist_data", { it is BowItem }, { AlchemistKosmogliph.Data(Optional.empty(), 0f) }) { builder ->
+        register("alchemist_data", { it is BowItem }, { AlchemistKosmogliph.Data(Optional.empty(), 0) }) { builder ->
             builder.codec(AlchemistKosmogliph.Data.CODEC).build()
         }
 

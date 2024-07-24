@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.client.item.TooltipConfig
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.PotionContentsComponent
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectUtil
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.StackReference
@@ -15,16 +16,17 @@ import net.minecraft.item.Items
 import net.minecraft.item.PotionItem
 import net.minecraft.registry.Registries
 import net.minecraft.screen.slot.Slot
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.CommonTexts
 import net.minecraft.text.Text
 import net.minecraft.util.ClickType
 import net.minecraft.util.Formatting
+import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
-import kotlin.math.floor
 
 class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is BowItem }), RangedWeaponKosmogliph {
     override fun onStackClicked(
@@ -51,7 +53,6 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
         if (expectedPotionType != otherPotion.key.get().value) return false
         thisPotion = Optional.of(expectedPotionType)
         charges += 4
-        charges = floor(charges)
 
         reference.set(other.copyWithCount(other.count - 1))
         stack.set(AstralItemComponents.ALCHEMIST_DATA, Data(thisPotion, charges))
@@ -59,19 +60,35 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
         return true
     }
 
-    override fun overrideArrowType(player: PlayerEntity, stack: ItemStack): ItemStack? {
-        val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return null
+    override fun preFire(
+        world: ServerWorld,
+        user: LivingEntity,
+        hand: Hand,
+        stack: ItemStack,
+        projectiles: List<ItemStack>,
+        speed: Float,
+        divergence: Float,
+        isPlayer: Boolean,
+        entity: LivingEntity?
+    ): Boolean {
+        val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return false
         var potion = data.potion
         var charges = data.charges
-        if (charges <= 0 || potion.isEmpty) return null
-        val potionInst = Registries.POTION.getHolder(potion.get()).getOrNull() ?: return null
-        val tippedArrow = PotionContentsComponent.createStack(Items.TIPPED_ARROW, potionInst)
-        charges -= 0.5f
-        if (floor(charges) <= 0) {
+        if (--charges <= 0) {
             potion = Optional.empty()
         }
 
-        stack.set(AstralItemComponents.ALCHEMIST_DATA, Data(potion, charges))
+        stack.set(AstralItemComponents.ALCHEMIST_DATA, Data(potion, charges.coerceAtLeast(0)))
+
+        return false
+    }
+
+    override fun overrideArrowType(player: PlayerEntity, stack: ItemStack): ItemStack? {
+        val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return null
+        if (data.charges <= 0 || data.potion.isEmpty) return null
+        val potionInst = Registries.POTION.getHolder(data.potion.get()).getOrNull() ?: return null
+        val tippedArrow = PotionContentsComponent.createStack(Items.TIPPED_ARROW, potionInst)
+
         return tippedArrow
     }
 
@@ -85,7 +102,7 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
 
         val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return
         tooltip += CommonTexts.EMPTY
-        if (floor(data.charges) <= 0 || data.potion.isEmpty) {
+        if (data.charges <= 0 || data.potion.isEmpty) {
             tooltip += Text.translatable("effect.none").formatted(Formatting.DARK_PURPLE)
             return
         }
@@ -111,18 +128,18 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
             tooltip += text.formatted(Formatting.DARK_PURPLE)
         }
 
-        tooltip += Text.translatable("kosmogliph.alchemist.charges", floor(data.charges).toInt().toString()).formatted(Formatting.DARK_PURPLE)
+        tooltip += Text.translatable("kosmogliph.alchemist.charges", data.charges.toString()).formatted(Formatting.DARK_PURPLE)
     }
 
     class Data(
         val potion: Optional<Identifier>,
-        val charges: Float
+        val charges: Int
     ) {
         companion object {
             val CODEC: Codec<Data> = RecordCodecBuilder.create { builder ->
                 val group = builder.group(
                     Identifier.CODEC.optionalFieldOf("statusEffects").forGetter(Data::potion),
-                    Codec.FLOAT.fieldOf("charges").orElse(0f).forGetter(Data::charges)
+                    Codec.INT.fieldOf("charges").orElse(0).forGetter(Data::charges)
                 )
 
                 group.apply(builder, ::Data)
