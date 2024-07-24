@@ -7,10 +7,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.PickaxeItem
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
-import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockBox
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.breakAndDropStacksAt
@@ -28,9 +28,12 @@ class HammerKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is Picka
 
     fun queryMinablePositions(stack: ItemStack, world: World, pos: BlockPos, miner: LivingEntity): Set<BlockPos> {
         val minablePositions = mutableSetOf(pos)
+        val reach = if (miner.isInCreativeMode) 5.0 else 4.5
+
+        val combined = miner.eyePos.add(miner.rotationVector.multiply(reach))
 
         //raycast always return a BlockHitResult
-        val raycast = miner.raycast(20.0, 0f, false) as BlockHitResult
+        val raycast = world.raycast(RaycastContext(miner.eyePos, combined, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, miner))
         val aoe = areaOfAffect(pos, raycast.side)
 
         aoe.allInside().forEach {
