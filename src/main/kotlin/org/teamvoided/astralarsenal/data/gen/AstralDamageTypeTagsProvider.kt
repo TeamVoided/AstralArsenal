@@ -41,7 +41,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_PLASMA)
             .add(DamageTypes.LIGHTNING_BOLT)
-        //    .add(AstralDamageTypes.BEAM_OF_LIGHT)
+            .add(AstralDamageTypes.BEAM_OF_LIGHT)
 
         // Lasers, Beams of light, Etc should go here
 
@@ -57,7 +57,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.ARROW)
             .add(DamageTypes.LLAMA_SPIT)
             .add(DamageTypes.WIND_CHARGE)
-        //    .add(AstralDamageTypes.CANNONBALL)
+            .add(AstralDamageTypes.CANNONBALL)
 
     }
 }
