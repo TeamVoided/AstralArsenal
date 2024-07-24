@@ -2,11 +2,17 @@ package org.teamvoided.astralarsenal.data.gen
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistrySetBuilder
 import org.teamvoided.astralarsenal.AstralArsenal.LOGGER
+import org.teamvoided.astralarsenal.data.registry.RegistryBootstrapper
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 
 @Suppress("unused")
-class AstralArsenalData : DataGeneratorEntrypoint {
+object AstralArsenalData : DataGeneratorEntrypoint {
+    internal val registriesToGenerate = mutableListOf<RegistryKey<out Registry<*>>>()
+
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {
         LOGGER.info("Hello from DataGen")
         val pack = gen.createPack()
@@ -18,7 +24,16 @@ class AstralArsenalData : DataGeneratorEntrypoint {
         pack.addProvider(::AstralBlockTagProvider)
         pack.addProvider(::AstralDamageTypeTagsProvider)
         pack.addProvider(::AstralItemTagProvider)
+
+        pack.addProvider(::AstralRegistryProvider)
     }
 
-    override fun buildRegistry(gen: RegistrySetBuilder) { }
+    override fun buildRegistry(gen: RegistrySetBuilder) {
+        gen.bootstrapRegistry(AstralDamageTypes)
+    }
+
+    internal fun <T> RegistrySetBuilder.bootstrapRegistry(bootstrapper: RegistryBootstrapper<T>) {
+        add(bootstrapper.registryKey, bootstrapper::bootstrap)
+        registriesToGenerate.add(bootstrapper.registryKey)
+    }
 }
