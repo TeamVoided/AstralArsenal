@@ -29,10 +29,10 @@ class CosmicTableBlock(settings: Settings) : BlockWithEntity(settings) {
         entity: PlayerEntity,
         hitResult: BlockHitResult
     ): ActionResult {
-        if (world.isClient()) return ActionResult.PASS
+        if (world.isClient()) return ActionResult.SUCCESS_NO_ITEM_USED
 
         entity.openHandledScreen(world.getBlockEntity(pos, AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY).orElseThrow())
 
-        return ActionResult.SUCCESS
+        return ActionResult.SUCCESS_NO_ITEM_USED
     }
 }
