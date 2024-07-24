@@ -12,13 +12,11 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.AstralArsenal
-import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class ShotgunKosmogliph (
     id: Identifier,
-) : SimpleKosmogliph(id, { AstralArsenal.LOGGER.info("{}", it.item is CrossbowItem); it.item is CrossbowItem }), RangedWeaponKosmogliph {
+) : SimpleKosmogliph(id, { it.item is CrossbowItem }), RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
         if (world.isClient) return
 
@@ -52,7 +50,5 @@ class ShotgunKosmogliph (
             }
             stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
         }
-
-
-        }
     }
+}
