@@ -45,20 +45,18 @@ class AntidoteKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                 if (!entity.world.isClient) {
                     val x = entity.statusEffects.filter {
                         !it.effectType.value().isBeneficial &&
-                                !blacklist.contains(it.effectType)
+                                !blacklist.contains(it.effectType) &&
+                                !it.isInfinite
                     }
-                    if (x.isNotEmpty()) {
-                        for (balls in x) {
-                            entity.statusEffects.remove(balls)
-                            entity.addStatusEffect(
-                                StatusEffectInstance(
-                                    balls.effectType,
-                                    balls.duration - 1, balls.amplifier,
-                                    balls.isAmbient, balls.shouldShowParticles(), balls.shouldShowIcon()
-                                )
+                    x.forEach { effect ->
+                        entity.statusEffects.remove(effect)
+                        entity.addStatusEffect(
+                            StatusEffectInstance(
+                                effect.effectType,
+                                effect.duration - 1, effect.amplifier,
+                                effect.isAmbient, effect.shouldShowParticles(), effect.shouldShowIcon()
                             )
-                        }
-
+                        )
                     }
                 }
             }
