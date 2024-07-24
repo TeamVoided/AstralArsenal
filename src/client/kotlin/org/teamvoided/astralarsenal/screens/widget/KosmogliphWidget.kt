@@ -43,6 +43,8 @@ abstract class KosmogliphWidget(
     companion object {
         val INACTIVE_TEXTURE = id("widget/kosmogliph/inactive")
         val ACTIVE_TEXTURE = id("widget/kosmogliph/active")
+
+        const val SIZE = 22
     }
 }
 

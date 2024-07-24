@@ -10,13 +10,23 @@ import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.menu.CosmicTableMenu
 import org.teamvoided.astralarsenal.screens.widget.KosmogliphWidget
+import org.teamvoided.astralarsenal.screens.widget.KosmogliphWidget.Companion.SIZE
 
 class CosmicTableScreen(
-    handler: CosmicTableMenu,
-    inventory: PlayerInventory,
-    title: Text
+    handler: CosmicTableMenu, inventory: PlayerInventory, title: Text
 ) : HandledScreen<CosmicTableMenu>(handler, inventory, title) {
     private val currentWidgets = mutableListOf<KosmogliphWidget>()
+
+
+    // opening with is 160px
+
+    override fun init() {
+        super.init()
+        currentWidgets.forEach(::remove)
+        currentWidgets.clear()
+        createWidgets()
+        currentWidgets.forEach(::addDrawableSelectableElement)
+    }
 
     override fun handledScreenTick() {
         if (!handler.getSlot(0).hasStack()) {
@@ -29,18 +39,14 @@ class CosmicTableScreen(
     }
 
     private fun createWidgets() {
-        val applicableKosmogliphs =
-            Kosmogliph.REGISTRY.holders()
-                .toList()
-                .map { it.value() }
-                .filter { it.canBeAppliedTo(handler.getSlot(0).stack) }
+        val applicableKosmogliphs = Kosmogliph.REGISTRY.holders().toList().map { it.value() }
+            .filter { it.canBeAppliedTo(handler.getSlot(0).stack) }
 
-        val x = (this.width - this.backgroundWidth) / 2
-        val y = (this.height - this.backgroundHeight) / 2
-        val positions = determineWidgetPositions(applicableKosmogliphs.size, Vector2i(x + 8, y + 14), 2)
+        val positions = getPositions(applicableKosmogliphs.size)
+        //determineWidgetPositions(applicableKosmogliphs.size, Vector2i(x + 8, y + 14), 2)
 
         val widgets = positions.mapIndexed { index, position ->
-            KosmogliphWidget(position.x, position.y, 22, 22, Text.empty(), applicableKosmogliphs[index]) { x, y ->
+            KosmogliphWidget(position.x, position.y, SIZE, SIZE, Text.empty(), applicableKosmogliphs[index]) { x, y ->
                 client!!.interactionManager!!.clickButton(handler.syncId, index)
                 Kosmogliph.addToComponent(handler.getSlot(0).stack, kosmogliph)
             }
@@ -48,6 +54,50 @@ class CosmicTableScreen(
 
         currentWidgets.addAll(widgets)
     }
+
+    private fun getPositions(count: Int): List<Vector2i> {
+
+        val halfSize = SIZE / 2
+        val y = y + 14 + GAP
+        val x = (this.width / 2) - halfSize
+
+        val y2 = y + GAP + SIZE
+
+        return when (count) {
+            0 -> emptyList()
+            1 -> listOf(Vector2i(x, y))
+            2 -> listOf(Vector2i(x - 30, y), Vector2i(x + 30, y))
+            3 -> listOf(Vector2i(x - 30, y), Vector2i(x, y), Vector2i(x + 30, y))
+            4 -> listOf(
+                Vector2i(x - 60, y),
+                Vector2i(x - 20, y),
+                Vector2i(x + 20, y),
+                Vector2i(x + 60, y)
+            )
+
+            5 -> makeTopRow(x, y)
+
+            6 -> listOf(
+                Vector2i(x - 60, y),
+                Vector2i(x - 20, y),
+                Vector2i(x + 20, y),
+                Vector2i(x + 60, y)
+            ).plus(Vector2i(x - 40, y2)).plus(Vector2i(x + 40, y2))
+            7 -> makeTopRow(x,y)
+                .plus(Vector2i(x - 50, y2))
+                .plus(Vector2i(x + 50, y2))
+
+            else -> emptyList() //throw IllegalStateException("Are more than 10 kosmogliphs are applicable to this item?")
+        }
+    }
+
+    fun makeTopRow(x: Int, y: Int) = listOf(
+        Vector2i(x - 60, y),
+        Vector2i(x - 30, y),
+        Vector2i(x, y),
+        Vector2i(x + 30, y),
+        Vector2i(x + 60, y)
+    )
 
     private fun determineWidgetPositions(count: Int, offset: Vector2i, gap: Int): List<Vector2i> {
         if (count <= 0) return emptyList()
@@ -99,10 +149,7 @@ class CosmicTableScreen(
     }
 
     override fun drawBackground(
-        graphics: GuiGraphics,
-        delta: Float,
-        mouseX: Int,
-        mouseY: Int
+        graphics: GuiGraphics, delta: Float, mouseX: Int, mouseY: Int
     ) {
         val x = (this.width - this.backgroundWidth) / 2
         val y = (this.height - this.backgroundHeight) / 2
@@ -117,8 +164,9 @@ class CosmicTableScreen(
 
     companion object {
         val TEXTURE = AstralArsenal.id("textures/gui/container/cosmic_table.png")
-        val WIDTH = 175
-        val HEIGHT = 165
+        const val WIDTH = 175
+        const val HEIGHT = 165
 
+        const val GAP = 4
     }
 }
