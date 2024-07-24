@@ -1,11 +1,9 @@
 {
   "values": [
-    "#minecraft:is_explosion",
+    "minecraft:explosion",
+    "minecraft:player_attack",
     "minecraft:fireworks",
     "minecraft:sonic_boom",
-    "minecraft:wither_skull",
-    "minecraft:player_explosion",
-    "minecraft:explosion",
-    "minecraft:bad_respawn_point"
+    "minecraft:wither_skull"
   ]
 }
