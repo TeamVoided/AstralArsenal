@@ -1,7 +1,6 @@
 package org.teamvoided.astralarsenal.mixin;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.client.item.TooltipConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,7 +9,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Hand;
@@ -22,20 +20,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.teamvoided.astralarsenal.init.AstralItemComponents;
 import org.teamvoided.astralarsenal.util.UtilKt;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Mixin(Item.class)
 public abstract class ItemMixin {
-    @Inject(method = "appendTooltip", at = @At("TAIL"))
-    void kosmogliphTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipConfig config, CallbackInfo ci) {
-        if (!stack.getComponents().contains(AstralItemComponents.INSTANCE.getKOSMOGLIPHS())) return;
-        UtilKt.getKosmogliphsOnStack(stack).forEach(kosmogliph -> kosmogliph.modifyItemTooltip(stack, context, tooltip, config));
-    }
-
     @Inject(method = "use", at = @At("HEAD"))
     public void kosmogliphPreUse(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         UtilKt.getKosmogliphsOnStack(user.getStackInHand(hand)).forEach((kosmogliph) -> kosmogliph.preUse(world, user, hand));
