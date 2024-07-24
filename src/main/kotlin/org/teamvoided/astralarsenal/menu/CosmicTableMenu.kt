@@ -80,6 +80,10 @@ class CosmicTableMenu(
         return true
     }
 
+    fun hasKosmogliph(stack: ItemStack): Boolean {
+        return (stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()).isNotEmpty()
+    }
+
     fun applicableKosmogliphs(): List<Kosmogliph> {
         return Kosmogliph.REGISTRY.holders()
             .toList()
