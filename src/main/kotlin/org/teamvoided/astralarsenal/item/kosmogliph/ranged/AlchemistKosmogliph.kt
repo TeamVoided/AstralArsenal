@@ -67,6 +67,8 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
         isPlayer: Boolean,
         entity: LivingEntity?
     ): Boolean {
+        if (user.isInCreativeMode) return false
+
         val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return false
         var potion = data.potion
         var charges = data.charges
