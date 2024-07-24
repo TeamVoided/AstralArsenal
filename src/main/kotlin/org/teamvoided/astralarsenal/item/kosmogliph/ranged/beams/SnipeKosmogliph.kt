@@ -28,7 +28,7 @@ class SnipeKosmogliph (id: Identifier) :
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         var result = player.raycast(100.0, 1f, false)
         var distance = sqrt(
-            sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + (player.eyePos.y - result.pos.y).pow(
+            sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y- 0.5) - result.pos.y).pow(
                 2
             )
         )
@@ -39,10 +39,10 @@ class SnipeKosmogliph (id: Identifier) :
                 world.getOtherEntities(
                     player, Box(
                         (lerp(player.eyePos.x, result.pos.x, i / interval)) + 0.5,
-                        (lerp(player.eyePos.y, result.pos.y, i / interval)) + 0.5,
+                        (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)) + 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) + 0.5,
                         (lerp(player.eyePos.x, result.pos.x, i / interval)) - 0.5,
-                        (lerp(player.eyePos.y, result.pos.y, i / interval)) - 0.5,
+                        (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)) - 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
                 )
@@ -52,7 +52,7 @@ class SnipeKosmogliph (id: Identifier) :
                 serverWorld.spawnParticles(
                     ParticleTypes.END_ROD,
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
-                    (lerp(player.eyePos.y, result.pos.y, i / interval)),
+                    (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),
                     5,
                     0.2,
@@ -82,7 +82,7 @@ class SnipeKosmogliph (id: Identifier) :
         mcCoroutineTask(delay = 20.ticks) {
             result = player.raycast(100.0, 1f, false)
             distance = sqrt(
-                sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + (player.eyePos.y - result.pos.y).pow(
+                sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y- 0.5) - result.pos.y).pow(
                     2
                 )
             )
@@ -93,10 +93,10 @@ class SnipeKosmogliph (id: Identifier) :
                     world.getOtherEntities(
                         player, Box(
                             (lerp(player.eyePos.x, result.pos.x, i / interval)) + 0.5,
-                            (lerp(player.eyePos.y, result.pos.y, i / interval)) + 0.5,
+                            (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)) + 0.5,
                             (lerp(player.eyePos.z, result.pos.z, i / interval)) + 0.5,
                             (lerp(player.eyePos.x, result.pos.x, i / interval)) - 0.5,
-                            (lerp(player.eyePos.y, result.pos.y, i / interval)) - 0.5,
+                            (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)) - 0.5,
                             (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
                         )
                     )
@@ -106,9 +106,9 @@ class SnipeKosmogliph (id: Identifier) :
                     serverWorld.spawnParticles(
                         ParticleTypes.END_ROD,
                         (lerp(player.eyePos.x, result.pos.x, i / interval)),
-                        (lerp(player.eyePos.y, result.pos.y, i / interval)),
+                        (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)),
                         (lerp(player.eyePos.z, result.pos.z, i / interval)),
-                        100,
+                        5,
                         0.2,
                         0.2,
                         0.2,

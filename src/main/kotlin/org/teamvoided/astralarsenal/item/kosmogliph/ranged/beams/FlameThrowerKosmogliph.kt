@@ -33,7 +33,7 @@ class FlameThrowerKosmogliph(id: Identifier) :
             mcCoroutineTask(delay = (i * 0.005).seconds) {
                 val result = player.raycast(10.0, 1f, false)
                 val distance = sqrt(
-                    sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + (player.eyePos.y - result.pos.y).pow(
+                    sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y- 0.5) - result.pos.y).pow(
                         2
                     )
                 )
@@ -43,12 +43,12 @@ class FlameThrowerKosmogliph(id: Identifier) :
                     entities.addAll(
                         world.getOtherEntities(
                             player, Box(
-                                (lerp(player.pos.x, result.pos.x, j / interval)) + 0.5,
-                                (lerp(player.pos.y, result.pos.y, j / interval)) + 0.5,
-                                (lerp(player.pos.z, result.pos.z, j / interval)) + 0.5,
-                                (lerp(player.pos.x, result.pos.x, j / interval)) - 0.5,
-                                (lerp(player.pos.y, result.pos.y, j / interval)) - 0.5,
-                                (lerp(player.pos.z, result.pos.z, j / interval)) - 0.5
+                                (lerp(player.eyePos.x, result.pos.x, j / interval)) + 0.5,
+                                (lerp(player.eyePos.y- 0.5, result.pos.y, j / interval)) + 0.5,
+                                (lerp(player.eyePos.z, result.pos.z, j / interval)) + 0.5,
+                                (lerp(player.eyePos.x, result.pos.x, j / interval)) - 0.5,
+                                (lerp(player.eyePos.y- 0.5, result.pos.y, j / interval)) - 0.5,
+                                (lerp(player.eyePos.z, result.pos.z, j / interval)) - 0.5
                             )
                         )
                     )
@@ -57,7 +57,7 @@ class FlameThrowerKosmogliph(id: Identifier) :
                         serverWorld.spawnParticles(
                             ParticleTypes.FLAME,
                             (lerp(player.eyePos.x, result.pos.x, j / interval)),
-                            (lerp(player.eyePos.y, result.pos.y, j / interval)),
+                            (lerp(player.eyePos.y- 0.5, result.pos.y, j / interval)),
                             (lerp(player.eyePos.z, result.pos.z, j / interval)),
                             1,
                             0.2,

@@ -24,7 +24,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         val result = player.raycast(100.0, 1f, false)
-        val distance = sqrt(sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + (player.eyePos.y - result.pos.y).pow(2))
+        val distance = sqrt(sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y - 0.5) - result.pos.y).pow(2))
         val entities = mutableListOf<Entity>()
         val interval = (distance.times(2))
         for (i in 0..interval.roundToInt()) {
@@ -32,10 +32,10 @@ class BasicRailgunKosmogliph(id: Identifier) :
                 world.getOtherEntities(
                     player, Box(
                         (lerp(player.eyePos.x, result.pos.x, i / interval)) + 0.5,
-                        (lerp(player.eyePos.y, result.pos.y, i / interval)) + 0.5,
+                        (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) + 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) + 0.5,
                         (lerp(player.eyePos.x, result.pos.x, i / interval)) - 0.5,
-                        (lerp(player.eyePos.y, result.pos.y, i / interval)) - 0.5,
+                        (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
                 )
@@ -45,7 +45,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
                 serverWorld.spawnParticles(
                     ParticleTypes.END_ROD,
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
-                    (lerp(player.eyePos.y, result.pos.y, i / interval)),
+                    (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),
                     10,
                     0.2,

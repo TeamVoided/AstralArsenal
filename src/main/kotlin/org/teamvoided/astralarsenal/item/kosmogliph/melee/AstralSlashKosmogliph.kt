@@ -2,24 +2,40 @@ package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.SwordItem
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.coroutine.mcCoroutineTask
+import org.teamvoided.astralarsenal.coroutine.ticks
 import org.teamvoided.astralarsenal.entity.SlashEntity
+import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+import kotlin.time.Duration.Companion.seconds
 
 class AstralSlashKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem && it.item !is AstralGreathammerItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         if (!world.isClient) {
             var w = -20
             repeat(20){
+                mcCoroutineTask(delay = 0.01.seconds) {
                 val snowballEntity = SlashEntity(world, player)
                 snowballEntity.setDmg(10f)
                 snowballEntity.setProperties(player, player.pitch, player.yaw + w, 0.0f, 2.0f, 0.0f)
                 world.spawnEntity(snowballEntity)
                 w += 2
+                }
             }
+            world.playSound(null,
+                player.x,
+                player.y,
+                player.z,
+                SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP,
+                SoundCategory.PLAYERS,
+                1.0F,
+                1.0f)
             if (!player.isCreative) {
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 200)
             }

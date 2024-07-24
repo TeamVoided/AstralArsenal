@@ -2,9 +2,12 @@ package org.teamvoided.astralarsenal.item.kosmogliph.ranged
 
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.ChargedProjectilesComponent
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.CrossbowItem
+import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
@@ -48,4 +51,12 @@ class CannonballLauncherKosmogliph(
             }
     }
 }
+
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
+        return listOf(Enchantments.MULTISHOT)
+    }
+
+    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
+        return listOf(Enchantments.PIERCING)
+    }
 }
