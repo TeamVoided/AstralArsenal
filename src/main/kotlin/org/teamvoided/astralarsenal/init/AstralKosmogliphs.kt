@@ -74,7 +74,7 @@ object AstralKosmogliphs {
     val SHOTGUN = register("shotgun", ::ShotgunKosmogliph)
 
     val ORBITAL = register("orbital", ::OrbitalKosmogliph)
-    val DEVISTATE = register("devistate", ::DevistateKosmogliph)
+    val DEVASTATE = register("devastate", ::DevastateKosmogliph)
     val LOCK_OFF = register("lock_off", ::LockOffKosmogliph)
     val TIME_BOMB = register("time_bomb", ::TimeBombKosmogliph)
 

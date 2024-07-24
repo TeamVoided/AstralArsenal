@@ -11,12 +11,11 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.RangedWeaponKosmogliph
 
-class DevistateKosmogliph (
+class DevastateKosmogliph (
     id: Identifier,
 ) : SimpleKosmogliph(id, { it.item is CrossbowItem || it.item is BowItem }),
     RangedWeaponKosmogliph {

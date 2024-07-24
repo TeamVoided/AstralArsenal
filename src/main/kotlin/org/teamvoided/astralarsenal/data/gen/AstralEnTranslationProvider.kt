@@ -32,7 +32,7 @@ class AstralEnTranslationProvider(
             .map { it.value() }
             .forEach { kosmogliph ->
                 gen.add(kosmogliph.translationKey(true), kosmogliph.translationText(true).titleCase())
-                gen.add(kosmogliph.translationKey(), kosmogliph.translationText())
+                gen.add(kosmogliph.translationKey(), kosmogliph.translationText().titleCase())
             }
         //can someone make it so that the kosmogliphs have a dull purple colour in text?
         gen.add("death.attack.cannonball", "%s was dunked on by %s")
