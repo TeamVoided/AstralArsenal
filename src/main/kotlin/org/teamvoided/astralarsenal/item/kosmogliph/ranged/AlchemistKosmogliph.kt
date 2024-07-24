@@ -9,11 +9,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectUtil
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.StackReference
-import net.minecraft.item.BowItem
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.item.PotionItem
+import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.screen.slot.Slot
 import net.minecraft.server.world.ServerWorld
@@ -28,7 +24,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
-class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is BowItem }), RangedWeaponKosmogliph {
+class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is BowItem }), BowKosmogliph {
     override fun onStackClicked(
         stack: ItemStack,
         other: ItemStack,
@@ -83,7 +79,10 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
         return false
     }
 
-    override fun overrideArrowType(player: PlayerEntity, stack: ItemStack): ItemStack? {
+    override fun overrideArrowType(player: PlayerEntity, stack: ItemStack, original: ItemStack): ItemStack? {
+        if (original.isEmpty) return null
+        original.decrement(1)
+
         val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return null
         if (data.charges <= 0 || data.potion.isEmpty) return null
         val potionInst = Registries.POTION.getHolder(data.potion.get()).getOrNull() ?: return null

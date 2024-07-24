@@ -6,9 +6,9 @@
   "mixins": [
     "AbstractBlockMixin",
     "BowKosmogliphUseEvents",
+    "BowMixin",
     "DamageReductionMixin",
     "ItemMixin",
-    "PlayerEntityMixin",
     "RangedWeaponItemMixin",
     "ToolItemMixin",
     "TridentMixin"
