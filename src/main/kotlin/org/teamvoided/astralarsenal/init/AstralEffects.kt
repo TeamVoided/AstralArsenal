@@ -9,6 +9,7 @@ import net.minecraft.registry.Holder
 import net.minecraft.registry.Registries
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
+import org.teamvoided.astralarsenal.effects.BleedStatusEffect
 import org.teamvoided.astralarsenal.util.registerHolder
 
 object AstralEffects {
@@ -28,7 +29,10 @@ object AstralEffects {
             )
     )
     val REDUCE = register(
-        "reduce", AstralStatusEffect(StatusEffectType.HARMFUL, 6684672)
+        "reduce", AstralStatusEffect(StatusEffectType.HARMFUL, 0x660000)
+    )
+    val BLEED = register(
+        "bleed", BleedStatusEffect(0x660000)
     )
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =

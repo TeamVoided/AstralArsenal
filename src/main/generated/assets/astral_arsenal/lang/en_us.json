@@ -54,6 +54,7 @@
   "kosmogliph.name.astral_arsenal.step_up": "Step Up",
   "kosmogliph.name.astral_arsenal.thermal": "Thermal",
   "kosmogliph.name.astral_arsenal.time_bomb": "Time Bomb",
+  "kosmogliph.name.astral_arsenal.trident_bleed": "Bleed",
   "kosmogliph.name.astral_arsenal.trident_reduce": "Reduce",
   "kosmogliph.name.astral_arsenal.vein_miner": "Vein Miner",
   "kosmogliph.tooltip.astral_arsenal.antidote": "Antidote",
@@ -92,6 +93,7 @@
   "kosmogliph.tooltip.astral_arsenal.step_up": "Step Up",
   "kosmogliph.tooltip.astral_arsenal.thermal": "Thermal",
   "kosmogliph.tooltip.astral_arsenal.time_bomb": "Time Bomb",
+  "kosmogliph.tooltip.astral_arsenal.trident_bleed": "Bleed",
   "kosmogliph.tooltip.astral_arsenal.trident_reduce": "Reduce",
   "kosmogliph.tooltip.astral_arsenal.vein_miner": "Vein Miner"
 }
