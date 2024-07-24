@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.minecraft.block.BlockState
 import net.minecraft.client.item.TooltipConfig
+import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -61,6 +62,9 @@ interface Kosmogliph {
         id().path.toString()
     fun translationKey(tooltip: Boolean = false) =
         id().toTranslationKey("kosmogliph${if (tooltip) ".tooltip" else ".name"}")
+
+    fun requiredEnchantments(): List<RegistryKey<Enchantment>> = listOf()
+    fun disallowedEnchantment(): List<RegistryKey<Enchantment>> = listOf()
 
     data class Failure(val reason: Text)
 
