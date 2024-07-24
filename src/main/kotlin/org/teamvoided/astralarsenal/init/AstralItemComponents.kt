@@ -6,9 +6,11 @@ import net.minecraft.component.DataComponentType
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.BowItem
 import net.minecraft.item.CrossbowItem
+import net.minecraft.item.ElytraItem
 import net.minecraft.item.Item
 import net.minecraft.item.RangedWeaponItem
 import net.minecraft.item.ToolItem
+import net.minecraft.item.TridentItem
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
@@ -24,7 +26,7 @@ object AstralItemComponents {
     private val mods = mutableSetOf<DataComponentTypeModificationContext<*>>()
 
     val KOSMOGLIPHS: DataComponentType<KosmogliphsComponent> =
-        register("kosmogliphs", { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem }, { KosmogliphsComponent() }) { builder ->
+        register("kosmogliphs", { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem }, { KosmogliphsComponent() }) { builder ->
             builder.codec(KosmogliphsComponent.CODEC).build()
         }
 
