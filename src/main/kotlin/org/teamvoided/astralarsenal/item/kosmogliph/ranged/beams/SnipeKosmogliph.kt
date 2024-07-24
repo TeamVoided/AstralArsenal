@@ -1,6 +1,7 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams
 
 import net.minecraft.entity.Entity
+import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.SwordItem
 import net.minecraft.particle.ParticleTypes
@@ -74,7 +75,12 @@ class SnipeKosmogliph (id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, 7.5f)
+            entity.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
+                    player,
+                    player
+                ), 7.5f)
         }
         if (!player.isCreative) {
             player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
@@ -128,7 +134,12 @@ class SnipeKosmogliph (id: Identifier) :
                 1.0f
             )
             for (entity in entities) {
-                entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, 7.5f)
+                entity.damage(
+                    DamageSource(
+                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
+                        player,
+                        player
+                    ), 7.5f)
             }
             if (!player.isCreative) {
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)

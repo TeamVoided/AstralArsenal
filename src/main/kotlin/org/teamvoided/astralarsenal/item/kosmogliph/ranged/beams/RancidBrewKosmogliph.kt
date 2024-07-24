@@ -2,6 +2,8 @@ package org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -72,7 +74,12 @@ class RancidBrewKosmogliph (id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            entity.damage(entity.damageSources.magic(),5f)
+            entity.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
+                    player,
+                    player
+                ),5f)
             if(entity is LivingEntity){
             entity.addStatusEffect(
                 StatusEffectInstance(

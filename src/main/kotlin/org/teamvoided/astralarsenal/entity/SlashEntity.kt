@@ -2,6 +2,8 @@ package org.teamvoided.astralarsenal.entity
 
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
@@ -13,6 +15,7 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities
 
@@ -69,7 +72,12 @@ class SlashEntity : ThrownItemEntity {
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
-        entityHitResult.entity.damage(damageSources.magic(),this.getDmg())
+        entityHitResult.entity.damage(
+            DamageSource(
+            AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
+            this,
+            owner
+        ),this.getDmg())
         super.onEntityHit(entityHitResult)
     }
 

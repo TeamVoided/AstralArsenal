@@ -1,6 +1,8 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams
 
 import net.minecraft.entity.Entity
+import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.SwordItem
 import net.minecraft.particle.ParticleTypes
@@ -68,7 +70,12 @@ class RayofFrostKosmogliph (id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            entity.damage(entity.damageSources.freeze(),5f)
+            entity.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(world.registryManager, DamageTypes.FREEZE),
+                    player,
+                    player
+                ),5f)
             entity.frozenTicks += 300
         }
         if (!player.isCreative) {

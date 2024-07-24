@@ -23,7 +23,7 @@ class HeavyKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     ): Float {
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_EXPLOSION)) {
-            outputDamage = (outputDamage * 0.1).toFloat()
+            outputDamage = (outputDamage * 0.0).toFloat()
         }
         return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
     }

@@ -36,6 +36,14 @@ class AstralSlashKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is
                 SoundCategory.PLAYERS,
                 1.0F,
                 1.0f)
+            world.playSound(null,
+                player.x,
+                player.y,
+                player.z,
+                SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE,
+                SoundCategory.PLAYERS,
+                1.0F,
+                1.0f)
             if (!player.isCreative) {
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 200)
             }

@@ -19,6 +19,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.DRAGON_BREATH)
             .add(DamageTypes.INDIRECT_MAGIC)
             .add(DamageTypes.MAGIC)
+            .add(DamageTypes.WITHER)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_FIRE)
             .forceAddTag(DamageTypeTags.IS_FIRE)
@@ -45,11 +46,12 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
 
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_EXPLOSION)
-            .add(DamageTypes.EXPLOSION)
-            .add(DamageTypes.PLAYER_ATTACK)
+            .forceAddTag(DamageTypeTags.IS_EXPLOSION)
             .add(DamageTypes.FIREWORKS)
             .add(DamageTypes.SONIC_BOOM)
             .add(DamageTypes.WITHER_SKULL)
+            .add(DamageTypes.PLAYER_EXPLOSION)
+            .add(DamageTypes.BAD_RESPAWN_POINT)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_PROJECTILE)
             .add(DamageTypes.MOB_PROJECTILE)

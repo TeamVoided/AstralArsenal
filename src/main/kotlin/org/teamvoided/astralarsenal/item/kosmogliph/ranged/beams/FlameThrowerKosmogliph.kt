@@ -1,11 +1,14 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams
 
 import net.minecraft.entity.Entity
+import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.SwordItem
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
@@ -69,9 +72,23 @@ class FlameThrowerKosmogliph(id: Identifier) :
                     }
                 }
                 for (entity in entities) {
-                    entity.damage(entity.damageSources.inFire(), 3f)
+                    entity.damage(
+                        DamageSource(
+                            AstralDamageTypes.getHolder(world.registryManager, DamageTypes.IN_FIRE),
+                            player,
+                            player
+                        ), 3f)
                     entity.setOnFireFor(200)
                 }
+                if(i % 20 == 0){
+                world.playSound(null,
+                    player.x,
+                    player.y,
+                    player.z,
+                    SoundEvents.BLOCK_FIRE_AMBIENT,
+                    SoundCategory.PLAYERS,
+                    1.0F,
+                    1.0f)}
             }
         }
         if (!player.isCreative) {
