@@ -34,7 +34,7 @@ class CosmicTableScreen(
         val applicationSlot = handler.getSlot(0)
         val gemSlot = handler.getSlot(1)
 
-        if (!(applicationSlot.hasStack() && (gemSlot.hasStack() || handler.hasKosmogliph(applicationSlot.stack)) && (lastTickStack == applicationSlot.stack))) {
+        if (!(applicationSlot.hasStack() && (gemSlot.hasStack() || handler.hasKosmogliph(applicationSlot.stack) || handler.playerInventory.player.isCreative) && (lastTickStack == applicationSlot.stack))) {
             currentWidgets.forEach(::remove)
             currentWidgets.clear()
         } else if (currentWidgets.isEmpty()) {
