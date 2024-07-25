@@ -20,6 +20,10 @@ class CosmicTableScreen(
     private var lastTickStack = ItemStack.EMPTY
 
 
+    init {
+        titleY -= 2
+        playerInventoryTitleY += 1
+    }
     // opening with is 160px
 
     override fun init() {
@@ -53,7 +57,15 @@ class CosmicTableScreen(
         //determineWidgetPositions(applicableKosmogliphs.size, Vector2i(x + 8, y + 14), 2)
 
         val widgets = positions.mapIndexed { index, position ->
-            KosmogliphWidget(position.x, position.y, SIZE, SIZE, Text.empty(), applicableKosmogliphs[index], handler) { x, y ->
+            KosmogliphWidget(
+                position.x,
+                position.y,
+                SIZE,
+                SIZE,
+                Text.empty(),
+                applicableKosmogliphs[index],
+                handler
+            ) { x, y ->
                 client!!.interactionManager!!.clickButton(handler.syncId, index)
                 Kosmogliph.addToComponent(handler.getSlot(0).stack, kosmogliph)
             }
@@ -90,7 +102,8 @@ class CosmicTableScreen(
                 Vector2i(x + 20, y),
                 Vector2i(x + 60, y)
             ).plus(Vector2i(x - 40, y2)).plus(Vector2i(x + 40, y2))
-            7 -> makeTopRow(x,y)
+
+            7 -> makeTopRow(x, y)
                 .plus(Vector2i(x - 50, y2))
                 .plus(Vector2i(x + 50, y2))
 

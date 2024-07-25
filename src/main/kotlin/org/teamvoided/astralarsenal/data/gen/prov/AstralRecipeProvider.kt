@@ -11,6 +11,7 @@ import net.minecraft.item.Items
 import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
+import org.teamvoided.astralarsenal.init.AstralBlocks
 import org.teamvoided.astralarsenal.init.AstralItems
 import java.util.concurrent.CompletableFuture
 
@@ -23,7 +24,7 @@ class AstralRecipeProvider(
     }
 
     private fun RecipeExporter.generateCraftingRecipes() {
-        shaped(AstralItems.COSMIC_TABLE)
+        shaped(AstralBlocks.COSMIC_TABLE)
             .pattern("DED")
             .pattern("ONO")
             .pattern("COC")

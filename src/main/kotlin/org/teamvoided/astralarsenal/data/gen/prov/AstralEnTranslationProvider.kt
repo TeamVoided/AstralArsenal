@@ -12,6 +12,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralTabs
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
@@ -51,10 +52,12 @@ class AstralEnTranslationProvider(
         gen.add("comic_table.message.missing", "Your %s is missing enchantments!")
         gen.add("comic_table.message.incompatible", "Your %s has incompatible enchantments!")
 
-        gen.add("effect.astral_arsenal.unhealable_damage","Hard Damage")
-        gen.add("effect.astral_arsenal.slam_jump","Slam Jump")
-        gen.add("effect.astral_arsenal.reduce","Reduce")
-        gen.add("effect.astral_arsenal.bleed","Bleed")
+        gen.add(AstralEffects.UNHEALABLE_DAMAGE.value().translationKey, "Hard Damage")
+        gen.add(AstralEffects.SLAM_JUMP.value().translationKey, "Slam Jump")
+        gen.add(AstralEffects.REDUCE.value().translationKey, "Reduce")
+        gen.add(AstralEffects.BLEED.value().translationKey, "Bleed")
+
+        gen.add("container.cosmic_table", "Cosmic Table")
     }
 
     private fun genLang(identifier: Identifier): String =

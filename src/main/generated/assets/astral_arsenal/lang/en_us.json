@@ -2,6 +2,7 @@
   "block.astral_arsenal.cosmic_table": "Cosmic Table",
   "comic_table.message.incompatible": "Your %s has incompatible enchantments!",
   "comic_table.message.missing": "Your %s is missing enchantments!",
+  "container.cosmic_table": "Cosmic Table",
   "cosmic_table.enchantments.incompatible": "Incompatible: ",
   "cosmic_table.enchantments.missing": "Missing: ",
   "death.attack.bleed": "%s bled to death.",

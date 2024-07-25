@@ -24,6 +24,7 @@ object AstralBlocks {
                 .nonOpaque()
         )
     )
+
     val COSMIC_TABLE_BLOCK_ENTITY = registerBlockEntity("cosmic_table", BlockEntityType.Builder.create(::CosmicTableBlockEntity, COSMIC_TABLE).build())
 
     private fun registerBlock(name: String, block: Block): Block {
