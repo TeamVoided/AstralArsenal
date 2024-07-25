@@ -55,7 +55,7 @@ class SnipeKosmogliph (id: Identifier) :
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
                     (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),
-                    5,
+                    2,
                     0.2,
                     0.2,
                     0.2,

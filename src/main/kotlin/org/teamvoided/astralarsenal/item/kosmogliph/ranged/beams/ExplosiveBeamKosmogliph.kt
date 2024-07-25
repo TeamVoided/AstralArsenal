@@ -89,7 +89,7 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
                     entity.x,
                     entity.y,
                     entity.z,
-                    500,
+                    3,
                     1.5,
                     1.5,
                     1.5,
