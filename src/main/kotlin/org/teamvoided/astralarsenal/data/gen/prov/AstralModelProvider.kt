@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.data.gen
+package org.teamvoided.astralarsenal.data.gen.prov
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
@@ -8,7 +8,6 @@ import net.minecraft.data.client.model.Model
 import net.minecraft.data.client.model.Models
 import net.minecraft.item.BlockItem
 import net.minecraft.registry.Registries
-import org.teamvoided.astralarsenal.init.AstralBlocks
 import org.teamvoided.astralarsenal.init.AstralItems
 import java.util.*
 

@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.data.gen
+package org.teamvoided.astralarsenal.data.gen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
