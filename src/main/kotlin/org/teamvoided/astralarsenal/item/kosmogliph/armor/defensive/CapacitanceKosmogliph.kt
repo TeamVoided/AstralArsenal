@@ -26,7 +26,7 @@ class CapacitanceKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     ): Float {
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)){
-            outputDamage = (outputDamage * 0.2).toFloat()
+            outputDamage = (outputDamage * 0.1).toFloat()
         }
         return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
     }

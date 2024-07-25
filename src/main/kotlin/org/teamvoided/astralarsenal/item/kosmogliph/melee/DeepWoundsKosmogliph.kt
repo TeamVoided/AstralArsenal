@@ -36,7 +36,7 @@ class DeepWoundsKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is 
                     target.addStatusEffect(
                         StatusEffectInstance(
                             AstralEffects.UNHEALABLE_DAMAGE,
-                            300,  0,
+                            200,  0,
                             false, false, false
                         )
                     )

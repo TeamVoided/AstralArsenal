@@ -16,7 +16,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class FreezeKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem || it.item is AxeItem }) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
-        if(target.frozenTicks <= 140){target.frozenTicks += 500}
+        if(target.frozenTicks <= 140){target.frozenTicks += 220}
         else{target.frozenTicks += 100 }
         if(!target.isAlive){
             if (!target.world.isClient) {
@@ -43,7 +43,7 @@ class FreezeKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is Swor
                         target.pos.z - 3)
                 )
                 for (entity in entities) {
-                    if(entity != attacker && entity.isLiving){entity.frozenTicks += 500}
+                    if(entity != attacker && entity.isLiving){entity.frozenTicks += 220}
                 }}
         }
         super.postHit(stack, target, attacker)

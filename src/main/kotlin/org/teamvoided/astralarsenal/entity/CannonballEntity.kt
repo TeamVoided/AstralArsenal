@@ -8,6 +8,7 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
@@ -38,6 +39,7 @@ class CannonballEntity : ThrownItemEntity {
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
+        if(entityHitResult.entity !is PlayerEntity){
         entityHitResult.entity.damage(
             DamageSource(
                 AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CANNONBALL),
@@ -45,6 +47,16 @@ class CannonballEntity : ThrownItemEntity {
                 owner
             ), getDmg().toFloat()
         )
+        }
+        else{
+            entityHitResult.entity.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CANNONBALL),
+                    this,
+                    owner
+                ), (getDmg().toFloat()) - 5
+            )
+        }
         if(this.getDmg() in 20..39){
             this.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
         }

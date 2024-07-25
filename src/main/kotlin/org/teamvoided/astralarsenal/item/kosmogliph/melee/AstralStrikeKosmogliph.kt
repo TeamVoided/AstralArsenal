@@ -22,14 +22,14 @@ class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is
         if (hitTimes >= 5) {
             val beam = BeamOfLightEntity(attacker.world, attacker)
             beam.setPosition(target.pos)
-            beam.WINDUP = 120
-            beam.TIMEACTIVE = 40
+            beam.WINDUP = 20
+            beam.TIMEACTIVE = 10
             beam.side = 2
             beam.THRUST = 1.0
             beam.targetEntity = target
             beam.DOT = false
-            beam.DMG = 5
-            beam.trackTime = 100
+            beam.DMG = 3
+            beam.trackTime = 10
             attacker.world.spawnEntity(beam)
             hitTimes = 0
         }
