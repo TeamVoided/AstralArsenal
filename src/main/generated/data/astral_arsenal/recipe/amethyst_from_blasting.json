@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.5,
+  "ingredient": {
+    "item": "astral_arsenal:concentrated_amethyst_blend"
+  },
+  "result": {
+    "id": "astral_arsenal:amethyst"
+  }
+}

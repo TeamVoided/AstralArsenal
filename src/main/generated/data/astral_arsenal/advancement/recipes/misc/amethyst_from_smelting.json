@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_amethyst": {
+      "conditions": {
+        "items": [
+          {
+            "items": "astral_arsenal:amethyst"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_concentrated_amethyst_blend": {
+      "conditions": {
+        "items": [
+          {
+            "items": "astral_arsenal:concentrated_amethyst_blend"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "astral_arsenal:amethyst_from_smelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_concentrated_amethyst_blend",
+      "has_amethyst"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "astral_arsenal:amethyst_from_smelting"
+    ]
+  }
+}

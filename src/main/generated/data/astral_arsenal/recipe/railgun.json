@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:crossbow"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "K": {
+      "item": "astral_arsenal:kosmic_gem"
+    }
+  },
+  "pattern": [
+    "IKI",
+    "KCK",
+    "IKI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "astral_arsenal:railgun"
+  }
+}
