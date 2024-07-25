@@ -33,7 +33,7 @@ modSettings {
     entrypoint("client", "org.teamvoided.astralarsenal.AstralArsenalClient::init")
     entrypoint("fabric-datagen", "org.teamvoided.astralarsenal.data.gen.AstralArsenalData")
 
-    mixinFile("${modId()}.client.mixins.json")
+//    mixinFile("${modId()}.client.mixins.json")
     mixinFile("${modId()}.mixins.json")
     accessWidener("${modId()}.accesswidener")
 }
