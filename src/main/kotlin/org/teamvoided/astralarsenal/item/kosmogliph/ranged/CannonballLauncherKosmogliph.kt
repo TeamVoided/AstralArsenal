@@ -53,10 +53,10 @@ class CannonballLauncherKosmogliph(
 }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.MULTISHOT)
+        return listOf(Enchantments.MULTISHOT, Enchantments.PIERCING)
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.PIERCING)
+        return listOf()
     }
 }

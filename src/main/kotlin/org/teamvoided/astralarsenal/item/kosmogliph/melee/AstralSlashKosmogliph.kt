@@ -1,7 +1,10 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.SwordItem
+import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
@@ -48,5 +51,12 @@ class AstralSlashKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 200)
             }
         }
+    }
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
+        return listOf()
+    }
+
+    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
+        return listOf()
     }
 }

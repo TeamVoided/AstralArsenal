@@ -1,8 +1,11 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.SwordItem
+import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
@@ -16,7 +19,7 @@ class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var hitTimes = data.hitTimes
         hitTimes++
-        if (hitTimes >= 3) {
+        if (hitTimes >= 5) {
             val beam = BeamOfLightEntity(attacker.world, attacker)
             beam.setPosition(target.pos)
             beam.WINDUP = 120
@@ -45,5 +48,12 @@ class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is
                     { data -> listOf(data.hitTimes) }
                 )
         }
+    }
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
+        return listOf(Enchantments.FIRE_ASPECT)
+    }
+
+    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
+        return listOf()
     }
 }

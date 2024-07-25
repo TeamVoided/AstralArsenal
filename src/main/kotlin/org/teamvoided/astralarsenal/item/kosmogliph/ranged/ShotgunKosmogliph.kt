@@ -2,11 +2,14 @@ package org.teamvoided.astralarsenal.item.kosmogliph.ranged
 
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.ChargedProjectilesComponent
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ArrowEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.item.CrossbowItem
+import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
@@ -50,5 +53,12 @@ class ShotgunKosmogliph (
             }
             stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
         }
+    }
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
+        return listOf()
+    }
+
+    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
+        return listOf(Enchantments.MULTISHOT)
     }
 }

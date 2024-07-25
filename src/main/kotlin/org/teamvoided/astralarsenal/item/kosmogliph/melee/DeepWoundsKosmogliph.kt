@@ -1,5 +1,7 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -7,6 +9,7 @@ import net.minecraft.item.AxeItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.SwordItem
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.registry.RegistryKey
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
@@ -40,5 +43,12 @@ class DeepWoundsKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is 
                 }
             }
         super.postHit(stack, target, attacker)
+    }
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
+        return listOf(Enchantments.FIRE_ASPECT)
+    }
+
+    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
+        return listOf()
     }
 }

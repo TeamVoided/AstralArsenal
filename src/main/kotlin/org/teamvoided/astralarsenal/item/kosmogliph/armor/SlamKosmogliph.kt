@@ -2,6 +2,8 @@ package org.teamvoided.astralarsenal.item.kosmogliph.armor
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -10,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.DamageTypeTags
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
@@ -85,7 +88,11 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             }
         }
     }
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
+        return listOf(Enchantments.THORNS)
+    }
+
+    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
+        return listOf()
+    }
 }
-//Gonna need a lot of help adding the rest of the functionality for this.
-//that functionality is: for every block fallen after pressing crouch, give the player x ammount of jump boost
-//for a split second, and create a knockback explosion that ignores the player who slammed.

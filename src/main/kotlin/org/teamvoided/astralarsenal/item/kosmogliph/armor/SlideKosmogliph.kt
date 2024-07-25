@@ -1,10 +1,13 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.armor
 
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EntityPose
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.registry.RegistryKey
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -51,5 +54,12 @@ class SlideKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             }
             player.pose = EntityPose.SLIDING
         }
+    }
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
+        return listOf(Enchantments.THORNS)
+    }
+
+    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
+        return listOf()
     }
 }

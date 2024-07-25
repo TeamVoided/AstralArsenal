@@ -5,12 +5,15 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.client.item.TooltipConfig
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.PotionContentsComponent
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectUtil
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.StackReference
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryKey
 import net.minecraft.screen.slot.Slot
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.CommonTexts
@@ -146,5 +149,12 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
                 group.apply(builder, ::Data)
             }
         }
+    }
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
+        return listOf(Enchantments.INFINITY)
+    }
+
+    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
+        return listOf()
     }
 }

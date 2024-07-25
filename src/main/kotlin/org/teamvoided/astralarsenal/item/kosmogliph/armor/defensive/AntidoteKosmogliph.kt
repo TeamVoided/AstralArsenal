@@ -1,5 +1,7 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.armor.defensive
 
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -9,6 +11,7 @@ import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ElytraItem
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
@@ -62,6 +65,13 @@ class AntidoteKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             }
         }
         super.inventoryTick(stack, world, entity, slot, selected)
+    }
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
+        return listOf(Enchantments.THORNS)
+    }
+
+    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
+        return listOf()
     }
 
 }
