@@ -21,6 +21,7 @@ object AstralBlocks {
             AbstractBlock.Settings
                 .copy(Blocks.CRAFTING_TABLE)
                 .sounds(BlockSoundGroup.LODESTONE)
+                .nonOpaque()
         )
     )
     val COSMIC_TABLE_BLOCK_ENTITY = registerBlockEntity("cosmic_table", BlockEntityType.Builder.create(::CosmicTableBlockEntity, COSMIC_TABLE).build())

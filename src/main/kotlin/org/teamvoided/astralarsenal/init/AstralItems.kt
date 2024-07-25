@@ -33,7 +33,7 @@ object AstralItems {
     val CANNONBALL = register("cannonball", CannonballItem(Item.Settings()))
     val MORTER = register("morter", MorterItem(Item.Settings()))
     val COSMIC_TABLE = register("cosmic_table", BlockItem(AstralBlocks.COSMIC_TABLE, Item.Settings()))
-    val ASTRAL_GREATHAMMER = register("astral_greathammer", AstralGreathammerItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.5F))))
+    val ASTRAL_GREATHAMMER = register("astral_greathammer", AstralGreathammerItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.0F))))
     val RAILGUN = register("railgun", RailgunItem(Item.Settings().fireproof().maxCount(1).rarity(Rarity.EPIC)))
 
     @Deprecated(

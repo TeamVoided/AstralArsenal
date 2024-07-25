@@ -20,6 +20,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.INDIRECT_MAGIC)
             .add(DamageTypes.MAGIC)
             .add(DamageTypes.WITHER)
+            .add(AstralDamageTypes.BLEED)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_FIRE)
             .forceAddTag(DamageTypeTags.IS_FIRE)
@@ -61,5 +62,11 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.WIND_CHARGE)
             .add(AstralDamageTypes.CANNONBALL)
 
+        getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR)
+            .add(AstralDamageTypes.BEAM_OF_LIGHT)
+            .add(AstralDamageTypes.BLEED)
+
+        getOrCreateTagBuilder(DamageTypeTags.BYPASSES_SHIELD)
+            .add(AstralDamageTypes.BEAM_OF_LIGHT)
     }
 }

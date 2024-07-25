@@ -1,0 +1,27 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"0": "astral_arsenal:block/cosmic_table_bottom",
+		"1": "astral_arsenal:block/cosmic_table_side_1",
+		"2": "astral_arsenal:block/cosmic_table_side_2",
+		"3": "astral_arsenal:block/cosmic_table_side_3",
+		"4": "astral_arsenal:block/cosmic_table_side_4",
+		"5": "astral_arsenal:block/cosmic_table_top",
+		"particle": "astral_arsenal:block/cosmic_table_bottom"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 12, 16],
+			"faces": {
+				"north": {"uv": [0, 4, 16, 16], "texture": "#3", "cullface": "north"},
+				"east": {"uv": [0, 4, 16, 16], "texture": "#2", "cullface": "east"},
+				"south": {"uv": [0, 4, 16, 16], "texture": "#1", "cullface": "south"},
+				"west": {"uv": [0, 4, 16, 16], "texture": "#4", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0", "cullface": "down"}
+			}
+		}
+	]
+}
