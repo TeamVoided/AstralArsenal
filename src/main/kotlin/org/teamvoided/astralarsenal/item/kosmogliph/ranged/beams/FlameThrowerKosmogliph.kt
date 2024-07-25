@@ -12,7 +12,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
-import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.coroutine.mcCoroutineTask
@@ -33,16 +32,13 @@ class FlameThrowerKosmogliph(id: Identifier) :
                 val result = player.raycast(10.0, 1f, false)
                 val distance = player.eyePos.distanceTo(result.pos)
                 val entities = mutableListOf<Entity>()
-                entities.addAll(
-                    world.getOtherEntities(
-                        player, Box(
-                            player.eyePos.subtract(Vec3d(0.0, 0.5, 0.0)),
-                            result.pos
-                        )
-                    )
-                )
 
                 val interval = (distance * 2).roundToInt()
+                (0..interval).forEach { j ->
+                    val pos = player.eyePos.lerp(result.pos, j / interval.toDouble())
+                    entities.addAll(world.getOtherEntities(player, Box(pos, pos)))
+                }
+
                 if (!world.isClient && world is ServerWorld) {
                     for (j in 0..interval) {
                         world.spawnParticles(
