@@ -17,7 +17,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.ranged.RangedWeaponKosmoglip
 
 class DevastateKosmogliph (
     id: Identifier,
-) : SimpleKosmogliph(id, { it.item is CrossbowItem || it.item is BowItem }),
+) : SimpleKosmogliph(id, { it.item is CrossbowItem }),
     RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
         if (world.isClient) return

@@ -14,7 +14,6 @@ import java.util.*
 
 class AstralModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
-        gen.registerSimpleCubeAll(AstralBlocks.COSMIC_TABLE)
     }
 
     override fun generateItemModels(gen: ItemModelGenerator) {
