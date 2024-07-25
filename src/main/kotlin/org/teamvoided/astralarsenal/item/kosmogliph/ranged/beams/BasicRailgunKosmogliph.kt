@@ -68,12 +68,22 @@ class BasicRailgunKosmogliph(id: Identifier) :
             1.0f
         )
         for (entity in entities) {
+            val random = world.random.range(1, 10)
+            if(random == 1){
             entity.damage(
                 DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
+                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
                     player,
                     player
-                ), 10f)
+                ), 10f)}
+            else{
+                entity.damage(
+                    DamageSource(
+                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                        player,
+                        player
+                    ), 10f)
+            }
         }
             if(!player.isCreative){
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)

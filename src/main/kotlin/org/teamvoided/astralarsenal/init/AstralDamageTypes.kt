@@ -8,8 +8,11 @@ import net.minecraft.registry.RegistryKeys
 import org.teamvoided.astralarsenal.data.registry.RegistryBootstrapper
 
 object AstralDamageTypes : RegistryBootstrapper<DamageType>(RegistryKeys.DAMAGE_TYPE) {
-    val CANNONBALL = register("cannonball") { DamageType("cannonball", DamageScalingType.ALWAYS, 0f) }
-    val BEAM_OF_LIGHT = register("beam_of_light") { DamageType("beam_of_light", DamageScalingType.ALWAYS, 0f) }
+    val CANNONBALL = register("cannonball") { DamageType("cannonball", DamageScalingType.NEVER, 0f) }
+    val BALLNT = register("ballnt") { DamageType("ballnt", DamageScalingType.NEVER, 0f) }
+    val BEAM_OF_LIGHT = register("beam_of_light") { DamageType("beam_of_light", DamageScalingType.NEVER, 0f) }
+    val RAILED = register("railed") { DamageType("railed", DamageScalingType.NEVER, 0f) }
+    val NON_RAILED = register("non_railed") { DamageType("non_railed", DamageScalingType.NEVER, 0f) }
     val BLEED = register("bleed") { DamageType("bleed", DamageScalingType.NEVER, 0f) }
 
     fun Entity.customDamage(type:RegistryKey<DamageType>, amount: Float, owner: Entity? = null): Boolean {

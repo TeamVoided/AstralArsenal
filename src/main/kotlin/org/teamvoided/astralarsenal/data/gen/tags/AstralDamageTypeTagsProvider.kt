@@ -44,6 +44,8 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_PLASMA)
             .add(DamageTypes.LIGHTNING_BOLT)
             .add(AstralDamageTypes.BEAM_OF_LIGHT)
+            .add(AstralDamageTypes.RAILED)
+            .add(AstralDamageTypes.NON_RAILED)
 
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_EXPLOSION)
@@ -61,12 +63,17 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.LLAMA_SPIT)
             .add(DamageTypes.WIND_CHARGE)
             .add(AstralDamageTypes.CANNONBALL)
+            .add(AstralDamageTypes.BALLNT)
 
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR)
             .add(AstralDamageTypes.BEAM_OF_LIGHT)
             .add(AstralDamageTypes.BLEED)
+            .add(AstralDamageTypes.RAILED)
+            .add(AstralDamageTypes.NON_RAILED)
 
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_SHIELD)
             .add(AstralDamageTypes.BEAM_OF_LIGHT)
+            .add(AstralDamageTypes.RAILED)
+            .add(AstralDamageTypes.NON_RAILED)
     }
 }

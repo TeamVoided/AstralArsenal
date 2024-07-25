@@ -4,6 +4,9 @@
   "ingredients": [
     {
       "item": "minecraft:emerald"
+    },
+    {
+      "item": "minecraft:emerald"
     }
   ],
   "result": {

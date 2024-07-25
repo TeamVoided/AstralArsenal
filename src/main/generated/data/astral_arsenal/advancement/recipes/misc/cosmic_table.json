@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_end_crystal": {
+    "has_kosmic_gem": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:end_crystal"
+            "items": "astral_arsenal:kosmic_gem"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_end_crystal"
+      "has_kosmic_gem"
     ]
   ],
   "rewards": {

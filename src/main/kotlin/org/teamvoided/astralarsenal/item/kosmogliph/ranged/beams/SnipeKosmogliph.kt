@@ -75,12 +75,22 @@ class SnipeKosmogliph (id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            entity.damage(
-                DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
-                    player,
-                    player
-                ), 7.5f)
+            val random = world.random.range(1, 10)
+            if(random == 1){
+                entity.damage(
+                    DamageSource(
+                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                        player,
+                        player
+                    ), 7.5f)}
+            else{
+                entity.damage(
+                    DamageSource(
+                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                        player,
+                        player
+                    ), 7.5f)
+            }
         }
         if (!player.isCreative) {
             player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
@@ -134,12 +144,22 @@ class SnipeKosmogliph (id: Identifier) :
                 1.0f
             )
             for (entity in entities) {
-                entity.damage(
-                    DamageSource(
-                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
-                        player,
-                        player
-                    ), 7.5f)
+                val random = world.random.range(1, 10)
+                if(random == 1){
+                    entity.damage(
+                        DamageSource(
+                            AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                            player,
+                            player
+                        ), 7.5f)}
+                else{
+                    entity.damage(
+                        DamageSource(
+                            AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                            player,
+                            player
+                        ), 7.5f)
+                }
             }
             if (!player.isCreative) {
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)

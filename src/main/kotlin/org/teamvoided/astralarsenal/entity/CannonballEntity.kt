@@ -49,13 +49,24 @@ class CannonballEntity : ThrownItemEntity {
         )
         }
         else{
-            entityHitResult.entity.damage(
-                DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CANNONBALL),
-                    this,
-                    owner
-                ), (getDmg().toFloat()) - 5
-            )
+            if(entityHitResult.entity == owner){
+                entityHitResult.entity.damage(
+                    DamageSource(
+                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BALLNT),
+                        this,
+                        owner
+                    ), (getDmg().toFloat()) - 5
+                )
+            }
+            else{
+                entityHitResult.entity.damage(
+                    DamageSource(
+                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CANNONBALL),
+                        this,
+                        owner
+                    ), (getDmg().toFloat()) - 5
+                )
+            }
         }
         if(this.getDmg() in 20..39){
             this.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)

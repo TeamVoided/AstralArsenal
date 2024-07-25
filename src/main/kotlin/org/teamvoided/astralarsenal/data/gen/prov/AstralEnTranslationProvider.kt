@@ -37,6 +37,10 @@ class AstralEnTranslationProvider(
                 gen.add(kosmogliph.translationKey(), kosmogliph.translationText().titleCase())
             }
         gen.add("death.attack.cannonball", "%s was dunked on by %s")
+        gen.add("death.attack.ballnt", "%s ain't ballin'")
+        gen.add("death.attack.beam_of_light", "%s was delivered straight to god by %s")
+        gen.add("death.attack.railed", "%s was railed by %s")
+        gen.add("death.attack.non_railed", "%s was electrocuted by %s")
         gen.add("death.attack.bleed", "%s bled to death.")
 
         gen.add(AstralTabs.TAB, "Astral Arsenal")
