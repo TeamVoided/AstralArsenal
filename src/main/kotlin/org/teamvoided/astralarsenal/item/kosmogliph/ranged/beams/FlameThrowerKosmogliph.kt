@@ -55,20 +55,21 @@ class FlameThrowerKosmogliph(id: Identifier) :
                             )
                         )
                     )
-                    if (!player.world.isClient) {
-                        val serverWorld = player.world as ServerWorld
-                        serverWorld.spawnParticles(
-                            ParticleTypes.FLAME,
-                            (lerp(player.eyePos.x, result.pos.x, j / interval)),
-                            (lerp(player.eyePos.y- 0.5, result.pos.y, j / interval)),
-                            (lerp(player.eyePos.z, result.pos.z, j / interval)),
-                            1,
-                            0.2,
-                            0.2,
-                            0.2,
-                            0.0
-                        )
-
+                    if(i % 20 == 0){
+                        if (!player.world.isClient) {
+                         val serverWorld = player.world as ServerWorld
+                            serverWorld.spawnParticles(
+                                ParticleTypes.FLAME,
+                                (lerp(player.eyePos.x, result.pos.x, j / interval)),
+                                (lerp(player.eyePos.y - 0.5, result.pos.y, j / interval)),
+                                (lerp(player.eyePos.z, result.pos.z, j / interval)),
+                                1,
+                                0.2,
+                                0.2,
+                                0.2,
+                                0.0
+                         )
+                        }
                     }
                 }
                 for (entity in entities) {
