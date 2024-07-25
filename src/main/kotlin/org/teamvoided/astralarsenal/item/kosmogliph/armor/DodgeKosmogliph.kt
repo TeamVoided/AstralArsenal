@@ -22,7 +22,7 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
 }) {
     // change this to change how much boost they get :3
     val JUMP_FORWARD_BOOST = 5.0
-    val SPEED_CAP = 3.0
+    val SPEED_CAP = 1.0
     val SPEED_MULT = sqrt(2 * SPEED_CAP * SPEED_CAP)
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {

@@ -25,7 +25,7 @@ object AstralEffects {
         "unhealable_damage", AstralStatusEffect(StatusEffectType.NEUTRAL, 6684672)
             .addAttributeModifier(
                 EntityAttributes.GENERIC_MAX_HEALTH, id("effect.unhealable"),
-                -1.0, EntityAttributeModifier.Operation.ADD_VALUE
+                -0.25, EntityAttributeModifier.Operation.ADD_VALUE
             )
     )
     val REDUCE = register(
@@ -41,7 +41,7 @@ object AstralEffects {
     fun modifyDamage(entity: LivingEntity, damage: Float): Float {
         var output = damage
         if(entity.hasStatusEffect(REDUCE))
-            output *= 2
+            output *= 1.15f
 
         return output
     }

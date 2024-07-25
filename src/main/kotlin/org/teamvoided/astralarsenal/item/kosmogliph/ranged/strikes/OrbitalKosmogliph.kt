@@ -36,7 +36,7 @@ class OrbitalKosmogliph (
             snowballEntity.THRUST = 1.0
             snowballEntity.TIMEACTIVE = 40
             snowballEntity.WINDUP = 120
-            snowballEntity.DMG = 5
+            snowballEntity.DMG = 4
             snowballEntity.trackTime = 100
             world.spawnEntity(snowballEntity)
             world.playSound(
@@ -49,6 +49,9 @@ class OrbitalKosmogliph (
                 1.0F,
                 1.0f
             )
+            if (!player.isCreative) {
+                player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
+            }
             if (hand == Hand.MAIN_HAND){
                 stack.damageEquipment(1, player, EquipmentSlot.MAINHAND)}
             else if (hand == Hand.OFF_HAND){

@@ -16,7 +16,7 @@ class SlideKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.LEGGINGS
 }) {
-    // Change this to change the maximum speed
+    // removed
     val JUMP_FORWARD_BOOST = 1.0
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {

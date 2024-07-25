@@ -35,7 +35,7 @@ class DevastateKosmogliph (
             snowballEntity.THRUST = 1.0
             snowballEntity.TIMEACTIVE = 20
             snowballEntity.WINDUP = 70
-            snowballEntity.DMG = 15
+            snowballEntity.DMG = 8
             snowballEntity.trackTime = 50
             world.spawnEntity(snowballEntity)
             world.playSound(
@@ -48,6 +48,9 @@ class DevastateKosmogliph (
                 1.0F,
                 1.0f
             )
+            if (!player.isCreative) {
+                player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
+            }
             if (hand == Hand.MAIN_HAND){
                 stack.damageEquipment(1, player, EquipmentSlot.MAINHAND)}
             else if (hand == Hand.OFF_HAND){

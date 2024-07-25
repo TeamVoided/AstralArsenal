@@ -35,7 +35,7 @@ class TimeBombKosmogliph (
             snowballEntity.THRUST = 1.0
             snowballEntity.TIMEACTIVE = 5
             snowballEntity.WINDUP = 1200
-            snowballEntity.DMG = 200
+            snowballEntity.DMG = 150
             snowballEntity.trackTime = 1100
             world.spawnEntity(snowballEntity)
             world.playSound(
@@ -48,6 +48,9 @@ class TimeBombKosmogliph (
                 1.0F,
                 1.0f
             )
+            if (!player.isCreative) {
+                player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
+            }
             if (hand == Hand.MAIN_HAND){
                 stack.damageEquipment(1, player, EquipmentSlot.MAINHAND)}
             else if (hand == Hand.OFF_HAND){
