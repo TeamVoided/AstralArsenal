@@ -4,11 +4,14 @@ import com.mojang.serialization.MapCodec
 import net.minecraft.block.BlockRenderType
 import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
+import net.minecraft.block.ShapeContext
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.shape.VoxelShape
+import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.block.enity.CosmicTableBlockEntity
 import org.teamvoided.astralarsenal.init.AstralBlocks
@@ -27,7 +30,9 @@ class CosmicTableBlock(settings: Settings) : BlockWithEntity(settings) {
         return BlockRenderType.MODEL
     }
 
-
+    override fun getOutlineShape(
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
+    ): VoxelShape = SHAPE
 
     override fun onUse(
         state: BlockState,
@@ -41,5 +46,9 @@ class CosmicTableBlock(settings: Settings) : BlockWithEntity(settings) {
         entity.openHandledScreen(world.getBlockEntity(pos, AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY).orElseThrow())
 
         return ActionResult.SUCCESS_NO_ITEM_USED
+    }
+
+    companion object {
+        val SHAPE = createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0)
     }
 }

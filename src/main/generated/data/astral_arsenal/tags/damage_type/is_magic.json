@@ -3,6 +3,7 @@
     "minecraft:dragon_breath",
     "minecraft:indirect_magic",
     "minecraft:magic",
-    "minecraft:wither"
+    "minecraft:wither",
+    "astral_arsenal:bleed"
   ]
 }
