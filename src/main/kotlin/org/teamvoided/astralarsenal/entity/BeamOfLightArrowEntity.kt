@@ -58,7 +58,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
             snowballEntity.WINDUP = WINDUP / 4
             snowballEntity.DMG = DMG
             snowballEntity.trackTime = trackTime / 4
-            snowballEntity.owner = this.owner
+            snowballEntity.owner = balls
             world.spawnEntity(snowballEntity)
             this.discard()
         }

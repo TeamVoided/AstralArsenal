@@ -27,7 +27,7 @@ class FlameThrowerKosmogliph(id: Identifier) :
         if (!world.isClient && world is ServerWorld) {
             mcCoroutineTask {
                 val stack = player.getStackInHand(hand)
-                for (i in 0..250) {
+                for (i in 0..62) {
                     if (stack != player.getStackInHand(hand)) return@mcCoroutineTask
 
                     val result = player.raycast(10.0, 1f, false)

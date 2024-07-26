@@ -103,7 +103,7 @@ class BeamOfLightEntity : Entity {
                         entity.damage(
                             DamageSource(
                                 AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
-                                owner,
+                                this,
                                 owner
                             ), this.DMG.toFloat())
                     entity.addVelocity(0.0,THRUST,0.0)
@@ -124,7 +124,7 @@ class BeamOfLightEntity : Entity {
                         random.nextDouble().minus(0.5).times(side).times(0.5),
                         random.nextDouble().minus(0.5).times(1),
                         random.nextDouble().minus(0.5).times(side).times(0.5),
-                        0.5
+                        0.0
                     )}
                 val entities = world.getOtherEntities(
                     null, Box(
@@ -139,7 +139,7 @@ class BeamOfLightEntity : Entity {
                     entity.damage(
                         DamageSource(
                             AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
-                            owner,
+                            this,
                             owner
                         ), this.DMG.toFloat())
                     }
