@@ -5,9 +5,11 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AbstractBlockMixin",
+    "AnvilScreenHandlerMixin",
     "BowKosmogliphUseEvents",
     "BowMixin",
     "DamageReductionMixin",
+    "EnchantmentScreenHandlerMixin",
     "ItemMixin",
     "RangedWeaponItemMixin",
     "ToolItemMixin",
