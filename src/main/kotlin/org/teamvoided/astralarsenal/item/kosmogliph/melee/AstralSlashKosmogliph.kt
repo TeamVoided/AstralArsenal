@@ -22,14 +22,12 @@ class AstralSlashKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         if (!world.isClient) {
             var w = -20
-            repeat(20){
-                mcCoroutineTask(delay = 0.01.seconds) {
+            repeat(40){
                 val snowballEntity = SlashEntity(world, player)
                 snowballEntity.setDmg(3f)
                 snowballEntity.setProperties(player, player.pitch, player.yaw + w, 0.0f, 2.0f, 0.0f)
                 world.spawnEntity(snowballEntity)
-                w += 2
-                }
+                w++
             }
             world.playSound(null,
                 player.x,

@@ -12,6 +12,7 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.BEAM_OF_LIGHT, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BEAM_OF_LIGHT_ARROW, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.SLASH_ENTITY, ::EmptyEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.DEEP_WOUND_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BOOM_SHOOTER_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BOOM_ENTITY, ::EmptyEntityRenderer)
     }

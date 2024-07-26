@@ -35,9 +35,14 @@ object KeyHandlers {
     }
 
     private fun crouchHandler(holdingCrouch: AtomicBoolean) = ClientCtxInvokable { client: MinecraftClient ->
-        if (!client.options.sneakKey.isPressed) {
+        val player = client.player ?: return@ClientCtxInvokable
+        if (player.isOnGround || player.isCreative || player.isSpectator) {
+            holdingCrouch.value = true
+        }
+        else if (!client.options.sneakKey.isPressed) {
             holdingCrouch.value = false
-        } else if (!holdingCrouch.value) {
+        }
+        else if (!holdingCrouch.value) {
             ClientPlayNetworking.send(SlamKosmogliphPayload)
             holdingCrouch.value = true
         }

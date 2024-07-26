@@ -3,6 +3,7 @@ package org.teamvoided.astralarsenal.entity
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
@@ -82,7 +83,7 @@ class BeamOfLightEntity : Entity {
                     this.x,
                     (this.y + (i * 0.5)) - 5,
                     this.z,
-                    3,
+                    1,
                     random.nextDouble().minus(0.5).times(side).times(0.5),
                     random.nextDouble().minus(0.5).times(1),
                     random.nextDouble().minus(0.5).times(side).times(0.5),
@@ -99,7 +100,12 @@ class BeamOfLightEntity : Entity {
                     ))
                 for (entity in entities) {
                     if(!entitiesHit.contains(entity)){
-                    entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), owner)
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
+                                owner,
+                                owner
+                            ), this.DMG.toFloat())
                     entity.addVelocity(0.0,THRUST,0.0)
                         entitiesHit.add(entity)
                     }
@@ -114,11 +120,11 @@ class BeamOfLightEntity : Entity {
                         this.x,
                         (this.y + (i * 0.5)) - 5,
                         this.z,
-                        3,
+                        1,
                         random.nextDouble().minus(0.5).times(side).times(0.5),
                         random.nextDouble().minus(0.5).times(1),
                         random.nextDouble().minus(0.5).times(side).times(0.5),
-                        0.0
+                        0.5
                     )}
                 val entities = world.getOtherEntities(
                     null, Box(
@@ -130,7 +136,12 @@ class BeamOfLightEntity : Entity {
                         pos.z + side.times(-0.5)
                     ))
                 for (entity in entities) {
-                        entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), owner)
+                    entity.damage(
+                        DamageSource(
+                            AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
+                            owner,
+                            owner
+                        ), this.DMG.toFloat())
                     }
                 }}
         }

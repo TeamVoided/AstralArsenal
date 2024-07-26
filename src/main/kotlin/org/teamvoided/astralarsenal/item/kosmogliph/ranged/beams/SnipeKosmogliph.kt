@@ -95,6 +95,7 @@ class SnipeKosmogliph (id: Identifier) :
         if (!player.isCreative) {
             player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
         }
+        if (!world.isClient) {
         mcCoroutineTask(delay = 20.ticks) {
             result = player.raycast(100.0, 1f, false)
             distance = sqrt(
@@ -161,6 +162,7 @@ class SnipeKosmogliph (id: Identifier) :
                         ), 7.5f)
                 }
             }
+        }
             if (!player.isCreative) {
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
             }

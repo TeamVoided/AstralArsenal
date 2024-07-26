@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.entity
 
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.ArrowEntity
@@ -26,7 +27,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
     var DMG = 1
     var side = 1
     var trackTime = 0
-    var balls = null
+    var balls: LivingEntity? = null
 
     override fun tick() {
         if (!world.isClient) {
@@ -57,6 +58,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
             snowballEntity.WINDUP = WINDUP / 4
             snowballEntity.DMG = DMG
             snowballEntity.trackTime = trackTime / 4
+            snowballEntity.owner = this.owner
             world.spawnEntity(snowballEntity)
             this.discard()
         }
@@ -74,6 +76,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
             snowballEntity.DMG = DMG
             snowballEntity.targetEntity = entityHitResult.entity
             snowballEntity.trackTime = trackTime
+            snowballEntity.owner = this.owner
             world.spawnEntity(snowballEntity)
             this.discard()
         }

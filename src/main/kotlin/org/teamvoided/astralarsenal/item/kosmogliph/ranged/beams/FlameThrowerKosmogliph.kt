@@ -24,22 +24,23 @@ import kotlin.time.Duration.Companion.seconds
 class FlameThrowerKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.item is RailgunItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
-        mcCoroutineTask {
-            val stack = player.getStackInHand(hand)
-            for (i in 0..250) {
-                if (stack != player.getStackInHand(hand)) return@mcCoroutineTask
+        if (!world.isClient && world is ServerWorld) {
+            mcCoroutineTask {
+                val stack = player.getStackInHand(hand)
+                for (i in 0..250) {
+                    if (stack != player.getStackInHand(hand)) return@mcCoroutineTask
 
-                val result = player.raycast(10.0, 1f, false)
-                val distance = player.eyePos.distanceTo(result.pos)
-                val entities = mutableListOf<Entity>()
+                    val result = player.raycast(10.0, 1f, false)
+                    val distance = player.eyePos.distanceTo(result.pos)
+                    val entities = mutableListOf<Entity>()
 
-                val interval = (distance * 2).roundToInt()
-                (0..interval).forEach { j ->
-                    val pos = player.eyePos.lerp(result.pos, j / interval.toDouble())
-                    entities.addAll(world.getOtherEntities(player, Box(pos, pos)))
-                }
+                    val interval = (distance * 2).roundToInt()
+                    (0..interval).forEach { j ->
+                        val pos = player.eyePos.lerp(result.pos, j / interval.toDouble())
+                        entities.addAll(world.getOtherEntities(player, Box(pos, pos)))
+                    }
 
-                if (!world.isClient && world is ServerWorld) {
+
                     for (j in 0..interval) {
                         world.spawnParticles(
                             ParticleTypes.FLAME,
@@ -64,20 +65,20 @@ class FlameThrowerKosmogliph(id: Identifier) :
                             1.0f
                         )
                     }
-                }
 
-                entities.forEach { entity ->
-                    entity.damage(
-                        DamageSource(
-                            AstralDamageTypes.getHolder(world.registryManager, DamageTypes.IN_FIRE),
-                            player,
-                            player
-                        ), 3f
-                    )
-                    entity.setOnFireFor(200)
-                }
+                    entities.forEach { entity ->
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, DamageTypes.IN_FIRE),
+                                player,
+                                player
+                            ), 3f
+                        )
+                        entity.setOnFireFor(200)
+                    }
 
-                delay((0.08).seconds)
+                    delay((0.08).seconds)
+                }
             }
         }
 
