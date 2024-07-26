@@ -38,7 +38,7 @@ class AstralEnTranslationProvider(
             }
         gen.add("death.attack.cannonball", "%s was dunked on by %s")
         gen.add("death.attack.ballnt", "%s ain't ballin'")
-        gen.add("death.attack.beam_of_light", "%s was delivered straight to god by %s")
+        gen.add("death.attack.beam_of_light", "%s was delivered straight to cod by %s")
         gen.add("death.attack.railed", "%s was railed by %s")
         gen.add("death.attack.non_railed", "%s was electrocuted by %s")
         gen.add("death.attack.bleed", "%s bled to death.")
@@ -62,6 +62,8 @@ class AstralEnTranslationProvider(
         gen.add(AstralEffects.BLEED.value().translationKey, "Bleed")
 
         gen.add("container.cosmic_table", "Cosmic Table")
+
+        gen.add("entities.astral_arsenal.beam_of_light", "Cod")
     }
 
     private fun genLang(identifier: Identifier): String =

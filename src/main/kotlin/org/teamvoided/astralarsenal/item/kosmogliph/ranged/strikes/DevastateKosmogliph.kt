@@ -40,6 +40,7 @@ class DevastateKosmogliph (
             snowballEntity.WINDUP = 70
             snowballEntity.DMG = 8
             snowballEntity.trackTime = 50
+            snowballEntity.balls = player
             world.spawnEntity(snowballEntity)
             world.playSound(
                 null,

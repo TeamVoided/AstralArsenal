@@ -40,6 +40,7 @@ class TimeBombKosmogliph (
             snowballEntity.WINDUP = 1200
             snowballEntity.DMG = 150
             snowballEntity.trackTime = 1100
+            snowballEntity.balls = player
             world.spawnEntity(snowballEntity)
             world.playSound(
                 null,
