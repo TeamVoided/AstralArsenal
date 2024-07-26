@@ -22,6 +22,8 @@ object AstralBlocks {
                 .copy(Blocks.CRAFTING_TABLE)
                 .sounds(BlockSoundGroup.LODESTONE)
                 .nonOpaque()
+                .strength(10f)
+
         )
     )
 
