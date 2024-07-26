@@ -46,6 +46,16 @@ class AstralRecipeProvider(
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
 
+        shaped(AstralItems.ASTRAL_GREATHAMMER)
+            .pattern("IKI")
+            .pattern("KCK")
+            .pattern("IKI")
+            .ingredient('I', Items.IRON_INGOT)
+            .ingredient('K', AstralItems.KOSMIC_GEM)
+            .ingredient('C', Items.DIAMOND_AXE)
+            .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
+            .offerTo(this)
+
         simpleShapeless(
             AstralItems.AMERALD_BLEND,
             RecipeCategory.REDSTONE, 1,
