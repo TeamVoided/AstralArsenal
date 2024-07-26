@@ -3,7 +3,6 @@ package org.teamvoided.astralarsenal.entity
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
@@ -24,8 +23,8 @@ class BeamOfLightEntity : Entity {
 
     constructor(world: World?, owner: LivingEntity?) :
             super(AstralEntities.BEAM_OF_LIGHT as EntityType<out Entity?>, world) {
-                this.owner = owner
-            }
+        this.owner = owner
+    }
 
     constructor(world: World?, x: Double, y: Double, z: Double) :
             super(AstralEntities.BEAM_OF_LIGHT as EntityType<out Entity?>, world)
@@ -46,7 +45,7 @@ class BeamOfLightEntity : Entity {
     var DMG = 1
     var side = 1
     var entitiesHit = mutableListOf<Entity>()
-    var targetEntity : Entity? = null
+    var targetEntity: Entity? = null
     var trackTime = 0
     var owner: Entity? = null
 
@@ -67,92 +66,99 @@ class BeamOfLightEntity : Entity {
                     0.0
                 )
             }
-            if (targetEntity != null && this.getTime() < trackTime){
+            if (targetEntity != null && this.getTime() < trackTime) {
                 this.setPosition(targetEntity!!.pos.x, targetEntity!!.pos.y + 1, targetEntity!!.pos.z)
             }
-        }
-        else if(this.getTime() == WINDUP){this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)}
-        else if(this.getTime() in WINDUP..(TIMEACTIVE+WINDUP)){
-            if (!DOT){
-            if (!world.isClient) {
-                if(this.getTime() % 5 == 0){this.playSound(AstralSounds.BEAM_VIBRATE,2.0f,1.0f)}
-                val serverWorld = world as ServerWorld
-                for(i in 0..100){
-                serverWorld.spawnParticles(
-                    ParticleTypes.END_ROD,
-                    this.x,
-                    (this.y + (i * 0.5)) - 5,
-                    this.z,
-                    1,
-                    random.nextDouble().minus(0.5).times(side).times(0.5),
-                    random.nextDouble().minus(0.5).times(1),
-                    random.nextDouble().minus(0.5).times(side).times(0.5),
-                    0.0
-                )}
-                val entities = world.getOtherEntities(
-                    null, Box(
-                        pos.x + side.times(0.5),
-                        pos.y + 50.0,
-                        pos.z + side.times(0.5),
-                        pos.x + side.times(-0.5),
-                        pos.y - 50,
-                        pos.z + side.times(-0.5)
-                    ))
-                for (entity in entities) {
-                    if(!entitiesHit.contains(entity)){
-                        entity.damage(
-                            DamageSource(
-                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
-                                this,
-                                owner
-                            ), this.DMG.toFloat())
-                    entity.addVelocity(0.0,THRUST,0.0)
-                        entitiesHit.add(entity)
+        } else if (this.getTime() == WINDUP) {
+            this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)
+        } else if (this.getTime() in WINDUP..(TIMEACTIVE + WINDUP)) {
+            if (!DOT) {
+                if (!world.isClient) {
+                    if (this.getTime() % 5 == 0) {
+                        this.playSound(AstralSounds.BEAM_VIBRATE, 2.0f, 1.0f)
                     }
-                }}
+                    val serverWorld = world as ServerWorld
+                    for (i in 0..100) {
+                        serverWorld.spawnParticles(
+                            ParticleTypes.END_ROD,
+                            this.x,
+                            (this.y + (i * 0.5)) - 5,
+                            this.z,
+                            1,
+                            random.nextDouble().minus(0.5).times(side).times(0.5),
+                            random.nextDouble().minus(0.5).times(1),
+                            random.nextDouble().minus(0.5).times(side).times(0.5),
+                            0.0
+                        )
+                    }
+                    val entities = world.getOtherEntities(
+                        null, Box(
+                            pos.x + side.times(0.5),
+                            pos.y + 50.0,
+                            pos.z + side.times(0.5),
+                            pos.x + side.times(-0.5),
+                            pos.y - 50,
+                            pos.z + side.times(-0.5)
+                        )
+                    )
+                    for (entity in entities) {
+                        if (!entitiesHit.contains(entity)) {
+                            if (owner != null) {
+                                entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner!!)
+                            } else {
+                                entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this)
+                            }
+                            entity.addVelocity(0.0, THRUST, 0.0)
+                            entitiesHit.add(entity)
+                        }
+                    }
+                }
+            } else {
+                if (!world.isClient) {
+                    if (this.getTime() % 5 == 0) {
+                        this.playSound(AstralSounds.BEAM_VIBRATE, 2.0f, 1.0f)
+                    }
+                    val serverWorld = world as ServerWorld
+                    for (i in 0..100) {
+                        serverWorld.spawnParticles(
+                            ParticleTypes.END_ROD,
+                            this.x,
+                            (this.y + (i * 0.5)) - 5,
+                            this.z,
+                            1,
+                            random.nextDouble().minus(0.5).times(side).times(0.5),
+                            random.nextDouble().minus(0.5).times(1),
+                            random.nextDouble().minus(0.5).times(side).times(0.5),
+                            0.0
+                        )
+                    }
+                    val entities = world.getOtherEntities(
+                        null, Box(
+                            pos.x + side.times(0.5),
+                            pos.y + 10.0,
+                            pos.z + side.times(0.5),
+                            pos.x + side.times(-0.5),
+                            pos.y - 10,
+                            pos.z + side.times(-0.5)
+                        )
+                    )
+                    for (entity in entities) {
+                        if (owner != null) {
+                            entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner!!)
+                        } else {
+                            entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this)
+                        }
+                    }
+                }
             }
-            else{if (!world.isClient) {
-                if(this.getTime() % 5 == 0){this.playSound(AstralSounds.BEAM_VIBRATE,2.0f,1.0f)}
-                val serverWorld = world as ServerWorld
-                for(i in 0..100){
-                    serverWorld.spawnParticles(
-                        ParticleTypes.END_ROD,
-                        this.x,
-                        (this.y + (i * 0.5)) - 5,
-                        this.z,
-                        1,
-                        random.nextDouble().minus(0.5).times(side).times(0.5),
-                        random.nextDouble().minus(0.5).times(1),
-                        random.nextDouble().minus(0.5).times(side).times(0.5),
-                        0.0
-                    )}
-                val entities = world.getOtherEntities(
-                    null, Box(
-                        pos.x + side.times(0.5),
-                        pos.y + 10.0,
-                        pos.z + side.times(0.5),
-                        pos.x + side.times(-0.5),
-                        pos.y - 10,
-                        pos.z + side.times(-0.5)
-                    ))
-                for (entity in entities) {
-                    entity.damage(
-                        DamageSource(
-                            AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
-                            this,
-                            owner
-                        ), this.DMG.toFloat())
-                    }
-                }}
-        }
-        else if (this.getTime() > (TIMEACTIVE + WINDUP)){
+        } else if (this.getTime() > (TIMEACTIVE + WINDUP)) {
             this.playSound(AstralSounds.BEAM_WIND, 3.0f, 1.0f)
             this.discard()
         }
-        if (this.getTime() in trackTime..WINDUP){
+        if (this.getTime() in trackTime..WINDUP) {
             val times = (this.getTime() - trackTime) + 1
             if (!world.isClient) {
-                for(i in 0..times) {
+                for (i in 0..times) {
                     val serverWorld = world as ServerWorld
                     serverWorld.spawnParticles(
                         ParticleTypes.CRIT,
