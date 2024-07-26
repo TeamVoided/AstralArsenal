@@ -103,11 +103,7 @@ class BeamOfLightEntity : Entity {
                     )
                     for (entity in entities) {
                         if (!entitiesHit.contains(entity)) {
-                            if (owner != null) {
-                                entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner!!)
-                            } else {
-                                entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this)
-                            }
+                            entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
                             entity.addVelocity(0.0, THRUST, 0.0)
                             entitiesHit.add(entity)
                         }
@@ -143,11 +139,7 @@ class BeamOfLightEntity : Entity {
                         )
                     )
                     for (entity in entities) {
-                        if (owner != null) {
-                            entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner!!)
-                        } else {
-                            entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this)
-                        }
+                        entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
                     }
                 }
             }
