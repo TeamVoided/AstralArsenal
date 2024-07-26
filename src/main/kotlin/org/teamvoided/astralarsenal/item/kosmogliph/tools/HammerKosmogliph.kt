@@ -1,10 +1,12 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.tools
 
 import net.minecraft.block.BlockState
+import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.PickaxeItem
+import net.minecraft.registry.RegistryKey
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockBox
@@ -69,5 +71,12 @@ class HammerKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is Picka
             Direction.NORTH, Direction.SOUTH -> BlockBox(pos.x - 1, pos.y - 1, pos.z, pos.x + 1, pos.y + 1, pos.z)
             Direction.EAST, Direction.WEST -> BlockBox(pos.x, pos.y - 1, pos.z - 1, pos.x, pos.y + 1, pos.z + 1)
         }
+    }
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
+        return listOf()
+    }
+
+    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
+        return listOf()
     }
 }
