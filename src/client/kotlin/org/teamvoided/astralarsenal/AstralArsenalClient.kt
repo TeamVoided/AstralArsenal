@@ -4,8 +4,11 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
+import org.teamvoided.astralarsenal.block.entity.CosmicTableBlockEntityRenderer
 import org.teamvoided.astralarsenal.handlers.KeyHandlers
 import org.teamvoided.astralarsenal.handlers.LaserBeamPayloadHandler
+import org.teamvoided.astralarsenal.init.AstralBlocks
 import org.teamvoided.astralarsenal.init.AstralEntitiesClient
 import org.teamvoided.astralarsenal.init.AstralHandledScreens
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
@@ -35,5 +38,10 @@ object AstralArsenalClient {
                 )
             }
         }
+
+        BlockEntityRendererFactories.register(
+            AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY,
+            ::CosmicTableBlockEntityRenderer
+        )
     }
 }
