@@ -6,8 +6,10 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
 import net.minecraft.block.ShapeContext
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.FurnaceBlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.ActionResult
+import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.shape.VoxelShape
@@ -15,6 +17,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.block.enity.CosmicTableBlockEntity
 import org.teamvoided.astralarsenal.init.AstralBlocks
+
 
 class CosmicTableBlock(settings: Settings) : BlockWithEntity(settings) {
     override fun getCodec(): MapCodec<CosmicTableBlock> = createCodec(::CosmicTableBlock)
@@ -46,6 +49,22 @@ class CosmicTableBlock(settings: Settings) : BlockWithEntity(settings) {
         entity.openHandledScreen(world.getBlockEntity(pos, AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY).orElseThrow())
 
         return ActionResult.SUCCESS_NO_ITEM_USED
+    }
+
+    override fun onStateReplaced(
+        state: BlockState,
+        world: World,
+        pos: BlockPos?,
+        newState: BlockState,
+        movedByPiston: Boolean
+    ) {
+        if (!state.isOf(newState.block)) {
+            val blockEntity = world.getBlockEntity(pos)
+            if (blockEntity is CosmicTableBlockEntity) {
+                ItemScatterer.spawn(world, pos, blockEntity)
+            }
+            super.onStateReplaced(state, world, pos, newState, movedByPiston)
+        }
     }
 
     companion object {

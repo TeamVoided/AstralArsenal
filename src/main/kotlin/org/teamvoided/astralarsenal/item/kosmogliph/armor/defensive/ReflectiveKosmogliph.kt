@@ -31,7 +31,7 @@ class ReflectiveKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
     }
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.THORNS)
+        return listOf()
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {

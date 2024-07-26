@@ -67,7 +67,7 @@ class AntidoteKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         super.inventoryTick(stack, world, entity, slot, selected)
     }
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.THORNS)
+        return listOf()
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {

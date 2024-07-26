@@ -107,7 +107,7 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         }
     }
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.THORNS)
+        return listOf()
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
