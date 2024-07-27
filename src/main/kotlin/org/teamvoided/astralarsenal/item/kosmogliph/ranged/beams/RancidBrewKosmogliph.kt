@@ -8,61 +8,21 @@ import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.SwordItem
 import net.minecraft.particle.ParticleTypes
-import net.minecraft.server.world.ServerWorld
+import net.minecraft.registry.Holder
 import net.minecraft.sound.SoundCategory
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
-import net.minecraft.util.math.Box
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
-import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralSounds
-import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.item.RailgunItem
-import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
-import kotlin.math.pow
-import kotlin.math.roundToInt
-import kotlin.math.sqrt
 
-class RancidBrewKosmogliph (id: Identifier) :
-    SimpleKosmogliph(id, { it.item is RailgunItem }) {
+class RancidBrewKosmogliph(id: Identifier) : AbstractRailgunKosmogliph(id, { it.item is RailgunItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
-        val result = player.raycast(100.0, 1f, false)
-        val distance = sqrt(sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y- 0.5) - result.pos.y).pow(2))
-        val entities = mutableListOf<Entity>()
-        val interval = (distance.times(2))
-        for (i in 0..interval.roundToInt()) {
-            entities.addAll(
-                world.getOtherEntities(
-                    player, Box(
-                        (lerp(player.eyePos.x, result.pos.x, i / interval)) + 0.5,
-                        (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)) + 0.5,
-                        (lerp(player.eyePos.z, result.pos.z, i / interval)) + 0.5,
-                        (lerp(player.eyePos.x, result.pos.x, i / interval)) - 0.5,
-                        (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)) - 0.5,
-                        (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
-                    )
-                )
-            )
-            if (!player.world.isClient) {
-                val serverWorld = player.world as ServerWorld
-                serverWorld.spawnParticles(
-                    ParticleTypes.ENCHANT,
-                    (lerp(player.eyePos.x, result.pos.x, i / interval)),
-                    (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)),
-                    (lerp(player.eyePos.z, result.pos.z, i / interval)),
-                    10,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.0001
-                )
+        val raycast = raycast(world, player, 100.0, ParticleTypes.ENCHANT, 10, Vec3d(0.2, 0.2, 0.2), 0.0)
 
-            }
-        }
         world.playSound(
             null,
             player.x,
@@ -73,77 +33,49 @@ class RancidBrewKosmogliph (id: Identifier) :
             1.0F,
             1.0f
         )
-        for (entity in entities) {
-            entity.damage(
-                DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
-                    player,
-                    player
-                ),5f)
-            if(entity is LivingEntity){
-            entity.addStatusEffect(
-                StatusEffectInstance(
-                    StatusEffects.SLOWNESS,
-                    300, 0,
-                    false, true, true
-                ))
-                entity.addStatusEffect(
-                    StatusEffectInstance(
-                        StatusEffects.WITHER,
-                        300, 0,
-                        false, true, true
-                    ))
-                entity.addStatusEffect(
-                    StatusEffectInstance(
-                        StatusEffects.POISON,
-                        300, 0,
-                        false, true, true
-                    ))
-                entity.addStatusEffect(
-                    StatusEffectInstance(
-                        StatusEffects.HUNGER,
-                        300, 0,
-                        false, true, true
-                    ))
-                entity.addStatusEffect(
-                    StatusEffectInstance(
-                        StatusEffects.WEAKNESS,
-                        300, 0,
-                        false, true, true
-                    ))
-                entity.addStatusEffect(
-                    StatusEffectInstance(
-                        StatusEffects.DARKNESS,
-                        300, 0,
-                        false, true, true
-                    ))
-                entity.addStatusEffect(
-                    StatusEffectInstance(
-                        StatusEffects.UNLUCK,
-                        300, 0,
-                        false, true, true
-                    ))}
+
+        raycast.first.damageAll(
+            DamageSource(
+                AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
+                player,
+                player
+            ), 5f
+        )
+        raycast.first.forEach { entity ->
+            if (entity !is LivingEntity) return@forEach
+
+            entity.addStatusEffects(
+                300, 1, false, true, true, player,
+                StatusEffects.SLOWNESS, StatusEffects.WITHER, StatusEffects.POISON,
+                StatusEffects.HUNGER, StatusEffects.WEAKNESS, StatusEffects.DARKNESS,
+                StatusEffects.UNLUCK
+            )
         }
-        if (!player.isCreative) {
-            player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
-        }
-        player.addStatusEffect(
-            StatusEffectInstance(
-                StatusEffects.SLOWNESS,
-                100, 0,
-                false, true, true
-            ))
+
         player.addStatusEffect(
             StatusEffectInstance(
                 StatusEffects.WITHER,
                 100, 1,
                 false, true, true
-            ))
-        player.addStatusEffect(
-            StatusEffectInstance(
-                StatusEffects.HUNGER,
-                100, 0,
-                false, true, true
-            ))
+            ), player
+        )
+
+        if (!player.isCreative) {
+            player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
+        }
+    }
+
+    fun LivingEntity.addStatusEffects(
+        duration: Int,
+        amplifier: Int,
+        ambient: Boolean,
+        showParticle: Boolean,
+        showIcon: Boolean,
+        source: Entity,
+        vararg effects: Holder<StatusEffect>
+    ) {
+        effects.forEach { effect ->
+            addStatusEffect(StatusEffectInstance(effect, duration, amplifier, ambient, showParticle, showIcon), source)
+        }
     }
 }

@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
-class DamageReductionKosmogliph(
+class DamageModificationKosmogliph(
     id: Identifier,
     val multiplier: Float,
     applicationPredicate: Predicate<ItemStack>,
