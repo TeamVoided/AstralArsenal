@@ -24,7 +24,7 @@ class SnipeKosmogliph(id: Identifier) : AbstractRailgunKosmogliph(id) {
     }
 
     fun snipe(world: World, player: PlayerEntity) {
-        val raycast = raycast(world, player, 100.0, ParticleTypes.END_ROD, 5, Vec3d(0.2, 0.2, 0.2), 0.0)
+        val raycast = raycast(world, player, 100.0, ParticleTypes.END_ROD, 2, Vec3d(0.2, 0.2, 0.2), 0.0)
         raycast.first.damageAll(
             DamageSource(
                 AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),

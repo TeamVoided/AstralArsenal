@@ -21,7 +21,7 @@ import org.teamvoided.astralarsenal.item.RailgunItem
 
 class RancidBrewKosmogliph(id: Identifier) : AbstractRailgunKosmogliph(id, { it.item is RailgunItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
-        val raycast = raycast(world, player, 100.0, ParticleTypes.ENCHANT, 10, Vec3d(0.2, 0.2, 0.2), 0.0)
+        val raycast = raycast(world, player, 100.0, ParticleTypes.ENCHANT, 3, Vec3d(0.2, 0.2, 0.2), 0.0)
 
         world.playSound(
             null,
