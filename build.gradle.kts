@@ -42,6 +42,7 @@ dependencies {
     modImplementation(fileTree("libs"))
     modImplementation(libs.modmenu)
     modImplementation(libs.farrow)
+    include(libs.farrow)
 
     if (org.gradle.internal.os.OperatingSystem.current().isLinux) {
         modRuntimeOnly(libs.waygl)

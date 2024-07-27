@@ -60,20 +60,27 @@ class AstralRecipeProvider(
             AstralItems.AMERALD_BLEND,
             RecipeCategory.REDSTONE, 1,
             listOf(
-                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,)
+                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,
+                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,
+                )
         ).offerTo(this)
 
         simpleShapeless(
             AstralItems.LAZULICA_BLEND,
             RecipeCategory.REDSTONE, 1,
             listOf(
-                AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,)
+                AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
+                AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
+                )
         ).offerTo(this)
 
         simpleShapeless(
             AstralItems.CONCENTRATED_AMETHYST_BLEND,
             RecipeCategory.REDSTONE, 1,
             listOf(
+                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
+                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
+                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
                 AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
                 )
         ).offerTo(this)

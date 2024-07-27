@@ -3,8 +3,11 @@ package org.teamvoided.astralarsenal.item.kosmogliph.tools
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
+import net.minecraft.item.AxeItem
+import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.PickaxeItem
+import net.minecraft.item.ShovelItem
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.context.LootContextParameterSet
 import net.minecraft.recipe.RecipeType
@@ -15,7 +18,7 @@ import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import kotlin.jvm.optionals.getOrNull
 
-class SmelterKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is PickaxeItem }) {
+class SmelterKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is PickaxeItem || it.item is ShovelItem || it.item is AxeItem || it.item is HoeItem }) {
     override fun modifyBlockBreakLoot(
         table: LootTable,
         parameters: LootContextParameterSet,
