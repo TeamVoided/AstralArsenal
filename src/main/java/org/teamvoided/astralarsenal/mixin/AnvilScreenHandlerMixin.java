@@ -1,6 +1,7 @@
 package org.teamvoided.astralarsenal.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -44,6 +45,6 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                 }));
             });
         }
-        return original && hasDisallowedEnchantments[0];
+        return original && !hasDisallowedEnchantments[0];
     }
 }
