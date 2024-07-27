@@ -80,17 +80,17 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
         }
 
         stack.set(AstralItemComponents.ALCHEMIST_DATA, Data(potion, charges.coerceAtLeast(0)))
+        projectiles.forEach { it.decrement(1) }
 
         return false
     }
 
     override fun overrideArrowType(player: PlayerEntity, stack: ItemStack, original: ItemStack): ItemStack? {
         if (original.isEmpty) return null
-        original.decrement(1)
 
-        val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return null
-        if (data.charges <= 0 || data.potion.isEmpty) return null
-        val potionInst = Registries.POTION.getHolder(data.potion.get()).getOrNull() ?: return null
+        val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return original
+        if (data.charges <= 0 || data.potion.isEmpty) return original
+        val potionInst = Registries.POTION.getHolder(data.potion.get()).getOrNull() ?: return original
         val tippedArrow = PotionContentsComponent.createStack(Items.TIPPED_ARROW, potionInst)
 
         return tippedArrow

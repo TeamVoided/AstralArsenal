@@ -65,6 +65,7 @@ interface Kosmogliph {
 
     fun requiredEnchantments(): List<RegistryKey<Enchantment>> = listOf()
     fun disallowedEnchantment(): List<RegistryKey<Enchantment>> = listOf()
+    fun allowedKosmogliphs(): List<Kosmogliph> = listOf()
 
     data class Failure(val reason: Text)
 
