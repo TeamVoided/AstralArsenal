@@ -52,6 +52,16 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::BoomEntity), SpawnGroup.MISC)
             .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
+    val FLAME_SHOT_ENTITY = register(
+        "boom_entity",
+        EntityType.Builder.create(EntityType.EntityFactory(::FlameShotEntity), SpawnGroup.MISC)
+            .setDimensions(0.25f, 0.25f).maxTrackingRange(4).build()
+    )
+    val FREEZE_SHOT_ENTITY = register(
+        "boom_entity",
+        EntityType.Builder.create(EntityType.EntityFactory(::FreezeShotEntity), SpawnGroup.MISC)
+            .setDimensions(0.25f, 0.25f).maxTrackingRange(4).build()
+    )
 
     private fun <T : Entity> register(path: String, entry: EntityType<T>): EntityType<T> {
         return Registry.register(Registries.ENTITY_TYPE, id(path), entry)

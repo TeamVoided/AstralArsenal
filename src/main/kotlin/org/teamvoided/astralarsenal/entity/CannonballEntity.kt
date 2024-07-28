@@ -81,7 +81,7 @@ class CannonballEntity : ThrownItemEntity {
         var i: Int = this.getDmg() + 5
         if (i > 40){i = 40}
         this.setDmg(i)
-        if (entityHitResult.entity.isAlive) {
+        if (entityHitResult.entity.isAlive || this.getDmg() < 15) {
             this.setVelocity(this.getVelocity().multiply(-0.05, 0.0, -0.05))
             this.addVelocity(0.0, 0.2, 0.0)
         }

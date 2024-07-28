@@ -6,45 +6,32 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.item.AxeItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.SwordItem
-import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.RegistryKey
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
-import net.minecraft.util.math.Box
+import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class FreezeKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem || it.item is AxeItem }) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         if(target.frozenTicks <= 140){target.frozenTicks += 220}
         else{target.frozenTicks += 100 }
+
+        val bursts: Int
         if(!target.isAlive){
-            if (!target.world.isClient) {
-                val serverWorld = target.world as ServerWorld
-                serverWorld.spawnParticles(
-                    ParticleTypes.SOUL_FIRE_FLAME,
-                    target.x,
-                    target.y + 1,
-                    target.z,
-                    250,
-                    target.world.random.nextDouble().minus(0.5).times(2),
-                    target.world.random.nextDouble().minus(0.5).times(2),
-                    target.world.random.nextDouble().minus(0.5).times(2),
-                    0.0
-                )
-                target.playSound(SoundEvents.BLOCK_GLASS_BREAK,1.0f,1.0f)
-                val entities = target.world.getOtherEntities(
-                    null, Box(
-                        target.pos.x + 3,
-                        target.pos.y + 3,
-                        target.pos.z + 3,
-                        target.pos.x - 3,
-                        target.pos.y - 3,
-                        target.pos.z - 3)
-                )
-                for (entity in entities) {
-                    if(entity != attacker && entity.isLiving){entity.frozenTicks += 220}
-                }}
+            bursts = 20
+        target.playSound(SoundEvents.BLOCK_GLASS_BREAK,1.0f,1.0f)
+        }
+        else{
+            bursts = 3
+            target.playSound(SoundEvents.BLOCK_POWDER_SNOW_STEP,1.0f,1.0f)
+        }
+        repeat(bursts){
+            val snowballEntity = FreezeShotEntity(target.world, attacker)
+            snowballEntity.setProperties(target, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f)
+            snowballEntity.addVelocity(target.random.nextDouble().minus(0.5), target.random.nextDouble().times(0.5), target.random.nextDouble().minus(0.5))
+            snowballEntity.setPosition(target.pos)
+            target.world.spawnEntity(snowballEntity)
         }
         super.postHit(stack, target, attacker)
     }
