@@ -13,7 +13,7 @@ import org.teamvoided.astralarsenal.init.AstralSounds
 
 class BasicRailgunKosmogliph(id: Identifier) : AbstractRailgunKosmogliph(id) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
-        val raycast = raycast(world, player, 100.0, ParticleTypes.END_ROD, 3, Vec3d(0.2, 0.2, 0.2), 0.0)
+        val raycast = raycast(world, player, 100.0, ParticleTypes.END_ROD, 10, Vec3d(0.2, 0.2, 0.2), 0.0)
         world.playSound(
             null,
             player.x,

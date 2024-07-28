@@ -15,7 +15,7 @@ import org.teamvoided.astralarsenal.item.RailgunItem
 
 class RayofFrostKosmogliph(id: Identifier) : AbstractRailgunKosmogliph(id, { it.item is RailgunItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
-        val raycast = raycast(world, player, 100.0, ParticleTypes.SNOWFLAKE, 3, Vec3d(0.2, 0.2, 0.2), 0.0)
+        val raycast = raycast(world, player, 100.0, ParticleTypes.SNOWFLAKE, 10, Vec3d(0.2, 0.2, 0.2), 0.0)
         raycast.first.damageAll(
             DamageSource(
                 AstralDamageTypes.getHolder(world.registryManager, DamageTypes.FREEZE),

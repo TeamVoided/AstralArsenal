@@ -11,11 +11,11 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralSounds
-import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
+import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 
 class ExplosiveBeamKosmogliph(id: Identifier) : AbstractRailgunKosmogliph(id) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
-        val raycast = raycast(world, player, 100.0, ParticleTypes.FLAME, 5, Vec3d(0.2, 0.2, 0.2), 0.0)
+        val raycast = raycast(world, player, 100.0, ParticleTypes.FLAME, 10, Vec3d(0.2, 0.2, 0.2), 0.0)
         world.playSound(
             null,
             player.x,
@@ -39,7 +39,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) : AbstractRailgunKosmogliph(id) {
             world.createExplosion(
                 player,
                 entity.damageSources.explosion(player, player),
-                StrongExplosionBehavior(),
+                WeakExplosionBehavior(),
                 entity.x,
                 entity.y,
                 entity.z,
