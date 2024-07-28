@@ -12,6 +12,7 @@
     "EnchantmentScreenHandlerMixin",
     "ItemMixin",
     "RangedWeaponItemMixin",
+    "ServerPlayerInteractionManagerMixin",
     "ToolItemMixin",
     "TridentMixin"
   ],
