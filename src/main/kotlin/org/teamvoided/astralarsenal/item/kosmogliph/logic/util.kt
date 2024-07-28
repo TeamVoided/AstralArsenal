@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.logic
 
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.component.DataComponentTypes
@@ -15,43 +16,34 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralBlockTags
-import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.util.PlayerInteractionManagerExtension
-import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
-import kotlin.math.min
 
 
 fun hammerTryBeakBlocks(world: World, player: PlayerEntity, pos: BlockPos): Boolean {
     if (world.isClient) return false
     if (player.isSneaking) return false
 
-    val interactionManager = (player as ServerPlayerEntity).interactionManager as PlayerInteractionManagerExtension
-    interactionManager.kosmogliph_setMining(true)
-
     val stack = player.mainHandStack
     val state = world.getBlockState(pos)
 
+    if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, pos, state, world.getBlockEntity(pos)))
+        return false
+
+
+    val interactionManager = (player as ServerPlayerEntity).interactionManager as PlayerInteractionManagerExtension
+    interactionManager.kosmogliph_setMining(true)
+
+
     val mineablePositions = queryMineableHammerPositions(stack, world, pos, state, player)
-    mineablePositions.breakAndDropStacksAt(world, pos, player)
-    return if (mineablePositions.isEmpty()) false else {
+
+    mineablePositions.breakAndDropStacksAt(world, pos, player, stack)
+    val hadPositions = if (mineablePositions.isEmpty()) false else {
         stack.damageEquipment(mineablePositions.size, player, EquipmentSlot.MAINHAND)
         true
     }
+    interactionManager.kosmogliph_setMining(false)
+    return hadPositions
 }
-
-
-fun queryMineablePositions(
-    stack: ItemStack, world: World, pos: BlockPos, state: BlockState, miner: LivingEntity
-): Set<BlockPos> {
-    val kosmogliph = getKosmogliphsOnStack(stack)
-    if (kosmogliph.contains(AstralKosmogliphs.HAMMER)) queryMineableHammerPositions(stack, world, pos, state, miner)
-    if (kosmogliph.contains(AstralKosmogliphs.VEIN_MINER)) queryMineableVeinPositions(
-        stack, world, state, pos, 30.0, min(64, stack.maxDamage - stack.damage)
-    )
-
-    return setOf()
-}
-
 
 fun queryMineableVeinPositions(
     stack: ItemStack,
@@ -93,18 +85,29 @@ fun queryMineableVeinPositions(
 }
 
 fun BlockPos.neighbors(): Set<BlockPos> {
-    return Direction.entries.map { this.offset(it) }.toSet()
+    val set = mutableSetOf<BlockPos>()
+    for (i in -1..1) {
+        for (j in -1..1) {
+            for (k in -1..1) {
+                if (i == 0 && j == 0 && k == 0) continue
+                set.add(this.add(i, j, k))
+            }
+        }
+    }
+    return set
+//    return Direction.entries.map { this.offset(it) }.toSet()
 }
 
 fun queryMineableHammerPositions(
     stack: ItemStack, world: World, pos: BlockPos, mainState: BlockState, miner: LivingEntity
 ): Set<BlockPos> {
-    val minablePositions = mutableSetOf(pos)
+    if (stack.get(DataComponentTypes.TOOL)?.isCorrectForDrops(world.getBlockState(pos)) != true) return setOf()
+
+    val mineablePositions = mutableSetOf(pos)
     val reach = if (miner.isInCreativeMode) 5.0 else 4.5
 
     val combined = miner.eyePos.add(miner.rotationVector.multiply(reach))
 
-    //raycast always return a BlockHitResult
     val raycast = world.raycast(
         RaycastContext(
             miner.eyePos, combined, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, miner
@@ -116,18 +119,21 @@ fun queryMineableHammerPositions(
     aoe.allInside().forEach {
         val state = world.getBlockState(it)
         if (stack.canSafelyBreak(world, state, it)) {
-            if (mainState.getHardness(world, pos) + 0.1 >= state.getHardness(world, it)) {
-                minablePositions.add(it)
+            val player = miner as PlayerEntity
+            val base = mainState.calcBlockBreakingDelta(player, world, pos)
+            val side = state.calcBlockBreakingDelta(player, world, it)
+            if (side > 1.0 || base <= side) {
+                mineablePositions.add(it)
             }
         }
     }
 
     val durability = stack.maxDamage - stack.damage
-    if (durability < minablePositions.size) {
-        return minablePositions.toList().subList(0, durability - 1).toSet()
+    if (durability < mineablePositions.size) {
+        return mineablePositions.toList().subList(0, durability - 1).toSet()
     }
 
-    return minablePositions
+    return mineablePositions
 }
 
 fun BlockBox.allInside(): Set<BlockPos> {
@@ -153,28 +159,24 @@ fun areaOfAffect(pos: BlockPos, direction: Direction): BlockBox {
 }
 
 fun Set<BlockPos>.breakAndDropStacksAt(
-    world: World,
-    pos: BlockPos,
-    miner: LivingEntity
+    world: World, pos: BlockPos, miner: LivingEntity, stack: ItemStack
 ) {
     val combined = map { otherPos ->
-        val stacks = Block.getDroppedStacks(
-            world.getBlockState(otherPos),
-            world as ServerWorld,
-            otherPos,
-            world.getBlockEntity(otherPos),
-            miner,
-            miner.mainHandStack
-        )
+        val state = world.getBlockState(otherPos)
+        val stacks =
+            Block.getDroppedStacks(state, world as ServerWorld, otherPos, world.getBlockEntity(otherPos), miner, stack)
 
+        state.onStacksDropped(world, otherPos, stack, true)
         world.breakBlock(otherPos, false, miner)
         stacks
     }.flatten() //.combined()
 
-    combined.forEach { stack -> Block.dropStack(world, pos, stack) }
+    if (miner is ServerPlayerEntity && miner.isCreative) return
+    combined.forEach { droppedStack -> Block.dropStack(world, pos, droppedStack) }
 }
 
 // causes item dupe
+@Suppress("unused")
 fun List<ItemStack>.combined(): List<ItemStack> {
     val combined = mutableListOf<ItemStack>()
     map { it.copy() }.forEach { stack ->

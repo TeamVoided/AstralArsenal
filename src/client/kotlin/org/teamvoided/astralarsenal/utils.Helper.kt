@@ -8,7 +8,6 @@ import net.minecraft.util.shape.VoxelShapes
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HAMMER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.VEIN_MINER
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.queryMineableHammerPositions
-import org.teamvoided.astralarsenal.item.kosmogliph.logic.queryMineablePositions
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.queryMineableVeinPositions
 import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
 import kotlin.math.min
@@ -38,7 +37,6 @@ fun getShapeAndPos(client: MinecraftClient): Pair<List<VoxelShape>, BlockPos>? {
             val positions = if (isHammer) queryMineableHammerPositions(stack, world, pos, state, player) else
                 queryMineableVeinPositions(stack, world, state, pos, 30.0, min(64, stack.maxDamage - stack.damage))
 
-            queryMineablePositions(stack, world, pos, state, player)
             val outlineShapes = java.util.ArrayList<VoxelShape>()
             outlineShapes.add(VoxelShapes.empty())
 
