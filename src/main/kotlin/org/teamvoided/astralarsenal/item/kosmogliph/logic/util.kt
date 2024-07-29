@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.stat.Stats
 import net.minecraft.util.math.BlockBox
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -168,6 +169,7 @@ fun Set<BlockPos>.breakAndDropStacksAt(
 
         state.onStacksDropped(world, otherPos, stack, true)
         world.breakBlock(otherPos, false, miner)
+        if (miner is PlayerEntity && !miner.isCreative) miner.incrementStat(Stats.MINED.getOrCreateStat(state.block))
         stacks
     }.flatten() //.combined()
 
