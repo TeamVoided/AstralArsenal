@@ -20,6 +20,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.AlchemistKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.BeamKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams.MinigunKosmogliph
 import java.util.*
 
 object AstralItemComponents {
@@ -53,6 +54,10 @@ object AstralItemComponents {
     val ASTRAL_STRIKE_DATA: DataComponentType<AstralStrikeKosmogliph.Data> =
         register("astral_strike_data", { it is ArmorItem || it is ToolItem }, { AstralStrikeKosmogliph.Data(0) }) { builder ->
             builder.codec(AstralStrikeKosmogliph.Data.CODEC).build()
+        }
+    val MINIGUN_DATA: DataComponentType<MinigunKosmogliph.Data> =
+        register("minigun_data", { it is RailgunItem }, { MinigunKosmogliph.Data(0, 0) }) { builder ->
+            builder.codec(MinigunKosmogliph.Data.CODEC).build()
         }
 
     val GRAPPLE_DATA: DataComponentType<GrappleKosmogliph.Data> =

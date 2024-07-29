@@ -37,6 +37,11 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::SlashEntity), SpawnGroup.MISC)
             .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
+    val BULLET_ENTITY = register(
+        "bullet_entity",
+        EntityType.Builder.create(EntityType.EntityFactory(::BulletEntity), SpawnGroup.MISC)
+            .setDimensions(0.25f, 0.25f).maxTrackingRange(4).build()
+    )
     val DEEP_WOUND_ENTITY = register(
         "deep_wound_entity",
         EntityType.Builder.create(EntityType.EntityFactory(::DeepWoundEntity), SpawnGroup.MISC)

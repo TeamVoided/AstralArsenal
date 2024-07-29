@@ -26,7 +26,7 @@ class FlameThrowerKosmogliph(id: Identifier) :
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         mcCoroutineTask {
             val stack = player.getStackInHand(hand)
-            for (i in 0..250) {
+            for (i in 0..63) {
                 if (stack != player.getStackInHand(hand)) return@mcCoroutineTask
 
                 val result = player.raycast(10.0, 1f, false)
