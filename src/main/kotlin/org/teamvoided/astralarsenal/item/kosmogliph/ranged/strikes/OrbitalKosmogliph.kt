@@ -38,9 +38,9 @@ class OrbitalKosmogliph (
             snowballEntity.side = 4
             snowballEntity.THRUST = 1.0
             snowballEntity.TIMEACTIVE = 40
-            snowballEntity.WINDUP = 120
+            snowballEntity.WINDUP = 60
             snowballEntity.DMG = 4
-            snowballEntity.trackTime = 100
+            snowballEntity.trackTime = 40
             snowballEntity.balls = player
             world.spawnEntity(snowballEntity)
             world.playSound(

@@ -19,6 +19,7 @@ import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.item.RailgunItem
@@ -89,19 +90,7 @@ class RancidBrewKosmogliph (id: Identifier) :
                 ))
                 entity.addStatusEffect(
                     StatusEffectInstance(
-                        StatusEffects.WITHER,
-                        300, 0,
-                        false, true, true
-                    ))
-                entity.addStatusEffect(
-                    StatusEffectInstance(
                         StatusEffects.POISON,
-                        300, 0,
-                        false, true, true
-                    ))
-                entity.addStatusEffect(
-                    StatusEffectInstance(
-                        StatusEffects.HUNGER,
                         300, 0,
                         false, true, true
                     ))
@@ -113,13 +102,13 @@ class RancidBrewKosmogliph (id: Identifier) :
                     ))
                 entity.addStatusEffect(
                     StatusEffectInstance(
-                        StatusEffects.DARKNESS,
+                        AstralEffects.REDUCE,
                         300, 0,
                         false, true, true
                     ))
                 entity.addStatusEffect(
                     StatusEffectInstance(
-                        StatusEffects.UNLUCK,
+                        AstralEffects.BLEED,
                         300, 0,
                         false, true, true
                     ))}
@@ -135,7 +124,7 @@ class RancidBrewKosmogliph (id: Identifier) :
             ))
         player.addStatusEffect(
             StatusEffectInstance(
-                StatusEffects.WITHER,
+                AstralEffects.REDUCE,
                 100, 1,
                 false, true, true
             ))

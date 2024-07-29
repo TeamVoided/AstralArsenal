@@ -76,7 +76,7 @@ class RayofFrostKosmogliph (id: Identifier) :
                     player,
                     player
                 ),5f)
-            entity.frozenTicks += 300
+            entity.frozenTicks += 500
         }
         if (!player.isCreative) {
             player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)

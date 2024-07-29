@@ -28,12 +28,11 @@ class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is
             beam.THRUST = 1.0
             beam.targetEntity = target
             beam.DOT = false
-            beam.DMG = 3
+            beam.DMG = 5
             beam.trackTime = 10
             attacker.world.spawnEntity(beam)
             hitTimes = 0
         }
-        println("im working")
         stack.set(AstralItemComponents.ASTRAL_STRIKE_DATA, Data(hitTimes))
         return super.postHit(stack, target, attacker)
     }

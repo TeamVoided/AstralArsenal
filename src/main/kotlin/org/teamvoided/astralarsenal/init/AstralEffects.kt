@@ -25,7 +25,7 @@ object AstralEffects {
         "unhealable_damage", AstralStatusEffect(StatusEffectType.NEUTRAL, 6684672)
             .addAttributeModifier(
                 EntityAttributes.GENERIC_MAX_HEALTH, id("effect.unhealable"),
-                -0.75, EntityAttributeModifier.Operation.ADD_VALUE
+                -0.5, EntityAttributeModifier.Operation.ADD_VALUE
             )
     )
     val REDUCE = register(

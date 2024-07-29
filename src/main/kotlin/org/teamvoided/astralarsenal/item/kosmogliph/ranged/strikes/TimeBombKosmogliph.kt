@@ -38,7 +38,7 @@ class TimeBombKosmogliph (
             snowballEntity.THRUST = 1.0
             snowballEntity.TIMEACTIVE = 5
             snowballEntity.WINDUP = 1200
-            snowballEntity.DMG = 150
+            snowballEntity.DMG = 50
             snowballEntity.trackTime = 1100
             snowballEntity.balls = player
             world.spawnEntity(snowballEntity)

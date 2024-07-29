@@ -15,6 +15,7 @@ import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -73,7 +74,7 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
             world.createExplosion(
                 player,
                 entity.damageSources.explosion(player,player),
-                WeakExplosionBehavior(),
+                StrongExplosionBehavior(),
                 entity.x,
                 entity.y,
                 entity.z,
@@ -100,7 +101,7 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
             world.createExplosion(
                 player,
                 player.damageSources.explosion(player,player),
-                WeakExplosionBehavior(),
+                StrongExplosionBehavior(),
                 result.pos.x,
                 result.pos.y,
                 result.pos.z,

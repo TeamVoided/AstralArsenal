@@ -141,9 +141,7 @@ class SnipeKosmogliph (id: Identifier) :
                         player
                     ), 7.5f)
             }
-            if (!player.isCreative) {
-                player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
-            }
+
         }
     }
 }

@@ -52,7 +52,7 @@ class FlameThrowerKosmogliph(id: Identifier) :
                             0.2,
                             0.0
                         )
-
+                        if(i % 10 == 0){
                         world.playSound(
                             null,
                             player.x,
@@ -62,7 +62,7 @@ class FlameThrowerKosmogliph(id: Identifier) :
                             SoundCategory.PLAYERS,
                             1.0F,
                             1.0f
-                        )
+                        )}
                     }
                 }
 
