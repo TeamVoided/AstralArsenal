@@ -11,10 +11,13 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Math.lerp
+import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.world.explosion.PenopticonExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
@@ -71,6 +74,19 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
             1.0f
         )
         for (entity in entities) {
+            if(entity is CannonballEntity || entity is MortarEntity){
+                world.createExplosion(entity,
+                    entity.damageSources.explosion(entity, player),
+                    PenopticonExplosionBehavior(),
+                    entity.x,
+                    entity.y,
+                    entity.z,
+                    3.0f,
+                    false,
+                    World.ExplosionSourceType.TNT)
+                entity.discard()
+            }
+            else{
             world.createExplosion(
                 player,
                 entity.damageSources.explosion(player,player),
@@ -95,6 +111,7 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
                     1.5,
                     0.0
                 )
+            }
             }
         }
         if(entities.isEmpty()){
@@ -125,7 +142,7 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
             }
         }
         if (!player.isCreative) {
-            player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
+            player.itemCooldownManager.set(player.getStackInHand(hand).item, 600)
         }
     }
 }

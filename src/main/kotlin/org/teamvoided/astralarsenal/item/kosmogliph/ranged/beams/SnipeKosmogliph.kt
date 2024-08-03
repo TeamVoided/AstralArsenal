@@ -1,6 +1,8 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams
 
 import net.minecraft.entity.Entity
+import net.minecraft.entity.ItemEntity
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.SwordItem
@@ -14,12 +16,16 @@ import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.coroutine.mcCoroutineTask
 import org.teamvoided.astralarsenal.coroutine.ticks
+import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
+import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -75,16 +81,41 @@ class SnipeKosmogliph (id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            entity.damage(
-                DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
-                    player,
-                    player
-                ), 7.5f)
+            if (entity is LivingEntity || entity is CannonballEntity || entity is MortarEntity) {
+            if(entity is CannonballEntity || entity is MortarEntity){
+                world.createExplosion(entity,
+                    entity.damageSources.explosion(entity, player),
+                    WeakExplosionBehavior(),
+                    entity.x,
+                    entity.y,
+                    entity.z,
+                    2.0f,
+                    false,
+                    World.ExplosionSourceType.TNT)
+                entity.discard()
+            }}
+            val rand = world.random.rangeInclusive(1,10)
+            if(rand == 1){
+                entity.damage(
+                    DamageSource(
+                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                        player,
+                        player
+                    ), 7.5f)
+            }
+            else{
+                entity.damage(
+                    DamageSource(
+                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                        player,
+                        player
+                    ), 7.5f)
+            }
         }
         if (!player.isCreative) {
-            player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
+            player.itemCooldownManager.set(player.getStackInHand(hand).item, 600)
         }
+        if(!world.isClient){
         mcCoroutineTask(delay = 20.ticks) {
             result = player.raycast(100.0, 1f, false)
             distance = sqrt(
@@ -134,14 +165,42 @@ class SnipeKosmogliph (id: Identifier) :
                 1.0f
             )
             for (entity in entities) {
-                entity.damage(
-                    DamageSource(
-                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BEAM_OF_LIGHT),
-                        player,
-                        player
-                    ), 7.5f)
+                if (entity is LivingEntity || entity is CannonballEntity || entity is MortarEntity) {
+                    if (entity is CannonballEntity || entity is MortarEntity) {
+                        world.createExplosion(
+                            entity,
+                            entity.damageSources.explosion(entity, player),
+                            WeakExplosionBehavior(),
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                            2.0f,
+                            false,
+                            World.ExplosionSourceType.TNT
+                        )
+                        entity.discard()
+                    }
+                    val rand = world.random.rangeInclusive(1, 10)
+                    if (rand == 1) {
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                                player,
+                                player
+                            ), 7.5f
+                        )
+                    } else {
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                                player,
+                                player
+                            ), 7.5f
+                        )
+                    }
+                }
             }
-
         }
+    }
     }
 }

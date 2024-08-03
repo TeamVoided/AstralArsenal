@@ -2,13 +2,12 @@ package org.teamvoided.astralarsenal.world.explosion
 
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockView
 import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.ExplosionBehavior
 
-class StrongExplosionBehavior : ExplosionBehavior() {
+class FrostExplosionBehavior : ExplosionBehavior() {
 
     override fun canDestroyBlock(
         explosion: Explosion,
@@ -25,9 +24,8 @@ class StrongExplosionBehavior : ExplosionBehavior() {
         return 1f
     }
 
-    override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {
-        if (entity is LivingEntity){
-        return 15f}
-        else{return 0f}
+    override fun calculateDamage(explosion: Explosion, entity: Entity): Float {
+        entity.frozenTicks += 1000
+        return 0f
     }
 }

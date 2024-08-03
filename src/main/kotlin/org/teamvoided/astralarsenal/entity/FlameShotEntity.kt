@@ -33,7 +33,7 @@ class FlameShotEntity : ThrownItemEntity {
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         super.onEntityHit(entityHitResult)
-        if(entityHitResult.entity != owner){
+        if(entityHitResult.entity != owner && entityHitResult.entity is LivingEntity){
             val hit = entityHitResult.entity
             hit.customDamage(DamageTypes.IN_FIRE, 3.0f, this, owner)
             hit.setOnFireFor(100)

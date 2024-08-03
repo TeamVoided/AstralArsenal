@@ -27,6 +27,11 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::BeamOfLightEntity), SpawnGroup.MISC)
             .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
+    val BLACK_HOLE_ENTITY = register(
+        "black_hole",
+        EntityType.Builder.create(EntityType.EntityFactory(::BlackHoleEntity), SpawnGroup.MISC)
+            .setDimensions(3f, 3f).maxTrackingRange(4).build()
+    )
     val BEAM_OF_LIGHT_ARROW = register(
         "beam_of_light_arrow",
         EntityType.Builder.create(EntityType.EntityFactory(::BeamOfLightArrowEntity), SpawnGroup.MISC)
@@ -58,12 +63,12 @@ object AstralEntities {
             .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
     val FLAME_SHOT_ENTITY = register(
-        "boom_entity",
+        "flame_shot_entity",
         EntityType.Builder.create(EntityType.EntityFactory(::FlameShotEntity), SpawnGroup.MISC)
             .setDimensions(0.25f, 0.25f).maxTrackingRange(4).build()
     )
     val FREEZE_SHOT_ENTITY = register(
-        "boom_entity",
+        "freeze_shot_entity",
         EntityType.Builder.create(EntityType.EntityFactory(::FreezeShotEntity), SpawnGroup.MISC)
             .setDimensions(0.25f, 0.25f).maxTrackingRange(4).build()
     )

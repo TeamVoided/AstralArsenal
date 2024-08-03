@@ -11,7 +11,7 @@ import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph.Data
-
+//This needs to be moved to a crossbow kosmogliph
 class MinigunKosmogliph (id: Identifier) :
     SimpleKosmogliph(id, { it.item is RailgunItem }){
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {

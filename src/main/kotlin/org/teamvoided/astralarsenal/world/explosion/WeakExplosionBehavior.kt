@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.world.explosion
 
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
+import net.minecraft.entity.LivingEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockView
 import net.minecraft.world.explosion.Explosion
@@ -25,6 +26,8 @@ class WeakExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {
-        return 10f
+        if (entity is LivingEntity){
+            return 10f}
+        else{return 0f}
     }
 }

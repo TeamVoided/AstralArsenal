@@ -41,7 +41,7 @@ class AstralRecipeProvider(
             .pattern("KCK")
             .pattern("IKI")
             .ingredient('I', Items.IRON_INGOT)
-            .ingredient('K', AstralItems.KOSMIC_GEM)
+            .ingredient('K', Items.DIAMOND)
             .ingredient('C', Items.CROSSBOW)
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
@@ -51,7 +51,7 @@ class AstralRecipeProvider(
             .pattern("KCK")
             .pattern("IKI")
             .ingredient('I', Items.IRON_INGOT)
-            .ingredient('K', AstralItems.KOSMIC_GEM)
+            .ingredient('K', Items.DIAMOND)
             .ingredient('C', Items.DIAMOND_AXE)
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
@@ -62,6 +62,9 @@ class AstralRecipeProvider(
             listOf(
                 AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,
                 AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,
+                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,
+                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,
+                Items.DIAMOND
                 )
         ).offerTo(this)
 
@@ -71,6 +74,9 @@ class AstralRecipeProvider(
             listOf(
                 AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
                 AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
+                AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
+                AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
+                Items.DIAMOND
                 )
         ).offerTo(this)
 
@@ -82,6 +88,7 @@ class AstralRecipeProvider(
                 AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
                 AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
                 AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
+                Items.DIAMOND
                 )
         ).offerTo(this)
 
@@ -110,7 +117,12 @@ class AstralRecipeProvider(
         simpleShapeless(
             AstralItems.AMETHYST_DUST,
             RecipeCategory.REDSTONE, 1,
-            listOf(Items.AMETHYST_SHARD, Items.AMETHYST_SHARD)
+            listOf(Items.AMETHYST_SHARD, Items.AMETHYST_SHARD,
+                Items.AMETHYST_SHARD, Items.AMETHYST_SHARD,
+                Items.AMETHYST_SHARD, Items.AMETHYST_SHARD,
+                Items.AMETHYST_SHARD, Items.AMETHYST_SHARD,
+                Items.AMETHYST_SHARD)
+
         ).offerTo(this)
 
         simpleShapeless(

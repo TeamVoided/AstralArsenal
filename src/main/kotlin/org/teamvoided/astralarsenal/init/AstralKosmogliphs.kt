@@ -79,6 +79,8 @@ object AstralKosmogliphs {
     val DEVASTATE = register("devastate", ::DevastateKosmogliph)
     val LOCK_OFF = register("lock_off", ::LockOffKosmogliph)
     val TIME_BOMB = register("time_bomb", ::TimeBombKosmogliph)
+    //2.0.0 content
+    // val BLACK_HOLE = register("black_hole", ::BlackHoleKosmogliph)
 
     val TRIDENT_REDUCE = register("trident_reduce", ::TridentReduceKosmogliph)
     val TRIDENT_BLEED = register("trident_bleed", ::TridentBleedKosmogliph)

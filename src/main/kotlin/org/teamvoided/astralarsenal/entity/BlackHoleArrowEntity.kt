@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.entity
 
-import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.ArrowEntity
@@ -11,7 +10,7 @@ import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralEntities
 
-class BeamOfLightArrowEntity : ArrowEntity {
+class BlackHoleArrowEntity : ArrowEntity {
     constructor(entityType: EntityType<out BeamOfLightArrowEntity?>?, world: World?) :
             super(entityType as EntityType<out ArrowEntity?>?, world)
 
@@ -20,27 +19,21 @@ class BeamOfLightArrowEntity : ArrowEntity {
 
     constructor(world: World?, x: Double, y: Double, z: Double) :
             super(AstralEntities.BEAM_OF_LIGHT_ARROW as EntityType<out ArrowEntity?>, world)
-    var WINDUP = 1
-    var TIMEACTIVE = 1
-    var DOT = false
-    var THRUST = 2.0
-    var DMG = 1
-    var side = 1
-    var trackTime = 0
+
     var balls: LivingEntity? = null
 
     override fun tick() {
         if (!world.isClient) {
             val serverWorld = world as ServerWorld
             serverWorld.spawnParticles(
-                ParticleTypes.END_ROD,
+                ParticleTypes.DRAGON_BREATH,
                 this.x,
                 this.y,
                 this.z,
-                10,
-                random.nextDouble().minus(0.5),
-                random.nextDouble().minus(0.5),
-                random.nextDouble().minus(0.5),
+                50,
+                random.nextDouble().minus(0.5).times(0.2),
+                random.nextDouble().minus(0.5).times(0.2),
+                random.nextDouble().minus(0.5).times(0.2),
                 0.0
             )
         }
@@ -48,34 +41,30 @@ class BeamOfLightArrowEntity : ArrowEntity {
     }
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
-        if (!world.isClient) {
-            val snowballEntity = BeamOfLightEntity(world, balls)
-            snowballEntity.setPosition(this.x,this.y,this.z)
-            snowballEntity.DOT = DOT
-            snowballEntity.side = side
-            snowballEntity.THRUST = THRUST
-            snowballEntity.TIMEACTIVE = TIMEACTIVE
-            snowballEntity.WINDUP = WINDUP / 4
-            snowballEntity.DMG = DMG
-            snowballEntity.trackTime = trackTime / 4
-            snowballEntity.owner = balls
-            world.spawnEntity(snowballEntity)
             this.discard()
-        }
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
-        if (!world.isClient) {
-            val snowballEntity = BeamOfLightEntity(world, balls)
-            snowballEntity.setPosition(this.x,this.y,this.z)
-            snowballEntity.DOT = DOT
-            snowballEntity.side = side
-            snowballEntity.THRUST = THRUST
-            snowballEntity.TIMEACTIVE = TIMEACTIVE
-            snowballEntity.WINDUP = WINDUP
-            snowballEntity.DMG = DMG
-            snowballEntity.targetEntity = entityHitResult.entity
-            snowballEntity.trackTime = trackTime
+        if (!world.isClient && entityHitResult.entity is LivingEntity) {
+            val snowballEntity = BlackHoleEntity(world, balls)
+            val x = when(random.nextBoolean()){
+                true -> 1
+                false -> -1
+            }
+            val y = when(random.nextBoolean()){
+                true -> 1
+                false -> -1
+            }
+            val z = when(random.nextBoolean()){
+                true -> 1
+                false -> -1
+            }
+            snowballEntity.setPosition(
+                this.x + (x * 5) + random.nextDouble().minus(0.5).times(10),
+                this.y + (y * 5) + random.nextDouble().minus(0.5).times(10),
+                this.z + (z * 5) + random.nextDouble().minus(0.5).times(10)
+            )
+            snowballEntity.target = entityHitResult.entity as LivingEntity
             snowballEntity.owner = balls
             world.spawnEntity(snowballEntity)
             this.discard()

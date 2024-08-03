@@ -2,6 +2,8 @@ package org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams
 
 import kotlinx.coroutines.delay
 import net.minecraft.entity.Entity
+import net.minecraft.entity.ItemEntity
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.player.PlayerEntity
@@ -24,6 +26,7 @@ import kotlin.time.Duration.Companion.seconds
 class FlameThrowerKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.item is RailgunItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
+        if(!world.isClient){
         mcCoroutineTask {
             val stack = player.getStackInHand(hand)
             for (i in 0..63) {
@@ -65,16 +68,17 @@ class FlameThrowerKosmogliph(id: Identifier) :
                         )}
                     }
                 }
-
-                entities.forEach { entity ->
-                    entity.damage(
-                        DamageSource(
-                            AstralDamageTypes.getHolder(world.registryManager, DamageTypes.IN_FIRE),
-                            player,
-                            player
-                        ), 3f
-                    )
-                    entity.setOnFireFor(200)
+                for(entity in entities){
+                    if (entity is LivingEntity) {
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, DamageTypes.IN_FIRE),
+                                player,
+                                player
+                            ), 3f
+                        )
+                        entity.setOnFireFor(200)
+                    }
                 }
 
                 delay((0.08).seconds)
@@ -85,4 +89,4 @@ class FlameThrowerKosmogliph(id: Identifier) :
             player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
         }
     }
-}
+}}
