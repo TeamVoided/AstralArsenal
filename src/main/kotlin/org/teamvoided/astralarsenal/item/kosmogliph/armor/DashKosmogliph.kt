@@ -85,7 +85,6 @@ class DashKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                     if (y.isNotEmpty()) {
                         for (t in y) {
                             time += (t.amplifier * 20)
-                            println(time)
                         }
                     }
                 }

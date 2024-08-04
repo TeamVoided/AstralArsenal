@@ -106,7 +106,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
             }
         }}
             if(!player.isCreative){
-                player.itemCooldownManager.set(player.getStackInHand(hand).item, 600)
+                player.itemCooldownManager.set(player.getStackInHand(hand).item, 800)
         }
     }
 

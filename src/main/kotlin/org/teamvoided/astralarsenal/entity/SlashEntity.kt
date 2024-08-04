@@ -7,6 +7,7 @@ import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
@@ -43,7 +44,7 @@ class SlashEntity : ThrownItemEntity {
 
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
-        builder.add(DMG, 3f)
+        builder.add(DMG, 5f)
         builder.add(time,0)
     }
 
@@ -72,12 +73,21 @@ class SlashEntity : ThrownItemEntity {
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
+        if(entityHitResult.entity is PlayerEntity){
         entityHitResult.entity.damage(
             DamageSource(
             AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
             this,
             owner
-        ),this.getDmg())
+        ),this.getDmg())}
+        else{
+            entityHitResult.entity.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
+                    this,
+                    owner
+                ),this.getDmg().times(2))
+        }
         super.onEntityHit(entityHitResult)
     }
 
