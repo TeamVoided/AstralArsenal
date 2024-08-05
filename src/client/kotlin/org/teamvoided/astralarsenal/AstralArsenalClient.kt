@@ -11,6 +11,7 @@ import org.teamvoided.astralarsenal.handlers.LaserBeamPayloadHandler
 import org.teamvoided.astralarsenal.init.AstralBlocks
 import org.teamvoided.astralarsenal.init.AstralEntitiesClient
 import org.teamvoided.astralarsenal.init.AstralHandledScreens
+import org.teamvoided.astralarsenal.init.AstralHudRendering
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.networking.LaserBeamPayload
 import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
@@ -39,9 +40,7 @@ object AstralArsenalClient {
             }
         }
 
-        BlockEntityRendererFactories.register(
-            AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY,
-            ::CosmicTableBlockEntityRenderer
-        )
+        AstralHudRendering.init()
+        BlockEntityRendererFactories.register(AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY, ::CosmicTableBlockEntityRenderer)
     }
 }
