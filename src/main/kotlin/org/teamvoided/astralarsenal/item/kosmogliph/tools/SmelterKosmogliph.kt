@@ -2,7 +2,6 @@ package org.teamvoided.astralarsenal.item.kosmogliph.tools
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.enchantment.Enchantment
-import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.AxeItem
 import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemStack
@@ -40,7 +39,7 @@ class SmelterKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Picka
         return smeltedStacks
     }
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.SILK_TOUCH)
+        return listOf()
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
