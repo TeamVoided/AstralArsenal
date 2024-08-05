@@ -1,26 +1,28 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.armor
 
 import net.minecraft.enchantment.Enchantment
-import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
+import net.minecraft.network.packet.s2c.play.SoundPlayS2CPacket
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.data.tags.AstralEntityTags.MOUNTS_WITH_DASH
 import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
-import java.lang.Math.random
 
-class DashKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
+class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.LEGGINGS
 }) {
@@ -28,34 +30,46 @@ class DashKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val JUMP_FORWARD_BOOST = 1.0
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
-        val data = stack.get(AstralItemComponents.DASH_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.get(AstralItemComponents.DASH_DATA)
+            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world
+        var dashingEntity: LivingEntity = player
 
-        if(data.uses > 0) {
-            val boost = player.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(JUMP_FORWARD_BOOST)
-            player.setVelocity(player.velocity.x + boost.x, 0.1, player.velocity.z + boost.z)
-            player.velocityModified = true
+        if (player.vehicle != null) {
+            val entity = player.vehicle!!
+            if (entity is LivingEntity && entity.type.isIn(MOUNTS_WITH_DASH)) {
+                dashingEntity = entity
+            } else return
+        }
+
+        if (data.uses > 0) {
+            val boost = dashingEntity.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(JUMP_FORWARD_BOOST)
+            dashingEntity.setVelocity(dashingEntity.velocity.x + boost.x, 0.1, dashingEntity.velocity.z + boost.z)
+            dashingEntity.velocityModified = true
             world.playSound(
                 null,
-                player.x,
-                player.y,
-                player.z,
-                AstralSounds.DODGE,
+                dashingEntity.x,
+                dashingEntity.y,
+                dashingEntity.z,
+                SoundEvents.ENTITY_BREEZE_LAND,
                 SoundCategory.PLAYERS,
                 1.0F,
-                1.0F)
-            if(!world.isClient){
-                val serverWorld = world as ServerWorld
-                serverWorld.spawnParticles(
-                    ParticleTypes.ELECTRIC_SPARK,
-                    player.x,
-                    player.y,
-                    player.z,
-                    20,
-                    random().minus(0.5).times(2),
-                    random().minus(0.5).times(2),
-                    random().minus(0.5).times(2),
-                    0.0)
+                1.0F
+            )
+            if (world is ServerWorld) {
+                repeat(20) {
+                    world.spawnParticles(
+                        ParticleTypes.CLOUD,
+                        dashingEntity.x + (world.random.nextDouble() - 0.5) * 1.7,
+                        dashingEntity.y + 1 + (world.random.nextDouble() - 0.5) * 1.7,
+                        dashingEntity.z + (world.random.nextDouble() - 0.5) * 1.7,
+                        0,
+                        dashingEntity.velocity.x,
+                        dashingEntity.velocity.y,
+                        dashingEntity.velocity.z,
+                        -0.2,
+                    )
+                }
             }
             stack.set(AstralItemComponents.DASH_DATA, Data(data.uses - 1, data.cooldown))
         }
@@ -78,7 +92,7 @@ class DashKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
 
             if (cooldown <= 0) {
                 uses++
-                val x: Float = (uses * 0.5).toFloat()
+                val x: Float = (uses * 2.0).toFloat()
                 var time = 20
                 if (entity is LivingEntity) {
                     val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
@@ -89,16 +103,20 @@ class DashKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                     }
                 }
                 cooldown = time
-                world.playSound(
-                    null,
-                    entity.x,
-                    entity.y,
-                    entity.z,
-                    AstralSounds.CHARGE,
-                    SoundCategory.PLAYERS,
-                    1.0F,
-                    x
-                )
+                if (entity is ServerPlayerEntity) {
+                    entity.networkHandler.send(
+                        SoundPlayS2CPacket(
+                            Holder.createDirect(SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE),
+                            SoundCategory.PLAYERS,
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                            1.6F,
+                            x,
+                            world.getRandom().nextLong()
+                        )
+                    )
+                }
             }
 
             stack.set(AstralItemComponents.DASH_DATA, Data(uses, cooldown))
@@ -117,6 +135,7 @@ class DashKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                 )
         }
     }
+
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf()
     }

@@ -11,6 +11,7 @@ import org.teamvoided.astralarsenal.data.gen.prov.AstralModelProvider
 import org.teamvoided.astralarsenal.data.gen.prov.AstralRecipeProvider
 import org.teamvoided.astralarsenal.data.gen.tags.AstralBlockTagProvider
 import org.teamvoided.astralarsenal.data.gen.tags.AstralDamageTypeTagsProvider
+import org.teamvoided.astralarsenal.data.gen.tags.AstralEntityTagProvider
 import org.teamvoided.astralarsenal.data.gen.tags.AstralItemTagProvider
 import org.teamvoided.astralarsenal.data.registry.RegistryBootstrapper
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
@@ -30,6 +31,7 @@ object AstralArsenalData : DataGeneratorEntrypoint {
         pack.addProvider(::AstralBlockTagProvider)
         pack.addProvider(::AstralDamageTypeTagsProvider)
         pack.addProvider(::AstralItemTagProvider)
+        pack.addProvider(::AstralEntityTagProvider)
 
         pack.addProvider(::AstralRegistryProvider)
     }
