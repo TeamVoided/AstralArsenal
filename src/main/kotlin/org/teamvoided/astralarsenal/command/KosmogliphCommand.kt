@@ -15,7 +15,7 @@ object KosmogliphCommand {
         ctx: CommandBuildContext,
         env: RegistrationEnvironment
     ) {
-        val cmdNode = literal("kosmogliph")
+        val kosmogliphNode = literal("kosmogliph").requires { it.hasPermission(2) }
             .then(
                 literal("apply").then(
                     argument("kosmogliph", IdentifierArgumentType.identifier()).suggests { ctx, builder ->
@@ -26,9 +26,10 @@ object KosmogliphCommand {
                         builder.buildFuture()
                     }.executes(::cmd)
                 )
-            ).build()
+            )
+            .build()
 
-        node.addChild(cmdNode)
+        node.addChild(kosmogliphNode)
     }
 
     fun cmd(ctx: CommandContext<ServerCommandSource>): Int {
