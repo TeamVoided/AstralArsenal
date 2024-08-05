@@ -7,8 +7,11 @@ import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
+import net.minecraft.network.packet.s2c.play.SoundPlayS2CPacket
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -99,16 +102,20 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
                     }
                 }
                 cooldown = time
-                world.playSound(
-                    null,
-                    entity.x,
-                    entity.y,
-                    entity.z,
-                    SoundEvents.BLOCK_END_PORTAL_FRAME_FILL,
-                    SoundCategory.PLAYERS,
-                    0.6F,
-                    x
-                )
+                if (entity is ServerPlayerEntity) {
+                    entity.networkHandler.send(
+                        SoundPlayS2CPacket(
+                            Holder.createDirect(SoundEvents.BLOCK_END_PORTAL_FRAME_FILL),
+                            SoundCategory.PLAYERS,
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                            0.6F,
+                            x,
+                            world.getRandom().nextLong()
+                        )
+                    )
+                }
             }
 
             if (lastJump < 20) lastJump++
