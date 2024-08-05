@@ -25,11 +25,11 @@ class AstralRecipeProvider(
 
     private fun RecipeExporter.generateCraftingRecipes() {
         shaped(AstralBlocks.COSMIC_TABLE)
-            .pattern("DED")
+            .pattern("DGD")
             .pattern("ONO")
             .pattern("COC")
             .ingredient('D', Items.DIAMOND_BLOCK)
-            .ingredient('E', AstralItems.KOSMIC_GEM)
+            .ingredient('G', AstralItems.KOSMIC_GEM)
             .ingredient('O', Items.OBSIDIAN)
             .ingredient('N', Items.NETHERITE_INGOT)
             .ingredient('C', Items.CRYING_OBSIDIAN)
@@ -39,103 +39,97 @@ class AstralRecipeProvider(
         shaped(AstralItems.RAILGUN)
             .pattern("IKI")
             .pattern("KCK")
-            .pattern("IKI")
+            .pattern("IGI")
             .ingredient('I', Items.IRON_INGOT)
             .ingredient('K', Items.DIAMOND)
             .ingredient('C', Items.CROSSBOW)
+            .ingredient('G', AstralItems.KOSMIC_GEM)
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
 
         shaped(AstralItems.ASTRAL_GREATHAMMER)
             .pattern("IKI")
             .pattern("KCK")
-            .pattern("IKI")
+            .pattern("IGI")
             .ingredient('I', Items.IRON_INGOT)
             .ingredient('K', Items.DIAMOND)
             .ingredient('C', Items.DIAMOND_AXE)
+            .ingredient('G', AstralItems.KOSMIC_GEM)
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
 
         simpleShapeless(
             AstralItems.AMERALD_BLEND,
-            RecipeCategory.REDSTONE, 1,
+            RecipeCategory.MISC, 1,
             listOf(
-                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,
-                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,
-                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,
-                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST,
-                Items.DIAMOND
-                )
+                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST, AstralItems.AMETHYST_DUST,
+                AstralItems.EMERALD_DUST, Items.DIAMOND, AstralItems.EMERALD_DUST,
+                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST, AstralItems.AMETHYST_DUST,
+            )
         ).offerTo(this)
 
         simpleShapeless(
             AstralItems.LAZULICA_BLEND,
-            RecipeCategory.REDSTONE, 1,
+            RecipeCategory.MISC, 1,
             listOf(
-                AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
-                AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
-                AstralItems.QUARTZ_DUST, AstralItems.QUARTZ_DUST,
-                AstralItems.QUARTZ_DUST, AstralItems.QUARTZ_DUST,
-                Items.DIAMOND
-                )
+                AstralItems.QUARTZ_DUST, AstralItems.QUARTZ_DUST, AstralItems.QUARTZ_DUST,
+                AstralItems.LAPIS_LAZULI_DUST, Items.DIAMOND, AstralItems.LAPIS_LAZULI_DUST,
+                AstralItems.QUARTZ_DUST, AstralItems.QUARTZ_DUST, AstralItems.QUARTZ_DUST,
+            )
         ).offerTo(this)
 
         simpleShapeless(
             AstralItems.CONCENTRATED_AMETHYST_BLEND,
-            RecipeCategory.REDSTONE, 1,
+            RecipeCategory.MISC, 1,
             listOf(
-                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
-                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
-                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
-                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
-                Items.DIAMOND
-                )
+                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
+                AstralItems.AMETHYST_DUST, Items.DIAMOND, AstralItems.AMETHYST_DUST,
+                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
+            )
         ).offerTo(this)
 
         simpleShapeless(
             AstralItems.KOSMIC_GEM,
-            RecipeCategory.REDSTONE, 1,
+            RecipeCategory.MISC, 1,
             listOf(
-                AstralItems.LAZULICA, AstralItems.AMERALD,
-                AstralItems.LAZULICA, AstralItems.AMERALD,
-                AstralItems.LAZULICA, AstralItems.AMERALD,
-                AstralItems.LAZULICA, AstralItems.AMERALD,
-                Items.DIAMOND)
+                AstralItems.LAZULICA, AstralItems.AMERALD, AstralItems.LAZULICA,
+                AstralItems.AMERALD, Items.DIAMOND, AstralItems.AMERALD,
+                AstralItems.LAZULICA, AstralItems.AMERALD, AstralItems.LAZULICA
+            )
         ).offerTo(this)
 
         simpleShapeless(
             AstralItems.KOSMIC_GEM,
-            RecipeCategory.REDSTONE, 1,
+            RecipeCategory.MISC, 1,
             listOf(
-                AstralItems.LAZULICA, AstralItems.AMETHYST,
-                AstralItems.LAZULICA, AstralItems.AMETHYST,
-                AstralItems.LAZULICA, AstralItems.AMETHYST,
-                AstralItems.LAZULICA, AstralItems.AMETHYST,
-                Items.DIAMOND)
+                AstralItems.LAZULICA, AstralItems.AMETHYST, AstralItems.LAZULICA,
+                AstralItems.AMETHYST, Items.DIAMOND, AstralItems.AMETHYST,
+                AstralItems.LAZULICA, AstralItems.AMETHYST, AstralItems.LAZULICA,
+            )
         ).offerTo(this, AstralItems.KOSMIC_GEM.id.extendPath("_amethyst"))
 
         simpleShapeless(
             AstralItems.AMETHYST_DUST,
-            RecipeCategory.REDSTONE, 1,
+            RecipeCategory.MISC, 1,
             listOf(Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD)
 
         ).offerTo(this)
 
         simpleShapeless(
             AstralItems.EMERALD_DUST,
-            RecipeCategory.REDSTONE, 1,
+            RecipeCategory.MISC, 1,
             listOf(Items.EMERALD, Items.EMERALD)
         ).offerTo(this)
 
         simpleShapeless(
             AstralItems.LAPIS_LAZULI_DUST,
-            RecipeCategory.REDSTONE, 1,
+            RecipeCategory.MISC, 1,
             listOf(Items.LAPIS_LAZULI, Items.LAPIS_LAZULI)
         ).offerTo(this)
 
         simpleShapeless(
             AstralItems.QUARTZ_DUST,
-            RecipeCategory.REDSTONE, 1,
+            RecipeCategory.MISC, 1,
             listOf(Items.QUARTZ, Items.QUARTZ)
         ).offerTo(this)
 
@@ -205,6 +199,7 @@ class AstralRecipeProvider(
 
         return factory
     }
+
     fun <T : AbstractCookingRecipe> RecipeExporter.genericSmelting(
         recipe: AbstractCookingRecipe.Factory<T>,
         serializer: RecipeSerializer<T>,
@@ -221,18 +216,21 @@ class AstralRecipeProvider(
         .itemCriterion(inputs)
         .itemCriterion(output)
         .offerTo(this, id)
+
     fun RecipeExporter.smelting(
         category: RecipeCategory, output: ItemConvertible, inout: ItemConvertible,
         experience: Float, cookingTime: Int, group: String = "", id: Identifier = id(getSmeltingItemPath(output))
     ) = genericSmelting(
         ::SmeltingRecipe, RecipeSerializer.SMELTING, category, inout, output, experience, cookingTime, group, id
     )
+
     fun RecipeExporter.blasting(
         category: RecipeCategory, output: ItemConvertible, inout: ItemConvertible,
         experience: Float, cookingTime: Int, group: String = "", id: Identifier = id(getBlastingItemPath(output))
     ) = genericSmelting(
         ::BlastingRecipe, RecipeSerializer.BLASTING, category, inout, output, experience, cookingTime, group, id
     )
+
     fun RecipeJsonFactory.itemCriterion(item: ItemConvertible): RecipeJsonFactory =
         this.criterion(hasItem(item), conditionsFromItem(item))
 

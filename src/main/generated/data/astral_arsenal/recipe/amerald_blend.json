@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
+  "category": "misc",
   "ingredients": [
     {
       "item": "astral_arsenal:amethyst_dust"
@@ -15,19 +15,19 @@
       "item": "astral_arsenal:emerald_dust"
     },
     {
-      "item": "astral_arsenal:amethyst_dust"
-    },
-    {
-      "item": "astral_arsenal:emerald_dust"
-    },
-    {
-      "item": "astral_arsenal:amethyst_dust"
-    },
-    {
-      "item": "astral_arsenal:emerald_dust"
-    },
-    {
       "item": "minecraft:diamond"
+    },
+    {
+      "item": "astral_arsenal:emerald_dust"
+    },
+    {
+      "item": "astral_arsenal:amethyst_dust"
+    },
+    {
+      "item": "astral_arsenal:emerald_dust"
+    },
+    {
+      "item": "astral_arsenal:amethyst_dust"
     }
   ],
   "result": {

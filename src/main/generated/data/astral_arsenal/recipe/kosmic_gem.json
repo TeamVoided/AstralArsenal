@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
+  "category": "misc",
   "ingredients": [
     {
       "item": "astral_arsenal:lazulica"
@@ -15,19 +15,19 @@
       "item": "astral_arsenal:amerald"
     },
     {
-      "item": "astral_arsenal:lazulica"
-    },
-    {
-      "item": "astral_arsenal:amerald"
-    },
-    {
-      "item": "astral_arsenal:lazulica"
-    },
-    {
-      "item": "astral_arsenal:amerald"
-    },
-    {
       "item": "minecraft:diamond"
+    },
+    {
+      "item": "astral_arsenal:amerald"
+    },
+    {
+      "item": "astral_arsenal:lazulica"
+    },
+    {
+      "item": "astral_arsenal:amerald"
+    },
+    {
+      "item": "astral_arsenal:lazulica"
     }
   ],
   "result": {

@@ -41,8 +41,8 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_lapis_lazuli_dust",
       "has_quartz_dust",
+      "has_lapis_lazuli_dust",
       "has_diamond"
     ]
   ],

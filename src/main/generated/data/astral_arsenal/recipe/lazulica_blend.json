@@ -1,33 +1,33 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
+  "category": "misc",
   "ingredients": [
     {
+      "item": "astral_arsenal:quartz_dust"
+    },
+    {
+      "item": "astral_arsenal:quartz_dust"
+    },
+    {
+      "item": "astral_arsenal:quartz_dust"
+    },
+    {
       "item": "astral_arsenal:lapis_lazuli_dust"
-    },
-    {
-      "item": "astral_arsenal:quartz_dust"
-    },
-    {
-      "item": "astral_arsenal:lapis_lazuli_dust"
-    },
-    {
-      "item": "astral_arsenal:quartz_dust"
-    },
-    {
-      "item": "astral_arsenal:quartz_dust"
-    },
-    {
-      "item": "astral_arsenal:quartz_dust"
-    },
-    {
-      "item": "astral_arsenal:quartz_dust"
-    },
-    {
-      "item": "astral_arsenal:quartz_dust"
     },
     {
       "item": "minecraft:diamond"
+    },
+    {
+      "item": "astral_arsenal:lapis_lazuli_dust"
+    },
+    {
+      "item": "astral_arsenal:quartz_dust"
+    },
+    {
+      "item": "astral_arsenal:quartz_dust"
+    },
+    {
+      "item": "astral_arsenal:quartz_dust"
     }
   ],
   "result": {
