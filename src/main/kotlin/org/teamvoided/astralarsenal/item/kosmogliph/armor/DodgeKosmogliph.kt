@@ -1,7 +1,6 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.armor
 
 import net.minecraft.enchantment.Enchantment
-import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
@@ -22,7 +21,7 @@ import kotlin.math.sqrt
 class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.LEGGINGS
-}) {
+}), AirSpeedKosmogliph {
     // change this to change how much boost they get :3
     val JUMP_FORWARD_BOOST = 5.0
     val SPEED_CAP = 1.0

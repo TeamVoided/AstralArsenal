@@ -11,6 +11,7 @@
     "DamageReductionMixin",
     "EnchantmentScreenHandlerMixin",
     "ItemMixin",
+    "KosmogliphAirSpeedMixin",
     "RangedWeaponItemMixin",
     "ServerPlayerInteractionManagerMixin",
     "ToolItemMixin",

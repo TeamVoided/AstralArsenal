@@ -65,6 +65,7 @@ interface Kosmogliph {
 
     fun requiredEnchantments(): List<RegistryKey<Enchantment>> = listOf()
     fun disallowedEnchantment(): List<RegistryKey<Enchantment>> = listOf()
+    fun modifyAirStrafeSpeed(entity: LivingEntity, speed: Float) = speed
 
     data class Failure(val reason: Text)
 

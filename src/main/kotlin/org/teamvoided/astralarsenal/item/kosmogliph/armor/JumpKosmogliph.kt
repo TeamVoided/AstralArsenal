@@ -24,7 +24,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.BOOTS
-}) {
+}), AirSpeedKosmogliph {
     // Change this to change how much boost is given when double-jumping.
     val JUMP_FORWARD_BOOST = 0.3
 

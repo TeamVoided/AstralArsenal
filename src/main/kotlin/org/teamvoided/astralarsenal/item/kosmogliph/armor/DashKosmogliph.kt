@@ -25,7 +25,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.LEGGINGS
-}) {
+}), AirSpeedKosmogliph {
     // change this to change how much boost they get :3
     val JUMP_FORWARD_BOOST = 1.0
 
