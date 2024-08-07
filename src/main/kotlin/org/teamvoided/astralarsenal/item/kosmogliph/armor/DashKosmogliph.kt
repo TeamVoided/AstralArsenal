@@ -76,6 +76,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
+        super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
         if (slot == 1) {
             val data = stack.get(AstralItemComponents.DASH_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")

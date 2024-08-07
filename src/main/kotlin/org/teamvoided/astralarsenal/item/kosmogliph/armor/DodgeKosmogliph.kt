@@ -65,6 +65,7 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
+        super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
         if ((entity is PlayerEntity) && entity.inventory.armor.contains(stack) && slot == 1) {
             val data = stack.get(AstralItemComponents.DODGE_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")

@@ -74,6 +74,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
+        super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
         if (slot == 0) {
             val data = stack.get(AstralItemComponents.JUMP_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
