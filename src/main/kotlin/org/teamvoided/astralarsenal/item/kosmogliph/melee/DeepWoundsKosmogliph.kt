@@ -61,6 +61,11 @@ class DeepWoundsKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is 
         }
     }
 
+    override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
+        attacker.absorptionAmount += attacker.absorptionAmount + 0.5f
+        super.postHit(stack, target, attacker)
+    }
+
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf()
     }

@@ -60,6 +60,7 @@ class AstralEnTranslationProvider(
         gen.add(AstralEffects.SLAM_JUMP.value().translationKey, "Slam Jump")
         gen.add(AstralEffects.REDUCE.value().translationKey, "Reduce")
         gen.add(AstralEffects.BLEED.value().translationKey, "Bleed")
+        gen.add(AstralEffects.OVERHEAL.value().translationKey, "Overheal")
 
         gen.add("container.cosmic_table", "Cosmic Table")
 

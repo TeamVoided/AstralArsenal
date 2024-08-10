@@ -28,6 +28,13 @@ object AstralEffects {
                 -0.5, EntityAttributeModifier.Operation.ADD_VALUE
             )
     )
+    val OVERHEAL = register(
+        "overheal", AstralStatusEffect(StatusEffectType.NEUTRAL, 6684672)
+            .addAttributeModifier(
+                EntityAttributes.GENERIC_MAX_ABSORPTION, id("effect.overheal"),
+                0.5, EntityAttributeModifier.Operation.ADD_VALUE
+            )
+    )
     val REDUCE = register(
         "reduce", AstralStatusEffect(StatusEffectType.HARMFUL, 0x660000)
     )

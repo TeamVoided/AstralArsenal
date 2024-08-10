@@ -71,13 +71,27 @@ class DeepWoundEntity : ThrownItemEntity {
             super.tick()
         }
     }
-
+    val unhealable = listOf(
+        AstralEffects.UNHEALABLE_DAMAGE
+    )
+    val over = listOf(
+        AstralEffects.OVERHEAL
+    )
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         if(entityHitResult.entity is LivingEntity){
             val ent = entityHitResult.entity as LivingEntity
             val maxhp = ent.maxHealth
             val hp = ent.health
             val levels = (maxhp - hp).roundToInt()
+            var hard_levels = levels
+            var over_levels = levels
+            val effects = ent.statusEffects.filter { unhealable.contains(it.effectType) }
+            if(effects.isNotEmpty()){
+                effects.forEach {
+                    val w = it.amplifier
+                    hard_levels += w
+                }
+            }
             ent.addStatusEffect(
                 StatusEffectInstance(
                 AstralEffects.UNHEALABLE_DAMAGE,
@@ -85,7 +99,25 @@ class DeepWoundEntity : ThrownItemEntity {
                 false, true, true
             )
             )
+            if(owner is LivingEntity){
+                val ow = owner as LivingEntity
+                val effects_two = ow.statusEffects.filter { over.contains(it.effectType) }
+                if(effects_two.isNotEmpty()){
+                    effects.forEach {
+                        val w = it.amplifier
+                        over_levels += w
+                    }
+                }
+                ow.addStatusEffect(
+                    StatusEffectInstance(
+                        AstralEffects.OVERHEAL,
+                        600, over_levels,
+                        false, false, true
+                    )
+                )
+            }
         }
+
         super.onEntityHit(entityHitResult)
     }
 

@@ -65,7 +65,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
-        if (!world.isClient) {
+        if (!world.isClient && entityHitResult.entity != this.balls) {
             val snowballEntity = BeamOfLightEntity(world, balls)
             snowballEntity.setPosition(this.x,this.y,this.z)
             snowballEntity.DOT = DOT

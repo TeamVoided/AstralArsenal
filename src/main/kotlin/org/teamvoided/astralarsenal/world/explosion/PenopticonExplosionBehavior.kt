@@ -24,6 +24,6 @@ class PenopticonExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {
-        return 20f
+        return 17.5f
     }
 }

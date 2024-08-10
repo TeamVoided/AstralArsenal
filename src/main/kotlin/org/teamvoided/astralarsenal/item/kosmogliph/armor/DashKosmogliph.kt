@@ -2,7 +2,9 @@ package org.teamvoided.astralarsenal.item.kosmogliph.armor
 
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
@@ -18,6 +20,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags.MOUNTS_WITH_DASH
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
@@ -43,7 +46,14 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         }
 
         if (data.uses > 0) {
-            val boost = dashingEntity.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(JUMP_FORWARD_BOOST)
+            val boo : Double
+            if((dashingEntity.health <= (dashingEntity.maxHealth * 0.25))){
+                boo = JUMP_FORWARD_BOOST * 0.75
+            }
+            else{
+                boo = JUMP_FORWARD_BOOST
+            }
+            val boost = dashingEntity.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(boo)
             dashingEntity.setVelocity(dashingEntity.velocity.x + boost.x, 0.1, dashingEntity.velocity.z + boost.z)
             dashingEntity.velocityModified = true
             world.playSound(
@@ -102,6 +112,8 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
                             time += (t.amplifier * 20)
                         }
                     }
+                    val z: Int = (entity.frozenTicks/20) * 5
+                    time += z
                 }
                 cooldown = time
                 if (entity is ServerPlayerEntity) {
@@ -122,6 +134,29 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
 
             stack.set(AstralItemComponents.DASH_DATA, Data(uses, cooldown))
         }
+    }
+
+    override fun modifyDamage(
+        stack: ItemStack,
+        entity: LivingEntity,
+        damage: Float,
+        source: DamageSource,
+        equipmentSlot: EquipmentSlot
+    ): Float {
+        val data = stack.get(AstralItemComponents.DASH_DATA)
+            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        var uses = data.uses
+        var cooldown = data.cooldown
+        if(damage >= 2){
+        if (uses >= 3){
+            uses += -1
+            cooldown += 20
+        }
+        else{
+            cooldown += 5
+        }}
+        stack.set(AstralItemComponents.DASH_DATA, Data(uses, cooldown))
+        return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot)
     }
 
     data class Data(

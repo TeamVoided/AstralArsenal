@@ -9,7 +9,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 interface AirSpeedKosmogliph : Kosmogliph {
     companion object {
         val AIR_STRAFE_MODIFIER = 1.0f
-        val TICKS_BEFORE_MODIFIED = 23
+        val TICKS_BEFORE_MODIFIED = 100
 
         val ticksMap = mutableMapOf<Entity, Int>()
     }
@@ -19,8 +19,8 @@ interface AirSpeedKosmogliph : Kosmogliph {
         set(value) { ticksMap[this] = value }
 
     override fun modifyAirStrafeSpeed(entity: LivingEntity, speed: Float): Float {
-        if(entity.fallTime > TICKS_BEFORE_MODIFIED)
-            return entity.movementSpeed * AIR_STRAFE_MODIFIER
+        //if(entity.fallTime > TICKS_BEFORE_MODIFIED){
+           // return entity.movementSpeed * AIR_STRAFE_MODIFIER}
         return speed
     }
 

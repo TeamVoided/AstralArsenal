@@ -2,19 +2,28 @@ package org.teamvoided.astralarsenal.item.kosmogliph.armor
 
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EquipmentSlot
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
+import net.minecraft.network.packet.s2c.play.SoundPlayS2CPacket
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph.Data
 import java.lang.Math.random
 import kotlin.math.sqrt
 
@@ -22,7 +31,6 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.LEGGINGS
 }), AirSpeedKosmogliph {
-    // change this to change how much boost they get :3
     val JUMP_FORWARD_BOOST = 5.0
     val SPEED_CAP = 1.0
     val SPEED_MULT = sqrt(2 * SPEED_CAP * SPEED_CAP)
@@ -72,26 +80,71 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             var uses = data.uses
             if (uses >= 3) return
             var cooldown = data.cooldown
-            cooldown--
+            if (entity is PlayerEntity) {
+                if (entity.hungerManager.foodLevel > 6) {
+                    cooldown--
+                }
+            } else {
+                cooldown--
+            }
 
             if (cooldown <= 0) {
                 uses++
-                val x: Float = (uses * 0.5).toFloat()
-                cooldown = 20
-                world.playSound(
-                    null,
-                    entity.x,
-                    entity.y,
-                    entity.z,
-                    AstralSounds.CHARGE,
-                    SoundCategory.PLAYERS,
-                    1.0F,
-                    x
-                )
+                val x: Float = (uses * 2.0).toFloat()
+                var time = 20
+                if (entity is LivingEntity) {
+                    val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
+                    if (y.isNotEmpty()) {
+                        for (t in y) {
+                            time += (t.amplifier * 20)
+                        }
+                    }
+                    val z: Int = (entity.frozenTicks/20) * 5
+                    time += z
+                }
+                cooldown = time
+                if (entity is ServerPlayerEntity) {
+                    entity.networkHandler.send(
+                        SoundPlayS2CPacket(
+                            Holder.createDirect(SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE),
+                            SoundCategory.PLAYERS,
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                            1.6F,
+                            x,
+                            world.getRandom().nextLong()
+                        )
+                    )
+                }
             }
 
             stack.set(AstralItemComponents.DODGE_DATA, Data(uses, cooldown))
         }
+    }
+    override fun modifyDamage(
+        stack: ItemStack,
+        entity: LivingEntity,
+        damage: Float,
+        source: DamageSource,
+        equipmentSlot: EquipmentSlot
+    ): Float {
+        val data = stack.get(AstralItemComponents.DODGE_DATA)
+            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        var uses = data.uses
+        var cooldown = data.cooldown
+        if(damage >= 2){
+        if (uses >= 3){
+            uses += -1
+            cooldown += 20
+        }
+        else{
+            cooldown += 5
+        }}
+        stack.set(AstralItemComponents.DODGE_DATA,
+            Data(uses, cooldown)
+        )
+        return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot)
     }
 
     data class Data(
