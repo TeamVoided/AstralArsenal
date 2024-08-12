@@ -35,19 +35,17 @@ public abstract class WorldRendererMixin {
         if (shapesAndPos == null) return;
 
         var pos = shapesAndPos.getSecond();
-        shapesAndPos.getFirst().forEach(shape -> {
-            drawShapeOutline(
-                    matrices,
-                    consumer,
-                    shape,
-                    (double) pos.getX() - offsetX,
-                    (double) pos.getY() - offsetY,
-                    (double) pos.getZ() - offsetZ,
-                    0.0F,
-                    0.0F,
-                    0.0F,
-                    0.4F);
-        });
+        drawShapeOutline(
+                matrices,
+                consumer,
+                shapesAndPos.getFirst(),
+                pos.getX() - offsetX,
+                pos.getY() - offsetY,
+                pos.getZ() - offsetZ,
+                0.0F,
+                0.0F,
+                0.0F,
+                0.4F);
         ci.cancel();
     }
 

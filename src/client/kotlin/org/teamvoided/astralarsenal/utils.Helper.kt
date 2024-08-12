@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal
 
+import net.minecraft.block.ShapeContext
 import net.minecraft.client.MinecraftClient
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
@@ -15,7 +16,7 @@ import kotlin.math.min
 
 // this code is a modified version fabric-hammers mod
 // https://github.com/bdani0717/fabric-hammers-1.20
-fun getShapeAndPos(client: MinecraftClient): Pair<List<VoxelShape>, BlockPos>? {
+fun getShapeAndPos(client: MinecraftClient): Pair<VoxelShape, BlockPos>? {
     val player = client.player ?: return null
     val world = client.world ?: return null
 
@@ -37,24 +38,22 @@ fun getShapeAndPos(client: MinecraftClient): Pair<List<VoxelShape>, BlockPos>? {
             val positions = if (isHammer) queryMineableHammerPositions(stack, world, pos, state, player) else
                 queryMineableVeinPositions(stack, world, state, pos, 30.0, min(64, stack.maxDamage - stack.damage))
 
-            val outlineShapes = java.util.ArrayList<VoxelShape>()
-            outlineShapes.add(VoxelShapes.empty())
+            var outlineShape = VoxelShapes.empty()
 
             if (positions.isEmpty()) return null
 
             for (position in positions) {
                 val diffPos = position.subtract(pos)
-                val offsetShape = world.getBlockState(position)
+                val offsetBlock = world.getBlockState(position)
 
-                if (!offsetShape.isAir) {
-                    outlineShapes[0] = VoxelShapes.union(
-                        outlineShapes[0], offsetShape.getOutlineShape(world, diffPos)
+                if (!offsetBlock.isAir) {
+                    outlineShape = VoxelShapes.union(
+                        outlineShape, offsetBlock.getOutlineShape(world, diffPos, ShapeContext.of(player))
                             .offset(diffPos.x.toDouble(), diffPos.y.toDouble(), diffPos.z.toDouble())
                     )
                 }
             }
-
-            return outlineShapes to pos
+            return outlineShape to pos
         }
     }
     return null
