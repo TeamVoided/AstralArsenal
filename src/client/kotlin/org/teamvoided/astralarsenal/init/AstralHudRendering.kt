@@ -5,44 +5,45 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.network.ClientPlayerEntity
+import net.minecraft.item.ItemStack
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
 
 object AstralHudRendering {
-    var renderDashTicks = 0
-    var renderJumpTicks = 0
+    var rightIconTicks = 0
+    var leftIconTicks = 0
 
     fun init() {
         HudRenderCallback.EVENT.register noRender@{ graphics, deltaTracker ->
             val client = MinecraftClient.getInstance() ?: return@noRender
             val player = client.player ?: return@noRender
+            if (client.options.hudHidden) return@noRender
 
-            // (ender) ig debugger
+            // (ender) in game debugger
 //            player.sendMessage(Text.literal("Delay: $renderDashTicks"), true)
 
-            if (renderDashTicks > 0) renderDashTicks--
-            if (renderJumpTicks > 0) renderJumpTicks--
+            if (rightIconTicks > 0) rightIconTicks--
+            if (leftIconTicks > 0) leftIconTicks--
 
             graphics.matrices.push()
             RenderSystem.enableBlend()
 
-            graphics.renderDash(player)
-            graphics.renderJump(player)
+            graphics.renderRightIcon(player)
+            graphics.renderLeftIcon(player)
 
             RenderSystem.disableBlend()
             graphics.matrices.pop()
         }
     }
 
-    private fun GuiGraphics.renderDash(player: ClientPlayerEntity) {
+    private fun GuiGraphics.renderRightIcon(player: ClientPlayerEntity) {
         val leggings = player.inventory.armor[1]
         if (leggings.isEmpty) return
 
-        if (!getKosmogliphsOnStack(leggings).contains(AstralKosmogliphs.DASH)) return
-        val dashData = leggings.get(AstralItemComponents.DASH_DATA) ?: return
+        val uses = getRightIconUses(leggings) ?: return
 
-        if (dashData.uses < 3) renderDashTicks = 40
-        if (renderDashTicks <= 0) return
+        if (uses < 3) rightIconTicks = 40
+        if (rightIconTicks <= 0) return
 
         this.drawGuiTexture(
             id("hud/dash_bg"),
@@ -51,7 +52,7 @@ object AstralHudRendering {
             15,
             9
         )
-        repeat(dashData.uses) {
+        repeat(uses) {
             this.drawGuiTexture(
                 id("hud/dash_2"),
                 (this.scaledWindowWidth / 2) + 8 + (3 * it),
@@ -62,15 +63,24 @@ object AstralHudRendering {
         }
     }
 
-    private fun GuiGraphics.renderJump(player: ClientPlayerEntity) {
+    private fun getRightIconUses(leggings: ItemStack): Int? {
+        val kosmo = getKosmogliphsOnStack(leggings)
+        if (kosmo.contains(AstralKosmogliphs.DASH))
+            return leggings.get(AstralItemComponents.DASH_DATA)?.uses
+        if (kosmo.contains(AstralKosmogliphs.DODGE))
+            return leggings.get(AstralItemComponents.DODGE_DATA)?.uses
+        return null
+    }
+
+    private fun GuiGraphics.renderLeftIcon(player: ClientPlayerEntity) {
         val boots = player.inventory.armor[0]
         if (boots.isEmpty) return
 
         if (!getKosmogliphsOnStack(boots).contains(AstralKosmogliphs.JUMP)) return
-        val jumpData = boots.get(AstralItemComponents.JUMP_DATA) ?: return
+        val uses = boots.get(AstralItemComponents.JUMP_DATA)?.uses ?: return
 
-        if (jumpData.uses < 3) renderJumpTicks = 40
-        if (renderJumpTicks <= 0) return
+        if (uses < 3) leftIconTicks = 40
+        if (leftIconTicks <= 0) return
 
         this.drawGuiTexture(
             id("hud/jump_bg"),
@@ -79,7 +89,7 @@ object AstralHudRendering {
             15,
             9
         )
-        repeat(jumpData.uses) {
+        repeat(uses) {
             this.drawGuiTexture(
                 id("hud/jump_1"),
                 (this.scaledWindowWidth / 2) - 8 - 9 - (3 * it),

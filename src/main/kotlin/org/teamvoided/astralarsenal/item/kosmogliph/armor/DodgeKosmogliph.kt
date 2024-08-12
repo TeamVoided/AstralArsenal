@@ -22,9 +22,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
-import java.lang.Math.random
 import kotlin.math.sqrt
 
 class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
@@ -52,24 +50,25 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
                 player.x,
                 player.y,
                 player.z,
-                AstralSounds.DODGE,
+                SoundEvents.ENTITY_BREEZE_LAND,
                 SoundCategory.PLAYERS,
                 1.0F,
                 1.0F
             )
-            if (!world.isClient) {
-                val serverWorld = world as ServerWorld
-                serverWorld.spawnParticles(
-                    ParticleTypes.ELECTRIC_SPARK,
-                    player.x,
-                    player.y,
-                    player.z,
-                    20,
-                    random().minus(0.5).times(2),
-                    random().minus(0.5).times(2),
-                    random().minus(0.5).times(2),
-                    0.0
-                )
+            if (world is ServerWorld) {
+                repeat(20) {
+                    world.spawnParticles(
+                        ParticleTypes.CLOUD,
+                        player.x + (world.random.nextDouble() - 0.5) * 1.7,
+                        player.y + 1 + (world.random.nextDouble() - 0.5) * 1.7,
+                        player.z + (world.random.nextDouble() - 0.5) * 1.7,
+                        0,
+                        player.velocity.x,
+                        player.velocity.y,
+                        player.velocity.z,
+                        -0.2,
+                    )
+                }
             }
             stack.set(AstralItemComponents.DODGE_DATA, Data(data.uses - 1, data.cooldown))
         }
