@@ -53,7 +53,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
                 player.z,
                 SoundEvents.ENTITY_BREEZE_JUMP,
                 SoundCategory.PLAYERS,
-                1.0F,
+                0.3F,
                 1.0F
             )
             if (!world.isClient) {
