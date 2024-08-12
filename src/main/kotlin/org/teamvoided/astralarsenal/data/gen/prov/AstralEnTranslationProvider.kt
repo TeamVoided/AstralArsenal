@@ -12,6 +12,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags.ALL_TAGS
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralTabs
@@ -67,13 +68,14 @@ class AstralEnTranslationProvider(
         gen.add("container.cosmic_table", "Cosmic Table")
 
         gen.add("entities.astral_arsenal.beam_of_light", "Cod")
+
+        ALL_TAGS.forEach { gen.add(it.translationKey, genLang(it.id).titleCase("/")) }
     }
 
-    private fun genLang(identifier: Identifier): String =
-        identifier.path.titleCase()
+    private fun genLang(identifier: Identifier): String = identifier.path.titleCase()
 
-    private fun String.titleCase(): String {
-        return split("_").joinToString(" ") { it.replaceFirstChar(Char::uppercaseChar) }
+    private fun String.titleCase(del: String = "_"): String {
+        return split(del).joinToString(" ") { it.replaceFirstChar(Char::uppercaseChar) }
     }
 
     val Item.id get() = Registries.ITEM.getId(this)

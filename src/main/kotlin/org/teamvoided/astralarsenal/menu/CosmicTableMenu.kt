@@ -14,6 +14,7 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.slot.Slot
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralMenus
@@ -101,7 +102,7 @@ class CosmicTableMenu(
             .filter { it.canBeAppliedTo(getSlot(0).stack) }
     }
 
-    fun kosmogliphCanBeApplied(stack: ItemStack) = stack.get(AstralItemComponents.KOSMOGLIPHS) != null
+    fun kosmogliphCanBeApplied(stack: ItemStack) = stack.isIn(AstralItemTags.SUPPORTS_KOSMOGLIPHS)
     fun isKosmikGem(stack: ItemStack) = stack.isOf(AstralItems.KOSMIC_GEM)
 
     fun isIncompatible(kosmogliph: Kosmogliph, stack: ItemStack): Boolean {

@@ -14,8 +14,13 @@ class AstralItemTagProvider(
     registriesFuture: CompletableFuture<HolderLookup.Provider>
 ) : FabricTagProvider.ItemTagProvider(output, registriesFuture) {
     override fun configure(wrapperLookup: HolderLookup.Provider) {
+        vanillaTags()
         enchantTags()
         kosmogliphTags()
+    }
+
+    private fun vanillaTags(){
+        getOrCreateTagBuilder(ItemTags.SWORDS).add(AstralItems.ASTRAL_GREATHAMMER)
     }
 
     private fun enchantTags() {
@@ -89,5 +94,45 @@ class AstralItemTagProvider(
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TRIDENT_REDUCE).forceAddTag(ConventionalItemTags.SPEAR_TOOLS)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TRIDENT_BLEED).forceAddTag(ConventionalItemTags.SPEAR_TOOLS)
+
+
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_KOSMOGLIPHS)
+            .forceAddTag(AstralItemTags.SUPPORTS_VEIN_MINER)
+            .forceAddTag(AstralItemTags.SUPPORTS_HAMMER)
+            .forceAddTag(AstralItemTags.SUPPORTS_SMELTER)
+            .forceAddTag(AstralItemTags.SUPPORTS_CANNONBALL)
+            .forceAddTag(AstralItemTags.SUPPORTS_MORTAR)
+            .forceAddTag(AstralItemTags.SUPPORTS_JUMP)
+            .forceAddTag(AstralItemTags.SUPPORTS_STEP_UP)
+            .forceAddTag(AstralItemTags.SUPPORTS_DASH)
+            .forceAddTag(AstralItemTags.SUPPORTS_DODGE)
+            .forceAddTag(AstralItemTags.SUPPORTS_SLAM)
+            .forceAddTag(AstralItemTags.SUPPORTS_ALCHEMIST)
+            .forceAddTag(AstralItemTags.SUPPORTS_ASTRAL_STRIKE)
+            .forceAddTag(AstralItemTags.SUPPORTS_FREEZE)
+            .forceAddTag(AstralItemTags.SUPPORTS_FLAME_BURST)
+            .forceAddTag(AstralItemTags.SUPPORTS_ASTRAL_SLASH)
+            .forceAddTag(AstralItemTags.SUPPORTS_DEEP_WOUNDS)
+            .forceAddTag(AstralItemTags.SUPPORTS_SCORCH_PROOF)
+            .forceAddTag(AstralItemTags.SUPPORTS_ANTIDOTE)
+            .forceAddTag(AstralItemTags.SUPPORTS_ENDURANCE)
+            .forceAddTag(AstralItemTags.SUPPORTS_CAPACITANCE)
+            .forceAddTag(AstralItemTags.SUPPORTS_THERMAL)
+            .forceAddTag(AstralItemTags.SUPPORTS_HEAVY)
+            .forceAddTag(AstralItemTags.SUPPORTS_REFLECTIVE)
+            .forceAddTag(AstralItemTags.SUPPORTS_BASIC_RAILGUN)
+            .forceAddTag(AstralItemTags.SUPPORTS_EXPLOSIVE_BEAM)
+            .forceAddTag(AstralItemTags.SUPPORTS_RAY_OF_FROST)
+            .forceAddTag(AstralItemTags.SUPPORTS_FLAME_THROWER)
+            .forceAddTag(AstralItemTags.SUPPORTS_RANCID_BREW)
+            .forceAddTag(AstralItemTags.SUPPORTS_SNIPE)
+            .forceAddTag(AstralItemTags.SUPPORTS_CANNONBALL_LAUNCHER)
+            .forceAddTag(AstralItemTags.SUPPORTS_SHOTGUN)
+            .forceAddTag(AstralItemTags.SUPPORTS_ORBITAL)
+            .forceAddTag(AstralItemTags.SUPPORTS_DEVASTATE)
+            .forceAddTag(AstralItemTags.SUPPORTS_LOCK_OFF)
+            .forceAddTag(AstralItemTags.SUPPORTS_TIME_BOMB)
+            .forceAddTag(AstralItemTags.SUPPORTS_TRIDENT_REDUCE)
+            .forceAddTag(AstralItemTags.SUPPORTS_TRIDENT_BLEED)
     }
 }

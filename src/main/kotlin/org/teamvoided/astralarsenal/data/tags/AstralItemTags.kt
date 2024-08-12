@@ -7,6 +7,9 @@ import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.util.tag
 
 object AstralItemTags {
+    val ALL_TAGS = mutableSetOf<TagKey<Item>>()
+
+    val SUPPORTS_KOSMOGLIPHS = supports("kosmogliphs")
 
     val SUPPORTS_VEIN_MINER = supports("vein_miner")
     val SUPPORTS_HAMMER = supports("hammer")
@@ -58,6 +61,11 @@ object AstralItemTags {
     val SUPPORTS_TRIDENT_BLEED = supports("trident_bleed")
 
 
-    private fun create(id: String): TagKey<Item> = RegistryKeys.ITEM.tag(id(id))
+    private fun create(id: String): TagKey<Item> {
+        val key = RegistryKeys.ITEM.tag(id(id))
+        ALL_TAGS.add(key)
+        return key
+    }
+
     private fun supports(id: String): TagKey<Item> = create("supports/$id")
 }
