@@ -28,11 +28,18 @@ object AstralEffects {
                 -0.5, EntityAttributeModifier.Operation.ADD_VALUE
             )
     )
+    val HARD_DAMAGE = register(
+        "hard_damage", AstralStatusEffect(StatusEffectType.NEUTRAL, 6684672)
+            .addAttributeModifier(
+                EntityAttributes.GENERIC_MAX_HEALTH, id("effect.weak_hard"),
+                -0.05, EntityAttributeModifier.Operation.ADD_VALUE
+            )
+    )
     val OVERHEAL = register(
-        "overheal", AstralStatusEffect(StatusEffectType.NEUTRAL, 6684672)
+        "overheal", AstralStatusEffect(StatusEffectType.BENEFICIAL, 6684672)
             .addAttributeModifier(
                 EntityAttributes.GENERIC_MAX_ABSORPTION, id("effect.overheal"),
-                0.5, EntityAttributeModifier.Operation.ADD_VALUE
+                0.2, EntityAttributeModifier.Operation.ADD_VALUE
             )
     )
     val REDUCE = register(
@@ -48,7 +55,7 @@ object AstralEffects {
     fun modifyDamage(entity: LivingEntity, damage: Float): Float {
         var output = damage
         if(entity.hasStatusEffect(REDUCE))
-            output *= 1.15f
+            output *= 1.3f
 
         return output
     }

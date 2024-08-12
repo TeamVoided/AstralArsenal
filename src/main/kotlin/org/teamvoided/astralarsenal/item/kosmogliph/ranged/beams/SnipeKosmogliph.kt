@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.SwordItem
 import net.minecraft.particle.ParticleTypes
@@ -20,6 +21,7 @@ import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.item.RailgunItem
@@ -32,6 +34,9 @@ import kotlin.math.sqrt
 
 class SnipeKosmogliph (id: Identifier) :
     SimpleKosmogliph(id, {it.item is RailgunItem}) {
+    val unhealable = listOf(
+        AstralEffects.UNHEALABLE_DAMAGE
+    )
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         var result = player.raycast(100.0, 1f, false)
         var distance = sqrt(
@@ -113,8 +118,31 @@ class SnipeKosmogliph (id: Identifier) :
             }
         }
         if (!player.isCreative) {
-            player.itemCooldownManager.set(player.getStackInHand(hand).item, 800)
+            player.itemCooldownManager.set(player.getStackInHand(hand).item, 300)
         }
+        if(!player.isCreative){
+            player.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.DRAIN),
+                    player,
+                    player
+                ), 5f
+            )}
+        var hard_levels = 10
+        val effects = player.statusEffects.filter { unhealable.contains(it.effectType) }
+        if(effects.isNotEmpty()){
+            effects.forEach {
+                val w = it.amplifier
+                hard_levels += w
+            }
+        }
+        player.addStatusEffect(
+            StatusEffectInstance(
+                AstralEffects.UNHEALABLE_DAMAGE,
+                400, hard_levels,
+                false, true, true
+            )
+        )
         if(!world.isClient){
         mcCoroutineTask(delay = 20.ticks) {
             result = player.raycast(100.0, 1f, false)

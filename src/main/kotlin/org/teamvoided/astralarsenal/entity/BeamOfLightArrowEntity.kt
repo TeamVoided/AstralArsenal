@@ -28,6 +28,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
     var side = 1
     var trackTime = 0
     var balls: LivingEntity? = null
+    var hard_damage = 0
 
     override fun tick() {
         if (!world.isClient) {
@@ -59,6 +60,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
             snowballEntity.DMG = DMG
             snowballEntity.trackTime = trackTime / 4
             snowballEntity.owner = balls
+            snowballEntity.hard_damage = hard_damage
             world.spawnEntity(snowballEntity)
             this.discard()
         }

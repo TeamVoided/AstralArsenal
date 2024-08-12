@@ -70,10 +70,12 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.BLEED)
             .add(AstralDamageTypes.RAILED)
             .add(AstralDamageTypes.NON_RAILED)
+            .add(AstralDamageTypes.DRAIN)
 
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_SHIELD)
             .add(AstralDamageTypes.BEAM_OF_LIGHT)
             .add(AstralDamageTypes.RAILED)
             .add(AstralDamageTypes.NON_RAILED)
+            .add(AstralDamageTypes.DRAIN)
     }
 }

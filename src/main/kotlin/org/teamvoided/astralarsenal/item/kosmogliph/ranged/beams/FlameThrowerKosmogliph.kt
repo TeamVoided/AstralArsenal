@@ -55,7 +55,7 @@ class FlameThrowerKosmogliph(id: Identifier) :
                             0.2,
                             0.0
                         )
-                        if(i % 10 == 0){
+                        if(i % 30 == 0){
                         world.playSound(
                             null,
                             player.x,
@@ -75,7 +75,7 @@ class FlameThrowerKosmogliph(id: Identifier) :
                                 AstralDamageTypes.getHolder(world.registryManager, DamageTypes.IN_FIRE),
                                 player,
                                 player
-                            ), 3f
+                            ), 5f
                         )
                         entity.setOnFireFor(200)
                     }

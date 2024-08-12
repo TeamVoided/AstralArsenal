@@ -14,8 +14,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class FreezeKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem || it.item is AxeItem }) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
-        if(target.frozenTicks <= 140){target.frozenTicks += 220}
-        else{target.frozenTicks += 100 }
+        target.frozenTicks += 400
 
         val bursts: Int
         if(!target.isAlive){

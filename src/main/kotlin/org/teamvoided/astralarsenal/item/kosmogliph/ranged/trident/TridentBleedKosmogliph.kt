@@ -15,7 +15,7 @@ import org.teamvoided.astralarsenal.init.AstralEffects
 
 class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id) {
     override fun onHit(attacker: Entity?, victim: LivingEntity) {
-        victim.addStatusEffect(StatusEffectInstance(AstralEffects.BLEED, 200), attacker)
+        victim.addStatusEffect(StatusEffectInstance(AstralEffects.BLEED, 300), attacker)
     }
 
     override fun translationText(tooltip: Boolean) =

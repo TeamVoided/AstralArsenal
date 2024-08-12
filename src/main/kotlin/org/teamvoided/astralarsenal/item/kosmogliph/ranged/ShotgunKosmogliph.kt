@@ -26,14 +26,22 @@ class ShotgunKosmogliph (
         val stack = player.getStackInHand(hand)
         val chargedProjectiles = stack.get(DataComponentTypes.CHARGED_PROJECTILES)
         if (chargedProjectiles != null && !chargedProjectiles.isEmpty) {
-            repeat(10){
+            for(i in 1..10){
                 val snowballEntity = ArrowEntity(world, player, chargedProjectiles.projectiles[0], stack)
-                snowballEntity.setProperties(player,
-                player.pitch + world.random.nextDouble().minus(0.5).times(15).toFloat(),
-                player.yaw + world.random.nextDouble().minus(0.5).times(15).toFloat(),
-                0.0f, 3.0f, 0.0f)
-                snowballEntity.addVelocity(0.0, 0.0, 0.0)
-                snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY
+                if(i == 1){
+                    snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED
+                    snowballEntity.setProperties(
+                        player, player.pitch, player.yaw,
+                        0.0f, 3.0f, 0.0f)
+                }
+                else {
+                    snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY
+                    snowballEntity.setProperties(
+                        player,
+                        player.pitch + world.random.nextDouble().minus(0.5).times(15).toFloat(),
+                        player.yaw + world.random.nextDouble().minus(0.5).times(15).toFloat(),
+                        0.0f, 3.0f, 0.0f)
+                }
                 world.spawnEntity(snowballEntity)
             }
             world.playSound(
@@ -55,10 +63,10 @@ class ShotgunKosmogliph (
         }
     }
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf()
+        return listOf(Enchantments.PIERCING)
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.MULTISHOT)
+        return listOf()
     }
 }

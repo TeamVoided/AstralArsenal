@@ -34,13 +34,14 @@ class DevastateKosmogliph (
             snowballEntity.setProperties(player, player.pitch, player.yaw, 0.0f, 2.5f, 0.0f)
             snowballEntity.setPosition(player.x,player.eyeY,player.z)
             snowballEntity.DOT = false
-            snowballEntity.side = 1
+            snowballEntity.side = 3
             snowballEntity.THRUST = 1.0
             snowballEntity.TIMEACTIVE = 20
-            snowballEntity.WINDUP = 70
+            snowballEntity.WINDUP = 50
             snowballEntity.DMG = 8
-            snowballEntity.trackTime = 50
+            snowballEntity.trackTime = 40
             snowballEntity.balls = player
+            snowballEntity.hard_damage = 8
             world.spawnEntity(snowballEntity)
             world.playSound(
                 null,

@@ -41,7 +41,8 @@ class AstralEnTranslationProvider(
         gen.add("death.attack.beam_of_light", "%s was delivered straight to cod by %s")
         gen.add("death.attack.railed", "%s was railed by %s")
         gen.add("death.attack.non_railed", "%s was electrocuted by %s")
-        gen.add("death.attack.bleed", "%s bled to death.")
+        gen.add("death.attack.bleed", "%s was left out to bleed")
+        gen.add("death.attack.drain", "%s drained their life")
 
         gen.add(AstralTabs.TAB, "Astral Arsenal")
 
@@ -61,6 +62,7 @@ class AstralEnTranslationProvider(
         gen.add(AstralEffects.REDUCE.value().translationKey, "Reduce")
         gen.add(AstralEffects.BLEED.value().translationKey, "Bleed")
         gen.add(AstralEffects.OVERHEAL.value().translationKey, "Overheal")
+        gen.add(AstralEffects.HARD_DAMAGE.value().translationKey, "Weak Hard Damage")
 
         gen.add("container.cosmic_table", "Cosmic Table")
 

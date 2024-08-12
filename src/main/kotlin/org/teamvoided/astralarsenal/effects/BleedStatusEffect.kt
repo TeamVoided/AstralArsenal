@@ -8,7 +8,7 @@ import kotlin.math.max
 
 class BleedStatusEffect(color: Int) : AstralStatusEffect(StatusEffectType.HARMFUL, color) {
     override fun shouldApplyUpdateEffect(tick: Int, amplifier: Int): Boolean {
-        return tick % max(1, 60 - (amplifier * 20)) == 0
+        return tick % max(1, 30 - (amplifier * 20)) == 0
     }
 
     override fun applyUpdateEffect(entity: LivingEntity?, amplifier: Int): Boolean {

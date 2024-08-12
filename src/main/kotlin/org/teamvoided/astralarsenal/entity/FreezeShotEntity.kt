@@ -35,7 +35,7 @@ class FreezeShotEntity : ThrownItemEntity {
         if(entityHitResult.entity != owner && entityHitResult.entity is LivingEntity){
             val hit = entityHitResult.entity
             hit.customDamage(DamageTypes.FREEZE, 3.0f, this, owner)
-            hit.frozenTicks.plus(400)
+            hit.frozenTicks.plus(500)
         }
     }
 

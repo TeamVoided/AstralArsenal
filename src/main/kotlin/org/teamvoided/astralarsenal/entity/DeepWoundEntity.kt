@@ -95,7 +95,7 @@ class DeepWoundEntity : ThrownItemEntity {
             ent.addStatusEffect(
                 StatusEffectInstance(
                 AstralEffects.UNHEALABLE_DAMAGE,
-                600, levels,
+                600, hard_levels,
                 false, true, true
             )
             )
@@ -115,6 +115,7 @@ class DeepWoundEntity : ThrownItemEntity {
                         false, false, true
                     )
                 )
+                ow.absorptionAmount += (over_levels * 0.25f)
             }
         }
 

@@ -14,6 +14,7 @@ object AstralDamageTypes : RegistryBootstrapper<DamageType>(RegistryKeys.DAMAGE_
     val RAILED = register("railed") { DamageType("railed", DamageScalingType.NEVER, 0f) }
     val NON_RAILED = register("non_railed") { DamageType("non_railed", DamageScalingType.NEVER, 0f) }
     val BLEED = register("bleed") { DamageType("bleed", DamageScalingType.NEVER, 0f) }
+    val DRAIN = register("drain") { DamageType("drain", DamageScalingType.NEVER, 0f) }
 
     fun Entity.customDamage(type: RegistryKey<DamageType>, amount: Float, source: Entity? = null, attacker: Entity? = null): Boolean {
         return this.damage(this.damageSources.create(type, source, attacker), amount)

@@ -39,9 +39,10 @@ class LockOffKosmogliph (
             snowballEntity.THRUST = 0.0
             snowballEntity.TIMEACTIVE = 400
             snowballEntity.WINDUP = 200
-            snowballEntity.DMG = 1
+            snowballEntity.DMG = 2
             snowballEntity.trackTime = 180
             snowballEntity.balls = player
+            snowballEntity.hard_damage = 1
             world.spawnEntity(snowballEntity)
             world.playSound(
                 null,

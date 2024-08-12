@@ -35,13 +35,14 @@ class OrbitalKosmogliph (
             snowballEntity.setProperties(player, player.pitch, player.yaw, 0.0f, 2.5f, 0.0f)
             snowballEntity.setPosition(player.x,player.eyeY,player.z)
             snowballEntity.DOT = false
-            snowballEntity.side = 4
+            snowballEntity.side = 5
             snowballEntity.THRUST = 1.0
             snowballEntity.TIMEACTIVE = 40
             snowballEntity.WINDUP = 60
             snowballEntity.DMG = 4
-            snowballEntity.trackTime = 40
+            snowballEntity.trackTime = 50
             snowballEntity.balls = player
+            snowballEntity.hard_damage = 4
             world.spawnEntity(snowballEntity)
             world.playSound(
                 null,

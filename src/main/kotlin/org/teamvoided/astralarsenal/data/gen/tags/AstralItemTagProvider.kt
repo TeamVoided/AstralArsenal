@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.init.AstralItems
 import java.util.concurrent.CompletableFuture
 
 class AstralItemTagProvider(
@@ -24,5 +25,22 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.WEARABLE_HELMETS)
             .forceAddTag(ItemTags.HEAD_ARMOR)
 
+        getOrCreateTagBuilder(ItemTags.FIRE_ASPECT_ENCHANTABLE)
+            .add(AstralItems.ASTRAL_GREATHAMMER)
+
+        getOrCreateTagBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE)
+            .add(AstralItems.ASTRAL_GREATHAMMER)
+
+        getOrCreateTagBuilder(ItemTags.WEAPON_ENCHANTABLE)
+            .add(AstralItems.ASTRAL_GREATHAMMER)
+
+        getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE)
+            .add(AstralItems.ASTRAL_GREATHAMMER)
+
+        getOrCreateTagBuilder(ItemTags.VANISHING_ENCHANTABLE)
+            .add(AstralItems.ASTRAL_GREATHAMMER)
+
+        getOrCreateTagBuilder(ItemTags.SWORD_ENCHANTABLE)
+            .add(AstralItems.ASTRAL_GREATHAMMER)
     }
 }

@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class AntidoteKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
@@ -37,6 +38,7 @@ class AntidoteKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         StatusEffects.BAD_OMEN,
         StatusEffects.TRIAL_OMEN,
         StatusEffects.RAID_OMEN,
+        AstralEffects.UNHEALABLE_DAMAGE
     )
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {

@@ -19,7 +19,7 @@ class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var hitTimes = data.hitTimes
         hitTimes++
-        if (hitTimes >= 5) {
+        if (hitTimes >= 3) {
             val beam = BeamOfLightEntity(attacker.world, attacker)
             beam.setPosition(target.pos)
             beam.WINDUP = 20
@@ -30,6 +30,7 @@ class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is
             beam.DOT = false
             beam.DMG = 5
             beam.trackTime = 10
+            beam.hard_damage = 2
             attacker.world.spawnEntity(beam)
             hitTimes = 0
         }

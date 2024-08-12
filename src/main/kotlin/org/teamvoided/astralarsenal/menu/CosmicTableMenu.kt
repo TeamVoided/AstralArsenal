@@ -52,7 +52,6 @@ class CosmicTableMenu(
         val applicationSlot = getSlot(0)
         val kosmicGemSlot = getSlot(1)
         if ((!kosmicGemSlot.hasStack() || !kosmicGemSlot.stack.isOf(AstralItems.KOSMIC_GEM)) && !(hasKosmogliph(applicationSlot.stack) || player.isCreative)) return false
-        AstralArsenal.LOGGER.info("pass")
         val stack = applicationSlot.stack
         val kosmicGemStack = kosmicGemSlot.stack
 

@@ -45,6 +45,6 @@ class FlameBurstKosmogliph (id: Identifier) : SimpleKosmogliph(id, { it.item is 
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.FIRE_ASPECT)
+        return listOf()
     }
 }
