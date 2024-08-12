@@ -88,8 +88,8 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
             }
             else{
             world.createExplosion(
-                player,
-                entity.damageSources.explosion(player,player),
+                entity,
+                entity.damageSources.explosion(entity,player),
                 StrongExplosionBehavior(),
                 entity.x,
                 entity.y,

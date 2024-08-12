@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
@@ -133,13 +134,16 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
         var cooldown = data.cooldown
-        if(damage >= 2){
+        if(damage >= 2 && !source.isType(DamageTypes.FALL)){
         if (uses >= 3){
             uses += -1
             cooldown += 20
         }
-        else{
-            cooldown += 5
+        else if(cooldown >= 100 && uses != 0){
+            uses += -1
+        }
+        else if(cooldown <= 100){
+            cooldown += 10
         }}
         stack.set(AstralItemComponents.DODGE_DATA,
             Data(uses, cooldown)

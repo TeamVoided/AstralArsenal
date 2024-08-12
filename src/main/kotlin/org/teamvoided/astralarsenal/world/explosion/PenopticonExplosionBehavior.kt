@@ -20,7 +20,7 @@ class PenopticonExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun getKnockbackMultiplier(target: Entity): Float {
-        return 0f
+        return 5f
     }
 
     override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {

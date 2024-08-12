@@ -24,8 +24,7 @@ class KnockbackExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun getKnockbackMultiplier(target: Entity): Float {
-        target.addVelocity(0.0,2.0,0.0)
-        return 0f
+        return 2.5f
     }
 
     override fun calculateDamage(explosion: Explosion, entity: Entity): Float {

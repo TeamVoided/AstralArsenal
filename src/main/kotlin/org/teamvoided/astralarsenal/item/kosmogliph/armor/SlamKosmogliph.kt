@@ -56,8 +56,8 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             entity.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
             entity.addStatusEffect(StatusEffectInstance(
                 AstralEffects.SLAM_JUMP,
-                5,
-                (data.lastFallDistance + 1.5).roundToInt(),
+                10,
+                (data.lastFallDistance + 2).roundToInt(),
                 false,
                 false,
                 true

@@ -5,6 +5,8 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.damage.DamageSources
+import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ArmorItem
@@ -87,7 +89,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
             var maxUses = data.maxUses
             if (uses >= 3) return
             var cooldown = data.cooldown
-            if (entity.isOnGround) maxUses = 3
+            if (entity.isOnGround || entity.isInFluid) maxUses = 3
             if (entity is PlayerEntity) {
                 if (entity.hungerManager.foodLevel > 6) {
                     if (uses < maxUses) cooldown--
@@ -144,14 +146,18 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         var uses = data.uses
         var cooldown = data.cooldown
         var maxUses = data.maxUses
-        if(damage >= 2){
+        if(damage >= 2 && !source.isType(DamageTypes.FALL)){
         if (uses >= 3){
             uses += -1
             cooldown += 20
             maxUses += -1
         }
-        else{
-            cooldown += 5
+        else if(cooldown >= 100 && uses != 0){
+            uses += -1
+            maxUses += -1
+        }
+        else if(cooldown <= 100){
+            cooldown += 10
         }}
         stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, 0, maxUses))
         return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot)

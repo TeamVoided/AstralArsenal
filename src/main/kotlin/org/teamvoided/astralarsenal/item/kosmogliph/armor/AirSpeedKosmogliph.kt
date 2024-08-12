@@ -19,15 +19,15 @@ interface AirSpeedKosmogliph : Kosmogliph {
         set(value) { ticksMap[this] = value }
 
     override fun modifyAirStrafeSpeed(entity: LivingEntity, speed: Float): Float {
-        //if(entity.fallTime > TICKS_BEFORE_MODIFIED){
-           // return entity.movementSpeed * AIR_STRAFE_MODIFIER}
+        if(entity.fallTime > TICKS_BEFORE_MODIFIED){
+            return entity.movementSpeed * AIR_STRAFE_MODIFIER}
         return speed
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         super.inventoryTick(stack, world, entity, slot, selected)
 
-        if (entity.isOnGround)
+        if (entity.isOnGround || entity.isInFluid)
             entity.fallTime = 0
         else
             entity.fallTime += 1
