@@ -8,7 +8,6 @@ import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.particle.ParticleTypes
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
@@ -32,7 +31,7 @@ class FreezeShotEntity : ThrownItemEntity {
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         super.onEntityHit(entityHitResult)
-        if(entityHitResult.entity != owner && entityHitResult.entity is LivingEntity){
+        if (entityHitResult.entity != owner && entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity
             hit.customDamage(DamageTypes.FREEZE, 3.0f, this, owner)
             hit.frozenTicks.plus(500)

@@ -25,8 +25,10 @@ class StrongExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {
-        if (entity is LivingEntity){
-        return 15f}
-        else{return 0f}
+        if (entity is LivingEntity) {
+            return 15f
+        } else {
+            return 0f
+        }
     }
 }

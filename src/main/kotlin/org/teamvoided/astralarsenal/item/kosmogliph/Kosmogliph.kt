@@ -46,9 +46,30 @@ interface Kosmogliph {
     fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {}
     fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {}
     fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {}
-    fun shouldNegateDamage(stack: ItemStack, entity: LivingEntity, source: DamageSource, equipmentSlot: EquipmentSlot): Boolean = false
-    fun modifyDamage(stack: ItemStack, entity: LivingEntity, damage: Float, source: DamageSource, equipmentSlot: EquipmentSlot): Float = damage
-    fun onStackClicked(stack: ItemStack, other: ItemStack, slot: Slot, clickType: ClickType, player: PlayerEntity, reference: StackReference): Boolean = false
+    fun shouldNegateDamage(
+        stack: ItemStack,
+        entity: LivingEntity,
+        source: DamageSource,
+        equipmentSlot: EquipmentSlot
+    ): Boolean = false
+
+    fun modifyDamage(
+        stack: ItemStack,
+        entity: LivingEntity,
+        damage: Float,
+        source: DamageSource,
+        equipmentSlot: EquipmentSlot
+    ): Float = damage
+
+    fun onStackClicked(
+        stack: ItemStack,
+        other: ItemStack,
+        slot: Slot,
+        clickType: ClickType,
+        player: PlayerEntity,
+        reference: StackReference
+    ): Boolean = false
+
     fun modifyBlockBreakLoot(
         table: LootTable,
         parameters: LootContextParameterSet,
@@ -60,6 +81,7 @@ interface Kosmogliph {
     fun id() = REGISTRY.getId(this)!!
     fun translationText(tooltip: Boolean = false) =
         id().path.toString()
+
     fun translationKey(tooltip: Boolean = false) =
         id().toTranslationKey("kosmogliph${if (tooltip) ".tooltip" else ".name"}")
 

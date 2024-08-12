@@ -54,7 +54,7 @@ object AstralEffects {
 
     fun modifyDamage(entity: LivingEntity, damage: Float): Float {
         var output = damage
-        if(entity.hasStatusEffect(REDUCE))
+        if (entity.hasStatusEffect(REDUCE))
             output *= 1.3f
 
         return output

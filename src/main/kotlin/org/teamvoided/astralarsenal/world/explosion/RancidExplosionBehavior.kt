@@ -28,7 +28,7 @@ class RancidExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun calculateDamage(explosion: Explosion, entity: Entity): Float {
-        if(entity is LivingEntity){
+        if (entity is LivingEntity) {
             entity.addStatusEffect(
                 StatusEffectInstance(
                     StatusEffects.SLOWNESS,
@@ -63,7 +63,8 @@ class RancidExplosionBehavior : ExplosionBehavior() {
                     600, 0,
                     false, true, true
                 )
-            )}
+            )
+        }
         return 0f
     }
 }

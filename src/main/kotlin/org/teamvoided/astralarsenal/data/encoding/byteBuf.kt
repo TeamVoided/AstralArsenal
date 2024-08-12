@@ -11,8 +11,8 @@ import kotlinx.serialization.modules.SerializersModule
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.PacketByteBuf
 
-open class ByteBufFormat(override val serializersModule: SerializersModule): SerialFormat {
-    companion object Default: ByteBufFormat(EmptySerializersModule())
+open class ByteBufFormat(override val serializersModule: SerializersModule) : SerialFormat {
+    companion object Default : ByteBufFormat(EmptySerializersModule())
 
     fun <T> encodeToPacketByteBuf(serializer: SerializationStrategy<T>, value: T): PacketByteBuf {
         val buf = PacketByteBuf(Unpooled.buffer())
@@ -44,7 +44,7 @@ inline fun <reified T> ByteBufFormat.decodeFromPacketByteBuf(buf: PacketByteBuf)
 }
 
 @OptIn(ExperimentalSerializationApi::class)
-class ByteBufEncoder(override val serializersModule: SerializersModule, private val buffer: PacketByteBuf):
+class ByteBufEncoder(override val serializersModule: SerializersModule, private val buffer: PacketByteBuf) :
     AbstractEncoder(), NbtCompoundEncoder {
     override fun beginCollection(descriptor: SerialDescriptor, collectionSize: Int): CompositeEncoder {
         return super.beginCollection(descriptor, collectionSize).also {
@@ -114,7 +114,7 @@ class ByteBufEncoder(override val serializersModule: SerializersModule, private 
 }
 
 @OptIn(ExperimentalSerializationApi::class)
-class ByteBufDecoder(override val serializersModule: SerializersModule, private val buffer: PacketByteBuf):
+class ByteBufDecoder(override val serializersModule: SerializersModule, private val buffer: PacketByteBuf) :
     AbstractDecoder(), NbtCompoundDecoder {
     override fun decodeElementIndex(descriptor: SerialDescriptor): Int {
         val name = buffer.readString()
@@ -136,6 +136,7 @@ class ByteBufDecoder(override val serializersModule: SerializersModule, private 
         buffer.readByte()
         return null
     }
+
     override fun decodeEnum(enumDescriptor: SerialDescriptor): Int = buffer.readInt()
     override fun decodeShort(): Short = buffer.readShort()
     override fun decodeCollectionSize(descriptor: SerialDescriptor): Int = buffer.readInt()

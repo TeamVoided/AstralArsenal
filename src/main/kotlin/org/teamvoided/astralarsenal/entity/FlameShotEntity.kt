@@ -12,7 +12,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities
 
@@ -33,7 +32,7 @@ class FlameShotEntity : ThrownItemEntity {
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         super.onEntityHit(entityHitResult)
-        if(entityHitResult.entity != owner && entityHitResult.entity is LivingEntity){
+        if (entityHitResult.entity != owner && entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity
             hit.customDamage(DamageTypes.IN_FIRE, 3.0f, this, owner)
             hit.setOnFireFor(100)
@@ -60,8 +59,8 @@ class FlameShotEntity : ThrownItemEntity {
             random.nextDouble().times(2).minus(1).times(0.01)
         )
         super.tick()
-        if(this.isWet){
-            this.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH,1.0f,1.0f)
+        if (this.isWet) {
+            this.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, 1.0f, 1.0f)
             this.discard()
         }
     }

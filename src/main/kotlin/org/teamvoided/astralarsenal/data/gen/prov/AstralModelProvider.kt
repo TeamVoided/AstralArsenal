@@ -16,7 +16,12 @@ class AstralModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
 
         gen.registerBlockParented(AstralBlocks.COSMIC_TABLE)
-        gen.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(AstralBlocks.COSMIC_TABLE, AstralBlocks.COSMIC_TABLE.blockModel()))
+        gen.blockStateCollector.accept(
+            BlockStateModelGenerator.createSingletonBlockState(
+                AstralBlocks.COSMIC_TABLE,
+                AstralBlocks.COSMIC_TABLE.blockModel()
+            )
+        )
     }
 
     override fun generateItemModels(gen: ItemModelGenerator) {
@@ -30,7 +35,7 @@ class AstralModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         this.registerParentedItemModel(block, block.blockModel())
     }
 
-    private fun Block.blockModel(): Identifier =  Registries.BLOCK.getId(this).withPrefix("block/")
+    private fun Block.blockModel(): Identifier = Registries.BLOCK.getId(this).withPrefix("block/")
 
 //    val Block.parentModel
 //        get() = Model(Optional.of(Registries.BLOCK.getId(this).withPrefix("block/")), Optional.empty())

@@ -2,7 +2,6 @@ package org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.SwordItem
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
@@ -14,21 +13,23 @@ import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralSounds
-import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.PenopticonExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
-import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-class ExplosiveBeamKosmogliph (id: Identifier) :
+class ExplosiveBeamKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.item is RailgunItem }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         val result = player.raycast(100.0, 1f, false)
-        val distance = sqrt(sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y- 0.5) - result.pos.y).pow(2))
+        val distance = sqrt(
+            sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y - 0.5) - result.pos.y).pow(
+                2
+            )
+        )
         val entities = mutableListOf<Entity>()
         val interval = (distance.times(2))
         for (i in 0..interval.roundToInt()) {
@@ -36,15 +37,15 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
                 world.getOtherEntities(
                     player, Box(
                         (lerp(player.eyePos.x, result.pos.x, i / interval)) + 0.5,
-                        (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)) + 0.5,
+                        (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) + 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) + 0.5,
                         (lerp(player.eyePos.x, result.pos.x, i / interval)) - 0.5,
-                        (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)) - 0.5,
+                        (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
                 )
             )
-            if (entities.isNotEmpty()){
+            if (entities.isNotEmpty()) {
                 break
             }
             if (!player.world.isClient) {
@@ -52,7 +53,7 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
                 serverWorld.spawnParticles(
                     ParticleTypes.FLAME,
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
-                    (lerp(player.eyePos.y- 0.5, result.pos.y, i / interval)),
+                    (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),
                     5,
                     0.2,
@@ -74,8 +75,9 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            if(entity is CannonballEntity || entity is MortarEntity){
-                world.createExplosion(entity,
+            if (entity is CannonballEntity || entity is MortarEntity) {
+                world.createExplosion(
+                    entity,
                     entity.damageSources.explosion(entity, player),
                     PenopticonExplosionBehavior(),
                     entity.x,
@@ -83,49 +85,49 @@ class ExplosiveBeamKosmogliph (id: Identifier) :
                     entity.z,
                     3.0f,
                     false,
-                    World.ExplosionSourceType.TNT)
+                    World.ExplosionSourceType.TNT
+                )
                 entity.discard()
-            }
-            else{
-            world.createExplosion(
-                entity,
-                entity.damageSources.explosion(entity,player),
-                StrongExplosionBehavior(),
-                entity.x,
-                entity.y,
-                entity.z,
-                2.0f,
-                false,
-                World.
-                ExplosionSourceType.TNT)
-            if (!player.world.isClient) {
-                val serverWorld = player.world as ServerWorld
-                serverWorld.spawnParticles(
-                    ParticleTypes.FLAME,
+            } else {
+                world.createExplosion(
+                    entity,
+                    entity.damageSources.explosion(entity, player),
+                    StrongExplosionBehavior(),
                     entity.x,
                     entity.y,
                     entity.z,
-                    500,
-                    1.5,
-                    1.5,
-                    1.5,
-                    0.0
+                    2.0f,
+                    false,
+                    World.ExplosionSourceType.TNT
                 )
-            }
+                if (!player.world.isClient) {
+                    val serverWorld = player.world as ServerWorld
+                    serverWorld.spawnParticles(
+                        ParticleTypes.FLAME,
+                        entity.x,
+                        entity.y,
+                        entity.z,
+                        500,
+                        1.5,
+                        1.5,
+                        1.5,
+                        0.0
+                    )
+                }
             }
         }
-        if(entities.isEmpty()){
+        if (entities.isEmpty()) {
             world.createExplosion(
                 player,
-                player.damageSources.explosion(player,player),
+                player.damageSources.explosion(player, player),
                 StrongExplosionBehavior(),
                 result.pos.x,
                 result.pos.y,
                 result.pos.z,
                 2.0f,
                 false,
-                World.
-                ExplosionSourceType.TNT)
+                World.ExplosionSourceType.TNT
+            )
             if (!player.world.isClient) {
                 val serverWorld = player.world as ServerWorld
                 serverWorld.spawnParticles(

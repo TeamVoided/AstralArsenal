@@ -78,7 +78,8 @@ class BeamKosmogliph(
                 RaycastContext.ShapeType.COLLIDER,
                 RaycastContext.FluidHandling.NONE,
                 user
-            ))
+            )
+        )
         val ehr = ProjectileUtil.getEntityCollision(
             world,
             user,
@@ -100,7 +101,7 @@ class BeamKosmogliph(
         val arm = if (this is LivingEntity) mainArm else Arm.RIGHT
         val eyes = getLerpedEyePos(0f)
         val look = getRotationVec(0f)
-        var right = getRotationVector(0f, getYaw(0f)+90)
+        var right = getRotationVector(0f, getYaw(0f) + 90)
         val down = look.crossProduct(right)
         if (arm == Arm.LEFT) right = right.multiply(-1.0)
         return eyes.add(look.multiply(0.5)).add(right.multiply(0.25)).add(down.multiply(0.075))

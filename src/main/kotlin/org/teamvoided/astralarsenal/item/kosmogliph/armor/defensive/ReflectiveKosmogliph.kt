@@ -15,7 +15,6 @@ import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
-import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class ReflectiveKosmogliph(id: Identifier) : SimpleKosmogliph(id, {

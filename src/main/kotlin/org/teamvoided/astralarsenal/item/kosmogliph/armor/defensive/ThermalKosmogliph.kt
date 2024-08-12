@@ -13,7 +13,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class ThermalKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
+class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     (item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.CHESTPLATE) || item is ElytraItem
 }) {
@@ -25,24 +25,26 @@ class ThermalKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         equipmentSlot: EquipmentSlot
     ): Float {
         var outputDamage = damage
-        if (source.isTypeIn(AstralDamageTypeTags.IS_ICE)){
+        if (source.isTypeIn(AstralDamageTypeTags.IS_ICE)) {
             outputDamage = (outputDamage * 0.2).toFloat()
         }
         return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
     }
+
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        if (slot == 2){
-        if(entity is LivingEntity) {
-            if (!entity.world.isClient) {
-                val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
-                if (y.isNotEmpty()) {
-                    for (t in y) {
-                        entity.statusEffects.remove(t)
+        if (slot == 2) {
+            if (entity is LivingEntity) {
+                if (!entity.world.isClient) {
+                    val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
+                    if (y.isNotEmpty()) {
+                        for (t in y) {
+                            entity.statusEffects.remove(t)
+                        }
                     }
                 }
             }
+            entity.frozenTicks = 0
         }
-        entity.frozenTicks = 0}
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 

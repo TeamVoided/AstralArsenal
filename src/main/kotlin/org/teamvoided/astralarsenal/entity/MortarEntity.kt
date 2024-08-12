@@ -36,7 +36,7 @@ class MortarEntity : ThrownItemEntity {
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
-        if(entityHitResult.entity.isOnGround) {
+        if (entityHitResult.entity.isOnGround) {
             world.createExplosion(
                 this,
                 damageSources.explosion(this, this.owner),
@@ -48,17 +48,20 @@ class MortarEntity : ThrownItemEntity {
                 false,
                 World.ExplosionSourceType.TNT
             )
-            for(i in 0..100){world.addParticle(ParticleTypes.FLAME,
-                true,
-                this.x + random.rangeInclusive(-1, 1).times(0.1),
-                this.y + random.rangeInclusive(-1, 1).times(0.1),
-                this.z + random.rangeInclusive(-1, 1).times(0.1),
-                random.nextDouble().times(2).minus(1).times(0.01),
-                random.nextDouble().times(0.1),
-                random.nextDouble().times(2).minus(1).times(0.01))}
+            for (i in 0..100) {
+                world.addParticle(
+                    ParticleTypes.FLAME,
+                    true,
+                    this.x + random.rangeInclusive(-1, 1).times(0.1),
+                    this.y + random.rangeInclusive(-1, 1).times(0.1),
+                    this.z + random.rangeInclusive(-1, 1).times(0.1),
+                    random.nextDouble().times(2).minus(1).times(0.01),
+                    random.nextDouble().times(0.1),
+                    random.nextDouble().times(2).minus(1).times(0.01)
+                )
+            }
             this.discard()
-        }
-        else{
+        } else {
             world.createExplosion(
                 this,
                 damageSources.explosion(this, this.owner),
@@ -111,8 +114,17 @@ class MortarEntity : ThrownItemEntity {
     }
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
-        world.createExplosion(this, damageSources.explosion(this,this.owner), KnockbackExplosionBehavior(),this.x,this.y,this.z,2.0f,false,
-            World.ExplosionSourceType.TNT)
+        world.createExplosion(
+            this,
+            damageSources.explosion(this, this.owner),
+            KnockbackExplosionBehavior(),
+            this.x,
+            this.y,
+            this.z,
+            2.0f,
+            false,
+            World.ExplosionSourceType.TNT
+        )
         this.discard()
         super.onBlockHit(blockHitResult)
     }

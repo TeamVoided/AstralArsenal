@@ -31,7 +31,13 @@ object AstralItems {
     val KOSMIC_GEM = register("kosmic_gem", Item(Item.Settings().rarity(Rarity.RARE)))
     val CANNONBALL = register("cannonball", CannonballItem(Item.Settings()))
     val MORTER = register("morter", MorterItem(Item.Settings()))
-    val ASTRAL_GREATHAMMER = register("astral_greathammer", AstralGreathammerItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.0F))))
+    val ASTRAL_GREATHAMMER = register(
+        "astral_greathammer",
+        AstralGreathammerItem(
+            (Item.Settings()).fireproof().rarity(Rarity.EPIC)
+                .attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.0F))
+        )
+    )
     val RAILGUN = register("railgun", RailgunItem(Item.Settings().fireproof().maxCount(1).rarity(Rarity.EPIC)))
 
     @Deprecated(
@@ -71,7 +77,7 @@ object AstralItems {
             .toSet()
     }
 
-    fun <T: Item> register(id: String, item: T): T {
+    fun <T : Item> register(id: String, item: T): T {
         return Registry.register(Registries.ITEM, id(id), item)
     }
 }

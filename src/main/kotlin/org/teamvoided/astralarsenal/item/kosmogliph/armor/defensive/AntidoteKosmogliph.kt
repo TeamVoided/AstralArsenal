@@ -15,7 +15,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class AntidoteKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
+class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     (item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.CHESTPLATE) || item is ElytraItem
 }) {
@@ -27,12 +27,13 @@ class AntidoteKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         equipmentSlot: EquipmentSlot
     ): Float {
         var outputDamage = damage
-        if (source.isTypeIn(AstralDamageTypeTags.IS_MAGIC)){
+        if (source.isTypeIn(AstralDamageTypeTags.IS_MAGIC)) {
             outputDamage = (outputDamage * 0.2).toFloat()
         }
 
         return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
     }
+
     val blacklist = listOf(
         StatusEffects.INSTANT_DAMAGE,
         StatusEffects.BAD_OMEN,

@@ -11,7 +11,14 @@ import org.teamvoided.astralarsenal.menu.CosmicTableMenu
 object AstralMenus {
     val COSMIC_TABLE = register<CosmicTableMenu>("cosmic_table", ::CosmicTableMenu)
 
-    fun <T : ScreenHandler> register(name: String, factory: ExtendedScreenHandlerType.ExtendedFactory<T, CosmicTableData>): ExtendedScreenHandlerType<T, CosmicTableData> {
-        return Registry.register(Registries.SCREEN_HANDLER_TYPE, AstralArsenal.id(name), ExtendedScreenHandlerType(factory, CosmicTableData.PACKET_CODEC))
+    fun <T : ScreenHandler> register(
+        name: String,
+        factory: ExtendedScreenHandlerType.ExtendedFactory<T, CosmicTableData>
+    ): ExtendedScreenHandlerType<T, CosmicTableData> {
+        return Registry.register(
+            Registries.SCREEN_HANDLER_TYPE,
+            AstralArsenal.id(name),
+            ExtendedScreenHandlerType(factory, CosmicTableData.PACKET_CODEC)
+        )
     }
 }

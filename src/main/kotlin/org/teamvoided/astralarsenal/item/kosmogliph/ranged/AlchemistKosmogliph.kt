@@ -27,7 +27,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
-class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is BowItem }), BowKosmogliph {
+class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is BowItem }), BowKosmogliph {
     override fun onStackClicked(
         stack: ItemStack,
         other: ItemStack,
@@ -132,7 +132,8 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
             tooltip += text.formatted(Formatting.DARK_PURPLE)
         }
 
-        tooltip += Text.translatable("kosmogliph.alchemist.charges", data.charges.toString()).formatted(Formatting.DARK_PURPLE)
+        tooltip += Text.translatable("kosmogliph.alchemist.charges", data.charges.toString())
+            .formatted(Formatting.DARK_PURPLE)
     }
 
     class Data(
@@ -150,6 +151,7 @@ class AlchemistKosmogliph(id: Identifier): SimpleKosmogliph(id, { it.item is Bow
             }
         }
     }
+
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.INFINITY)
     }

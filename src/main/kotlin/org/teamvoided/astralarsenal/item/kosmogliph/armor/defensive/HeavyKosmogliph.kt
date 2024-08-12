@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class HeavyKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
+class HeavyKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     (item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.CHESTPLATE) || item is ElytraItem
 }) {

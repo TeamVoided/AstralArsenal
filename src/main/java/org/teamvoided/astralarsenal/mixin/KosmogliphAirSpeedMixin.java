@@ -10,9 +10,9 @@ import org.teamvoided.astralarsenal.pseudomixin.AirSpeedKt;
 
 @Mixin(PlayerEntity.class)
 public class KosmogliphAirSpeedMixin {
-  @Inject(method = "getAirSpeed()F", at = @At("RETURN"), cancellable = true)
-  private void modifyAirSpeed(CallbackInfoReturnable<Float> info) {
-    LivingEntity entity = (LivingEntity) (Object) this;
-    info.setReturnValue(AirSpeedKt.airSpeedKosmogliphCall(entity, info.getReturnValue()));
-  }
+    @Inject(method = "getAirSpeed()F", at = @At("RETURN"), cancellable = true)
+    private void modifyAirSpeed(CallbackInfoReturnable<Float> info) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+        info.setReturnValue(AirSpeedKt.airSpeedKosmogliphCall(entity, info.getReturnValue()));
+    }
 }

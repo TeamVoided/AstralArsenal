@@ -45,11 +45,13 @@ class BulletEntity : ThrownItemEntity {
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
         builder.add(DMG, 3f)
-        builder.add(time,0)
+        builder.add(time, 0)
         builder.add(newDMG, 0f)
     }
 
-    init{this.setNoGravity(true)}
+    init {
+        this.setNoGravity(true)
+    }
 
     override fun tick() {
         this.setTime(this.getTime() + 1)
@@ -72,11 +74,11 @@ class BulletEntity : ThrownItemEntity {
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
-        when(this.getTime()){
-            in  5..< 10 -> this.setnewDmg(90f)
-            in 10..< 15 -> this.setnewDmg(75f)
-            in 15..< 20 -> this.setnewDmg(50f)
-            in 20..< 25 -> this.setnewDmg(25f)
+        when (this.getTime()) {
+            in 5..<10 -> this.setnewDmg(90f)
+            in 10..<15 -> this.setnewDmg(75f)
+            in 15..<20 -> this.setnewDmg(50f)
+            in 20..<25 -> this.setnewDmg(25f)
             in 25..<500 -> this.setnewDmg(10f)
             500 -> this.discard()
             else -> {}
@@ -86,7 +88,8 @@ class BulletEntity : ThrownItemEntity {
                 AstralDamageTypes.getHolder(world.registryManager, DamageTypes.ARROW),
                 this,
                 owner
-            ),this.getnewDmg())
+            ), this.getnewDmg()
+        )
         super.onEntityHit(entityHitResult)
     }
 
@@ -103,7 +106,7 @@ class BulletEntity : ThrownItemEntity {
         return dataTracker.get(DMG) as Float
     }
 
-    fun setTime(Time: Int){
+    fun setTime(Time: Int) {
         dataTracker.set(time, Time)
     }
 
@@ -112,7 +115,7 @@ class BulletEntity : ThrownItemEntity {
     }
 
     fun setnewDmg(percent: Float) {
-        val perc = percent/100
+        val perc = percent / 100
         val new = this.getDmg() * perc
         dataTracker.set(newDMG, new)
     }

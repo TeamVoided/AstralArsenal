@@ -25,6 +25,7 @@ class BoomShooterEntity : Entity {
         private val time: TrackedData<Int>? =
             DataTracker.registerData(BoomShooterEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
     }
+
     fun setTime(Time: Int) {
         dataTracker.set(time, Time)
     }
@@ -32,32 +33,33 @@ class BoomShooterEntity : Entity {
     fun getTime(): Int {
         return dataTracker.get(time) as Int
     }
-    init{
+
+    init {
         this.setNoGravity(true)
     }
 
     override fun tick() {
         var t = this.getTime()
         t++
-        if(t.mod(5) == 0){
+        if (t.mod(5) == 0) {
             if (!world.isClient) {
-                val snowballEntity = BoomEntity(world, this.x,this.y,this.z)
+                val snowballEntity = BoomEntity(world, this.x, this.y, this.z)
                 snowballEntity.setProperties(this, this.pitch, (this.yaw.plus(t.times(2))), 0.0f, 0.3f, 0.0f)
                 snowballEntity.addVelocity(0.0, 1.0, 0.0)
                 world.spawnEntity(snowballEntity)
             }
         }
-        if(t >= 180){this.discard()}
+        if (t >= 180) {
+            this.discard()
+        }
         this.setTime(t)
         super.tick()
     }
 
     override fun readCustomDataFromNbt(nbt: NbtCompound?) {
-       // TODO("Not yet implemented")
     }
 
     override fun writeCustomDataToNbt(nbt: NbtCompound?) {
-      //  TODO("Not yet implemented")
     }
 
     override fun initDataTracker(builder: DataTracker.Builder) {

@@ -11,7 +11,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class CapacitanceKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
+class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     (item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.CHESTPLATE) || item is ElytraItem
 }) {
@@ -31,10 +31,10 @@ class CapacitanceKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             random = 1
         } else {
             dmg = (damage * 0.8).toInt()
-            random = entity.world.random.range(1,5)
+            random = entity.world.random.range(1, 5)
         }
         if (source.attacker != null && source.attacker != entity) {
-            if(random == 1){
+            if (random == 1) {
                 val snowballEntity = BeamOfLightEntity(entity.world, entity)
                 snowballEntity.setPosition(entity.pos)
                 snowballEntity.DOT = false

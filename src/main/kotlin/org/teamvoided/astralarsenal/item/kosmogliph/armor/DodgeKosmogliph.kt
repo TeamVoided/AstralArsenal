@@ -133,18 +133,18 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
         var cooldown = data.cooldown
-        if(damage >= 2 && !source.isType(DamageTypes.FALL)){
-        if (uses >= 3){
-            uses += -1
-            cooldown += 20
+        if (damage >= 2 && !source.isType(DamageTypes.FALL)) {
+            if (uses >= 3) {
+                uses += -1
+                cooldown += 20
+            } else if (cooldown >= 100 && uses != 0) {
+                uses += -1
+            } else if (cooldown <= 100) {
+                cooldown += 10
+            }
         }
-        else if(cooldown >= 100 && uses != 0){
-            uses += -1
-        }
-        else if(cooldown <= 100){
-            cooldown += 10
-        }}
-        stack.set(AstralItemComponents.DODGE_DATA,
+        stack.set(
+            AstralItemComponents.DODGE_DATA,
             Data(uses, cooldown)
         )
         return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot)

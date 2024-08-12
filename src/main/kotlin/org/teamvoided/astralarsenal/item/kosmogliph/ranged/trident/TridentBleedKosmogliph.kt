@@ -33,6 +33,7 @@ class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id) {
             builder.build()
         )
     }
+
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.CHANNELING, Enchantments.RIPTIDE)
     }

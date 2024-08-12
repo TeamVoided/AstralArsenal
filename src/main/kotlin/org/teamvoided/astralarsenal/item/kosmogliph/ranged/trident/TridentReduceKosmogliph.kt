@@ -13,6 +13,7 @@ class TridentReduceKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id) {
     override fun onHit(attacker: Entity?, victim: LivingEntity) {
         victim.addStatusEffect(StatusEffectInstance(AstralEffects.REDUCE, 200), attacker)
     }
+
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.RIPTIDE, Enchantments.CHANNELING)
     }

@@ -14,7 +14,6 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.slot.Slot
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
-import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralMenus
@@ -51,7 +50,10 @@ class CosmicTableMenu(
     override fun onButtonClick(player: PlayerEntity, id: Int): Boolean {
         val applicationSlot = getSlot(0)
         val kosmicGemSlot = getSlot(1)
-        if ((!kosmicGemSlot.hasStack() || !kosmicGemSlot.stack.isOf(AstralItems.KOSMIC_GEM)) && !(hasKosmogliph(applicationSlot.stack) || player.isCreative)) return false
+        if ((!kosmicGemSlot.hasStack() || !kosmicGemSlot.stack.isOf(AstralItems.KOSMIC_GEM)) && !(hasKosmogliph(
+                applicationSlot.stack
+            ) || player.isCreative)
+        ) return false
         val stack = applicationSlot.stack
         val kosmicGemStack = kosmicGemSlot.stack
 
@@ -65,12 +67,20 @@ class CosmicTableMenu(
         val incompatible = incompatibleEnchantments(kosmogliph, enchantments)
 
         if (missing.isNotEmpty()) {
-            player.sendMessage(Text.translatable("comic_table.message.missing", Text.translatable(stack.translationKey)).formatted(Formatting.RED), false)
+            player.sendMessage(
+                Text.translatable("comic_table.message.missing", Text.translatable(stack.translationKey))
+                    .formatted(Formatting.RED), false
+            )
             return false
         }
 
         if (incompatible.isNotEmpty()) {
-            player.sendMessage(Text.translatable("comic_table.message.incompatible", Text.translatable(stack.translationKey)).formatted(Formatting.RED), false)
+            player.sendMessage(
+                Text.translatable(
+                    "comic_table.message.incompatible",
+                    Text.translatable(stack.translationKey)
+                ).formatted(Formatting.RED), false
+            )
             return false
         }
 
@@ -141,17 +151,22 @@ class CosmicTableMenu(
     fun missingEnchantments(kosmogliph: Kosmogliph, enchantments: Set<Holder<Enchantment>>): Set<Holder<Enchantment>> {
         val missing = mutableSetOf<Holder<Enchantment>>()
         kosmogliph.requiredEnchantments().forEach { key ->
-            val holder = world.registryManager.get(RegistryKeys.ENCHANTMENT).getHolder(key).getOrNull() ?: return@forEach
+            val holder =
+                world.registryManager.get(RegistryKeys.ENCHANTMENT).getHolder(key).getOrNull() ?: return@forEach
             if (!enchantments.contains(holder)) missing += holder
         }
 
         return missing
     }
 
-    fun incompatibleEnchantments(kosmogliph: Kosmogliph, enchantments: Set<Holder<Enchantment>>): Set<Holder<Enchantment>> {
+    fun incompatibleEnchantments(
+        kosmogliph: Kosmogliph,
+        enchantments: Set<Holder<Enchantment>>
+    ): Set<Holder<Enchantment>> {
         val incompatible = mutableSetOf<Holder<Enchantment>>()
         kosmogliph.disallowedEnchantment().forEach { key ->
-            val holder = world.registryManager.get(RegistryKeys.ENCHANTMENT).getHolder(key).getOrNull() ?: return@forEach
+            val holder =
+                world.registryManager.get(RegistryKeys.ENCHANTMENT).getHolder(key).getOrNull() ?: return@forEach
             if (enchantments.contains(holder)) incompatible += holder
         }
 

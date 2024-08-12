@@ -6,7 +6,6 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
-import net.minecraft.entity.decoration.ArmorStandEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.particle.ParticleTypes
@@ -115,21 +114,21 @@ class BeamOfLightEntity : Entity {
                         if (!entitiesHit.contains(entity) && entity is LivingEntity) {
                             entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
                             entity.addVelocity(0.0, THRUST, 0.0)
-                                var hard_levels = this.hard_damage
-                                val effects = entity.statusEffects.filter { unhealable.contains(it.effectType) }
-                                if(effects.isNotEmpty()){
-                                    effects.forEach {
-                                        val w = it.amplifier
-                                        hard_levels += w
-                                    }
+                            var hard_levels = this.hard_damage
+                            val effects = entity.statusEffects.filter { unhealable.contains(it.effectType) }
+                            if (effects.isNotEmpty()) {
+                                effects.forEach {
+                                    val w = it.amplifier
+                                    hard_levels += w
                                 }
-                                entity.addStatusEffect(
-                                    StatusEffectInstance(
-                                        AstralEffects.UNHEALABLE_DAMAGE,
-                                        400, hard_levels,
-                                        false, true, true
-                                    )
+                            }
+                            entity.addStatusEffect(
+                                StatusEffectInstance(
+                                    AstralEffects.UNHEALABLE_DAMAGE,
+                                    400, hard_levels,
+                                    false, true, true
                                 )
+                            )
                             entitiesHit.add(entity)
                         }
                     }
@@ -164,23 +163,24 @@ class BeamOfLightEntity : Entity {
                         )
                     )
                     for (entity in entities) {
-                        if(entity is LivingEntity){
-                        entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, 0.0f, this, owner)
-                        var hard_levels = this.hard_damage
-                        val effects = entity.statusEffects.filter { weak.contains(it.effectType) }
-                        if(effects.isNotEmpty()){
-                            effects.forEach {
-                                val w = it.amplifier
-                                hard_levels += w
+                        if (entity is LivingEntity) {
+                            entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, 0.0f, this, owner)
+                            var hard_levels = this.hard_damage
+                            val effects = entity.statusEffects.filter { weak.contains(it.effectType) }
+                            if (effects.isNotEmpty()) {
+                                effects.forEach {
+                                    val w = it.amplifier
+                                    hard_levels += w
+                                }
                             }
-                        }
-                        entity.addStatusEffect(
-                            StatusEffectInstance(
-                                AstralEffects.HARD_DAMAGE,
-                                100, hard_levels,
-                                false, true, true
+                            entity.addStatusEffect(
+                                StatusEffectInstance(
+                                    AstralEffects.HARD_DAMAGE,
+                                    100, hard_levels,
+                                    false, true, true
+                                )
                             )
-                        )}
+                        }
                     }
                 }
             }

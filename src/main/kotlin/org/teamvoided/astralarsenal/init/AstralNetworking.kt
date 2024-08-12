@@ -40,5 +40,6 @@ object AstralNetworking {
             val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
             if (!kosmogliphs.contains(AstralKosmogliphs.SLAM)) return@registerGlobalReceiver
             AstralKosmogliphs.SLAM.handleSlam(stack, player)
-        }    }
+        }
+    }
 }

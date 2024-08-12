@@ -18,7 +18,14 @@ class VeinmineKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is Pic
         if (world.isClient() || world !is ServerWorld) return
         if (miner.isSneaking) return
         val mineablePositions =
-            queryMineableVeinPositions(stack, world, state, pos, 30.0, (64).coerceAtMost(stack.maxDamage - stack.damage))
+            queryMineableVeinPositions(
+                stack,
+                world,
+                state,
+                pos,
+                30.0,
+                (64).coerceAtMost(stack.maxDamage - stack.damage)
+            )
         mineablePositions.breakAndDropStacksAt(world, pos, miner, stack)
 
         stack.damageEquipment(mineablePositions.size - 1, miner, EquipmentSlot.MAINHAND)

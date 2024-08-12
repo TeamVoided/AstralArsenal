@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.entity
 
-import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.ArrowEntity
@@ -20,6 +19,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
 
     constructor(world: World?, x: Double, y: Double, z: Double) :
             super(AstralEntities.BEAM_OF_LIGHT_ARROW as EntityType<out ArrowEntity?>, world)
+
     var WINDUP = 1
     var TIMEACTIVE = 1
     var DOT = false
@@ -51,7 +51,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
         if (!world.isClient) {
             val snowballEntity = BeamOfLightEntity(world, balls)
-            snowballEntity.setPosition(this.x,this.y,this.z)
+            snowballEntity.setPosition(this.x, this.y, this.z)
             snowballEntity.DOT = DOT
             snowballEntity.side = side
             snowballEntity.THRUST = THRUST
@@ -69,7 +69,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         if (!world.isClient && entityHitResult.entity != this.balls) {
             val snowballEntity = BeamOfLightEntity(world, balls)
-            snowballEntity.setPosition(this.x,this.y,this.z)
+            snowballEntity.setPosition(this.x, this.y, this.z)
             snowballEntity.DOT = DOT
             snowballEntity.side = side
             snowballEntity.THRUST = THRUST
@@ -84,5 +84,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
         }
     }
 
-    init{this.setNoGravity(true)}
+    init {
+        this.setNoGravity(true)
+    }
 }

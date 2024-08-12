@@ -3,14 +3,7 @@ package org.teamvoided.astralarsenal.init
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.component.DataComponentMap
 import net.minecraft.component.DataComponentType
-import net.minecraft.item.ArmorItem
-import net.minecraft.item.BowItem
-import net.minecraft.item.CrossbowItem
-import net.minecraft.item.ElytraItem
-import net.minecraft.item.Item
-import net.minecraft.item.RangedWeaponItem
-import net.minecraft.item.ToolItem
-import net.minecraft.item.TridentItem
+import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
@@ -28,7 +21,10 @@ object AstralItemComponents {
 
     @JvmField
     val KOSMOGLIPHS: DataComponentType<KosmogliphsComponent> =
-        register("kosmogliphs", { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem }, { KosmogliphsComponent() }) { builder ->
+        register(
+            "kosmogliphs",
+            { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem },
+            { KosmogliphsComponent() }) { builder ->
             builder.codec(KosmogliphsComponent.CODEC).build()
         }
 
@@ -53,7 +49,10 @@ object AstralItemComponents {
         }
 
     val ASTRAL_STRIKE_DATA: DataComponentType<AstralStrikeKosmogliph.Data> =
-        register("astral_strike_data", { it is ArmorItem || it is ToolItem }, { AstralStrikeKosmogliph.Data(0) }) { builder ->
+        register(
+            "astral_strike_data",
+            { it is ArmorItem || it is ToolItem },
+            { AstralStrikeKosmogliph.Data(0) }) { builder ->
             builder.codec(AstralStrikeKosmogliph.Data.CODEC).build()
         }
     val MINIGUN_DATA: DataComponentType<MinigunKosmogliph.Data> =
@@ -62,7 +61,10 @@ object AstralItemComponents {
         }
 
     val GRAPPLE_DATA: DataComponentType<GrappleKosmogliph.Data> =
-        register("grapple_data", { it is ArmorItem || it is ToolItem }, { GrappleKosmogliph.Data(0, 0, false) }) { builder ->
+        register(
+            "grapple_data",
+            { it is ArmorItem || it is ToolItem },
+            { GrappleKosmogliph.Data(0, 0, false) }) { builder ->
             builder.codec(GrappleKosmogliph.Data.CODEC).build()
         }
 

@@ -17,8 +17,8 @@ import kotlinx.serialization.modules.SerializersModule
 import net.minecraft.nbt.NbtCompound
 import kotlin.properties.Delegates
 
-open class NbtFormat(override val serializersModule: SerializersModule): SerialFormat {
-    companion object Default: NbtFormat(EmptySerializersModule())
+open class NbtFormat(override val serializersModule: SerializersModule) : SerialFormat {
+    companion object Default : NbtFormat(EmptySerializersModule())
 
     fun <T> encodeToNbtCompound(serializer: SerializationStrategy<T>, value: T): NbtCompound {
         val compound = NbtCompound()
@@ -69,7 +69,7 @@ fun SerialDescriptor.pushTags(pushTag: (String) -> Unit) {
 class NbtListEncoder(
     override val serializersModule: SerializersModule,
     private val parent: NbtCompoundEncoder
-): AbstractEncoder(), NbtCompoundEncoder {
+) : AbstractEncoder(), NbtCompoundEncoder {
     private val compound = NbtCompound()
     private var currentIndex by Delegates.notNull<Int>()
 
@@ -110,7 +110,8 @@ class NbtListEncoder(
     }
 }
 
-class NbtListDecoder(override val serializersModule: SerializersModule, private val compound: NbtCompound): AbstractDecoder(),
+class NbtListDecoder(override val serializersModule: SerializersModule, private val compound: NbtCompound) :
+    AbstractDecoder(),
     NbtCompoundDecoder {
     private val keys = compound.keys.iterator()
     private lateinit var currentKey: String
@@ -144,7 +145,7 @@ class NbtEncoder(
     descriptor: SerialDescriptor,
     private val compound: NbtCompound,
     private val parent: NbtCompoundEncoder? = null
-): NamedValueEncoder(), NbtCompoundEncoder {
+) : NamedValueEncoder(), NbtCompoundEncoder {
     init {
         descriptor.pushTags { pushTag(it) }
     }
@@ -189,7 +190,7 @@ class NbtDecoder(
     override val serializersModule: SerializersModule,
     descriptor: SerialDescriptor,
     private val compound: NbtCompound
-): NamedValueDecoder(), NbtCompoundDecoder {
+) : NamedValueDecoder(), NbtCompoundDecoder {
     private val keys = compound.keys.iterator()
 
     init {

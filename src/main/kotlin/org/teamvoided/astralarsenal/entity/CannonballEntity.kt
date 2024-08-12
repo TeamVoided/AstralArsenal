@@ -39,17 +39,16 @@ class CannonballEntity : ThrownItemEntity {
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
-        if(entityHitResult.entity !is PlayerEntity){
-        entityHitResult.entity.damage(
-            DamageSource(
-                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CANNONBALL),
-                this,
-                owner
-            ), getDmg().toFloat()
-        )
-        }
-        else{
-            if(entityHitResult.entity == owner){
+        if (entityHitResult.entity !is PlayerEntity) {
+            entityHitResult.entity.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CANNONBALL),
+                    this,
+                    owner
+                ), getDmg().toFloat()
+            )
+        } else {
+            if (entityHitResult.entity == owner) {
                 entityHitResult.entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BALLNT),
@@ -57,8 +56,7 @@ class CannonballEntity : ThrownItemEntity {
                         owner
                     ), (getDmg().toFloat()) - 5
                 )
-            }
-            else{
+            } else {
                 entityHitResult.entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CANNONBALL),
@@ -68,18 +66,18 @@ class CannonballEntity : ThrownItemEntity {
                 )
             }
         }
-        if(this.getDmg() in 20..39){
+        if (this.getDmg() in 20..39) {
             this.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
-        }
-        else if(this.getDmg() >= 40){
+        } else if (this.getDmg() >= 40) {
             this.playSound((SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY))
             entityHitResult.entity.setOnFireFor(100)
-        }
-        else {
+        } else {
             this.playSound(SoundEvents.ITEM_MACE_SMASH_AIR)
         }
         var i: Int = this.getDmg() + 5
-        if (i > 40){i = 40}
+        if (i > 40) {
+            i = 40
+        }
         this.setDmg(i)
         if (entityHitResult.entity.isAlive || this.getDmg() < 20) {
             this.setVelocity(this.getVelocity().multiply(-0.05, 0.0, -0.05))
@@ -133,8 +131,7 @@ class CannonballEntity : ThrownItemEntity {
                 random.nextDouble().times(0.1),
                 random.nextDouble().times(2).minus(1).times(0.01)
             )
-        }
-        else if(this.getDmg() in 30..39){
+        } else if (this.getDmg() in 30..39) {
             world.addParticle(
                 ParticleTypes.FLAME,
                 true,
@@ -155,8 +152,7 @@ class CannonballEntity : ThrownItemEntity {
                 random.nextDouble().times(0.1),
                 random.nextDouble().times(2).minus(1).times(0.01)
             )
-        }
-        else if(this.getDmg() >= 40){
+        } else if (this.getDmg() >= 40) {
             world.addParticle(
                 ParticleTypes.SOUL_FIRE_FLAME,
                 true,
@@ -192,11 +188,23 @@ class CannonballEntity : ThrownItemEntity {
     }
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
-        if(this.getDmg() < 20){this.setDmg(20)}
-        world.createExplosion(this, damageSources.explosion(this,this.owner), KnockbackExplosionBehavior(),this.x,this.y,this.z,2.0f,false,World.ExplosionSourceType.TNT)
+        if (this.getDmg() < 20) {
+            this.setDmg(20)
+        }
+        world.createExplosion(
+            this,
+            damageSources.explosion(this, this.owner),
+            KnockbackExplosionBehavior(),
+            this.x,
+            this.y,
+            this.z,
+            2.0f,
+            false,
+            World.ExplosionSourceType.TNT
+        )
         this.discard()
         super.onBlockHit(blockHitResult)
-}
+    }
 
     fun setDmg(dmg: Int) {
         dataTracker.set(DMG, dmg)

@@ -25,8 +25,10 @@ class WeakExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {
-        if (entity is LivingEntity){
-            return 10f}
-        else{return 0f}
+        if (entity is LivingEntity) {
+            return 10f
+        } else {
+            return 0f
+        }
     }
 }

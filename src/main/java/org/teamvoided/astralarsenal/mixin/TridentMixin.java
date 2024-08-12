@@ -12,14 +12,14 @@ import org.teamvoided.astralarsenal.util.UtilKt;
 
 @Mixin(TridentEntity.class)
 public class TridentMixin {
-  @Inject(method = "onEntityHit", at = @At("TAIL"))
-  private void kosmogliphPostDamageEntity(EntityHitResult entityHitResult, CallbackInfo info) {
-    TridentEntity entity = (TridentEntity) (Object) this;
-    var stack = entity.getWeaponStack();
-    if(entityHitResult.getEntity() instanceof LivingEntity target && stack != null)
-      UtilKt.getKosmogliphsOnStack(stack).forEach(kosmogliph -> {
-        if(kosmogliph instanceof ThrownTridentKosmogliph tridentKosmogliph)
-          tridentKosmogliph.onHit(entity.getOwner(), target);
-      });
-  }
+    @Inject(method = "onEntityHit", at = @At("TAIL"))
+    private void kosmogliphPostDamageEntity(EntityHitResult entityHitResult, CallbackInfo info) {
+        TridentEntity entity = (TridentEntity) (Object) this;
+        var stack = entity.getWeaponStack();
+        if (entityHitResult.getEntity() instanceof LivingEntity target && stack != null)
+            UtilKt.getKosmogliphsOnStack(stack).forEach(kosmogliph -> {
+                if (kosmogliph instanceof ThrownTridentKosmogliph tridentKosmogliph)
+                    tridentKosmogliph.onHit(entity.getOwner(), target);
+            });
+    }
 }

@@ -17,7 +17,6 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
-import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities
 
 class SlashEntity : ThrownItemEntity {
@@ -45,10 +44,12 @@ class SlashEntity : ThrownItemEntity {
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
         builder.add(DMG, 5f)
-        builder.add(time,0)
+        builder.add(time, 0)
     }
 
-    init{this.setNoGravity(true)}
+    init {
+        this.setNoGravity(true)
+    }
 
     override fun tick() {
         this.setTime(this.getTime() + 1)
@@ -73,20 +74,22 @@ class SlashEntity : ThrownItemEntity {
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
-        if(entityHitResult.entity is PlayerEntity){
-        entityHitResult.entity.damage(
-            DamageSource(
-            AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
-            this,
-            owner
-        ),this.getDmg())}
-        else{
+        if (entityHitResult.entity is PlayerEntity) {
             entityHitResult.entity.damage(
                 DamageSource(
                     AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
                     this,
                     owner
-                ),this.getDmg().times(2))
+                ), this.getDmg()
+            )
+        } else {
+            entityHitResult.entity.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
+                    this,
+                    owner
+                ), this.getDmg().times(2)
+            )
         }
         super.onEntityHit(entityHitResult)
     }
@@ -104,7 +107,7 @@ class SlashEntity : ThrownItemEntity {
         return dataTracker.get(DMG) as Float
     }
 
-    fun setTime(Time: Int){
+    fun setTime(Time: Int) {
         dataTracker.set(time, Time)
     }
 

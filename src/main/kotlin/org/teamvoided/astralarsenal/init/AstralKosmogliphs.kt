@@ -11,15 +11,25 @@ import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.kosmogliph.AttributeModificationKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.DodgeKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.JumpKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.SlamKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.defensive.*
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.*
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.AlchemistKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.CannonballLauncherKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.ShotgunKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams.*
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.*
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.*
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.DevastateKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.LockOffKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.OrbitalKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.TimeBombKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.trident.TridentBleedKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.trident.TridentReduceKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.tools.*
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.HammerKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.SmelterKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.VeinmineKosmogliph
 
 @Suppress("unused")
 object AstralKosmogliphs {
@@ -33,8 +43,10 @@ object AstralKosmogliphs {
     val JUMP = register("jump", ::JumpKosmogliph)
     val DASH = register("dash", ::DashKosmogliph)
     val DODGE = register("dodge", ::DodgeKosmogliph)
+
     //val SLIDE = register("slide", ::SlideKosmogliph)
     val SLAM = register("slam", ::SlamKosmogliph)
+
     // val GRAPPLE = register("grapple", ::GrappleKosmogliph)
     // val BEAM = register("beam", ::BeamKosmogliph)
     val ALCHEMIST = register("alchemist", ::AlchemistKosmogliph)

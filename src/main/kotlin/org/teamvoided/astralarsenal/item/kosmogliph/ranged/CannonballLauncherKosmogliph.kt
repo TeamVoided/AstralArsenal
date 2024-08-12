@@ -33,7 +33,7 @@ class CannonballLauncherKosmogliph(
             world.spawnEntity(snowballEntity)
             if (!player.isCreative) {
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
-        }
+            }
             world.playSound(
                 null,
                 player.x,
@@ -44,13 +44,13 @@ class CannonballLauncherKosmogliph(
                 1.0F,
                 1.0f
             )
-            if (hand == Hand.MAIN_HAND){
-                stack.damageEquipment(1, player, EquipmentSlot.MAINHAND)}
-            else if (hand == Hand.OFF_HAND){
+            if (hand == Hand.MAIN_HAND) {
+                stack.damageEquipment(1, player, EquipmentSlot.MAINHAND)
+            } else if (hand == Hand.OFF_HAND) {
                 stack.damageEquipment(1, player, EquipmentSlot.OFFHAND)
             }
+        }
     }
-}
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.MULTISHOT, Enchantments.PIERCING)

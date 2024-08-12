@@ -41,21 +41,21 @@ class BlackHoleArrowEntity : ArrowEntity {
     }
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
-            this.discard()
+        this.discard()
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         if (!world.isClient && entityHitResult.entity is LivingEntity) {
             val snowballEntity = BlackHoleEntity(world, balls)
-            val x = when(random.nextBoolean()){
+            val x = when (random.nextBoolean()) {
                 true -> 1
                 false -> -1
             }
-            val y = when(random.nextBoolean()){
+            val y = when (random.nextBoolean()) {
                 true -> 1
                 false -> -1
             }
-            val z = when(random.nextBoolean()){
+            val z = when (random.nextBoolean()) {
                 true -> 1
                 false -> -1
             }
@@ -71,5 +71,7 @@ class BlackHoleArrowEntity : ArrowEntity {
         }
     }
 
-    init{this.setNoGravity(true)}
+    init {
+        this.setNoGravity(true)
+    }
 }

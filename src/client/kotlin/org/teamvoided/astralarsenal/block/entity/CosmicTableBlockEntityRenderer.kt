@@ -12,7 +12,8 @@ import org.teamvoided.astralarsenal.block.enity.CosmicTableBlockEntity
 import org.teamvoided.astralarsenal.init.AstralItems.KOSMIC_GEM
 import kotlin.math.sin
 
-class CosmicTableBlockEntityRenderer(context: BlockEntityRendererFactory.Context) : BlockEntityRenderer<CosmicTableBlockEntity> {
+class CosmicTableBlockEntityRenderer(context: BlockEntityRendererFactory.Context) :
+    BlockEntityRenderer<CosmicTableBlockEntity> {
     val SPEED = 200
     val HALF_SPEED = SPEED / 2
     var itemRenderer: ItemRenderer? = null

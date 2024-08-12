@@ -14,7 +14,7 @@ class DamageReductionKosmogliph(
     val multiplier: Float,
     applicationPredicate: Predicate<ItemStack>,
     vararg val tags: TagKey<DamageType>
-): SimpleKosmogliph(id, applicationPredicate) {
+) : SimpleKosmogliph(id, applicationPredicate) {
     override fun modifyDamage(
         stack: ItemStack,
         entity: LivingEntity,

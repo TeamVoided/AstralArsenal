@@ -16,11 +16,14 @@ interface AirSpeedKosmogliph : Kosmogliph {
 
     var Entity.fallTime
         get() = ticksMap[this] ?: 0
-        set(value) { ticksMap[this] = value }
+        set(value) {
+            ticksMap[this] = value
+        }
 
     override fun modifyAirStrafeSpeed(entity: LivingEntity, speed: Float): Float {
-        if(entity.fallTime > TICKS_BEFORE_MODIFIED){
-            return entity.movementSpeed * AIR_STRAFE_MODIFIER}
+        if (entity.fallTime > TICKS_BEFORE_MODIFIED) {
+            return entity.movementSpeed * AIR_STRAFE_MODIFIER
+        }
         return speed
     }
 

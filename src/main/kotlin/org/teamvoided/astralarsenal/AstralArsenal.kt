@@ -5,9 +5,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asCoroutineDispatcher
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
-import net.minecraft.entity.EquipmentSlot
 import net.minecraft.server.command.CommandManager.literal
 import net.minecraft.util.Identifier
 import org.slf4j.Logger
@@ -16,7 +13,6 @@ import org.teamvoided.astralarsenal.command.KosmogliphCommand
 import org.teamvoided.astralarsenal.coroutine.mcCoroutineDispatcher
 import org.teamvoided.astralarsenal.coroutine.mcCoroutineScope
 import org.teamvoided.astralarsenal.init.*
-import org.teamvoided.astralarsenal.networking.*
 
 @Suppress("unused")
 object AstralArsenal {

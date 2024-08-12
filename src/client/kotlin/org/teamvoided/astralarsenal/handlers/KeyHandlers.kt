@@ -6,8 +6,11 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.client.MinecraftClient
 import org.teamvoided.astralarsenal.AstralKeyBindings
-import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.networking.*
+import org.teamvoided.astralarsenal.handlers.KeyHandlers.ClientCtxInvokable
+import org.teamvoided.astralarsenal.networking.DashKosmogliphPayload
+import org.teamvoided.astralarsenal.networking.DodgeKosmogliphPayload
+import org.teamvoided.astralarsenal.networking.JumpKosmogliphPayload
+import org.teamvoided.astralarsenal.networking.SlamKosmogliphPayload
 import kotlin.reflect.full.declaredMemberProperties
 
 object KeyHandlers {
@@ -29,8 +32,8 @@ object KeyHandlers {
         } else if (!jumpKey.isPressed) {
             holdingJump.value = false
         } else if (!holdingJump.value) {
-                ClientPlayNetworking.send(JumpKosmogliphPayload)
-                holdingJump.value = true
+            ClientPlayNetworking.send(JumpKosmogliphPayload)
+            holdingJump.value = true
         }
     }
 
@@ -38,11 +41,9 @@ object KeyHandlers {
         val player = client.player ?: return@ClientCtxInvokable
         if (player.isOnGround || player.isCreative || player.isSpectator) {
             holdingCrouch.value = true
-        }
-        else if (!client.options.sneakKey.isPressed) {
+        } else if (!client.options.sneakKey.isPressed) {
             holdingCrouch.value = false
-        }
-        else if (!holdingCrouch.value) {
+        } else if (!holdingCrouch.value) {
             ClientPlayNetworking.send(SlamKosmogliphPayload)
             holdingCrouch.value = true
         }

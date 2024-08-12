@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class ShotgunKosmogliph (
+class ShotgunKosmogliph(
     id: Identifier,
 ) : SimpleKosmogliph(id, { it.item is CrossbowItem }), RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
@@ -26,21 +26,22 @@ class ShotgunKosmogliph (
         val stack = player.getStackInHand(hand)
         val chargedProjectiles = stack.get(DataComponentTypes.CHARGED_PROJECTILES)
         if (chargedProjectiles != null && !chargedProjectiles.isEmpty) {
-            for(i in 1..10){
+            for (i in 1..10) {
                 val snowballEntity = ArrowEntity(world, player, chargedProjectiles.projectiles[0], stack)
-                if(i == 1){
+                if (i == 1) {
                     snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED
                     snowballEntity.setProperties(
                         player, player.pitch, player.yaw,
-                        0.0f, 3.0f, 0.0f)
-                }
-                else {
+                        0.0f, 3.0f, 0.0f
+                    )
+                } else {
                     snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY
                     snowballEntity.setProperties(
                         player,
                         player.pitch + world.random.nextDouble().minus(0.5).times(15).toFloat(),
                         player.yaw + world.random.nextDouble().minus(0.5).times(15).toFloat(),
-                        0.0f, 3.0f, 0.0f)
+                        0.0f, 3.0f, 0.0f
+                    )
                 }
                 world.spawnEntity(snowballEntity)
             }
@@ -54,14 +55,15 @@ class ShotgunKosmogliph (
                 1.0F,
                 1.0f
             )
-            if (hand == Hand.MAIN_HAND){
-            stack.damageEquipment(1, player, EquipmentSlot.MAINHAND)}
-            else if (hand == Hand.OFF_HAND){
+            if (hand == Hand.MAIN_HAND) {
+                stack.damageEquipment(1, player, EquipmentSlot.MAINHAND)
+            } else if (hand == Hand.OFF_HAND) {
                 stack.damageEquipment(1, player, EquipmentSlot.OFFHAND)
             }
             stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
         }
     }
+
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.PIERCING)
     }

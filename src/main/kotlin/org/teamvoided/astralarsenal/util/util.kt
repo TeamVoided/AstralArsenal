@@ -14,8 +14,10 @@ import org.teamvoided.astralarsenal.item.kosmogliph.ranged.BowKosmogliph
 
 fun <T, R : Registry<T>> RegistryKey<R>.tag(id: Identifier) = TagKey.of(this, id)
 
-fun <T> Registry<T>.registerHolder(id: Identifier, entry:T): Holder.Reference<T> = Registry.registerHolder(this, id, entry)
-fun <T> Registry<T>.register(id: Identifier, entry:T): T = Registry.register(this, id, entry)
+fun <T> Registry<T>.registerHolder(id: Identifier, entry: T): Holder.Reference<T> =
+    Registry.registerHolder(this, id, entry)
+
+fun <T> Registry<T>.register(id: Identifier, entry: T): T = Registry.register(this, id, entry)
 
 fun getKosmogliphsOnStack(stack: ItemStack): KosmogliphsComponent {
     val component = stack.components.get(KOSMOGLIPHS)
@@ -23,7 +25,7 @@ fun getKosmogliphsOnStack(stack: ItemStack): KosmogliphsComponent {
     return component
 }
 
-fun interface BPredicate<T>: Predicate<T>, java.util.function.Predicate<T> {
+fun interface BPredicate<T> : Predicate<T>, java.util.function.Predicate<T> {
     override fun test(t: T): Boolean = this(t)
 }
 

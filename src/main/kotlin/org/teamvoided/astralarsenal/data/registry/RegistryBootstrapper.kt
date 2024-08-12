@@ -1,10 +1,6 @@
 package org.teamvoided.astralarsenal.data.registry
 
-import net.minecraft.registry.BootstrapContext
-import net.minecraft.registry.DynamicRegistryManager
-import net.minecraft.registry.Holder
-import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.*
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import kotlin.jvm.optionals.getOrNull

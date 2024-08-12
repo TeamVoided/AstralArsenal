@@ -21,7 +21,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags.MOUNTS_WITH_DASH
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
@@ -47,11 +46,10 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         }
 
         if (data.uses > 0) {
-            val boo : Double
-            if((dashingEntity.health <= (dashingEntity.maxHealth * 0.25))){
+            val boo: Double
+            if ((dashingEntity.health <= (dashingEntity.maxHealth * 0.25))) {
                 boo = JUMP_FORWARD_BOOST * 0.75
-            }
-            else{
+            } else {
                 boo = JUMP_FORWARD_BOOST
             }
             val boost = dashingEntity.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(boo)
@@ -113,7 +111,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
                             time += (t.amplifier * 20)
                         }
                     }
-                    val z: Int = (entity.frozenTicks/20) * 5
+                    val z: Int = (entity.frozenTicks / 20) * 5
                     time += z
                 }
                 cooldown = time
@@ -148,17 +146,16 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
         var cooldown = data.cooldown
-        if(damage >= 2 && !source.isType(DamageTypes.FALL)){
-        if (uses >= 3){
-            uses += -1
-            cooldown += 20
+        if (damage >= 2 && !source.isType(DamageTypes.FALL)) {
+            if (uses >= 3) {
+                uses += -1
+                cooldown += 20
+            } else if (cooldown >= 100 && uses != 0) {
+                uses += -1
+            } else if (cooldown <= 100) {
+                cooldown += 10
+            }
         }
-        else if(cooldown >= 100 && uses != 0){
-            uses += -1
-        }
-        else if(cooldown <= 100){
-            cooldown += 10
-        }}
         stack.set(AstralItemComponents.DASH_DATA, Data(uses, cooldown))
         return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot)
     }

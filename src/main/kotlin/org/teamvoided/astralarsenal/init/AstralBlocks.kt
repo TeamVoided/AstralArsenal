@@ -27,7 +27,10 @@ object AstralBlocks {
         )
     )
 
-    val COSMIC_TABLE_BLOCK_ENTITY = registerBlockEntity("cosmic_table", BlockEntityType.Builder.create(::CosmicTableBlockEntity, COSMIC_TABLE).build())
+    val COSMIC_TABLE_BLOCK_ENTITY = registerBlockEntity(
+        "cosmic_table",
+        BlockEntityType.Builder.create(::CosmicTableBlockEntity, COSMIC_TABLE).build()
+    )
 
     private fun registerBlock(name: String, block: Block): Block {
         val instance = Registry.register(Registries.BLOCK, AstralArsenal.id(name), block)
@@ -35,7 +38,10 @@ object AstralBlocks {
         return instance
     }
 
-    private fun <T : BlockEntity> registerBlockEntity(name: String, blockEntityType: BlockEntityType<T>): BlockEntityType<T> {
+    private fun <T : BlockEntity> registerBlockEntity(
+        name: String,
+        blockEntityType: BlockEntityType<T>
+    ): BlockEntityType<T> {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, AstralArsenal.id(name), blockEntityType)
     }
 }

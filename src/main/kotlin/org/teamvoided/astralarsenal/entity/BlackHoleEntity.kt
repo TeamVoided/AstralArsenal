@@ -7,15 +7,12 @@ import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Math.lerp
-import org.teamvoided.astralarsenal.entity.BeamOfLightEntity.Companion
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEffects
@@ -44,16 +41,22 @@ class BlackHoleEntity : Entity {
             DataTracker.registerData(BlackHoleEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
     }
 
-    init{ this.setNoGravity(true) }
+    init {
+        this.setNoGravity(true)
+    }
 
-    var target : LivingEntity? = null
-    var owner : LivingEntity? = null
+    var target: LivingEntity? = null
+    var owner: LivingEntity? = null
 
     override fun tick() {
-        if(this.target != null || this.owner != null){
+        if (this.target != null || this.owner != null) {
             val targetpos = target!!.pos
             val thispos = this.pos
-            val distance = sqrt(sqrt((thispos.x - targetpos.x).pow(2) + (thispos.z - targetpos.z).pow(2)).pow(2) + ((thispos.y - 0.5) - targetpos.y).pow(2))
+            val distance = sqrt(
+                sqrt((thispos.x - targetpos.x).pow(2) + (thispos.z - targetpos.z).pow(2)).pow(2) + ((thispos.y - 0.5) - targetpos.y).pow(
+                    2
+                )
+            )
             val interv = (distance * 10)
             this.setPosition(
                 (lerp(thispos.x, targetpos.x, 1 / interv)),
@@ -85,7 +88,7 @@ class BlackHoleEntity : Entity {
                 )
             )
             for (entity in entities) {
-                if(entity is LivingEntity){
+                if (entity is LivingEntity) {
                     val hp = entity.health * 0.5
                     val maxhp = entity.maxHealth
                     entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, hp.toFloat(), this, this.owner)
@@ -93,16 +96,19 @@ class BlackHoleEntity : Entity {
                         StatusEffectInstance(
                             AstralEffects.UNHEALABLE_DAMAGE,
                             100, (maxhp).toInt(),
-                            false, true, true)
+                            false, true, true
                         )
+                    )
                 }
-                if(entity == this.target){
+                if (entity == this.target) {
                     this.discard()
                 }
             }
         }
         this.incrementTime()
-        if(this.getTime() > 1200){this.discard()}
+        if (this.getTime() > 1200) {
+            this.discard()
+        }
     }
 
     override fun readCustomDataFromNbt(nbt: NbtCompound?) {
@@ -112,6 +118,7 @@ class BlackHoleEntity : Entity {
     override fun writeCustomDataToNbt(nbt: NbtCompound?) {
         //TODO("Not yet implemented")
     }
+
     fun setTime(time: Int) {
         dataTracker.set(TIME, time)
     }

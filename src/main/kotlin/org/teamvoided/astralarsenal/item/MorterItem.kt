@@ -10,14 +10,23 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.MortarEntity
 
-class MorterItem (settings: Settings) : Item(settings) {
+class MorterItem(settings: Settings) : Item(settings) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         if (!world.isClient) {
             val snowballEntity = MortarEntity(world, user)
             snowballEntity.setProperties(user, user.pitch, user.yaw, 0.0f, 0.1f, 0.0f)
             snowballEntity.addVelocity(0.0, 0.1, 0.0)
             world.spawnEntity(snowballEntity)
-            world.playSound(user.x,user.y,user.z, SoundEvents.BLOCK_BARREL_OPEN, SoundCategory.PLAYERS,1.0F,1.0F, false)
+            world.playSound(
+                user.x,
+                user.y,
+                user.z,
+                SoundEvents.BLOCK_BARREL_OPEN,
+                SoundCategory.PLAYERS,
+                1.0F,
+                1.0F,
+                false
+            )
             if (!user.isCreative) {
                 user.itemCooldownManager.set(this, 100)
             }

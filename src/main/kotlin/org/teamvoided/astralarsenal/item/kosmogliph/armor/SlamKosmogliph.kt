@@ -3,7 +3,6 @@ package org.teamvoided.astralarsenal.item.kosmogliph.armor
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.enchantment.Enchantment
-import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -22,7 +21,7 @@ import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import kotlin.math.roundToInt
 
-class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
+class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.HELMET
 }) {
@@ -30,7 +29,7 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
         val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return
         if (!player.isOnGround && !data.slamming) {
             stack.set(AstralItemComponents.SLAM_DATA, Data(data.lastFallDistance, true))
-            player.setVelocity(0.0,-20.0, 0.0)
+            player.setVelocity(0.0, -20.0, 0.0)
             player.velocityModified = true
         }
     }
@@ -54,14 +53,16 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
 
         if (slamming && currentFallDistance <= 0f && data.lastFallDistance > 0f) {
             entity.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
-            entity.addStatusEffect(StatusEffectInstance(
-                AstralEffects.SLAM_JUMP,
-                10,
-                (data.lastFallDistance + 2).roundToInt(),
-                false,
-                false,
-                true
-            ))
+            entity.addStatusEffect(
+                StatusEffectInstance(
+                    AstralEffects.SLAM_JUMP,
+                    10,
+                    (data.lastFallDistance + 2).roundToInt(),
+                    false,
+                    false,
+                    true
+                )
+            )
 
             slamming = false
         }
@@ -88,6 +89,7 @@ class SlamKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             }
         }
     }
+
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf()
     }
