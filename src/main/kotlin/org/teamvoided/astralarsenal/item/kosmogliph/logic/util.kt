@@ -202,5 +202,7 @@ fun List<ItemStack>.combined(): List<ItemStack> {
 
 fun ItemStack.canSafelyBreak(world: World, state: BlockState, pos: BlockPos): Boolean {
     val toolComponent = this.get(DataComponentTypes.TOOL) ?: return false
-    return toolComponent.isCorrectForDrops(state) && world.getBlockEntity(pos) == null
+    return world.worldBorder.contains(pos)
+            && toolComponent.isCorrectForDrops(state)
+            && world.getBlockEntity(pos) == null
 }
