@@ -24,11 +24,10 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph.Data
 import java.lang.Math.random
 import kotlin.math.sqrt
 
-class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
+class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.LEGGINGS
 }), AirSpeedKosmogliph {
@@ -37,13 +36,14 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
     val SPEED_MULT = sqrt(2 * SPEED_CAP * SPEED_CAP)
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
-        val data = stack.get(AstralItemComponents.DODGE_DATA) ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.get(AstralItemComponents.DODGE_DATA)
+            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world
         //this is broken and I don't know why, please help
-        if(data.uses > 0 && !world.isClient) {
+        if (data.uses > 0 && !world.isClient) {
             val boost = player.movement.multiply(1.0, 0.0, 1.0).multiply(JUMP_FORWARD_BOOST)
             player.addVelocity(boost)
-            if(player.velocity.horizontalLength() > SPEED_CAP)
+            if (player.velocity.horizontalLength() > SPEED_CAP)
                 player.velocity = boost.normalize().multiply(SPEED_MULT)
 
             player.velocityModified = true
@@ -55,8 +55,9 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                 AstralSounds.DODGE,
                 SoundCategory.PLAYERS,
                 1.0F,
-                1.0F)
-            if(!world.isClient){
+                1.0F
+            )
+            if (!world.isClient) {
                 val serverWorld = world as ServerWorld
                 serverWorld.spawnParticles(
                     ParticleTypes.ELECTRIC_SPARK,
@@ -67,7 +68,8 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                     random().minus(0.5).times(2),
                     random().minus(0.5).times(2),
                     random().minus(0.5).times(2),
-                    0.0)
+                    0.0
+                )
             }
             stack.set(AstralItemComponents.DODGE_DATA, Data(data.uses - 1, data.cooldown))
         }
@@ -81,11 +83,7 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             var uses = data.uses
             if (uses >= 3) return
             var cooldown = data.cooldown
-            if (entity is PlayerEntity) {
-                if (entity.hungerManager.foodLevel > 6) {
-                    cooldown--
-                }
-            } else {
+            if (entity.hungerManager.foodLevel > 6) {
                 cooldown--
             }
 
@@ -93,16 +91,16 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                 uses++
                 val x: Float = (uses * 2.0).toFloat()
                 var time = 20
-                if (entity is LivingEntity) {
-                    val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
-                    if (y.isNotEmpty()) {
-                        for (t in y) {
-                            time += (t.amplifier * 20)
-                        }
+
+                val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
+                if (y.isNotEmpty()) {
+                    for (t in y) {
+                        time += (t.amplifier * 20)
                     }
-                    val z: Int = (entity.frozenTicks/20) * 5
-                    time += z
                 }
+                val z: Int = (entity.frozenTicks / 20) * 5
+                time += z
+
                 cooldown = time
                 if (entity is ServerPlayerEntity) {
                     entity.networkHandler.send(
@@ -123,6 +121,7 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
             stack.set(AstralItemComponents.DODGE_DATA, Data(uses, cooldown))
         }
     }
+
     override fun modifyDamage(
         stack: ItemStack,
         entity: LivingEntity,
@@ -163,6 +162,7 @@ class DodgeKosmogliph (id: Identifier) : SimpleKosmogliph(id, {
                 )
         }
     }
+
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf()
     }
