@@ -41,4 +41,4 @@ bin/
 /run/
 .env
 
-src/main/generated/.cache/
+src/main/generated/

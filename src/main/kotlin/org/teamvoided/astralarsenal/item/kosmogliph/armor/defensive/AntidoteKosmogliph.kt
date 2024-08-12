@@ -6,19 +6,15 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.item.ArmorItem
-import net.minecraft.item.ElytraItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
-    val item = it.item
-    (item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.CHESTPLATE) || item is ElytraItem
-}) {
+class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ANTIDOTE) }) {
     override fun modifyDamage(
         stack: ItemStack,
         entity: LivingEntity,

@@ -6,20 +6,20 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.CrossbowItem
 import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.RangedWeaponKosmogliph
 
 class LockOffKosmogliph(
     id: Identifier,
-) : SimpleKosmogliph(id, { it.item is CrossbowItem }),
+) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_LOCK_OFF) }),
     RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
         if (world.isClient) return

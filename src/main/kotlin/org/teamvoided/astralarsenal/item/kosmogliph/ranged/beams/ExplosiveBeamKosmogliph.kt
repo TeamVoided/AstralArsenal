@@ -10,10 +10,10 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Math.lerp
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralSounds
-import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.PenopticonExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
@@ -22,7 +22,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class ExplosiveBeamKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.item is RailgunItem }) {
+    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_EXPLOSIVE_BEAM) }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         val result = player.raycast(100.0, 1f, false)
         val distance = sqrt(

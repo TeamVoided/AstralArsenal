@@ -5,9 +5,9 @@ import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registry
-import net.minecraft.registry.tag.ItemTags
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.item.kosmogliph.AttributeModificationKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
@@ -60,7 +60,7 @@ object AstralKosmogliphs {
     val STEP_UP = register("step_up") { id ->
         AttributeModificationKosmogliph(
             id,
-            { it.isIn(ItemTags.FOOT_ARMOR) },
+            { it.isIn(AstralItemTags.SUPPORTS_STEP_UP) },
             EntityAttributes.GENERIC_STEP_HEIGHT,
             id.extendPath("_modifier"),
             1.0,
@@ -69,6 +69,7 @@ object AstralKosmogliphs {
             0 // 0 is boots
         )
     }
+
     val SCORCH_PROOF = register("scorch-proof", ::ScorchProofKosmogliph)
     val ANTIDOTE = register("antidote", ::AntidoteKosmogliph)
     val ENDURANCE = register("endurance", ::EnduranceKosmogliph)

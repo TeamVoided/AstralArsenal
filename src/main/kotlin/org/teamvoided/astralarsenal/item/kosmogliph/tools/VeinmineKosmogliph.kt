@@ -4,17 +4,17 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.item.PickaxeItem
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.breakAndDropStacksAt
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.queryMineableVeinPositions
 import kotlin.math.min
 
-class VeinmineKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is PickaxeItem }) {
+class VeinmineKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_VEIN_MINER) }) {
     override fun postMine(stack: ItemStack, world: World, state: BlockState, pos: BlockPos, miner: LivingEntity) {
         if (world.isClient() || world !is ServerWorld) return
         if (miner.isSneaking) return

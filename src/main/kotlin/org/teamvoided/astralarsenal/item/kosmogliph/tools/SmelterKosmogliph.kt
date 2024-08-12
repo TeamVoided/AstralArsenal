@@ -1,19 +1,20 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.tools
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.context.LootContextParameterSet
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.SingleRecipeInput
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import kotlin.jvm.optionals.getOrNull
 
 class SmelterKosmogliph(id: Identifier) : SimpleKosmogliph(
     id,
-    { it.item is PickaxeItem || it.item is ShovelItem || it.item is AxeItem || it.item is HoeItem }) {
+    { it.isIn(AstralItemTags.SUPPORTS_SMELTER) }) {
     override fun modifyBlockBreakLoot(
         table: LootTable,
         parameters: LootContextParameterSet,

@@ -4,16 +4,16 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.item.SwordItem
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 // I will fix this - Astra
-class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem }) {
+class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ASTRAL_STRIKE) }) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         val data = stack.get(AstralItemComponents.ASTRAL_STRIKE_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")

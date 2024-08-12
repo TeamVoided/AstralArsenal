@@ -11,7 +11,10 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectUtil
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.StackReference
-import net.minecraft.item.*
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
+import net.minecraft.item.PotionItem
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.screen.slot.Slot
@@ -22,12 +25,14 @@ import net.minecraft.util.ClickType
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
-class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is BowItem }), BowKosmogliph {
+class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ALCHEMIST) }),
+    BowKosmogliph {
     override fun onStackClicked(
         stack: ItemStack,
         other: ItemStack,

@@ -15,12 +15,12 @@ import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.coroutine.mcCoroutineTask
 import org.teamvoided.astralarsenal.coroutine.ticks
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralSounds
-import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
@@ -28,7 +28,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class SnipeKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.item is RailgunItem }) {
+    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_SNIPE) }) {
     val unhealable = listOf(
         AstralEffects.UNHEALABLE_DAMAGE
     )

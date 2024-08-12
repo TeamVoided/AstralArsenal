@@ -8,7 +8,6 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.s2c.play.SoundPlayS2CPacket
 import net.minecraft.particle.ParticleTypes
@@ -21,13 +20,12 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
-    val item = it.item
-    item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.BOOTS
-}), AirSpeedKosmogliph {
+class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_JUMP) }),
+    AirSpeedKosmogliph {
     // Change this to change how much boost is given when double-jumping.
     val JUMP_FORWARD_BOOST = 0.3
 

@@ -8,18 +8,18 @@ import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ArrowEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
-import net.minecraft.item.CrossbowItem
 import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class ShotgunKosmogliph(
     id: Identifier,
-) : SimpleKosmogliph(id, { it.item is CrossbowItem }), RangedWeaponKosmogliph {
+) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_SHOTGUN) }), RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
         if (world.isClient) return
 

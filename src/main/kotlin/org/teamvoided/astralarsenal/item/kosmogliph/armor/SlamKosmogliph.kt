@@ -9,22 +9,19 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.DamageTypeTags
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import kotlin.math.roundToInt
 
-class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
-    val item = it.item
-    item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.HELMET
-}) {
+class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_SLAM) }) {
     fun handleSlam(stack: ItemStack, player: PlayerEntity) {
         val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return
         if (!player.isOnGround && !data.slamming) {

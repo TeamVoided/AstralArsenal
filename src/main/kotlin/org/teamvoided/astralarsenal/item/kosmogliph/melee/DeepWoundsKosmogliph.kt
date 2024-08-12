@@ -3,19 +3,18 @@ package org.teamvoided.astralarsenal.item.kosmogliph.melee
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.AxeItem
 import net.minecraft.item.ItemStack
-import net.minecraft.item.SwordItem
 import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.DeepWoundEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
-class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is SwordItem || it.item is AxeItem }) {
+class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DEEP_WOUNDS) }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         if (!world.isClient) {
             var w = -20

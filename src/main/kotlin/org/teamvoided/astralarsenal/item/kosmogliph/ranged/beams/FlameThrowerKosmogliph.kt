@@ -16,14 +16,14 @@ import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.coroutine.mcCoroutineTask
+import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
-import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.seconds
 
 class FlameThrowerKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.item is RailgunItem }) {
+    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_FLAME_THROWER) }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
         if (!world.isClient) {
             mcCoroutineTask {
