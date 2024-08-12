@@ -4,6 +4,7 @@
   "package": "org.teamvoided.astralarsenal.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "EnchantmentScreenMixin",
     "WorldRendererMixin"
   ],
   "injectors": {
