@@ -14,6 +14,9 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(EnchantmentScreen.class)
 public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentScreenHandler> {
 
+
+    // (ender) this is a bug fix for a problem that should not happen ever,
+    // it should be moved to a diff mod but for now it's here
     public EnchantmentScreenMixin(EnchantmentScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
     }
