@@ -12,6 +12,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.breakAndDropStacksAt
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.queryMineableVeinPositions
+import kotlin.math.min
 
 class VeinmineKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is PickaxeItem }) {
     override fun postMine(stack: ItemStack, world: World, state: BlockState, pos: BlockPos, miner: LivingEntity) {
@@ -24,8 +25,9 @@ class VeinmineKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is Pic
                 state,
                 pos,
                 30.0,
-                (64).coerceAtMost(stack.maxDamage - stack.damage)
+                min(64, stack.maxDamage - (stack.damage - 1))
             )
+        if (mineablePositions.isEmpty()) return
         mineablePositions.breakAndDropStacksAt(world, pos, miner, stack)
 
         stack.damageEquipment(mineablePositions.size - 1, miner, EquipmentSlot.MAINHAND)

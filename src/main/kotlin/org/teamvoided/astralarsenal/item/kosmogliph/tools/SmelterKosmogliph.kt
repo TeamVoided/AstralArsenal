@@ -1,13 +1,11 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.tools
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import net.minecraft.enchantment.Enchantment
 import net.minecraft.item.*
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.context.LootContextParameterSet
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.SingleRecipeInput
-import net.minecraft.registry.RegistryKey
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
@@ -38,11 +36,4 @@ class SmelterKosmogliph(id: Identifier) : SimpleKosmogliph(
         return smeltedStacks
     }
 
-    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf()
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
-    }
 }
