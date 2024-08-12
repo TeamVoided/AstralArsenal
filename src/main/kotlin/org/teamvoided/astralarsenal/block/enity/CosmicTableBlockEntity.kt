@@ -25,9 +25,9 @@ class CosmicTableBlockEntity(
 
     override fun getContainerName(): Text = Text.translatable("container.cosmic_table")
 
-    override fun method_11282(): DefaultedList<ItemStack> = inventory
+    override fun getInventory(): DefaultedList<ItemStack> = inventory
 
-    override fun method_11281(defaultedList: DefaultedList<ItemStack>) {
+    override fun setInventory(defaultedList: DefaultedList<ItemStack>) {
         inventory.clear()
         inventory.addAll(defaultedList)
     }
@@ -46,8 +46,8 @@ class CosmicTableBlockEntity(
         Inventories.writeNbt(nbt, inventory, lookupProvider)
     }
 
-    override fun method_11014(nbt: NbtCompound, lookupProvider: HolderLookup.Provider) {
-        super.method_11014(nbt, lookupProvider)
+    override fun readNbtImpl(nbt: NbtCompound, lookupProvider: HolderLookup.Provider) {
+        super.readNbtImpl(nbt, lookupProvider)
         Inventories.readNbt(nbt, inventory, lookupProvider)
     }
 
