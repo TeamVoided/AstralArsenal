@@ -1,7 +1,6 @@
 package org.teamvoided.astralarsenal.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -31,7 +30,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
     private boolean supportsEnchantments(boolean original) {
         ItemStack inputStack1 = ingredientInventory.getStack(0);
         ItemStack inputStack2 = ingredientInventory.getStack(1);
-        KosmogliphsComponent kosmogliphs = inputStack1.get(AstralItemComponents.INSTANCE.getKOSMOGLIPHS());
+        KosmogliphsComponent kosmogliphs = inputStack1.get(AstralItemComponents.KOSMOGLIPHS);
         boolean[] hasDisallowedEnchantments = {false};
 
         if (kosmogliphs != null && !kosmogliphs.isEmpty()) {

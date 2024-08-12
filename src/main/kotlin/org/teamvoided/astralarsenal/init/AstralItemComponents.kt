@@ -26,6 +26,7 @@ import java.util.*
 object AstralItemComponents {
     private val mods = mutableSetOf<DataComponentTypeModificationContext<*>>()
 
+    @JvmField
     val KOSMOGLIPHS: DataComponentType<KosmogliphsComponent> =
         register("kosmogliphs", { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem }, { KosmogliphsComponent() }) { builder ->
             builder.codec(KosmogliphsComponent.CODEC).build()
@@ -70,6 +71,7 @@ object AstralItemComponents {
             builder.codec(AlchemistKosmogliph.Data.CODEC).build()
         }
 
+    //(ender) Delete this?
     val BEAM_DATA: DataComponentType<BeamKosmogliph.Data> =
         register("beam_data", { it is CrossbowItem }, { BeamKosmogliph.Data(false) }) { builder ->
             builder.codec(BeamKosmogliph.Data.CODEC).build()
