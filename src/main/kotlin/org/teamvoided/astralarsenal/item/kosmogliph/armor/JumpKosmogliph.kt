@@ -20,6 +20,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
@@ -142,7 +143,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         var uses = data.uses
         var cooldown = data.cooldown
         var maxUses = data.maxUses
-        if (damage >= 2 && !source.isType(DamageTypes.FALL)) {
+        if (damage >= 2 && !source.isTypeIn(AstralDamageTypeTags.KEEPS_MOVEMENT)) {
             if (uses >= 3) {
                 uses += -1
                 cooldown += 20
