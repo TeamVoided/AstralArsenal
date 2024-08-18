@@ -18,7 +18,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class CannonballLauncherKosmogliph(
     id: Identifier,
-) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_CANNONBALL_LAUNCHER)}), RangedWeaponKosmogliph {
+) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_CANNONBALL_LAUNCHER) }), RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
         if (world.isClient) return
 
@@ -28,7 +28,7 @@ class CannonballLauncherKosmogliph(
         if (fireBall) {
             stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
             val snowballEntity = CannonballEntity(world, player)
-            snowballEntity.setProperties(player, player.pitch, player.yaw, 0.0f, 3.0f, 0.0f)
+            setPropertiesTwo(snowballEntity, player.pitch, player.yaw, 0.0f, 3.0f, 0.0f)
             snowballEntity.addVelocity(0.0, 0.0, 0.0)
             world.spawnEntity(snowballEntity)
             if (!player.isCreative) {

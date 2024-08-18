@@ -105,7 +105,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                             time += (t.amplifier * 20)
                         }
                     }
-                    val z: Int = (entity.frozenTicks / 20) * 5
+                    val z: Int = (entity.frozenTicks / 20)
                     time += z
                 }
                 cooldown = time
@@ -143,7 +143,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         var uses = data.uses
         var cooldown = data.cooldown
         var maxUses = data.maxUses
-        if (damage >= 2 && !source.isTypeIn(AstralDamageTypeTags.KEEPS_MOVEMENT)) {
+        if (damage >= 5 && !source.isTypeIn(AstralDamageTypeTags.KEEPS_MOVEMENT) && entity.lastDamageTaken < damage) {
             if (uses >= 3) {
                 uses += -1
                 cooldown += 20
@@ -152,7 +152,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                 uses += -1
                 maxUses += -1
             } else if (cooldown <= 100) {
-                cooldown += 10
+                cooldown += 15
             }
         }
         stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, 0, maxUses))

@@ -111,7 +111,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                             time += (t.amplifier * 20)
                         }
                     }
-                    val z: Int = (entity.frozenTicks / 20) * 5
+                    val z: Int = (entity.frozenTicks / 20)
                     time += z
                 }
                 cooldown = time
@@ -146,16 +146,17 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
         var cooldown = data.cooldown
-        if (damage >= 2 && !source.isTypeIn(AstralDamageTypeTags.KEEPS_MOVEMENT)) {
-            if (uses >= 3) {
-                uses += -1
-                cooldown += 20
-            } else if (cooldown >= 100 && uses != 0) {
-                uses += -1
-            } else if (cooldown <= 100) {
-                cooldown += 10
+        if (!entity.world.isClient)
+            if (damage >= 5 && !source.isTypeIn(AstralDamageTypeTags.KEEPS_MOVEMENT) && entity.lastDamageTaken < damage) {
+                if (uses >= 3) {
+                    uses += -1
+                    cooldown += 20
+                } else if (cooldown >= 100 && uses != 0) {
+                    uses += -1
+                } else if (cooldown <= 100) {
+                    cooldown += 15
+                }
             }
-        }
         stack.set(AstralItemComponents.DASH_DATA, Data(uses, cooldown))
         return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot)
     }

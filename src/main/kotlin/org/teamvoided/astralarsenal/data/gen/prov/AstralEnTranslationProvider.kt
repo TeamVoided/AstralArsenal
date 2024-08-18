@@ -44,6 +44,7 @@ class AstralEnTranslationProvider(
         gen.add("death.attack.non_railed", "%s was electrocuted by %s")
         gen.add("death.attack.bleed", "%s was left out to bleed")
         gen.add("death.attack.drain", "%s drained their life")
+        gen.add("death.attack.burn", "%s was given 4th degree burns by %s")
 
         gen.add(AstralTabs.TAB, "Astral Arsenal")
 

@@ -20,7 +20,7 @@ class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
             var w = -20
             repeat(40) {
                 val snowballEntity = DeepWoundEntity(world, player)
-                snowballEntity.setProperties(player, player.pitch, player.yaw + w, 0.0f, 1.0f, 0.0f)
+                setPropertiesTwo(snowballEntity, player.pitch, player.yaw + w, 0.0f, 1.0f, 0.0f)
                 world.spawnEntity(snowballEntity)
                 w++
             }

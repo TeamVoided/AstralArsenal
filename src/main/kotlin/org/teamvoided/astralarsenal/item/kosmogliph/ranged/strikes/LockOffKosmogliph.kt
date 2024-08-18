@@ -30,7 +30,7 @@ class LockOffKosmogliph(
         if (fireBall) {
             stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
             val snowballEntity = BeamOfLightArrowEntity(world, player)
-            snowballEntity.setProperties(player, player.pitch, player.yaw, 0.0f, 2.5f, 0.0f)
+            setPropertiesTwo(snowballEntity, player.pitch, player.yaw, 0.0f, 2.5f, 0.0f)
             snowballEntity.setPosition(player.x, player.eyeY, player.z)
             snowballEntity.DOT = true
             snowballEntity.side = 8

@@ -3,9 +3,12 @@ package org.teamvoided.astralarsenal.item.kosmogliph.armor.defensive
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.mob.ElderGuardianEntity
+import net.minecraft.entity.mob.GuardianEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
+import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
@@ -21,7 +24,7 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
         var outputDamage = damage
         val dmg: Int
         val random: Int
-        if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) {
+        if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA) || source.attacker is GuardianEntity || source.attacker is ElderGuardianEntity) {
             outputDamage = (outputDamage * 0.2).toFloat()
             dmg = (damage * 0.8).toInt()
             random = 1
@@ -39,7 +42,8 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                 snowballEntity.TIMEACTIVE = 10
                 snowballEntity.WINDUP = 40
                 snowballEntity.DMG = dmg
-                snowballEntity.trackTime = 20
+                snowballEntity.trackTime = 35
+                snowballEntity.hard_damage = damage.times(0.2).toInt()
                 snowballEntity.owner = entity
                 snowballEntity.targetEntity = source.attacker
                 entity.world.spawnEntity(snowballEntity)

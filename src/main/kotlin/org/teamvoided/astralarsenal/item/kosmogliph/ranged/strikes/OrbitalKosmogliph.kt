@@ -30,7 +30,7 @@ class OrbitalKosmogliph(
         if (fireBall) {
             stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
             val snowballEntity = BeamOfLightArrowEntity(world, player)
-            snowballEntity.setProperties(player, player.pitch, player.yaw, 0.0f, 2.5f, 0.0f)
+            setPropertiesTwo(snowballEntity, player.pitch, player.yaw, 0.0f, 2.5f, 0.0f)
             snowballEntity.setPosition(player.x, player.eyeY, player.z)
             snowballEntity.DOT = false
             snowballEntity.side = 5
@@ -38,7 +38,7 @@ class OrbitalKosmogliph(
             snowballEntity.TIMEACTIVE = 40
             snowballEntity.WINDUP = 60
             snowballEntity.DMG = 4
-            snowballEntity.trackTime = 50
+            snowballEntity.trackTime = 55
             snowballEntity.balls = player
             snowballEntity.hard_damage = 4
             world.spawnEntity(snowballEntity)

@@ -13,11 +13,11 @@ import org.teamvoided.astralarsenal.init.AstralEffects
 class TridentReduceKosmogliph(id: Identifier) :
     ThrownTridentKosmogliph(id, AstralItemTags.SUPPORTS_TRIDENT_REDUCE) {
     override fun onHit(attacker: Entity?, victim: LivingEntity) {
-        victim.addStatusEffect(StatusEffectInstance(AstralEffects.REDUCE, 200), attacker)
+        victim.addStatusEffect(StatusEffectInstance(AstralEffects.REDUCE, 400), attacker)
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.RIPTIDE, Enchantments.CHANNELING)
+        return listOf(Enchantments.RIPTIDE)
     }
 
     override fun translationText(tooltip: Boolean) =

@@ -90,8 +90,8 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                 entity.discard()
             } else {
                 world.createExplosion(
-                    entity,
-                    entity.damageSources.explosion(entity, player),
+                    null,
+                    entity.damageSources.explosion(null, player),
                     StrongExplosionBehavior(),
                     entity.x,
                     entity.y,
@@ -118,8 +118,8 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
         }
         if (entities.isEmpty()) {
             world.createExplosion(
-                player,
-                player.damageSources.explosion(player, player),
+                null,
+                player.damageSources.explosion(null, player),
                 StrongExplosionBehavior(),
                 result.pos.x,
                 result.pos.y,

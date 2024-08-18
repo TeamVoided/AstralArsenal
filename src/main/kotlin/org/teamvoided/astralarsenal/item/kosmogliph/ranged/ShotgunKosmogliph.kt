@@ -36,8 +36,8 @@ class ShotgunKosmogliph(
                     )
                 } else {
                     snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY
-                    snowballEntity.setProperties(
-                        player,
+                    setPropertiesTwo(
+                        snowballEntity,
                         player.pitch + world.random.nextDouble().minus(0.5).times(15).toFloat(),
                         player.yaw + world.random.nextDouble().minus(0.5).times(15).toFloat(),
                         0.0f, 3.0f, 0.0f

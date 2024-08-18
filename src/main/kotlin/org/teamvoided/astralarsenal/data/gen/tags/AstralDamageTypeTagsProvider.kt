@@ -24,6 +24,10 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_FIRE)
             .forceAddTag(DamageTypeTags.IS_FIRE)
+            .add(AstralDamageTypes.BURN)
+
+        getOrCreateTagBuilder(DamageTypeTags.IS_FIRE)
+            .add(AstralDamageTypes.BURN)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_ICE)
             .add(DamageTypes.FREEZE)
@@ -78,8 +82,11 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.NON_RAILED)
             .add(AstralDamageTypes.DRAIN)
 
+        getOrCreateTagBuilder(DamageTypeTags.BYPASSES_INVULNERABILITY)
+            .add(AstralDamageTypes.BURN)
+            .forceAddTag(AstralDamageTypeTags.IS_PLASMA)
+
         getOrCreateTagBuilder(AstralDamageTypeTags.KEEPS_MOVEMENT)
-            .add(DamageTypes.LAVA)
             .add(DamageTypes.FALL)
     }
 }

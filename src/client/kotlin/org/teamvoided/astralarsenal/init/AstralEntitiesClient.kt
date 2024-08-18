@@ -18,5 +18,6 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.BOOM_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.FLAME_SHOT_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.FREEZE_SHOT_ENTITY, ::EmptyEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.FLAME_THROWER_ENTITY, ::EmptyEntityRenderer)
     }
 }

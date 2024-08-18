@@ -16,7 +16,7 @@ import org.teamvoided.astralarsenal.init.AstralEffects
 
 class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, AstralItemTags.SUPPORTS_TRIDENT_BLEED) {
     override fun onHit(attacker: Entity?, victim: LivingEntity) {
-        victim.addStatusEffect(StatusEffectInstance(AstralEffects.BLEED, 300), attacker)
+        victim.addStatusEffect(StatusEffectInstance(AstralEffects.BLEED, 400), attacker)
     }
 
     override fun translationText(tooltip: Boolean) =
@@ -36,7 +36,7 @@ class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, Astra
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.CHANNELING, Enchantments.RIPTIDE)
+        return listOf(Enchantments.RIPTIDE)
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {

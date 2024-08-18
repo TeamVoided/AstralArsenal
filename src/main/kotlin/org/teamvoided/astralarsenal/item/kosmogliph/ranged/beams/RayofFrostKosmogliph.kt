@@ -97,7 +97,7 @@ class RayofFrostKosmogliph(id: Identifier) :
                         player
                     ), 7.5f
                 )
-                entity.frozenTicks += 500
+                entity.frozenTicks = 400
             }
         }
         if (!player.isCreative) {

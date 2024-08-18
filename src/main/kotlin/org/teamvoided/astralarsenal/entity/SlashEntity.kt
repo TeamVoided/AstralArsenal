@@ -77,7 +77,7 @@ class SlashEntity : ThrownItemEntity {
         if (entityHitResult.entity is PlayerEntity) {
             entityHitResult.entity.damage(
                 DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
+                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
                     this,
                     owner
                 ), this.getDmg()
@@ -85,7 +85,7 @@ class SlashEntity : ThrownItemEntity {
         } else {
             entityHitResult.entity.damage(
                 DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
+                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
                     this,
                     owner
                 ), this.getDmg().times(2)

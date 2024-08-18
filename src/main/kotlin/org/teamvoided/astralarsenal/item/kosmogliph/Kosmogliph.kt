@@ -12,6 +12,7 @@ import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.inventory.StackReference
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -27,6 +28,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.ClickType
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.init.AstralItemComponents
@@ -84,6 +86,20 @@ interface Kosmogliph {
 
     fun translationKey(tooltip: Boolean = false) =
         id().toTranslationKey("kosmogliph${if (tooltip) ".tooltip" else ".name"}")
+
+    fun setPropertiesTwo(
+        entity: ProjectileEntity,
+        pitch: Float,
+        yaw: Float,
+        roll: Float,
+        modifierZ: Float,
+        modifierXYZ: Float
+    ) {
+        val f = -MathHelper.sin(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
+        val g = -MathHelper.sin((pitch + roll) * (Math.PI.toFloat() / 180))
+        val h = MathHelper.cos(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
+        entity.setVelocity(f.toDouble(), g.toDouble(), h.toDouble(), modifierZ, modifierXYZ)
+    }
 
     fun requiredEnchantments(): List<RegistryKey<Enchantment>> = listOf()
     fun disallowedEnchantment(): List<RegistryKey<Enchantment>> = listOf()

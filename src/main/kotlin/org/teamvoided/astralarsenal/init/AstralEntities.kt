@@ -67,6 +67,11 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::FlameShotEntity), SpawnGroup.MISC)
             .setDimensions(0.25f, 0.25f).maxTrackingRange(4).build()
     )
+    val FLAME_THROWER_ENTITY = register(
+        "flame_thrower_entity",
+        EntityType.Builder.create(EntityType.EntityFactory(::FlameThrowerEntity), SpawnGroup.MISC)
+            .setDimensions(0.25f, 0.25f).maxTrackingRange(4).build()
+    )
     val FREEZE_SHOT_ENTITY = register(
         "freeze_shot_entity",
         EntityType.Builder.create(EntityType.EntityFactory(::FreezeShotEntity), SpawnGroup.MISC)
