@@ -82,11 +82,11 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.NON_RAILED)
             .add(AstralDamageTypes.DRAIN)
 
-        getOrCreateTagBuilder(DamageTypeTags.BYPASSES_INVULNERABILITY)
-            .add(AstralDamageTypes.BURN)
-            .forceAddTag(AstralDamageTypeTags.IS_PLASMA)
-
         getOrCreateTagBuilder(AstralDamageTypeTags.KEEPS_MOVEMENT)
             .add(DamageTypes.FALL)
+            .add(DamageTypes.LAVA)
+
+        getOrCreateTagBuilder(DamageTypeTags.BYPASSES_COOLDOWN)
+            .add(AstralDamageTypes.BURN)
     }
 }

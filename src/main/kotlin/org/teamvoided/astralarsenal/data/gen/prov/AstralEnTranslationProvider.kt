@@ -46,6 +46,14 @@ class AstralEnTranslationProvider(
         gen.add("death.attack.drain", "%s drained their life")
         gen.add("death.attack.burn", "%s was given 4th degree burns by %s")
 
+        gen.add("death.attack.cannonball.item", "%s was dunked on by %s using %s")
+        gen.add("death.attack.ballnt.item", "%s ain't ballin'")
+        gen.add("death.attack.beam_of_light.item", "%s was delivered straight to cod by %s using %s")
+        gen.add("death.attack.railed.item", "%s was railed by %s using %s")
+        gen.add("death.attack.non_railed.item", "%s was railed by %s using %s")
+        gen.add("death.attack.drain.item", "%s drained their life")
+        gen.add("death.attack.burn.item", "%s was given 4th degree burns by %s using %s")
+
         gen.add(AstralTabs.TAB, "Astral Arsenal")
 
         gen.add(AstralArsenal.DEFAULT_KEY_CATEGORY, "Astral Arsenal Keys")
