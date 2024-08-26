@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
+import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
@@ -17,6 +18,12 @@ class CannonballKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
             world.spawnEntity(snowballEntity)
             if (!player.isCreative) {
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
+            }
+            val stack = player.getStackInHand(hand)
+            if (hand == Hand.MAIN_HAND) {
+                stack.damageEquipment(20, player, EquipmentSlot.MAINHAND)
+            } else if (hand == Hand.OFF_HAND) {
+                stack.damageEquipment(20, player, EquipmentSlot.OFFHAND)
             }
         }
     }

@@ -115,9 +115,9 @@ class MortarEntity : ThrownItemEntity {
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
         world.createExplosion(
-            this,
-            damageSources.explosion(this, this.owner),
-            KnockbackExplosionBehavior(),
+            null,
+            damageSources.explosion(null, this.owner),
+            KnockbackExplosionBehavior(this.owner),
             this.x,
             this.y,
             this.z,

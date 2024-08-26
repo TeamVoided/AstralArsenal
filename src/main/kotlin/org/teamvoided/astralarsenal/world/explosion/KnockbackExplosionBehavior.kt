@@ -7,8 +7,8 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.ExplosionBehavior
 
-class KnockbackExplosionBehavior : ExplosionBehavior() {
-
+class KnockbackExplosionBehavior(causingEntity: Entity?) : ExplosionBehavior() {
+    val cause = causingEntity
     override fun canDestroyBlock(
         explosion: Explosion,
         world: BlockView,
@@ -20,7 +20,7 @@ class KnockbackExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun shouldDamage(explosion: Explosion, entity: Entity): Boolean {
-        return false
+        return cause == entity
     }
 
     override fun getKnockbackMultiplier(target: Entity): Float {
@@ -28,6 +28,6 @@ class KnockbackExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun calculateDamage(explosion: Explosion, entity: Entity): Float {
-        return 0f
+        return if(cause == entity) 5f else 0f
     }
 }
