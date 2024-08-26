@@ -66,7 +66,7 @@ fun queryMineableVeinPositions(
                 val itState = world.getBlockState(it)
                 itState.isOf(block) &&
                         itState.isIn(AstralBlockTags.VEIN_MINEABLE) &&
-                        stack.canSafelyBreak(world, state, pos) &&
+                        stack.canSafelyBreak(world, itState, it) &&
                         it.isWithinDistance(pos, maximumDistance) &&
                         !set.contains(it)
             }
