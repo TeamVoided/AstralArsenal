@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -77,6 +76,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
+        if (entity !is LivingEntity) return
         if (slot == 0) {
             val data = stack.get(AstralItemComponents.JUMP_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
@@ -85,7 +85,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
             var maxUses = data.maxUses
             if (uses >= 3) return
             var cooldown = data.cooldown
-            if (entity.isOnGround || entity.isInFluid) maxUses = 3
+            if (entity.isOnGround || entity.isInFluid || entity.isClimbing) maxUses = 3
             if (entity is PlayerEntity) {
                 if (entity.hungerManager.foodLevel > 6) {
                     if (uses < maxUses) cooldown--
