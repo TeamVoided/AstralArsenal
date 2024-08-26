@@ -45,6 +45,8 @@ class AstralItemTagProvider(
             .forceAddTag(ItemTags.SHOVELS)
             .forceAddTag(ItemTags.AXES)
             .forceAddTag(ItemTags.HOES)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_REAPER)
+            .forceAddTag(ItemTags.HOES)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_CANNONBALL).add(AstralItems.ASTRAL_GREATHAMMER)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_MORTAR).add(AstralItems.ASTRAL_GREATHAMMER)
@@ -100,6 +102,7 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_VEIN_MINER)
             .forceAddTag(AstralItemTags.SUPPORTS_HAMMER)
             .forceAddTag(AstralItemTags.SUPPORTS_SMELTER)
+            .forceAddTag(AstralItemTags.SUPPORTS_REAPER)
             .forceAddTag(AstralItemTags.SUPPORTS_CANNONBALL)
             .forceAddTag(AstralItemTags.SUPPORTS_MORTAR)
             .forceAddTag(AstralItemTags.SUPPORTS_JUMP)

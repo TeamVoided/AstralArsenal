@@ -14,6 +14,7 @@ object AstralItemTags {
     val SUPPORTS_VEIN_MINER = supports("vein_miner")
     val SUPPORTS_HAMMER = supports("hammer")
     val SUPPORTS_SMELTER = supports("smelter")
+    val SUPPORTS_REAPER = supports("reaper")
 
     val SUPPORTS_CANNONBALL = supports("cannonball")
     val SUPPORTS_MORTAR = supports("mortar")

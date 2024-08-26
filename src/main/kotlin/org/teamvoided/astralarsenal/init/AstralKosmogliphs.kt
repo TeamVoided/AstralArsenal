@@ -28,6 +28,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.TimeBombKosmo
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.trident.TridentBleedKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.trident.TridentReduceKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.tools.HammerKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.tools.ReaperKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.tools.SmelterKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.tools.VeinmineKosmogliph
 
@@ -36,6 +37,7 @@ object AstralKosmogliphs {
     val VEIN_MINER = register("vein_miner", ::VeinmineKosmogliph)
     val HAMMER = register("hammer", ::HammerKosmogliph)
     val SMELTER = register("smelter", ::SmelterKosmogliph)
+    val REAPER = register("reaper", ::ReaperKosmogliph)
 
     val CANNONBALL = register("cannonball", ::CannonballKosmogliph)
     val MORTAR = register("mortar", ::MortarKosmogliph)

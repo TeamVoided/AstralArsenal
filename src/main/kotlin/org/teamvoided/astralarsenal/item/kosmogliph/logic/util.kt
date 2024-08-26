@@ -3,6 +3,7 @@ package org.teamvoided.astralarsenal.item.kosmogliph.logic
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.CropBlock
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -17,6 +18,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralBlockTags
+import org.teamvoided.astralarsenal.data.tags.AstralBlockTags.REAPABLE_CROPS
 import org.teamvoided.astralarsenal.util.PlayerInteractionManagerExtension
 
 
@@ -97,6 +99,29 @@ fun BlockPos.neighbors(): Set<BlockPos> {
     }
     return set
 //    return Direction.entries.map { this.offset(it) }.toSet()
+}
+
+fun LivingEntity.reach() = if (this.isInCreativeMode) 5.0 else 4.5
+
+fun queryReaperMineablePositions(tool: ItemStack, world: World, pos: BlockPos, mainState: BlockState): Set<BlockPos> {
+    val isMatureMain = mainState.isMature() ?: true
+    if (!mainState.isIn(REAPABLE_CROPS) || !isMatureMain) return setOf()
+
+    val mineablePositions = mutableSetOf<BlockPos>()
+
+    val aoe = BlockBox(pos.x - 1, pos.y - 1, pos.z - 1, pos.x + 1, pos.y + 1, pos.z + 1).allInside()
+    aoe.forEach {
+        val state = world.getBlockState(it)
+        val isMature = state.isMature() ?: true
+        if (pos.isInWorld(world) && state.isIn(REAPABLE_CROPS) && isMature) mineablePositions.add(it)
+    }
+
+    val durability = tool.maxDamage - tool.damage
+    if (durability < mineablePositions.size) {
+        return mineablePositions.toList().subList(0, durability - 1).toSet()
+    }
+
+    return mineablePositions
 }
 
 fun queryMineableHammerPositions(
@@ -202,7 +227,8 @@ fun List<ItemStack>.combined(): List<ItemStack> {
 
 fun ItemStack.canSafelyBreak(world: World, state: BlockState, pos: BlockPos): Boolean {
     val toolComponent = this.get(DataComponentTypes.TOOL) ?: return false
-    return world.worldBorder.contains(pos)
-            && toolComponent.isCorrectForDrops(state)
-            && world.getBlockEntity(pos) == null
+    return pos.isInWorld(world) && toolComponent.isCorrectForDrops(state) && world.getBlockEntity(pos) == null
 }
+
+fun BlockPos.isInWorld(world: World): Boolean = world.worldBorder.contains(this)
+fun BlockState.isMature(): Boolean? = if (this.block is CropBlock) (this.block as CropBlock).isMature(this) else null

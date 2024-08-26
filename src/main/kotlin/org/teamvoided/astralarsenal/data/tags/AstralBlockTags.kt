@@ -8,7 +8,7 @@ import org.teamvoided.astralarsenal.util.tag
 
 object AstralBlockTags {
     val VEIN_MINEABLE = create("vein_mineable")
-    val DUMMY = create("dummy")
+    val REAPABLE_CROPS = create("reapable_crops")
 
     private fun create(id: String): TagKey<Block> = RegistryKeys.BLOCK.tag(id(id))
 }
