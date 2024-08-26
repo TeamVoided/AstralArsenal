@@ -15,6 +15,7 @@ import org.teamvoided.astralarsenal.block.CosmicTableBlock
 import org.teamvoided.astralarsenal.block.enity.CosmicTableBlockEntity
 
 object AstralBlocks {
+    fun init() = Unit
     val COSMIC_TABLE: Block = registerBlock(
         "cosmic_table",
         CosmicTableBlock(
@@ -23,6 +24,7 @@ object AstralBlocks {
                 .sounds(BlockSoundGroup.LODESTONE)
                 .nonOpaque()
                 .strength(10f)
+                .luminance { 4 }
 
         )
     )

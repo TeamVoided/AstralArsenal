@@ -24,7 +24,7 @@ object AstralArsenal {
 
     fun init() {
         //Referencing object will initialize them
-        AstralBlocks
+        AstralBlocks.init()
         AstralItems
         AstralItemComponents
         AstralScreenHandlers
