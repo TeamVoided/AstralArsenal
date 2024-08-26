@@ -42,6 +42,44 @@ class LockOffKosmogliph(
             snowballEntity.balls = player
             snowballEntity.hard_damage = 1
             world.spawnEntity(snowballEntity)
+            if(player.getStackInHand(hand).enchantments.enchantments.any {it.isRegistryKey(Enchantments.MULTISHOT)}){
+                val one: Int
+                val two: Int
+                if (world.random.range(0,2) == 1){
+                    one = 15
+                    two = -15
+                }
+                else{
+                    one = -15
+                    two = 15
+                }
+                val snowballEntity2 = BeamOfLightArrowEntity(world, player)
+                setPropertiesTwo(snowballEntity2, player.pitch, player.yaw + one, 0.0f, 2.5f, 0.0f)
+                snowballEntity2.setPosition(player.x, player.eyeY, player.z)
+                snowballEntity2.DOT = snowballEntity.DOT
+                snowballEntity2.side = snowballEntity.side
+                snowballEntity2.THRUST = snowballEntity.THRUST
+                snowballEntity2.TIMEACTIVE = snowballEntity.TIMEACTIVE
+                snowballEntity2.WINDUP = (snowballEntity.WINDUP * 0.5).toInt()
+                snowballEntity2.DMG = snowballEntity.DMG
+                snowballEntity2.trackTime = (snowballEntity.trackTime * 1.5).toInt()
+                snowballEntity2.balls = player
+                snowballEntity2.hard_damage = snowballEntity.hard_damage
+                world.spawnEntity(snowballEntity2)
+                val snowballEntity3 = BeamOfLightArrowEntity(world, player)
+                setPropertiesTwo(snowballEntity3, player.pitch, player.yaw + two, 0.0f, 2.5f, 0.0f)
+                snowballEntity3.setPosition(player.x, player.eyeY, player.z)
+                snowballEntity3.DOT = snowballEntity.DOT
+                snowballEntity3.side = snowballEntity.side
+                snowballEntity3.THRUST = snowballEntity.THRUST
+                snowballEntity3.TIMEACTIVE = snowballEntity.TIMEACTIVE
+                snowballEntity3.WINDUP = (snowballEntity.WINDUP * 1.5).toInt()
+                snowballEntity3.DMG = snowballEntity.DMG
+                snowballEntity3.trackTime = (snowballEntity.trackTime * 1.5).toInt()
+                snowballEntity3.balls = player
+                snowballEntity3.hard_damage = snowballEntity.hard_damage
+                world.spawnEntity(snowballEntity3)
+            }
             world.playSound(
                 null,
                 player.x,
@@ -64,7 +102,7 @@ class LockOffKosmogliph(
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.MULTISHOT, Enchantments.PIERCING)
+        return listOf(Enchantments.PIERCING)
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {

@@ -15,6 +15,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class ShotgunKosmogliph(
@@ -26,7 +27,11 @@ class ShotgunKosmogliph(
         val stack = player.getStackInHand(hand)
         val chargedProjectiles = stack.get(DataComponentTypes.CHARGED_PROJECTILES)
         if (chargedProjectiles != null && !chargedProjectiles.isEmpty) {
-            for (i in 1..10) {
+            var arrows = 10
+            if(player.getStackInHand(hand).enchantments.enchantments.any {it.isRegistryKey(Enchantments.MULTISHOT)}){
+                arrows = 30
+            }
+            for (i in 1..arrows) {
                 val snowballEntity = ArrowEntity(world, player, chargedProjectiles.projectiles[0], stack)
                 if (i == 1) {
                     snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED

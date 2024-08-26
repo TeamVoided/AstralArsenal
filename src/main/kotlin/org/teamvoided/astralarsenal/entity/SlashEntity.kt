@@ -59,7 +59,7 @@ class SlashEntity : ThrownItemEntity {
         if (!this.world.isClient) {
             val serverWorld = this.world as ServerWorld
             serverWorld.spawnParticles(
-                ParticleTypes.END_ROD,
+                ParticleTypes.ENCHANT,
                 this.x,
                 this.y,
                 this.z,
@@ -77,7 +77,7 @@ class SlashEntity : ThrownItemEntity {
         if (entityHitResult.entity is PlayerEntity) {
             entityHitResult.entity.damage(
                 DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                    AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
                     this,
                     owner
                 ), this.getDmg()
@@ -85,7 +85,7 @@ class SlashEntity : ThrownItemEntity {
         } else {
             entityHitResult.entity.damage(
                 DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                    AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
                     this,
                     owner
                 ), this.getDmg().times(2)

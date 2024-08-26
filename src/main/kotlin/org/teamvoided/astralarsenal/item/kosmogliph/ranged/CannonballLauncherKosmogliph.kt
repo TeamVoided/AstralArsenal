@@ -13,6 +13,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
@@ -31,6 +32,26 @@ class CannonballLauncherKosmogliph(
             setPropertiesTwo(snowballEntity, player.pitch, player.yaw, 0.0f, 3.0f, 0.0f)
             snowballEntity.addVelocity(0.0, 0.0, 0.0)
             world.spawnEntity(snowballEntity)
+            if(player.getStackInHand(hand).enchantments.enchantments.any {it.isRegistryKey(Enchantments.MULTISHOT)}){
+                val one: Int
+                val two: Int
+                if (world.random.range(0,2) == 1){
+                    one = 15
+                    two = -15
+                }
+                else{
+                    one = -15
+                    two = 15
+                }
+                val snowballEntity2 = CannonballEntity(world, player)
+                setPropertiesTwo(snowballEntity2, player.pitch, player.yaw + one, 0.0f, 2.0f, 0.0f)
+                snowballEntity2.setPosition(player.x, player.eyeY, player.z)
+                world.spawnEntity(snowballEntity2)
+                val snowballEntity3 = CannonballEntity(world, player)
+                setPropertiesTwo(snowballEntity3, player.pitch, player.yaw + two, 0.0f, 2.0f, 0.0f)
+                snowballEntity3.setPosition(player.x, player.eyeY, player.z)
+                world.spawnEntity(snowballEntity3)
+            }
             if (!player.isCreative) {
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
             }
@@ -53,7 +74,7 @@ class CannonballLauncherKosmogliph(
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.MULTISHOT, Enchantments.PIERCING)
+        return listOf(Enchantments.PIERCING)
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
