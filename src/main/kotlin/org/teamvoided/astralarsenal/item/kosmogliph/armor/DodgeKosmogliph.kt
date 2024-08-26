@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -36,7 +35,9 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
         val data = stack.get(AstralItemComponents.DODGE_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world
-        //this is broken and I don't know why, please help
+
+        if (player.vehicle != null) return
+
         if (data.uses > 0 && !world.isClient) {
             val boost = player.movement.multiply(1.0, 0.0, 1.0).multiply(JUMP_FORWARD_BOOST)
             player.addVelocity(boost)
