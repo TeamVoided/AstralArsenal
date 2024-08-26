@@ -36,7 +36,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world
 
-        if (player.vehicle != null) return
+        if (player.vehicle != null || player.isClimbing) return
 
         if (data.uses > 0 && !world.isClient) {
             val boost = player.movement.multiply(1.0, 0.0, 1.0).multiply(JUMP_FORWARD_BOOST)

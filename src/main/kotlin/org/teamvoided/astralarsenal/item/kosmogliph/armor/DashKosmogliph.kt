@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -23,7 +22,6 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags.MOUNTS_WITH_DASH
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
@@ -45,13 +43,10 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
             } else return
         }
 
+        if (dashingEntity.isClimbing) return
+
         if (data.uses > 0) {
-            val boo: Double
-            if ((dashingEntity.health <= (dashingEntity.maxHealth * 0.25))) {
-                boo = JUMP_FORWARD_BOOST * 0.75
-            } else {
-                boo = JUMP_FORWARD_BOOST
-            }
+            val boo = JUMP_FORWARD_BOOST * if (dashingEntity.health <= (dashingEntity.maxHealth * 0.25)) 0.75 else 1.0
             val boost = dashingEntity.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(boo)
             dashingEntity.setVelocity(dashingEntity.velocity.x + boost.x, 0.1, dashingEntity.velocity.z + boost.z)
             dashingEntity.velocityModified = true
