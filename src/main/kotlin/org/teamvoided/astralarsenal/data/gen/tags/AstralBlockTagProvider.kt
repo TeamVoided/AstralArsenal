@@ -28,5 +28,10 @@ class AstralBlockTagProvider(
             .add(Blocks.COCOA)
             .add(Blocks.NETHER_WART)
             .add(Blocks.SWEET_BERRY_BUSH)
+            // grass
+            .add(Blocks.SHORT_GRASS)
+            .add(Blocks.TALL_GRASS)
+            .add(Blocks.FERN)
+            .add(Blocks.LARGE_FERN)
     }
 }
