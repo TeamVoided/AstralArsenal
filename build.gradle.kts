@@ -41,6 +41,7 @@ modSettings {
 dependencies {
     modImplementation(fileTree("libs"))
     modImplementation(libs.modmenu)
+
     modImplementation(libs.farrow)
     include(libs.farrow)
 
