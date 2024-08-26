@@ -45,6 +45,9 @@ dependencies {
     modImplementation(libs.farrow)
     include(libs.farrow)
 
+    modCompileOnly("${libs.emi.get()}:api")
+    modLocalRuntime(libs.emi)
+
     if (org.gradle.internal.os.OperatingSystem.current().isLinux) {
         modRuntimeOnly(libs.waygl)
     }
