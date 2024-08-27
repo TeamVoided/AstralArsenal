@@ -3,12 +3,15 @@ package org.teamvoided.astralarsenal.util
 import arrow.core.Predicate
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
+import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
+import net.minecraft.util.math.Vec3d
+import org.joml.Vector3f
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
@@ -32,14 +35,17 @@ fun interface BPredicate<T> : Predicate<T>, java.util.function.Predicate<T> {
 }
 
 fun Iterable<Kosmogliph>.findFirstBow(): BowKosmogliph? {
-    forEach { kosmogliph ->
-        if (kosmogliph is BowKosmogliph) return kosmogliph
-    }
-
-    return null
+    return this.firstOrNull { it is BowKosmogliph } as BowKosmogliph?
 }
 
 
 fun ItemStack.hasMultiShot(): Boolean = this.hasEnchantment(Enchantments.MULTISHOT)
 fun ItemStack.hasEnchantment(enchantment: RegistryKey<Enchantment>): Boolean =
     this.enchantments.enchantments.any { it.isRegistryKey(enchantment) }
+
+fun Vector3f.toVec3d(): Vec3d = Vec3d(x.toDouble(), y.toDouble(), z.toDouble())
+fun ProjectileEntity.setVelocity(vec3f: Vector3f, speed: Float, divergence: Float) =
+    this.setVelocity(vec3f.toVec3d(), speed, divergence)
+
+fun ProjectileEntity.setVelocity(vec3d: Vec3d, speed: Float, divergence: Float) =
+    this.setVelocity(vec3d.x, vec3d.y, vec3d.z, speed, divergence)

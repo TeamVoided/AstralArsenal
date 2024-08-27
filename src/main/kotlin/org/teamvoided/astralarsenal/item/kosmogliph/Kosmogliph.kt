@@ -88,12 +88,7 @@ interface Kosmogliph {
         id().toTranslationKey("kosmogliph${if (tooltip) ".tooltip" else ".name"}")
 
     fun setPropertiesTwo(
-        entity: ProjectileEntity,
-        pitch: Float,
-        yaw: Float,
-        roll: Float,
-        modifierZ: Float,
-        modifierXYZ: Float
+        entity: ProjectileEntity, pitch: Float, yaw: Float, roll: Float, modifierZ: Float, modifierXYZ: Float
     ) {
         val f = -MathHelper.sin(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
         val g = -MathHelper.sin((pitch + roll) * (Math.PI.toFloat() / 180))

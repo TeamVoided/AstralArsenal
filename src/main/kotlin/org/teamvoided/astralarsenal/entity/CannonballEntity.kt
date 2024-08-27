@@ -4,7 +4,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.ProjectileDeflector
-import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
@@ -19,58 +18,40 @@ import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.world.explosion.KnockbackExplosionBehavior
 
 class CannonballEntity : ThrownItemEntity {
 
-    constructor(entityType: EntityType<out CannonballEntity?>?, world: World?) :
-            super(entityType as EntityType<out ThrownItemEntity?>?, world)
+    constructor(entityType: EntityType<out CannonballEntity>, world: World?) :
+            super(entityType, world)
 
     constructor(world: World?, owner: LivingEntity?) :
-            super(AstralEntities.CANNONBALL_ENTITY as EntityType<out ThrownItemEntity?>, owner, world)
+            super(AstralEntities.CANNONBALL_ENTITY, owner, world)
 
     constructor(world: World?, x: Double, y: Double, z: Double) :
-            super(AstralEntities.CANNONBALL_ENTITY as EntityType<out ThrownItemEntity?>, x, y, z, world)
+            super(AstralEntities.CANNONBALL_ENTITY, x, y, z, world)
 
     override fun getDefaultItem(): Item {
         return AstralItems.CANNONBALL
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
-        if (entityHitResult.entity !is PlayerEntity) {
-            entityHitResult.entity.damage(
-                DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CANNONBALL),
-                    this,
-                    owner
-                ), getDmg().toFloat()
-            )
+        val entity = entityHitResult.entity
+        if (entity.type == AstralEntities.CANNONBALL_ENTITY) return
+        if (entity !is PlayerEntity) {
+            entity.customDamage(AstralDamageTypes.CANNONBALL, getDmg().toFloat(), this, owner)
         } else {
-            if (entityHitResult.entity == owner) {
-                entityHitResult.entity.damage(
-                    DamageSource(
-                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.BALLNT),
-                        this,
-                        owner
-                    ), (getDmg().toFloat()) - 5
-                )
-            } else {
-                entityHitResult.entity.damage(
-                    DamageSource(
-                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CANNONBALL),
-                        this,
-                        owner
-                    ), (getDmg().toFloat()) - 5
-                )
-            }
+            val type = if (entity == owner) AstralDamageTypes.BALLNT else AstralDamageTypes.CANNONBALL
+            entity.customDamage(type, getDmg() - 5f, this, owner)
         }
         if (this.getDmg() in 20..39) {
             this.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
         } else if (this.getDmg() >= 40) {
             this.playSound((SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY))
-            entityHitResult.entity.setOnFireFor(100)
+            entity.setOnFireFor(100)
         } else {
             this.playSound(SoundEvents.ITEM_MACE_SMASH_AIR)
         }
@@ -79,8 +60,8 @@ class CannonballEntity : ThrownItemEntity {
             i = 40
         }
         this.setDmg(i)
-        if ((entityHitResult.entity.isAlive || this.getDmg() < 20)) {
-            this.setVelocity(this.getVelocity().multiply(-0.05, 0.0, -0.05))
+        if ((entity.isAlive || this.getDmg() < 20)) {
+            this.setVelocity(this.velocity.multiply(-0.05, 0.0, -0.05))
             this.addVelocity(0.0, 0.2, 0.0)
         }
     }
