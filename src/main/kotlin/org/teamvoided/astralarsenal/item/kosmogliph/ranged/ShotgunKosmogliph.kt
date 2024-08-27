@@ -15,8 +15,8 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.util.hasMultiShot
 
 class ShotgunKosmogliph(
     id: Identifier,
@@ -28,7 +28,7 @@ class ShotgunKosmogliph(
         val chargedProjectiles = stack.get(DataComponentTypes.CHARGED_PROJECTILES)
         if (chargedProjectiles != null && !chargedProjectiles.isEmpty) {
             var arrows = 10
-            if(player.getStackInHand(hand).enchantments.enchantments.any {it.isRegistryKey(Enchantments.MULTISHOT)}){
+            if (player.getStackInHand(hand).hasMultiShot()) {
                 arrows = 30
             }
             for (i in 1..arrows) {

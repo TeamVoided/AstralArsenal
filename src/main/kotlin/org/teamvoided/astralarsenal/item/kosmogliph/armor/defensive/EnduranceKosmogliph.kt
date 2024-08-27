@@ -3,13 +3,11 @@ package org.teamvoided.astralarsenal.item.kosmogliph.armor.defensive
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.mob.ElderGuardianEntity
 import net.minecraft.entity.mob.GuardianEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
-import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 

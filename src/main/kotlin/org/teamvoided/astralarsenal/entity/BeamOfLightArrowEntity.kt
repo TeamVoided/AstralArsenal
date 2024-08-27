@@ -45,7 +45,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
                 0.0
             )
         }
-        if(this.hasNoGravity()){
+        if (this.hasNoGravity()) {
             this.setNoGravity(false)
         }
         super.tick()

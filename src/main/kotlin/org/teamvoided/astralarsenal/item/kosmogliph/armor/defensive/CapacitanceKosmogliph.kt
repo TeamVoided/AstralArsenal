@@ -8,7 +8,6 @@ import net.minecraft.entity.mob.GuardianEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
-import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph

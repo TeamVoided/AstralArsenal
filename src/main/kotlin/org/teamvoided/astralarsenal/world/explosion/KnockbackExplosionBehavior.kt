@@ -28,6 +28,6 @@ class KnockbackExplosionBehavior(causingEntity: Entity?) : ExplosionBehavior() {
     }
 
     override fun calculateDamage(explosion: Explosion, entity: Entity): Float {
-        return if(cause == entity) 5f else 0f
+        return if (cause == entity) 5f else 0f
     }
 }

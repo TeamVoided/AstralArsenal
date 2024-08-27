@@ -13,7 +13,8 @@ import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 // I will fix this - Astra
-class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ASTRAL_STRIKE) }) {
+class AstralStrikeKosmogliph(id: Identifier) :
+    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ASTRAL_STRIKE) }) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         val data = stack.get(AstralItemComponents.ASTRAL_STRIKE_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")

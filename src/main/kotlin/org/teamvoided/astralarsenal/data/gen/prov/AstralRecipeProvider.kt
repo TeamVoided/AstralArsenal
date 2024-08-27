@@ -111,9 +111,11 @@ class AstralRecipeProvider(
         simpleShapeless(
             AstralItems.AMETHYST_DUST,
             RecipeCategory.MISC, 1,
-            listOf(Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD,
-                   Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD,
-                   Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD)
+            listOf(
+                Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD,
+                Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD,
+                Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD
+            )
 
         ).offerTo(this)
 

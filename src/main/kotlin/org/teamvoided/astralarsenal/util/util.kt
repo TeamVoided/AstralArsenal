@@ -1,6 +1,8 @@
 package org.teamvoided.astralarsenal.util
 
 import arrow.core.Predicate
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
@@ -36,3 +38,8 @@ fun Iterable<Kosmogliph>.findFirstBow(): BowKosmogliph? {
 
     return null
 }
+
+
+fun ItemStack.hasMultiShot(): Boolean = this.hasEnchantment(Enchantments.MULTISHOT)
+fun ItemStack.hasEnchantment(enchantment: RegistryKey<Enchantment>): Boolean =
+    this.enchantments.enchantments.any { it.isRegistryKey(enchantment) }

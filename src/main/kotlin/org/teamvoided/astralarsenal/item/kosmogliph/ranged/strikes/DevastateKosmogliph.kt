@@ -16,6 +16,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.RangedWeaponKosmogliph
+import org.teamvoided.astralarsenal.util.hasMultiShot
 
 class DevastateKosmogliph(
     id: Identifier,
@@ -42,14 +43,13 @@ class DevastateKosmogliph(
             snowballEntity.balls = player
             snowballEntity.hard_damage = 8
             world.spawnEntity(snowballEntity)
-            if(player.getStackInHand(hand).enchantments.enchantments.any {it.isRegistryKey(Enchantments.MULTISHOT)}){
+            if (player.getStackInHand(hand).hasMultiShot()) {
                 val one: Int
                 val two: Int
-                if (world.random.range(0,2) == 1){
+                if (world.random.range(0, 2) == 1) {
                     one = 15
                     two = -15
-                }
-                else{
+                } else {
                     one = -15
                     two = 15
                 }
@@ -102,7 +102,7 @@ class DevastateKosmogliph(
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf( Enchantments.PIERCING)
+        return listOf(Enchantments.PIERCING)
     }
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {

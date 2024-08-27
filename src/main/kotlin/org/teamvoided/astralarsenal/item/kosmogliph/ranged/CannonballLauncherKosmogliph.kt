@@ -13,9 +13,9 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.util.hasMultiShot
 
 class CannonballLauncherKosmogliph(
     id: Identifier,
@@ -32,14 +32,13 @@ class CannonballLauncherKosmogliph(
             setPropertiesTwo(snowballEntity, player.pitch, player.yaw, 0.0f, 3.0f, 0.0f)
             snowballEntity.addVelocity(0.0, 0.0, 0.0)
             world.spawnEntity(snowballEntity)
-            if(player.getStackInHand(hand).enchantments.enchantments.any {it.isRegistryKey(Enchantments.MULTISHOT)}){
+            if (player.getStackInHand(hand).hasMultiShot()) {
                 val one: Int
                 val two: Int
-                if (world.random.range(0,2) == 1){
+                if (world.random.range(0, 2) == 1) {
                     one = 15
                     two = -15
-                }
-                else{
+                } else {
                     one = -15
                     two = 15
                 }

@@ -13,6 +13,7 @@ open class SimpleKosmogliph(
     val applicationPredicate: Predicate<ItemStack>
 ) : Kosmogliph {
     constructor(id: Identifier, tag: TagKey<Item>) : this(id, { it.isIn(tag) })
+
     override fun modifyItemTooltip(
         stack: ItemStack,
         ctx: Item.TooltipContext,

@@ -19,7 +19,7 @@ class AstralItemTagProvider(
         kosmogliphTags()
     }
 
-    private fun vanillaTags(){
+    private fun vanillaTags() {
         getOrCreateTagBuilder(ItemTags.SWORDS).add(AstralItems.ASTRAL_GREATHAMMER)
     }
 
