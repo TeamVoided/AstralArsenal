@@ -48,6 +48,7 @@ class ShotgunKosmogliph(
                         0.0f, 3.0f, 0.0f
                     )
                 }
+                snowballEntity.isCritical = true
                 world.spawnEntity(snowballEntity)
             }
             world.playSound(
