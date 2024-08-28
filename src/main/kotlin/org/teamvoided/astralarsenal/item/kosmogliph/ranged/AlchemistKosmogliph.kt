@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.ranged
 
+import arrow.core.collectionSizeOrDefault
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.client.item.TooltipConfig
@@ -15,7 +16,6 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.item.PotionItem
-import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.screen.slot.Slot
 import net.minecraft.server.world.ServerWorld
@@ -44,18 +44,14 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return false
         if (other.item !is PotionItem) return false
         val potionContent = other.get(DataComponentTypes.POTION_CONTENTS) ?: return false
-        var thisPotion = data.potion
+        var thisPotion = data.contents
         var charges = data.charges
         if (data.charges >= 24) return false
-        val otherPotion = potionContent.potion.getOrNull() ?: return false
-        // TODO: Fix for PotionContents without a registered Potion
         val expectedPotionType = if (thisPotion.isEmpty) {
-            val key = otherPotion.key
-            if (key.isEmpty) return false
-            else key.get().value
+            potionContent
         } else thisPotion.get()
 
-        if (expectedPotionType != otherPotion.key.get().value) return false
+        if (!potionsAreEqual(expectedPotionType, potionContent)) return false
         thisPotion = Optional.of(expectedPotionType)
         charges += 4
 
@@ -79,7 +75,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         if (user.isInCreativeMode) return false
 
         val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return false
-        var potion = data.potion
+        var potion = data.contents
         var charges = data.charges
         if (--charges <= 0) {
             potion = Optional.empty()
@@ -95,9 +91,10 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         original.decrement(1)
 
         val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return null
-        if (data.charges <= 0 || data.potion.isEmpty) return null
-        val potionInst = Registries.POTION.getHolder(data.potion.get()).getOrNull() ?: return null
-        val tippedArrow = PotionContentsComponent.createStack(Items.TIPPED_ARROW, potionInst)
+        if (data.charges <= 0 || data.contents.isEmpty) return null
+        val potion = data.contents.getOrNull() ?: return null
+        val tippedArrow = ItemStack(Items.TIPPED_ARROW)
+        tippedArrow.set(DataComponentTypes.POTION_CONTENTS, potion)
 
         return tippedArrow
     }
@@ -112,12 +109,12 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
 
         val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return
         tooltip += CommonTexts.EMPTY
-        if (data.charges <= 0 || data.potion.isEmpty) {
+        if (data.charges <= 0 || data.contents.isEmpty) {
             tooltip += Text.translatable("effect.none").formatted(Formatting.DARK_PURPLE)
             return
         }
+        val potion = data.contents.getOrNull() ?: return
 
-        val potion = Registries.POTION.get(data.potion.get()) ?: return
         potion.effects.forEach { effect ->
             var text = Text.translatable(effect.translationKey)
             if (effect.amplifier > 0) {
@@ -143,13 +140,13 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
     }
 
     class Data(
-        val potion: Optional<Identifier>,
+        val contents: Optional<PotionContentsComponent>,
         val charges: Int
     ) {
         companion object {
             val CODEC: Codec<Data> = RecordCodecBuilder.create { builder ->
                 val group = builder.group(
-                    Identifier.CODEC.optionalFieldOf("statusEffects").forGetter(Data::potion),
+                    Codec.optionalField("contents", PotionContentsComponent.CODEC, true).forGetter(Data::contents),
                     Codec.INT.fieldOf("charges").orElse(0).forGetter(Data::charges)
                 )
 
@@ -164,5 +161,16 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
 
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
         return listOf()
+    }
+
+    companion object {
+        fun potionsAreEqual(a: PotionContentsComponent, b: PotionContentsComponent): Boolean {
+            if(a.effects.collectionSizeOrDefault(0) != b.effects.collectionSizeOrDefault(9)) return false
+            a.effects.forEach{ aIt ->
+                if (!b.effects.any{ bIt -> aIt.isOfType(bIt.effectType) && aIt.amplifier == bIt.amplifier })
+                    return false
+            }
+            return true
+        }
     }
 }
