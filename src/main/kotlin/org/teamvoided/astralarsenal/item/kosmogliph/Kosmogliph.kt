@@ -88,12 +88,12 @@ interface Kosmogliph {
         id().toTranslationKey("kosmogliph${if (tooltip) ".tooltip" else ".name"}")
 
     fun setPropertiesTwo(
-        entity: ProjectileEntity, pitch: Float, yaw: Float, roll: Float, modifierZ: Float, modifierXYZ: Float
+        entity: ProjectileEntity, pitch: Float, yaw: Float, roll: Float, speed: Float, modifierXYZ: Float
     ) {
         val f = -MathHelper.sin(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
         val g = -MathHelper.sin((pitch + roll) * (Math.PI.toFloat() / 180))
         val h = MathHelper.cos(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
-        entity.setVelocity(f.toDouble(), g.toDouble(), h.toDouble(), modifierZ, modifierXYZ)
+        entity.setVelocity(f.toDouble(), g.toDouble(), h.toDouble(), speed, modifierXYZ)
     }
 
     fun requiredEnchantments(): List<RegistryKey<Enchantment>> = listOf()

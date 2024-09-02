@@ -8,13 +8,19 @@ import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.projectile.ArrowEntity
+import net.minecraft.entity.projectile.FireworkRocketEntity
+import net.minecraft.entity.projectile.PersistentProjectileEntity
+import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.stat.Stats
 import net.minecraft.util.math.BlockBox
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.MathHelper
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralBlockTags
@@ -232,3 +238,30 @@ fun ItemStack.canSafelyBreak(world: World, state: BlockState, pos: BlockPos): Bo
 
 fun BlockPos.isInWorld(world: World): Boolean = world.worldBorder.contains(this)
 fun BlockState.isMature(): Boolean? = if (this.block is CropBlock) (this.block as CropBlock).isMature(this) else null
+
+
+// Ranged Weapon
+fun World.getProjectileEntity(
+    projectileStack: ItemStack, weaponStack: ItemStack, player: PlayerEntity, canPickUp: Boolean
+): ProjectileEntity {
+    return if (projectileStack.isOf(Items.FIREWORK_ROCKET)) {
+        FireworkRocketEntity(
+            this, projectileStack, player, player.x, player.eyeY - 0.15f.toDouble(), player.z, true
+        )
+    } else {
+        val arrowEntity = ArrowEntity(this, player, projectileStack, weaponStack)
+        arrowEntity.isCritical = true
+        arrowEntity.pickupType = if (canPickUp) PersistentProjectileEntity.PickupPermission.ALLOWED
+        else PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY
+
+        arrowEntity
+    }
+}
+
+//(ender) IDK what this actually does this is just a guess
+fun ProjectileEntity.setShootVelocity(pitch: Float, yaw: Float, roll: Float, speed: Float, modifierXYZ: Float) {
+    val f = -MathHelper.sin(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
+    val g = -MathHelper.sin((pitch + roll) * (Math.PI.toFloat() / 180))
+    val h = MathHelper.cos(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
+    this.setVelocity(f.toDouble(), g.toDouble(), h.toDouble(), speed, modifierXYZ)
+}
