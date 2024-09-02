@@ -7,7 +7,11 @@ import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ArrowEntity
+import net.minecraft.entity.projectile.FireworkRocketEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
+import net.minecraft.entity.projectile.ProjectileEntity
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -27,28 +31,44 @@ class ShotgunKosmogliph(
         val stack = player.getStackInHand(hand)
         val chargedProjectiles = stack.get(DataComponentTypes.CHARGED_PROJECTILES)
         if (chargedProjectiles != null && !chargedProjectiles.isEmpty) {
-            var arrows = 10
+            var arrows = 5
             if (player.getStackInHand(hand).hasMultiShot()) {
-                arrows = 30
+                arrows = 15
             }
             for (i in 1..arrows) {
-                val snowballEntity = ArrowEntity(world, player, chargedProjectiles.projectiles[0], stack)
+                var snowballEntity: ProjectileEntity
+                if (chargedProjectiles.projectiles[0].item == Items.FIREWORK_ROCKET) {
+                    snowballEntity = FireworkRocketEntity(
+                        world,
+                        chargedProjectiles.projectiles[0],
+                        player,
+                        player.getX(),
+                        player.getEyeY() - 0.15f.toDouble(),
+                        player.getZ(),
+                        true
+                    );
+                } else {
+                    snowballEntity = ArrowEntity(world, player, chargedProjectiles.projectiles[0], stack)
+                    snowballEntity.isCritical = true
+                    if (i == 1) {
+                        snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED
+                    } else {
+                        snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY
+                    }
+                }
                 if (i == 1) {
-                    snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED
                     snowballEntity.setProperties(
                         player, player.pitch, player.yaw,
-                        0.0f, 3.0f, 0.0f
+                        0.0f, 2.0f, 0.0f
                     )
                 } else {
-                    snowballEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY
                     setPropertiesTwo(
                         snowballEntity,
-                        player.pitch + world.random.nextDouble().minus(0.5).times(15).toFloat(),
-                        player.yaw + world.random.nextDouble().minus(0.5).times(15).toFloat(),
-                        0.0f, 3.0f, 0.0f
+                        player.pitch,
+                        player.yaw,
+                        0.0f, 2.0f, 10.0f
                     )
                 }
-                snowballEntity.isCritical = true
                 world.spawnEntity(snowballEntity)
             }
             world.playSound(

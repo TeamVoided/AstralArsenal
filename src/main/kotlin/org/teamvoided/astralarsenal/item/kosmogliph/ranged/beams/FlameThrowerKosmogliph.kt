@@ -18,9 +18,9 @@ class FlameThrowerKosmogliph(id: Identifier) :
                 val fire = FlameThrowerEntity(world, player)
                 setPropertiesTwo(
                     fire,
-                    player.pitch + world.random.nextDouble().minus(0.5).times(15).toFloat(),
-                    player.yaw + world.random.nextDouble().minus(0.5).times(15).toFloat(),
-                    0.0f, 1.0f, 0.0f
+                    player.pitch,
+                    player.yaw,
+                    0.0f, 1.0f, 5.0f
                 )
                 fire.setPosition(player.x, player.y + 1.0, player.z)
                 world.spawnEntity(fire)

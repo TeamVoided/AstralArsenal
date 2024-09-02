@@ -54,6 +54,8 @@ class AstralEnTranslationProvider(
         gen.add("death.attack.drain.item", "%s drained their life")
         gen.add("death.attack.burn.item", "%s was given 4th degree burns by %s using %s")
 
+        gen.add("death.attack.bleed.player", "%s bled to death while fighting %s")
+
         gen.add(AstralTabs.TAB, "Astral Arsenal")
 
         gen.add(AstralArsenal.DEFAULT_KEY_CATEGORY, "Astral Arsenal Keys")
