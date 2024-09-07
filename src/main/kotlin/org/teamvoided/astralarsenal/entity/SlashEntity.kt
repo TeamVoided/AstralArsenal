@@ -88,7 +88,7 @@ class SlashEntity : ThrownItemEntity {
                     AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
                     this,
                     owner
-                ), this.getDmg().times(2)
+                ), this.getDmg().times(2.5).toFloat()
             )
         }
         super.onEntityHit(entityHitResult)

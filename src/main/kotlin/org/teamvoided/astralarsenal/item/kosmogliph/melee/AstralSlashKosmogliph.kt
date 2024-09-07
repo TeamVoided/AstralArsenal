@@ -20,7 +20,7 @@ class AstralSlashKosmogliph(id: Identifier) :
             var w = -20
             repeat(40) {
                 val snowballEntity = SlashEntity(world, player)
-                snowballEntity.setDmg(3f)
+                snowballEntity.setDmg(5f)
                 setPropertiesTwo(snowballEntity, player.pitch, player.yaw + w, 0.0f, 2.0f, 0.0f)
                 world.spawnEntity(snowballEntity)
                 w++
