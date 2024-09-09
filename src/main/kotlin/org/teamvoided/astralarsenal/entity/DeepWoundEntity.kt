@@ -102,7 +102,7 @@ class DeepWoundEntity : ThrownItemEntity {
                 val ow = owner as LivingEntity
                 val effects_two = ow.statusEffects.filter { over.contains(it.effectType) }
                 if (effects_two.isNotEmpty()) {
-                    effects.forEach {
+                    effects_two.forEach {
                         val w = it.amplifier
                         over_levels += w
                     }

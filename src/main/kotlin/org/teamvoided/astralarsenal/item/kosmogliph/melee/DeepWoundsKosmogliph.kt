@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
@@ -12,6 +13,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.DeepWoundEntity
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DEEP_WOUNDS) }) {
@@ -49,9 +51,30 @@ class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
             }
         }
     }
-
+    val over = listOf(
+        AstralEffects.OVERHEAL
+    )
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         attacker.absorptionAmount += 0.5f
+        if (!target.isAlive) {
+            val ow = attacker as LivingEntity
+            var over_levels = target.maxHealth.toInt()
+            val effects_two = ow.statusEffects.filter { over.contains(it.effectType) }
+            if (effects_two.isNotEmpty()) {
+                effects_two.forEach {
+                    val w = it.amplifier
+                    over_levels += w
+                }
+            }
+            ow.addStatusEffect(
+                StatusEffectInstance(
+                    AstralEffects.OVERHEAL,
+                    100, over_levels,
+                    false, false, true
+                )
+            )
+            ow.absorptionAmount += (over_levels * 0.25f)
+        }
         super.postHit(stack, target, attacker)
     }
 
