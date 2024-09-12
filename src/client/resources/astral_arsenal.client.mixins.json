@@ -5,9 +5,11 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "EnchantmentScreenMixin",
-    "WorldRendererMixin"
+    "WorldRendererMixin",
+    "CrimsonTimeMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "mixins": []
 }

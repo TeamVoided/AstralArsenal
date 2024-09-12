@@ -12,6 +12,7 @@ import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
 object AstralHudRendering {
     var rightIconTicks = 0
     var leftIconTicks = 0
+    var crimsonCrosshair = false
 
     fun init() {
         HudRenderCallback.EVENT.register noRender@{ graphics, deltaTracker ->
@@ -30,6 +31,7 @@ object AstralHudRendering {
 
             graphics.renderRightIcon(player)
             graphics.renderLeftIcon(player)
+            graphics.renderCrimsonCrosshair()
 
             RenderSystem.disableBlend()
             graphics.matrices.pop()
@@ -98,5 +100,16 @@ object AstralHudRendering {
                 9
             )
         }
+    }
+
+    private fun GuiGraphics.renderCrimsonCrosshair() {
+        if(crimsonCrosshair)
+            this.drawGuiTexture(
+                id("hud/crimson_crosshair"),
+                (this.scaledWindowWidth - 15) / 2,
+                (this.scaledWindowHeight - 15) / 2,
+                15,
+                15
+            )
     }
 }
