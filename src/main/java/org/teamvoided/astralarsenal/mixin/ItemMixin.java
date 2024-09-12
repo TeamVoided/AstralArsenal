@@ -77,4 +77,17 @@ public abstract class ItemMixin {
     public void kosmogliphUsageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks, CallbackInfo ci) {
         UtilKt.getKosmogliphsOnStack(stack).forEach((kosmogliph) -> kosmogliph.usageTick(world, user, stack, remainingUseTicks));
     }
+
+    @Inject(method = "getUseTicks", at = @At("RETURN"))
+    private void kosmogliphGetUseTicks(ItemStack stack, LivingEntity entity, CallbackInfoReturnable<Integer> cir) {
+        final boolean[] success = {false};
+        UtilKt.getKosmogliphsOnStack(stack).forEach(kosmogliph -> {
+            if (!success[0]) {
+                int ticks = kosmogliph.getUseTicks(stack, entity);
+                if (ticks > 0) {
+                    success[0] = true;
+                }
+            }
+        });
+    }
 }

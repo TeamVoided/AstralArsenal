@@ -48,6 +48,7 @@ interface Kosmogliph {
     fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {}
     fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {}
     fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {}
+    fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = 0
     fun shouldNegateDamage(
         stack: ItemStack,
         entity: LivingEntity,
