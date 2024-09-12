@@ -22,7 +22,7 @@ class EnduranceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
     ): Float {
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_MELEE) && source.attacker !is GuardianEntity && source.attacker !is ElderGuardianEntity) {
-            outputDamage = (outputDamage * 0.25).toFloat()
+            outputDamage = (outputDamage * 0.35).toFloat()
         }
         return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
     }

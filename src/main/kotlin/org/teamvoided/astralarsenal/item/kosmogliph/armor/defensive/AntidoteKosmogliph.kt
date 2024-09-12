@@ -35,7 +35,8 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
         StatusEffects.BAD_OMEN,
         StatusEffects.TRIAL_OMEN,
         StatusEffects.RAID_OMEN,
-        AstralEffects.UNHEALABLE_DAMAGE
+        AstralEffects.UNHEALABLE_DAMAGE,
+        AstralEffects.HARD_DAMAGE
     )
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {

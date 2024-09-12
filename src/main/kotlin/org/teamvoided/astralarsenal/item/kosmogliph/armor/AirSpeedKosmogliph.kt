@@ -47,7 +47,7 @@ interface AirSpeedKosmogliph : Kosmogliph {
                         entity.x,
                         entity.y,
                         entity.z,
-                        1.6F,
+                        1.0F,
                         1.0F,
                         world.getRandom().nextLong()
                     )
