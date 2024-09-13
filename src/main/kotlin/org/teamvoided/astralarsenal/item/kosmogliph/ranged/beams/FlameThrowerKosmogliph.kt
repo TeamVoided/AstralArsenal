@@ -39,30 +39,23 @@ class FlameThrowerKosmogliph(id: Identifier) :
             )
         }
     }
-//usagetick seems to do nothing, idk what to do here
-//
-//    override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
-//        println("ticked")
-//        if (!world.isClient) {
-//                val fire = FlameThrowerEntity(world, user)
-//                setPropertiesTwo(
-//                    fire,
-//                    user.pitch,
-//                    user.yaw,
-//                    0.0f, 1.0f, 5.0f
-//                )
-//                fire.setPosition(user.x, user.y + 1.0, user.z)
-//                world.spawnEntity(fire)
-//        }
-//        super.usageTick(world, user, stack, remainingUseTicks)
-//    }
-//
-//    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int {
-//        println("ticks used")
-//        return 72000
-//    }
-//
-//    override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
-//        println("used")
-//    }
+
+    override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
+        if (!world.isClient) {
+                val fire = FlameThrowerEntity(world, user)
+                setPropertiesTwo(
+                    fire,
+                    user.pitch,
+                    user.yaw,
+                    0.0f, 1.0f, 5.0f
+                )
+                fire.setPosition(user.x, user.y + 1.0, user.z)
+                world.spawnEntity(fire)
+        }
+        super.usageTick(world, user, stack, remainingUseTicks)
+    }
+
+    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int {
+        return 72000
+    }
 }
