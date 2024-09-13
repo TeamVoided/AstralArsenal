@@ -27,6 +27,7 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.ClickType
 import net.minecraft.util.Hand
+import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
@@ -41,7 +42,7 @@ interface Kosmogliph {
     fun onApply(stack: ItemStack) {}
     fun onUnapply(stack: ItemStack) {}
     fun preUse(world: World, player: PlayerEntity, hand: Hand) {}
-    fun onUse(world: World, player: PlayerEntity, hand: Hand) {}
+    fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? = null
     fun onUseOnBlock(ctx: ItemUsageContext) {}
     fun onUseOnEntity(stack: ItemStack, player: PlayerEntity, entity: LivingEntity, hand: Hand) {}
     fun postMine(stack: ItemStack, world: World, state: BlockState, pos: BlockPos, miner: LivingEntity) {}
@@ -102,7 +103,6 @@ interface Kosmogliph {
     fun modifyAirStrafeSpeed(entity: LivingEntity, speed: Float) = speed
 
     data class Failure(val reason: Text)
-
     companion object {
         val REGISTRY_KEY: RegistryKey<Registry<Kosmogliph>> = RegistryKey.ofRegistry(AstralArsenal.id("kosmogliphs"))
         val REGISTRY: Registry<Kosmogliph> = FabricRegistryBuilder.createSimple(REGISTRY_KEY).buildAndRegister()

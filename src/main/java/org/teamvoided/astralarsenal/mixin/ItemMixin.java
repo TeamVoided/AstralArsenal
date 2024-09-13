@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.astralarsenal.util.UtilKt;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Mixin(Item.class)
@@ -31,9 +32,12 @@ public abstract class ItemMixin {
         UtilKt.getKosmogliphsOnStack(user.getStackInHand(hand)).forEach((kosmogliph) -> kosmogliph.preUse(world, user, hand));
     }
 
-    @Inject(method = "use", at = @At("TAIL"))
+    @SuppressWarnings("all") // Using suppress all since // noinspect doesn't work and IDEA wants an invalid unfold
+    @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     public void kosmogliphOnUse(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
-        UtilKt.getKosmogliphsOnStack(user.getStackInHand(hand)).forEach((kosmogliph) -> kosmogliph.onUse(world, user, hand));
+        UtilKt.getKosmogliphsOnStack(user.getStackInHand(hand)).stream().map(
+          (kosmogliph) -> Optional.ofNullable(kosmogliph.onUse(world, user, hand))
+        ).filter(Optional::isPresent).findFirst().ifPresent(optional -> optional.ifPresent(cir::setReturnValue));
     }
 
     @Inject(method = "useOnBlock", at = @At("TAIL"))

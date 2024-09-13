@@ -2,15 +2,17 @@ package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class CannonballKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_CANNONBALL) }) {
-    override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
+    override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
         if (!world.isClient) {
             val snowballEntity = CannonballEntity(world, player)
             snowballEntity.setProperties(player, player.pitch, player.yaw, 0.0f, 0.1f, 0.0f)
@@ -26,5 +28,6 @@ class CannonballKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
                 stack.damageEquipment(20, player, EquipmentSlot.OFFHAND)
             }
         }
+        return null
     }
 }

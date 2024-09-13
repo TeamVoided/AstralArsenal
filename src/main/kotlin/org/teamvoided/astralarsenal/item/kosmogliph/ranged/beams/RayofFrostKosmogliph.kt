@@ -5,11 +5,13 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Math.lerp
@@ -26,7 +28,7 @@ import kotlin.math.sqrt
 
 class RayofFrostKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_RAY_OF_FROST) }) {
-    override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
+    override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
         val result = player.raycast(100.0, 1f, false)
         val distance = sqrt(
             sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y - 0.5) - result.pos.y).pow(
@@ -103,5 +105,6 @@ class RayofFrostKosmogliph(id: Identifier) :
         if (!player.isCreative) {
             player.itemCooldownManager.set(player.getStackInHand(hand).item, 600)
         }
+        return null
     }
 }

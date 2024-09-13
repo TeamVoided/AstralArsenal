@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import net.minecraft.util.TypedActionResult
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralItemComponents
@@ -33,9 +34,8 @@ class MinigunKosmogliph(id: Identifier) :
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 
-    override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
-        val stack: ItemStack
-        super.onUse(world, player, hand)
+    override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
+        return super.onUse(world, player, hand)
     }
 
     data class Data(

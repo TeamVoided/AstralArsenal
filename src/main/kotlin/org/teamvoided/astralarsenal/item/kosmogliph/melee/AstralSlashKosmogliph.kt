@@ -2,11 +2,13 @@ package org.teamvoided.astralarsenal.item.kosmogliph.melee
 
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.SlashEntity
@@ -15,7 +17,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class AstralSlashKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ASTRAL_SLASH) && it.item !is AstralGreathammerItem }) {
-    override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
+    override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
         if (!world.isClient) {
             var w = -20
             repeat(40) {
@@ -49,6 +51,7 @@ class AstralSlashKosmogliph(id: Identifier) :
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 200)
             }
         }
+        return null
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {

@@ -10,6 +10,7 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.DeepWoundEntity
@@ -17,7 +18,7 @@ import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DEEP_WOUNDS) }) {
-    override fun onUse(world: World, player: PlayerEntity, hand: Hand) {
+    override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
         if (!world.isClient) {
             var w = -20
             repeat(40) {
@@ -50,6 +51,7 @@ class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 1800)
             }
         }
+        return null
     }
     val over = listOf(
         AstralEffects.OVERHEAL
@@ -57,23 +59,22 @@ class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         attacker.absorptionAmount += 0.5f
         if (!target.isAlive) {
-            val ow = attacker as LivingEntity
             var over_levels = target.maxHealth.toInt()
-            val effects_two = ow.statusEffects.filter { over.contains(it.effectType) }
+            val effects_two = attacker.statusEffects.filter { over.contains(it.effectType) }
             if (effects_two.isNotEmpty()) {
                 effects_two.forEach {
                     val w = it.amplifier
                     over_levels += w
                 }
             }
-            ow.addStatusEffect(
+            attacker.addStatusEffect(
                 StatusEffectInstance(
                     AstralEffects.OVERHEAL,
                     100, over_levels,
                     false, false, true
                 )
             )
-            ow.absorptionAmount += (over_levels * 0.25f)
+            attacker.absorptionAmount += (over_levels * 0.25f)
         }
         super.postHit(stack, target, attacker)
     }
