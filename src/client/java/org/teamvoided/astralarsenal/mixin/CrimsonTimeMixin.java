@@ -4,8 +4,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -44,7 +42,7 @@ public class CrimsonTimeMixin {
     if(ticks > 0) {
       ticks--;
 
-      if(instance.targetedEntity == null && target instanceof LivingEntity living && !living.hasStatusEffect(StatusEffects.INVISIBILITY))
+      if(instance.targetedEntity == null && !target.isInvisible())
         AstralHudRendering.INSTANCE.setCrimsonCrosshair(true);
     } else {
       target = null;
