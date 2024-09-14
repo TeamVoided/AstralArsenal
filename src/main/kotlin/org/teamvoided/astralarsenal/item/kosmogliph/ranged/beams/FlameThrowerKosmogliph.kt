@@ -54,9 +54,11 @@ class FlameThrowerKosmogliph(id: Identifier) :
                     user.yaw,
                     0.0f, 1.0f, 5.0f
                 )
-                fire.setPosition(user.x, user.y + 1.0, user.z)
+                val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
+                fire.setPosition(offset.x, offset.y, offset.z)
                 world.spawnEntity(fire)
         }
+        user.bodyYaw = user.yaw
         super.usageTick(world, user, stack, remainingUseTicks)
     }
 
