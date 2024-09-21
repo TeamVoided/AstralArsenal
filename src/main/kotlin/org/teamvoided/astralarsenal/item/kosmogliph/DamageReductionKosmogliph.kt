@@ -23,7 +23,7 @@ class DamageReductionKosmogliph(
         equipmentSlot: EquipmentSlot,
         stage: DamageModificationStage
     ): Float {
-        if (stage != DamageModificationStage.PRE_ARMOR) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+        if (stage != DamageModificationStage.POST_EFFECT) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
 
         if (tags.any { !source.isTypeIn(it) }) return damage
         return damage * multiplier

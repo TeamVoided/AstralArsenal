@@ -40,7 +40,7 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         equipmentSlot: EquipmentSlot,
         stage: DamageModificationStage
     ): Float {
-        if (stage != DamageModificationStage.PRE_ARMOR) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+        if (stage != DamageModificationStage.POST_EFFECT) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
 
         val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return damage
         return if (data.slamming && source.isTypeIn(DamageTypeTags.IS_FALL)) damage / 2 else damage
