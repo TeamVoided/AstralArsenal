@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffect
+import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffectType
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registries
@@ -52,11 +53,21 @@ object AstralEffects {
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
         Registries.STATUS_EFFECT.registerHolder(id(id), entry)
 
+    val REDUCE_MULT = 0.3
+    val reduce = listOf(
+        AstralEffects.REDUCE
+    )
     fun modifyDamage(entity: LivingEntity, damage: Float): Float {
         var output = damage
-        if (entity.hasStatusEffect(REDUCE))
-            output *= 1.3f
-
+        val effects_two = entity.statusEffects.filter { reduce.contains(it.effectType) }
+        if (effects_two.isNotEmpty()) {
+            effects_two.forEach {
+                val w = it.amplifier
+                val levels = w + 1
+                val mult = levels * REDUCE_MULT
+                output = (output * (1 + mult)).toFloat()
+            }
+        }
         return output
     }
 }

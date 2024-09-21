@@ -43,7 +43,8 @@ class SlashEntity : ThrownItemEntity {
 
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
-        builder.add(DMG, 5f)
+        // Note: this is not where to change the damage value. Change it in the kosmogliph.
+        builder.add(DMG, 0f)
         builder.add(time, 0)
     }
 

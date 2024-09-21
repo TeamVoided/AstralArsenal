@@ -15,25 +15,30 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralEffects
 
 class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, AstralItemTags.SUPPORTS_TRIDENT_BLEED) {
+    val over = listOf(
+        AstralEffects.BLEED
+    )
     override fun onHit(attacker: Entity?, victim: LivingEntity) {
-        victim.addStatusEffect(StatusEffectInstance(AstralEffects.BLEED, 400), attacker)
+        var bleed_levels = 0
+        val effects_two = victim.statusEffects.filter { over.contains(it.effectType) }
+        if (effects_two.isNotEmpty()) {
+            effects_two.forEach {
+                val w = it.amplifier
+                bleed_levels += w + 1
+            }
+        }
+        victim.addStatusEffect(
+            StatusEffectInstance(
+                AstralEffects.BLEED,
+                400, bleed_levels,
+                false, false, true
+            )
+        )
     }
 
     override fun translationText(tooltip: Boolean) =
         "Bleed"
 
-    override fun onApply(stack: ItemStack) {
-        super.onApply(stack)
-
-        val builder = ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(stack))
-        builder.removeIf { enchantment ->
-            enchantment.isRegistryKey(Enchantments.RIPTIDE)
-        }
-        stack.set(
-            DataComponentTypes.ENCHANTMENTS,
-            builder.build()
-        )
-    }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.RIPTIDE)

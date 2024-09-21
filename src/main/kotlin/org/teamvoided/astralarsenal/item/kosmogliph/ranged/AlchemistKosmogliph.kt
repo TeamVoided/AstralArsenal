@@ -46,7 +46,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         val potionContent = other.get(DataComponentTypes.POTION_CONTENTS) ?: return false
         var thisPotion = data.contents
         var charges = data.charges
-        if (data.charges >= 24) return false
+        if (data.charges >= 64) return false
         val expectedPotionType = if (thisPotion.isEmpty) {
             potionContent
         } else thisPotion.get()

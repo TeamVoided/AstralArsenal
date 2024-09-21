@@ -22,7 +22,7 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
         equipmentSlot: EquipmentSlot,
         stage: DamageModificationStage
     ): Float {
-        if (stage != DamageModificationStage.POST_EFFECT) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+        if (stage != DamageModificationStage.POST_ARMOR) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
 
         var outputDamage = damage
         val dmg: Int
@@ -43,9 +43,9 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                 snowballEntity.side = 2
                 snowballEntity.THRUST = 0.0
                 snowballEntity.TIMEACTIVE = 10
-                snowballEntity.WINDUP = 40
+                snowballEntity.WINDUP = 1
                 snowballEntity.DMG = dmg
-                snowballEntity.trackTime = 35
+                snowballEntity.trackTime = 1
                 snowballEntity.hard_damage = damage.times(0.2).toInt()
                 snowballEntity.owner = entity
                 snowballEntity.targetEntity = source.attacker

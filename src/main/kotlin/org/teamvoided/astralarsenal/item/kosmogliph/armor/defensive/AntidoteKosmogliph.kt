@@ -24,7 +24,7 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
         equipmentSlot: EquipmentSlot,
         stage: DamageModificationStage
     ): Float {
-        if (stage != DamageModificationStage.POST_EFFECT) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+        if (stage != DamageModificationStage.POST_ARMOR) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
 
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_MAGIC)) {

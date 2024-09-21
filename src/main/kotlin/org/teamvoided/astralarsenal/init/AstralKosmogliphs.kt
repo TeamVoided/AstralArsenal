@@ -11,10 +11,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.item.kosmogliph.AttributeModificationKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.DashKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.DodgeKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.JumpKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.SlamKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.defensive.*
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.*
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.AlchemistKosmogliph
