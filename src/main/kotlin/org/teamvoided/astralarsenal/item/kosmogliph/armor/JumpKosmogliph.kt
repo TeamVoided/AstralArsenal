@@ -22,6 +22,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.item.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_JUMP) }),
@@ -136,8 +137,11 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         entity: LivingEntity,
         damage: Float,
         source: DamageSource,
-        equipmentSlot: EquipmentSlot
+        equipmentSlot: EquipmentSlot,
+        stage: DamageModificationStage
     ): Float {
+        if (stage != DamageModificationStage.PRE_ARMOR) return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+
         val data = stack.get(AstralItemComponents.JUMP_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
@@ -156,7 +160,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
             }
         }
         stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, 0, maxUses))
-        return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot)
+        return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
     }
 
     data class Data(

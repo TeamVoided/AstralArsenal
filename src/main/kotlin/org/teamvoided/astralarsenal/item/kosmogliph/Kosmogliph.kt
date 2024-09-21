@@ -62,7 +62,8 @@ interface Kosmogliph {
         entity: LivingEntity,
         damage: Float,
         source: DamageSource,
-        equipmentSlot: EquipmentSlot
+        equipmentSlot: EquipmentSlot,
+        stage: DamageModificationStage
     ): Float = damage
 
     fun onStackClicked(

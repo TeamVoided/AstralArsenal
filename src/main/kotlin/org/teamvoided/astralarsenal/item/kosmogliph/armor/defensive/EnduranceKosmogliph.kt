@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.item.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class EnduranceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ENDURANCE) }) {
@@ -18,12 +19,15 @@ class EnduranceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         entity: LivingEntity,
         damage: Float,
         source: DamageSource,
-        equipmentSlot: EquipmentSlot
+        equipmentSlot: EquipmentSlot,
+        stage: DamageModificationStage
     ): Float {
+        if (stage != DamageModificationStage.PRE_ARMOR) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_MELEE) && source.attacker !is GuardianEntity && source.attacker !is ElderGuardianEntity) {
             outputDamage = (outputDamage * 0.35).toFloat()
         }
-        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
+        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot, stage)
     }
 }

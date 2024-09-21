@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.item.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class ScorchProofKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_SCORCH_PROOF) }) {
@@ -17,13 +18,16 @@ class ScorchProofKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
         entity: LivingEntity,
         damage: Float,
         source: DamageSource,
-        equipmentSlot: EquipmentSlot
+        equipmentSlot: EquipmentSlot,
+        stage: DamageModificationStage
     ): Float {
+        if (stage != DamageModificationStage.PRE_ARMOR) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_FIRE)) {
             outputDamage = (outputDamage * 0.2).toFloat()
         }
-        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
+        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot, stage)
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {

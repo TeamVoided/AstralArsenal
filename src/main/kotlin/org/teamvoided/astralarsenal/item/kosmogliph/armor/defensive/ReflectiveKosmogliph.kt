@@ -14,6 +14,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
+import org.teamvoided.astralarsenal.item.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class ReflectiveKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_REFLECTIVE) }) {
@@ -23,13 +24,16 @@ class ReflectiveKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
         entity: LivingEntity,
         damage: Float,
         source: DamageSource,
-        equipmentSlot: EquipmentSlot
+        equipmentSlot: EquipmentSlot,
+        stage: DamageModificationStage
     ): Float {
+        if (stage != DamageModificationStage.PRE_ARMOR) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_PROJECTILE)) {
             outputDamage = (outputDamage * 0.5).toFloat()
         }
-        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
+        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot, stage)
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, barer: Entity, slot: Int, selected: Boolean) {

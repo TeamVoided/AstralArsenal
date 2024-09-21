@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
+import org.teamvoided.astralarsenal.item.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 
 class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_CAPACITANCE) }) {
@@ -18,8 +19,11 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
         entity: LivingEntity,
         damage: Float,
         source: DamageSource,
-        equipmentSlot: EquipmentSlot
+        equipmentSlot: EquipmentSlot,
+        stage: DamageModificationStage
     ): Float {
+        if (stage != DamageModificationStage.PRE_ARMOR) return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+
         var outputDamage = damage
         val dmg: Int
         val random: Int
@@ -48,6 +52,6 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                 entity.world.spawnEntity(snowballEntity)
             }
         }
-        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot)
+        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot, stage)
     }
 }
