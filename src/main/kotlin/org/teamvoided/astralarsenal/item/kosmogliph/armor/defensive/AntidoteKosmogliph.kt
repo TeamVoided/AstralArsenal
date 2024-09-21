@@ -31,7 +31,7 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
             outputDamage = (outputDamage * 0.2).toFloat()
         }
 
-        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot, stage)
+        return outputDamage
     }
 
     val blacklist = listOf(

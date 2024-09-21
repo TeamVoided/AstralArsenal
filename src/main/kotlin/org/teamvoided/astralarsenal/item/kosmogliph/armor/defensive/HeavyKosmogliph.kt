@@ -25,6 +25,6 @@ class HeavyKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
         if (source.isTypeIn(AstralDamageTypeTags.IS_EXPLOSION)) {
             outputDamage = (outputDamage * 0.1).toFloat()
         }
-        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot, stage)
+        return outputDamage
     }
 }

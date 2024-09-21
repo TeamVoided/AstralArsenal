@@ -52,6 +52,6 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                 entity.world.spawnEntity(snowballEntity)
             }
         }
-        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot, stage)
+        return outputDamage
     }
 }

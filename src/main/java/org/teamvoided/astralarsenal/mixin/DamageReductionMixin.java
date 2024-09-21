@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,9 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.astralarsenal.init.AstralEffects;
 import org.teamvoided.astralarsenal.item.kosmogliph.DamageModificationStage;
 import org.teamvoided.astralarsenal.pseudomixin.DamageReductionKt;
-//import org.spongepowered.asm.mixin.Debug;
+import org.spongepowered.asm.mixin.Debug;
 
-//@Debug(export = true)
+@Debug(export = true)
 @Mixin(LivingEntity.class)
 public class DamageReductionMixin {
     @ModifyVariable(method = "damage", at = @At(value = "HEAD", ordinal = 0), argsOnly = true)
@@ -25,11 +26,8 @@ public class DamageReductionMixin {
     }
 
     @ModifyVariable(
-            method = "applyDamage",
-            at = @At(
-                    value = "LOAD",
-                    ordinal = 0
-            ),
+            method = "applyArmorToDamage",
+            at = @At("HEAD"),
             argsOnly = true
     )
     private float modifyDamagePreArmor(float value, DamageSource source) {
@@ -37,31 +35,28 @@ public class DamageReductionMixin {
         return DamageReductionKt.kosmogliphDamageReductionCall(self, value, source, DamageModificationStage.PRE_ARMOR);
     }
 
-    @ModifyVariable(
-            method = "applyDamage",
-            at = @At(
-                    value = "LOAD",
-                    ordinal = 1
-            ),
-            argsOnly = true
+    @ModifyReturnValue(
+            method = "applyArmorToDamage",
+            at = @At("RETURN")
     )
-    private float modifyDamagePostArmorPreEnchant(float value, DamageSource source) {
+    private float modifyDamagePostArmor(float value, DamageSource source) {
         var self = (LivingEntity) (Object) this;
-        return DamageReductionKt.kosmogliphDamageReductionCall(
-                self,
-                DamageReductionKt.kosmogliphDamageReductionCall(self, value, source, DamageModificationStage.POST_ARMOR),
-                source,
-                DamageModificationStage.PRE_ENCHANT
-        ); // Call POST_ARMOR first then PRE_ENCHANT
+        return DamageReductionKt.kosmogliphDamageReductionCall(self, value, source, DamageModificationStage.POST_ARMOR);
     }
 
     @ModifyVariable(
-            method = "applyDamage",
-            at = @At(
-                    value = "LOAD",
-                    ordinal = 2
-            ),
+            method = "applyEnchantmentsToDamage",
+            at = @At("HEAD"),
             argsOnly = true
+    )
+    private float modifyDamagePreEnchant(float value, DamageSource source) {
+        var self = (LivingEntity) (Object) this;
+        return DamageReductionKt.kosmogliphDamageReductionCall(self, value, source, DamageModificationStage.PRE_ENCHANT);
+    }
+
+    @ModifyReturnValue(
+            method = "applyEnchantmentsToDamage",
+            at = @At("RETURN")
     )
     private float modifyDamagePostEnchant(float value, DamageSource source) {
         var self = (LivingEntity) (Object) this;

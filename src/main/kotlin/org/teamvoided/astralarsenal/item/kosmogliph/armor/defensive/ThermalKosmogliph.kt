@@ -28,7 +28,7 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
         if (source.isTypeIn(AstralDamageTypeTags.IS_ICE)) {
             outputDamage = (outputDamage * 0.2).toFloat()
         }
-        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot, stage)
+        return outputDamage
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {

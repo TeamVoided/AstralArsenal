@@ -33,7 +33,7 @@ class ReflectiveKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
         if (source.isTypeIn(AstralDamageTypeTags.IS_PROJECTILE)) {
             outputDamage = (outputDamage * 0.5).toFloat()
         }
-        return super.modifyDamage(stack, entity, outputDamage, source, equipmentSlot, stage)
+        return outputDamage
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, barer: Entity, slot: Int, selected: Boolean) {
