@@ -51,7 +51,6 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.RAILED)
             .add(AstralDamageTypes.NON_RAILED)
 
-
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_EXPLOSION)
             .forceAddTag(DamageTypeTags.IS_EXPLOSION)
             .add(DamageTypes.FIREWORKS)
@@ -60,6 +59,10 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.PLAYER_EXPLOSION)
             .add(DamageTypes.EXPLOSION)
             .add(DamageTypes.BAD_RESPAWN_POINT)
+            .add(AstralDamageTypes.BOOM)
+
+        getOrCreateTagBuilder(DamageTypeTags.IS_EXPLOSION)
+            .add(AstralDamageTypes.BOOM)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_PROJECTILE)
             .add(DamageTypes.MOB_PROJECTILE)
@@ -68,6 +71,11 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.WIND_CHARGE)
             .add(AstralDamageTypes.CANNONBALL)
             .add(AstralDamageTypes.BALLNT)
+
+        getOrCreateTagBuilder(DamageTypeTags.IS_PROJECTILE) //for endermen to avoid
+
+        getOrCreateTagBuilder(DamageTypeTags.BYPASSES_EFFECTS)
+            .add(AstralDamageTypes.DRAIN)
 
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR)
             .add(AstralDamageTypes.BEAM_OF_LIGHT)
@@ -81,6 +89,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.RAILED)
             .add(AstralDamageTypes.NON_RAILED)
             .add(AstralDamageTypes.DRAIN)
+            .add(AstralDamageTypes.BLEED)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.KEEPS_MOVEMENT)
             .add(DamageTypes.FALL)
@@ -88,5 +97,14 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
 
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_COOLDOWN)
             .add(AstralDamageTypes.BURN)
+
+        getOrCreateTagBuilder(DamageTypeTags.AVOIDS_GUARDIAN_THORNS)
+            .forceAddTag(AstralDamageTypeTags.IS_PLASMA)
+
+        getOrCreateTagBuilder(DamageTypeTags.NO_KNOCKBACK)
+            .add(AstralDamageTypes.DRAIN)
+            .add(AstralDamageTypes.BOOM)
+            .add(AstralDamageTypes.BEAM_OF_LIGHT)
+            .add(AstralDamageTypes.BLEED)
     }
 }
