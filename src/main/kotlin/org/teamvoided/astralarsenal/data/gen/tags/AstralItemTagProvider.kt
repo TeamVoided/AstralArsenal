@@ -59,6 +59,7 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_DODGE).forceAddTag(ItemTags.LEG_ARMOR)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_SLAM).forceAddTag(ItemTags.HEAD_ARMOR)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ANKLE_GUARD).forceAddTag(ItemTags.HEAD_ARMOR)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ALCHEMIST).forceAddTag(ConventionalItemTags.BOW_TOOLS)
 

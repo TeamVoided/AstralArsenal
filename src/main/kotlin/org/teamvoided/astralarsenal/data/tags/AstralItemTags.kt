@@ -26,6 +26,7 @@ object AstralItemTags {
     val SUPPORTS_DODGE = supports("dodge")
 
     val SUPPORTS_SLAM = supports("slam")
+    val SUPPORTS_ANKLE_GUARD = supports("ankle_guard")
 
     val SUPPORTS_ALCHEMIST = supports("alchemist")
 
