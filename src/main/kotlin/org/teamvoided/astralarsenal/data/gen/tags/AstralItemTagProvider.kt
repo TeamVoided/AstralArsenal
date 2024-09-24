@@ -3,6 +3,7 @@ package org.teamvoided.astralarsenal.data.gen.tags
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.minecraft.item.Items
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
@@ -61,6 +62,8 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_SLAM).forceAddTag(ItemTags.HEAD_ARMOR)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ANKLE_GUARD).forceAddTag(ItemTags.HEAD_ARMOR)
 
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_PARRY).add(Items.SHIELD)
+
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ALCHEMIST).forceAddTag(ConventionalItemTags.BOW_TOOLS)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ASTRAL_STRIKE).forceAddTag(ItemTags.SWORDS)
@@ -111,6 +114,8 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_DASH)
             .forceAddTag(AstralItemTags.SUPPORTS_DODGE)
             .forceAddTag(AstralItemTags.SUPPORTS_SLAM)
+            .forceAddTag(AstralItemTags.SUPPORTS_ANKLE_GUARD)
+            .forceAddTag(AstralItemTags.SUPPORTS_PARRY)
             .forceAddTag(AstralItemTags.SUPPORTS_ALCHEMIST)
             .forceAddTag(AstralItemTags.SUPPORTS_ASTRAL_STRIKE)
             .forceAddTag(AstralItemTags.SUPPORTS_FREEZE)

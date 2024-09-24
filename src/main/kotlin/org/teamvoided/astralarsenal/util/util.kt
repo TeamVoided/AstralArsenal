@@ -4,6 +4,7 @@ import arrow.core.Predicate
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
@@ -11,10 +12,14 @@ import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Vec3d
 import org.joml.Vector3f
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
+import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.BowKosmogliph
@@ -56,4 +61,40 @@ fun ProjectileEntity.setVelocity(vec3d: Vec3d, speed: Float, divergence: Float) 
 // attackingEntity is the entity that does the damage e.g. a mob or a projectile
 // sourceEntity is the entity that caused the attacking entity e.g. a player that shot an arrow
 fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?, damage: Float, source: DamageSource) {
+    if(target is LivingEntity){
+        val shield = target.activeItem
+        if(getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.PARRY)){
+            if (target.itemUseTime < 10) {
+                target.world.playSound(
+                    null,
+                    target.x,
+                    target.y,
+                    target.z,
+                    SoundEvents.ITEM_SHIELD_BREAK,
+                    SoundCategory.PLAYERS,
+                    1.0F,
+                    1.0f
+                )
+                target.world.playSound(
+                    null,
+                    target.x,
+                    target.y,
+                    target.z,
+                    SoundEvents.BLOCK_ANVIL_PLACE,
+                    SoundCategory.PLAYERS,
+                    1.0F,
+                    1.0f
+                )
+                if (attackingEntity is LivingEntity) {
+                    attackingEntity.damage(
+                        DamageSource(
+                            AstralDamageTypes.getHolder(attackingEntity.world.registryManager, AstralDamageTypes.PARRY),
+                            target,
+                            target
+                        ), damage
+                    )
+                }
+            }
+        }
+    }
 }

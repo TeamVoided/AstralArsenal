@@ -24,6 +24,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.OrbitalKosmog
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.TimeBombKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.trident.TridentBleedKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.trident.TridentReduceKosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.shield.*
 import org.teamvoided.astralarsenal.item.kosmogliph.tools.HammerKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.tools.ReaperKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.tools.SmelterKosmogliph
@@ -46,6 +47,8 @@ object AstralKosmogliphs {
     //val SLIDE = register("slide", ::SlideKosmogliph)
     val SLAM = register("slam", ::SlamKosmogliph)
     val ANKLE_GUARD = register("ankle_guard", ::AnkleGuardKosmogliph)
+
+    val PARRY = register("parry", ::ParryKosmogliph)
 
     // val GRAPPLE = register("grapple", ::GrappleKosmogliph)
     // val BEAM = register("beam", ::BeamKosmogliph)

@@ -14,5 +14,9 @@ class AstralEntityTagProvider(
     override fun configure(wrapperLookup: HolderLookup.Provider) {
         getOrCreateTagBuilder(AstralEntityTags.MOUNTS_WITH_DASH)
             .add(EntityType.CAMEL)
+
+        getOrCreateTagBuilder(AstralEntityTags.PROTECTED_FROM_DEL)
+            .add(EntityType.TRIDENT)
+            .add(EntityType.ENDER_PEARL)
     }
 }

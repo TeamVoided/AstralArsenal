@@ -44,6 +44,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.MOB_ATTACK)
             .add(DamageTypes.MOB_ATTACK_NO_AGGRO)
             .add(DamageTypes.STING)
+            .add(AstralDamageTypes.PARRY)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_PLASMA)
             .add(DamageTypes.LIGHTNING_BOLT)
@@ -100,11 +101,13 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
 
         getOrCreateTagBuilder(DamageTypeTags.AVOIDS_GUARDIAN_THORNS)
             .forceAddTag(AstralDamageTypeTags.IS_PLASMA)
+            .add(AstralDamageTypes.PARRY)
 
         getOrCreateTagBuilder(DamageTypeTags.NO_KNOCKBACK)
             .add(AstralDamageTypes.DRAIN)
             .add(AstralDamageTypes.BOOM)
             .add(AstralDamageTypes.BEAM_OF_LIGHT)
             .add(AstralDamageTypes.BLEED)
+            .add(AstralDamageTypes.PARRY)
     }
 }
