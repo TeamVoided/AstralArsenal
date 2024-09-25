@@ -62,7 +62,8 @@ class ParryKosmogliph(id: Identifier) :
                     for (entity in parried) {
                         if (entity is ProjectileEntity) {
                             //will have to be changed to use some tags
-                            if (entity is ArrowEntity) {
+                            if (entity is ArrowEntity && !entity.isOnGround ) {
+                                //this current implementation lets arrows in walls blow the fuck up, this need sto NOT happen, so fix this TODO
                                 entity.discard()
                                 if (entity.isCritical) blowTheFuckUp(
                                     ParryStrongExplosionBehavior(),

@@ -23,12 +23,12 @@ class ParryIceExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun getKnockbackMultiplier(target: Entity): Float {
-        return 0f
+        return 0.5f
     }
 
     override fun calculateDamage(explosion: Explosion, entity: Entity): Float {
         entity.frozenTicks += 1000
-        if (entity is LivingEntity) {
+        if (entity is LivingEntity && entity != explosion.causingEntity) {
             entity.damage(
                 DamageSource(
                     AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),

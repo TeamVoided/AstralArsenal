@@ -26,7 +26,7 @@ class ParryBrewExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun getKnockbackMultiplier(target: Entity): Float {
-        return 0f
+        return 1.0f
     }
 
     override fun calculateDamage(explosion: Explosion, entity: Entity): Float {
@@ -67,7 +67,7 @@ class ParryBrewExplosionBehavior : ExplosionBehavior() {
                 )
             )
         }
-        if (entity is LivingEntity) {
+        if (entity is LivingEntity && entity != explosion.causingEntity) {
             entity.damage(
                 DamageSource(
                     AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
