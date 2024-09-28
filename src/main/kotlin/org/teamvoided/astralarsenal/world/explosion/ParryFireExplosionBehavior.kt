@@ -34,7 +34,7 @@ class ParryFireExplosionBehavior : ExplosionBehavior() {
                         AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
                         explosion.causingEntity,
                         explosion.causingEntity
-                    ), 5f
+                    ), 10f
                 )
             }
         return 0f

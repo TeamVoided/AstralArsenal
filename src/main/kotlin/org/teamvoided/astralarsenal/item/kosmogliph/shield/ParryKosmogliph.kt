@@ -42,7 +42,7 @@ import kotlin.math.sqrt
 class ParryKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_PARRY) }) {
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
-        if (user.itemUseTime < 6) {
+        if (user.itemUseTime < 5) {
             val result = user.raycast(1.0, 1f, false)
             val parried = mutableListOf<Entity>()
             parried.addAll(
@@ -103,7 +103,7 @@ class ParryKosmogliph(id: Identifier) :
                             } else if (entity is FlameThrowerEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
-                                    ParryFireExplosionBehavior(),
+                                    ParryWeakExplosionBehavior(),
                                     ParryFireExplosionBehavior(),
                                     0.1f,
                                     user,

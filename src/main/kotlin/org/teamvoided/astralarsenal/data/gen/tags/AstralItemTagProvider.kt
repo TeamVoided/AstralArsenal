@@ -63,6 +63,7 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ANKLE_GUARD).forceAddTag(ItemTags.HEAD_ARMOR)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_PARRY).add(Items.SHIELD)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_FROST_THORNS).add(Items.SHIELD)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ALCHEMIST).forceAddTag(ConventionalItemTags.BOW_TOOLS)
 
@@ -116,6 +117,7 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_SLAM)
             .forceAddTag(AstralItemTags.SUPPORTS_ANKLE_GUARD)
             .forceAddTag(AstralItemTags.SUPPORTS_PARRY)
+            .forceAddTag(AstralItemTags.SUPPORTS_FROST_THORNS)
             .forceAddTag(AstralItemTags.SUPPORTS_ALCHEMIST)
             .forceAddTag(AstralItemTags.SUPPORTS_ASTRAL_STRIKE)
             .forceAddTag(AstralItemTags.SUPPORTS_FREEZE)

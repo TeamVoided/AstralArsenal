@@ -17,7 +17,7 @@ class FreezeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIt
         target.frozenTicks += 340
 
         val bursts: Int
-        if (target !is PlayerEntity) {
+        if (target !is PlayerEntity || !target.isAlive) {
             if (!target.isAlive) {
                 bursts = 20
                 target.playSound(SoundEvents.BLOCK_GLASS_BREAK, 1.0f, 1.0f)

@@ -17,12 +17,15 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Vec3d
 import org.joml.Vector3f
+import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.item.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.BowKosmogliph
+import kotlin.math.roundToInt
 
 fun <T, R : Registry<T>> RegistryKey<R>.tag(id: Identifier) = TagKey.of(this, id)
 
@@ -64,7 +67,7 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
     if(target is LivingEntity){
         val shield = target.activeItem
         if(getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.PARRY)){
-            if (target.itemUseTime < 7) {
+            if (target.itemUseTime < 5) {
                 target.world.playSound(
                     null,
                     target.x,
@@ -94,6 +97,15 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
                         ), damage
                     )
                 }
+            }
+        }
+        else if(getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.FROST_THORNS)){
+            val num = (damage/2).roundToInt() + 1
+            repeat(num) {
+                val freezeBallEntity = FreezeShotEntity(target.world, target)
+                freezeBallEntity.setPosition(target.pos.x,target.pos.y + 1, target.pos.z)
+                freezeBallEntity.setShootVelocity(target.pitch, target.yaw, 0.0f, 1.0f, 20f)
+                target.world.spawnEntity(freezeBallEntity)
             }
         }
     }
