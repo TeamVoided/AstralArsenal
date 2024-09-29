@@ -145,5 +145,6 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_TIME_BOMB)
             .forceAddTag(AstralItemTags.SUPPORTS_TRIDENT_REDUCE)
             .forceAddTag(AstralItemTags.SUPPORTS_TRIDENT_BLEED)
+            .add(Items.SHIELD)
     }
 }

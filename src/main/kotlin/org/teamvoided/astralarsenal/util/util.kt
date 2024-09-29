@@ -67,7 +67,7 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
     if(target is LivingEntity){
         val shield = target.activeItem
         if(getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.PARRY)){
-            if (target.itemUseTime < 5) {
+            if (target.itemUseTime < 6) {
                 target.world.playSound(
                     null,
                     target.x,
@@ -94,7 +94,7 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
                             AstralDamageTypes.getHolder(attackingEntity.world.registryManager, AstralDamageTypes.PARRY),
                             target,
                             target
-                        ), damage
+                        ), (damage * 2)
                     )
                 }
             }
