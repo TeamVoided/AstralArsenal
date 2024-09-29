@@ -1,18 +1,10 @@
 package org.teamvoided.astralarsenal.item.kosmogliph.shield
 
+import com.mojang.authlib.minecraft.client.MinecraftClient
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.projectile.ArrowEntity
-import net.minecraft.entity.projectile.DragonFireballEntity
-import net.minecraft.entity.projectile.FireballEntity
-import net.minecraft.entity.projectile.FireworkRocketEntity
-import net.minecraft.entity.projectile.LlamaSpitEntity
-import net.minecraft.entity.projectile.ProjectileEntity
-import net.minecraft.entity.projectile.ShulkerBulletEntity
-import net.minecraft.entity.projectile.SmallFireballEntity
-import net.minecraft.entity.projectile.TridentEntity
-import net.minecraft.entity.projectile.WitherSkullEntity
+import net.minecraft.entity.projectile.*
 import net.minecraft.entity.projectile.thrown.EggEntity
 import net.minecraft.entity.projectile.thrown.PotionEntity
 import net.minecraft.entity.projectile.thrown.SnowballEntity
@@ -24,7 +16,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
-import net.minecraft.world.World.ExplosionSourceType
 import net.minecraft.world.explosion.ExplosionBehavior
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
@@ -32,12 +23,13 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.FlameThrowerEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
-import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.mixin.PersistentProjectileEntityAccessor
 import org.teamvoided.astralarsenal.world.explosion.*
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
+
 
 class ParryKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_PARRY) }) {
@@ -62,23 +54,24 @@ class ParryKosmogliph(id: Identifier) :
                     for (entity in parried) {
                         if (entity is ProjectileEntity) {
                             //will have to be changed to use some tags
-                            if (entity is ArrowEntity && !entity.isOnGround ) {
-                                //this current implementation lets arrows in walls blow the fuck up, this need sto NOT happen, so fix this TODO
-                                entity.discard()
-                                if (entity.isCritical) blowTheFuckUp(
-                                    ParryStrongExplosionBehavior(),
-                                    ParryBustedExplosionBehavior(),
-                                    1f,
-                                    user,
-                                    world
-                                )
-                                else blowTheFuckUp(
-                                    ParryWeakExplosionBehavior(),
-                                    ParryStrongExplosionBehavior(),
-                                    1f,
-                                    user,
-                                    world
-                                )
+                            if (entity is ArrowEntity) {
+                                if (!(entity as PersistentProjectileEntityAccessor).getInGround()) {
+                                    entity.discard()
+                                    if (entity.isCritical) blowTheFuckUp(
+                                        ParryStrongExplosionBehavior(),
+                                        ParryBustedExplosionBehavior(),
+                                        1f,
+                                        user,
+                                        world
+                                    )
+                                    else blowTheFuckUp(
+                                        ParryWeakExplosionBehavior(),
+                                        ParryStrongExplosionBehavior(),
+                                        1f,
+                                        user,
+                                        world
+                                    )
+                                }
                             } else if (entity is CannonballEntity || entity is MortarEntity || entity is FireworkRocketEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
@@ -118,7 +111,7 @@ class ParryKosmogliph(id: Identifier) :
                                     user,
                                     world
                                 )
-                            }  else if (entity is ShulkerBulletEntity || entity is PotionEntity || entity is WitherSkullEntity || entity is DragonFireballEntity) {
+                            } else if (entity is ShulkerBulletEntity || entity is PotionEntity || entity is WitherSkullEntity || entity is DragonFireballEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
                                     ParryBrewExplosionBehavior(),

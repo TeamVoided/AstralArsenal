@@ -14,6 +14,7 @@
     "ItemMixin",
     "KosmogliphAirSpeedMixin",
     "LivingEntityMixin",
+    "PersistentProjectileEntityAccessor",
     "RangedWeaponItemMixin",
     "ServerPlayerInteractionManagerMixin",
     "ToolItemMixin",
