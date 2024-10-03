@@ -10,10 +10,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.util.Rarity
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.AstralArsenal.id
-import org.teamvoided.astralarsenal.item.AstralGreathammerItem
-import org.teamvoided.astralarsenal.item.CannonballItem
-import org.teamvoided.astralarsenal.item.MorterItem
-import org.teamvoided.astralarsenal.item.RailgunItem
+import org.teamvoided.astralarsenal.item.*
 import java.util.stream.Stream
 
 @Suppress("unused")
@@ -37,6 +34,10 @@ object AstralItems {
             (Item.Settings()).fireproof().rarity(Rarity.EPIC)
                 .attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.0F))
         )
+    )
+    val NAILGUN = register(
+        "nailgun",
+        NailgunItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).maxCount(1))
     )
     val RAILGUN = register("railgun", RailgunItem(Item.Settings().fireproof().maxCount(1).rarity(Rarity.EPIC)))
 

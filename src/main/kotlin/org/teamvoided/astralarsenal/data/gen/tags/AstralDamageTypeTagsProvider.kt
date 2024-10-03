@@ -51,6 +51,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.BEAM_OF_LIGHT)
             .add(AstralDamageTypes.RAILED)
             .add(AstralDamageTypes.NON_RAILED)
+            .add(AstralDamageTypes.RICHOCHET)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_EXPLOSION)
             .forceAddTag(DamageTypeTags.IS_EXPLOSION)
@@ -84,6 +85,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.RAILED)
             .add(AstralDamageTypes.NON_RAILED)
             .add(AstralDamageTypes.DRAIN)
+            .add(AstralDamageTypes.RICHOCHET)
 
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_SHIELD)
             .add(AstralDamageTypes.BEAM_OF_LIGHT)
@@ -98,6 +100,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
 
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_COOLDOWN)
             .add(AstralDamageTypes.BURN)
+            .add(AstralDamageTypes.RICHOCHET)
 
         getOrCreateTagBuilder(DamageTypeTags.AVOIDS_GUARDIAN_THORNS)
             .forceAddTag(AstralDamageTypeTags.IS_PLASMA)
@@ -109,5 +112,6 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.BEAM_OF_LIGHT)
             .add(AstralDamageTypes.BLEED)
             .add(AstralDamageTypes.PARRY)
+            .add(AstralDamageTypes.RICHOCHET)
     }
 }

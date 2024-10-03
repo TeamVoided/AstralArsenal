@@ -27,6 +27,11 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::BeamOfLightEntity), SpawnGroup.MISC)
             .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
+    val RICHOCHET = register(
+        "richochet",
+        EntityType.Builder.create(EntityType.EntityFactory(::RichochetEntity), SpawnGroup.MISC)
+            .setDimensions(0.0f, 0.0f).maxTrackingRange(4).build()
+    )
     val BLACK_HOLE_ENTITY = register(
         "black_hole",
         EntityType.Builder.create(EntityType.EntityFactory(::BlackHoleEntity), SpawnGroup.MISC)
