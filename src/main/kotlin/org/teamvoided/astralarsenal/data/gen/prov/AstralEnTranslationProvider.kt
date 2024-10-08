@@ -47,6 +47,7 @@ class AstralEnTranslationProvider(
         gen.add("death.attack.burn", "%s was given 4th degree burns by %s")
         gen.add("death.attack.boom", "%s was blown up")
         gen.add("death.attack.parry", "%s was parried by %s")
+        gen.add("death.attack.richochet", "%s was electrocuted by %s")
 
         gen.add("death.attack.cannonball.item", "%s was dunked on by %s using %s")
         gen.add("death.attack.ballnt.item", "%s ain't ballin'")
@@ -56,7 +57,8 @@ class AstralEnTranslationProvider(
         gen.add("death.attack.drain.item", "%s drained their life")
         gen.add("death.attack.burn.item", "%s was given 4th degree burns by %s using %s")
         gen.add("death.attack.boom.item", "%s was blown up by %s using %s")
-        gen.add("death.attack.parry,item", "%s was parried by %s using %s")
+        gen.add("death.attack.parry.item", "%s was parried by %s using %s")
+        gen.add("death.attack.richochet.item", "%s was electrocuted by %s using %s")
 
         gen.add("death.attack.bleed.player", "%s bled to death while fighting %s")
 

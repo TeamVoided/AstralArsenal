@@ -20,9 +20,7 @@ import net.minecraft.world.explosion.ExplosionBehavior
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.entity.CannonballEntity
-import org.teamvoided.astralarsenal.entity.FlameThrowerEntity
-import org.teamvoided.astralarsenal.entity.MortarEntity
+import org.teamvoided.astralarsenal.entity.*
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.mixin.PersistentProjectileEntityAccessor
 import org.teamvoided.astralarsenal.world.explosion.*
@@ -71,6 +69,7 @@ class ParryKosmogliph(id: Identifier) :
                                         user,
                                         world
                                     )
+                                    break
                                 }
                             } else if (entity is CannonballEntity || entity is MortarEntity || entity is FireworkRocketEntity) {
                                 entity.discard()
@@ -81,10 +80,12 @@ class ParryKosmogliph(id: Identifier) :
                                     user,
                                     world
                                 )
-                            } else if (entity is SnowballEntity) {
+                                break
+                            } else if (entity is SnowballEntity || entity is FreezeShotEntity) {
                                 entity.discard()
                                 blowTheFuckUp(ParryIceExplosionBehavior(), ParryIceExplosionBehavior(), 1f, user, world)
-                            } else if (entity is FireballEntity || entity is SmallFireballEntity) {
+                                break
+                            } else if (entity is FireballEntity || entity is SmallFireballEntity || entity is FlameShotEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
                                     ParryFireExplosionBehavior(),
@@ -93,24 +94,7 @@ class ParryKosmogliph(id: Identifier) :
                                     user,
                                     world
                                 )
-                            } else if (entity is FlameThrowerEntity) {
-                                entity.discard()
-                                blowTheFuckUp(
-                                    ParryWeakExplosionBehavior(),
-                                    ParryFireExplosionBehavior(),
-                                    0.1f,
-                                    user,
-                                    world
-                                )
-                            } else if (entity is EggEntity) {
-                                entity.discard()
-                                blowTheFuckUp(
-                                    ParryWeakExplosionBehavior(),
-                                    ParryStrongExplosionBehavior(),
-                                    1f,
-                                    user,
-                                    world
-                                )
+                                break
                             } else if (entity is ShulkerBulletEntity || entity is PotionEntity || entity is WitherSkullEntity || entity is DragonFireballEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
@@ -120,6 +104,7 @@ class ParryKosmogliph(id: Identifier) :
                                     user,
                                     world
                                 )
+                                break
                             } else if (entity is LlamaSpitEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
@@ -129,6 +114,7 @@ class ParryKosmogliph(id: Identifier) :
                                     user,
                                     world
                                 )
+                                break
                             } else if (entity.type.isIn(AstralEntityTags.PROTECTED_FROM_DEL)) {//prevents certain projectiles being destroyed from parrying
                             } else {
                                 entity.discard()
@@ -139,6 +125,7 @@ class ParryKosmogliph(id: Identifier) :
                                     user,
                                     world
                                 )
+                                break
                             }
                         }
                     }
@@ -174,7 +161,7 @@ class ParryKosmogliph(id: Identifier) :
                         (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
-                )
+                ).filter { it !is ProjectileEntity }
             )
             if (entities.isNotEmpty()) {
                 break
@@ -186,7 +173,7 @@ class ParryKosmogliph(id: Identifier) :
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
                     (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),
-                    5,
+                    1,
                     0.2,
                     0.2,
                     0.2,
@@ -229,6 +216,7 @@ class ParryKosmogliph(id: Identifier) :
                     World.ExplosionSourceType.TNT
                 )
                 entity.discard()
+                break
             } else {
                 world.createExplosion(
                     null,
@@ -248,13 +236,14 @@ class ParryKosmogliph(id: Identifier) :
                         entity.x,
                         entity.y,
                         entity.z,
-                        500,
+                        50,
                         1.0,
                         1.0,
                         1.0,
                         0.0
                     )
                 }
+                break
             }
         }
         if (entities.isEmpty()) {
@@ -276,7 +265,7 @@ class ParryKosmogliph(id: Identifier) :
                     result.pos.x,
                     result.pos.y,
                     result.pos.z,
-                    500,
+                    50,
                     1.0,
                     1.0,
                     1.0,

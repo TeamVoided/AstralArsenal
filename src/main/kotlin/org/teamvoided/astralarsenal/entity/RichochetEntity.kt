@@ -75,7 +75,8 @@ class RichochetEntity : Entity {
     }
 
     fun rail(world: World, cause: PlayerEntity, caster: RichochetEntity): Int {
-        var entitiesHit = mutableListOf<Entity>()
+        val entitiesHit = mutableListOf<Entity>()
+        entitiesHit.add(cause)
         val combined = caster.eyePos.add(caster.rotationVector.multiply(100.0))
         val result = world.raycast(
             RaycastContext(
@@ -105,7 +106,7 @@ class RichochetEntity : Entity {
             if (!caster.world.isClient) {
                 val serverWorld = caster.world as ServerWorld
                 serverWorld.spawnParticles(
-                    ParticleTypes.GLOW,
+                    ParticleTypes.END_ROD,
                     (lerp(caster.eyePos.x, result.pos.x, i / interval)),
                     (lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (lerp(caster.eyePos.z, result.pos.z, i / interval)),

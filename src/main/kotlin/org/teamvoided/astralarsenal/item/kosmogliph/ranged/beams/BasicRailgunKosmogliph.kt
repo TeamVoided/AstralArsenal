@@ -98,7 +98,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
                 entity.discard()
             }
             val rand = world.random.rangeInclusive(1, 10)
-            if (entity is LivingEntity) {
+            if (entity is PlayerEntity) {
                 if (rand == 1) {
                     entity.damage(
                         DamageSource(
@@ -116,6 +116,14 @@ class BasicRailgunKosmogliph(id: Identifier) :
                         ), 10f
                     )
                 }
+            } else if (entity is LivingEntity) {
+                entity.damage(
+                    DamageSource(
+                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                        player,
+                        player
+                    ), 30f
+                )
             }
         }
         if (!player.isCreative) {
@@ -129,21 +137,22 @@ class BasicRailgunKosmogliph(id: Identifier) :
                     player
                 ), 5f
             )
-        var hard_levels = 10
-        val effects = player.statusEffects.filter { unhealable.contains(it.effectType) }
-        if (effects.isNotEmpty()) {
-            effects.forEach {
-                val w = it.amplifier
-                hard_levels += w
+            var hard_levels = 10
+            val effects = player.statusEffects.filter { unhealable.contains(it.effectType) }
+            if (effects.isNotEmpty()) {
+                effects.forEach {
+                    val w = it.amplifier
+                    hard_levels += w
+                }
             }
-        }
-        player.addStatusEffect(
-            StatusEffectInstance(
-                AstralEffects.UNHEALABLE_DAMAGE,
-                400, hard_levels,
-                false, true, true
+            player.addStatusEffect(
+                StatusEffectInstance(
+                    AstralEffects.UNHEALABLE_DAMAGE,
+                    400, hard_levels,
+                    false, true, true
+                )
             )
-        )}
+        }
         return null
     }
 

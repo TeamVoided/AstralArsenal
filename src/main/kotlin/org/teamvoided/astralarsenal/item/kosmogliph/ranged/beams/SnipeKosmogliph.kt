@@ -98,25 +98,34 @@ class SnipeKosmogliph(id: Identifier) :
                         World.ExplosionSourceType.TNT
                     )
                     entity.discard()
+                } else if (entity is PlayerEntity) {
+                    val rand = world.random.rangeInclusive(1, 10)
+                    if (rand == 1) {
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                                player,
+                                player
+                            ), 7.5f
+                        )
+                    } else {
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                                player,
+                                player
+                            ), 7.5f
+                        )
+                    }
+                } else {
+                    entity.damage(
+                        DamageSource(
+                            AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                            player,
+                            player
+                        ), 22.5f
+                    )
                 }
-            }
-            val rand = world.random.rangeInclusive(1, 10)
-            if (rand == 1) {
-                entity.damage(
-                    DamageSource(
-                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
-                        player,
-                        player
-                    ), 7.5f
-                )
-            } else {
-                entity.damage(
-                    DamageSource(
-                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
-                        player,
-                        player
-                    ), 7.5f
-                )
             }
         }
         if (!player.isCreative) {
@@ -210,23 +219,35 @@ class SnipeKosmogliph(id: Identifier) :
                                 World.ExplosionSourceType.TNT
                             )
                             entity.discard()
-                        }
-                        val rand = world.random.rangeInclusive(1, 10)
-                        if (rand == 1) {
+                        } else if (entity is PlayerEntity) {
+                            val rand = world.random.rangeInclusive(1, 10)
+                            if (rand == 1) {
+                                entity.damage(
+                                    DamageSource(
+                                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                                        player,
+                                        player
+                                    ), 7.5f
+                                )
+                            } else {
+                                entity.damage(
+                                    DamageSource(
+                                        AstralDamageTypes.getHolder(
+                                            world.registryManager,
+                                            AstralDamageTypes.NON_RAILED
+                                        ),
+                                        player,
+                                        player
+                                    ), 7.5f
+                                )
+                            }
+                        } else {
                             entity.damage(
                                 DamageSource(
                                     AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
                                     player,
                                     player
-                                ), 7.5f
-                            )
-                        } else {
-                            entity.damage(
-                                DamageSource(
-                                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
-                                    player,
-                                    player
-                                ), 7.5f
+                                ), 22.5f
                             )
                         }
                     }

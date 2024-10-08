@@ -36,6 +36,25 @@ class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, Astra
         )
     }
 
+    override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
+        var bleed_levels = 0
+        val effects_two = target.statusEffects.filter { over.contains(it.effectType) }
+        if (effects_two.isNotEmpty()) {
+            effects_two.forEach {
+                val w = it.amplifier
+                bleed_levels += w + 1
+            }
+        }
+        target.addStatusEffect(
+            StatusEffectInstance(
+                AstralEffects.BLEED,
+                400, bleed_levels,
+                false, false, true
+            )
+        )
+        super.postHit(stack, target, attacker)
+    }
+
     override fun translationText(tooltip: Boolean) =
         "Bleed"
 

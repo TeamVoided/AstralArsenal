@@ -127,7 +127,7 @@ class RancidBrewKosmogliph(id: Identifier) :
                     entity.addStatusEffect(
                         StatusEffectInstance(
                             AstralEffects.REDUCE,
-                            300, 0,
+                            300, 9,
                             false, true, true
                         )
                     )
@@ -154,7 +154,7 @@ class RancidBrewKosmogliph(id: Identifier) :
         player.addStatusEffect(
             StatusEffectInstance(
                 AstralEffects.REDUCE,
-                100, 1,
+                100, 19,
                 false, true, true
             )
         )

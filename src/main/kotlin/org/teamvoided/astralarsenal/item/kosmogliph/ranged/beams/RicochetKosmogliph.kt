@@ -13,9 +13,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.hit.HitResult
-import net.minecraft.util.math.BlockBox
 import net.minecraft.util.math.Box
-import net.minecraft.util.math.MathHelper
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 import org.joml.Math.lerp
@@ -24,7 +22,6 @@ import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.entity.RichochetEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
-import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
@@ -32,17 +29,18 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-class RichochetKosmogliph(id: Identifier) :
+class RicochetKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_BASIC_RAILGUN) }) {
 
     //Modify this to change how many times it richochets
     val COUNTDOWN = 20
 
     //Modify this to change how much damage it does per hit, remember this will ignore cooldowns.
-    val DAMAGE = 0.25
+    val DAMAGE = 1.0
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
-        var entitiesHit = mutableListOf<Entity>()
+        val entitiesHit = mutableListOf<Entity>()
+        entitiesHit.add(player)
         val combined = player.eyePos.add(player.rotationVector.multiply(100.0))
         val result = world.raycast(
             RaycastContext(
@@ -72,7 +70,7 @@ class RichochetKosmogliph(id: Identifier) :
             if (!player.world.isClient) {
                 val serverWorld = player.world as ServerWorld
                 serverWorld.spawnParticles(
-                    ParticleTypes.GLOW,
+                    ParticleTypes.END_ROD,
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
                     (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),

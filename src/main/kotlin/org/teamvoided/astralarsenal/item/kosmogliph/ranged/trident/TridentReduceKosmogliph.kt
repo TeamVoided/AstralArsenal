@@ -5,6 +5,7 @@ import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
+import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
@@ -21,7 +22,7 @@ class TridentReduceKosmogliph(id: Identifier) :
         if (effects_two.isNotEmpty()) {
             effects_two.forEach {
                 val w = it.amplifier
-                bleed_levels += w + 1
+                bleed_levels += w + 6
             }
         }
         victim.addStatusEffect(
@@ -31,6 +32,25 @@ class TridentReduceKosmogliph(id: Identifier) :
                 false, false, true
             )
         )
+    }
+
+    override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
+        var bleed_levels = 0
+        val effects_two = target.statusEffects.filter { over.contains(it.effectType) }
+        if (effects_two.isNotEmpty()) {
+            effects_two.forEach {
+                val w = it.amplifier
+                bleed_levels += w + 1
+            }
+        }
+        target.addStatusEffect(
+            StatusEffectInstance(
+                AstralEffects.REDUCE,
+                400, bleed_levels,
+                false, false, true
+            )
+        )
+        super.postHit(stack, target, attacker)
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {

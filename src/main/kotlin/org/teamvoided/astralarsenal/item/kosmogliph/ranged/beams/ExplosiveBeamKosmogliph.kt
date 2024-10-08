@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
@@ -45,7 +46,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                         (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
-                )
+                ).filter { it !is ProjectileEntity }
             )
             if (entities.isNotEmpty()) {
                 break
@@ -90,6 +91,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                     World.ExplosionSourceType.TNT
                 )
                 entity.discard()
+                break
             } else {
                 world.createExplosion(
                     null,
@@ -116,6 +118,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                         0.0
                     )
                 }
+                break
             }
         }
         if (entities.isEmpty()) {

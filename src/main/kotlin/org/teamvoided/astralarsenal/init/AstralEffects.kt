@@ -53,9 +53,9 @@ object AstralEffects {
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
         Registries.STATUS_EFFECT.registerHolder(id(id), entry)
 
-    val REDUCE_MULT = 0.3
+    val REDUCE_MULT = 0.05
     val reduce = listOf(
-        AstralEffects.REDUCE
+        REDUCE
     )
     fun modifyDamage(entity: LivingEntity, damage: Float): Float {
         var output = damage

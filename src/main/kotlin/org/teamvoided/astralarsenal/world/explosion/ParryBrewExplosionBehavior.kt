@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.util.math.BlockPos
@@ -70,7 +71,7 @@ class ParryBrewExplosionBehavior : ExplosionBehavior() {
         if (entity is LivingEntity && entity != explosion.causingEntity) {
             entity.damage(
                 DamageSource(
-                    AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
+                    AstralDamageTypes.getHolder(entity.world.registryManager, DamageTypes.MAGIC),
                     explosion.causingEntity,
                     explosion.causingEntity
                 ), 5f
