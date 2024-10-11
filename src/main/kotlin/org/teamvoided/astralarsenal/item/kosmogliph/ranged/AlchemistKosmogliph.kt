@@ -29,6 +29,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import java.util.*
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ALCHEMIST) }),
@@ -102,15 +103,15 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
     override fun modifyItemTooltip(
         stack: ItemStack,
         ctx: Item.TooltipContext,
-        tooltip: MutableList<Text>,
+        tooltipConsumer: Consumer<Text>,
         config: TooltipConfig
     ) {
-        super.modifyItemTooltip(stack, ctx, tooltip, config)
+        super.modifyItemTooltip(stack, ctx, tooltipConsumer, config)
 
         val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return
-        tooltip += CommonTexts.EMPTY
+        tooltipConsumer.accept(CommonTexts.EMPTY)
         if (data.charges <= 0 || data.contents.isEmpty) {
-            tooltip += Text.translatable("effect.none").formatted(Formatting.DARK_PURPLE)
+            tooltipConsumer.accept(Text.translatable("effect.none").formatted(Formatting.DARK_PURPLE))
             return
         }
         val potion = data.contents.getOrNull() ?: return
@@ -131,12 +132,12 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
                     StatusEffectUtil.durationToString(effect, 1f, ctx.tickRate)
                 )
             }
-
-            tooltip += text.formatted(Formatting.DARK_PURPLE)
+            tooltipConsumer.accept(text.formatted(Formatting.DARK_PURPLE))
         }
 
-        tooltip += Text.translatable("kosmogliph.alchemist.charges", data.charges.toString())
-            .formatted(Formatting.DARK_PURPLE)
+        tooltipConsumer.accept(
+            Text.translatable("kosmogliph.alchemist.charges", data.charges.toString()).formatted(Formatting.DARK_PURPLE)
+        )
     }
 
     class Data(
@@ -165,9 +166,9 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
 
     companion object {
         fun potionsAreEqual(a: PotionContentsComponent, b: PotionContentsComponent): Boolean {
-            if(a.effects.collectionSizeOrDefault(0) != b.effects.collectionSizeOrDefault(9)) return false
-            a.effects.forEach{ aIt ->
-                if (!b.effects.any{ bIt -> aIt.isOfType(bIt.effectType) && aIt.amplifier == bIt.amplifier })
+            if (a.effects.collectionSizeOrDefault(0) != b.effects.collectionSizeOrDefault(9)) return false
+            a.effects.forEach { aIt ->
+                if (!b.effects.any { bIt -> aIt.isOfType(bIt.effectType) && aIt.amplifier == bIt.amplifier })
                     return false
             }
             return true

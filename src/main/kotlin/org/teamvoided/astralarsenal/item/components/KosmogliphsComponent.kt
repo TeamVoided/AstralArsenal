@@ -1,12 +1,17 @@
 package org.teamvoided.astralarsenal.item.components
 
 import com.mojang.serialization.Codec
+import net.minecraft.client.item.TooltipConfig
+import net.minecraft.item.Item
+import net.minecraft.item.TooltipAppender
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
+import java.util.function.Consumer
 
 class KosmogliphsComponent(
     private val kosmogliphs: Set<Kosmogliph> = mutableSetOf()
-) : Set<Kosmogliph> by kosmogliphs {
+) : TooltipAppender, Set<Kosmogliph> by kosmogliphs {
     companion object {
         val CODEC: Codec<KosmogliphsComponent> =
             Identifier.CODEC.xmap(::fromId, ::toId).listOf().xmap(::fromList, ::toList)
@@ -19,4 +24,7 @@ class KosmogliphsComponent(
 
         fun Collection<Kosmogliph>.toComponent() = KosmogliphsComponent(this.toSet())
     }
+
+    override fun appendToTooltip(context: Item.TooltipContext, tooltipConsumer: Consumer<Text>, config: TooltipConfig) =
+        kosmogliphs.forEach { tooltipConsumer.accept(Text.translatable(it.translationKey(true)).setColor(0x915eb4)) }
 }

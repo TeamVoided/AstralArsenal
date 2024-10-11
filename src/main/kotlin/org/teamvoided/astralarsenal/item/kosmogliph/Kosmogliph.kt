@@ -35,11 +35,13 @@ import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent.Companion.toComponent
+import java.util.function.Consumer
 
 interface Kosmogliph {
     fun modifyItemTooltip(
-        stack: ItemStack, ctx: Item.TooltipContext, tooltip: MutableList<Text>, config: TooltipConfig
+        stack: ItemStack, ctx: Item.TooltipContext, tooltipConsumer: Consumer<Text>, config: TooltipConfig
     ) = Unit
+
     fun canBeAppliedTo(stack: ItemStack): Boolean
     fun onApply(stack: ItemStack) {}
     fun onUnapply(stack: ItemStack) {}

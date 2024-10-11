@@ -12,6 +12,7 @@
     "EnchantmentScreenHandlerMixin",
     "HoeItemMixin",
     "ItemMixin",
+    "ItemStackMixin",
     "KosmogliphAirSpeedMixin",
     "LivingEntityMixin",
     "PersistentProjectileEntityAccessor",
