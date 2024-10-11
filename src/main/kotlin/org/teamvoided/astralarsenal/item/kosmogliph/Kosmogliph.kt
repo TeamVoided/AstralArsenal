@@ -37,7 +37,9 @@ import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent.Companion.toComponent
 
 interface Kosmogliph {
-    fun modifyItemTooltip(stack: ItemStack, ctx: Item.TooltipContext, tooltip: MutableList<Text>, config: TooltipConfig)
+    fun modifyItemTooltip(
+        stack: ItemStack, ctx: Item.TooltipContext, tooltip: MutableList<Text>, config: TooltipConfig
+    ) = Unit
     fun canBeAppliedTo(stack: ItemStack): Boolean
     fun onApply(stack: ItemStack) {}
     fun onUnapply(stack: ItemStack) {}
@@ -51,41 +53,26 @@ interface Kosmogliph {
     fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {}
     fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = 0
     fun shouldNegateDamage(
-        stack: ItemStack,
-        entity: LivingEntity,
-        source: DamageSource,
-        equipmentSlot: EquipmentSlot
+        stack: ItemStack, entity: LivingEntity, source: DamageSource, equipmentSlot: EquipmentSlot
     ): Boolean = false
 
     fun modifyDamage(
-        stack: ItemStack,
-        entity: LivingEntity,
-        damage: Float,
-        source: DamageSource,
-        equipmentSlot: EquipmentSlot,
-        stage: DamageModificationStage
+        stack: ItemStack, entity: LivingEntity, damage: Float, source: DamageSource,
+        equipmentSlot: EquipmentSlot, stage: DamageModificationStage
     ): Float = damage
 
     fun onStackClicked(
-        stack: ItemStack,
-        other: ItemStack,
-        slot: Slot,
-        clickType: ClickType,
-        player: PlayerEntity,
-        reference: StackReference
+        stack: ItemStack, other: ItemStack, slot: Slot, clickType: ClickType,
+        player: PlayerEntity, reference: StackReference
     ): Boolean = false
 
     fun modifyBlockBreakLoot(
-        table: LootTable,
-        parameters: LootContextParameterSet,
-        world: ServerWorld,
-        stack: ItemStack,
-        original: ObjectArrayList<ItemStack>
+        table: LootTable, parameters: LootContextParameterSet, world: ServerWorld,
+        stack: ItemStack, original: ObjectArrayList<ItemStack>
     ): List<ItemStack> = original
 
     fun id() = REGISTRY.getId(this)!!
-    fun translationText(tooltip: Boolean = false) =
-        id().path.toString()
+    fun translationText(tooltip: Boolean = false) = id().path.toString()
 
     fun translationKey(tooltip: Boolean = false) =
         id().toTranslationKey("kosmogliph${if (tooltip) ".tooltip" else ".name"}")
