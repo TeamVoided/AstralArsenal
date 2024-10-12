@@ -20,7 +20,7 @@ import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralItems
 
-class BaseNailEntity : PersistentProjectileEntity {
+open class BaseNailEntity : PersistentProjectileEntity {
 
     constructor(entityType: EntityType<out BaseNailEntity?>?, world: World?) :
             super(entityType as EntityType<out PersistentProjectileEntity?>?, world)
