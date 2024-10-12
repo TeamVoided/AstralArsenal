@@ -1,8 +1,7 @@
 package org.teamvoided.astralarsenal.init
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
-import net.minecraft.client.render.entity.EmptyEntityRenderer
-import net.minecraft.client.render.entity.FlyingItemEntityRenderer
+import net.minecraft.client.render.entity.*
 
 
 object AstralEntitiesClient {
@@ -20,5 +19,6 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.FREEZE_SHOT_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.FLAME_THROWER_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.RICHOCHET, ::EmptyEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.NAIL_ENTITY, ::EmptyEntityRenderer)
     }
 }

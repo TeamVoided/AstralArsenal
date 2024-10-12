@@ -73,6 +73,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.WIND_CHARGE)
             .add(AstralDamageTypes.CANNONBALL)
             .add(AstralDamageTypes.BALLNT)
+            .add(AstralDamageTypes.NAILED)
 
         getOrCreateTagBuilder(DamageTypeTags.IS_PROJECTILE) //for endermen to avoid
 
@@ -101,6 +102,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_COOLDOWN)
             .add(AstralDamageTypes.BURN)
             .add(AstralDamageTypes.RICHOCHET)
+            .add(AstralDamageTypes.NAILED)
 
         getOrCreateTagBuilder(DamageTypeTags.AVOIDS_GUARDIAN_THORNS)
             .forceAddTag(AstralDamageTypeTags.IS_PLASMA)

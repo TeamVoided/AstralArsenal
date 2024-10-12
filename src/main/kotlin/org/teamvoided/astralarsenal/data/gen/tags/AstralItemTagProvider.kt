@@ -104,6 +104,9 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TRIDENT_REDUCE).forceAddTag(ConventionalItemTags.SPEAR_TOOLS)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TRIDENT_BLEED).forceAddTag(ConventionalItemTags.SPEAR_TOOLS)
 
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_CAPACITY).add(AstralItems.NAILGUN)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_OVER_HEAT).add(AstralItems.NAILGUN)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_STATIC_RELEASE).add(AstralItems.NAILGUN)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_KOSMOGLIPHS)
             .forceAddTag(AstralItemTags.SUPPORTS_VEIN_MINER)
@@ -147,6 +150,9 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_TIME_BOMB)
             .forceAddTag(AstralItemTags.SUPPORTS_TRIDENT_REDUCE)
             .forceAddTag(AstralItemTags.SUPPORTS_TRIDENT_BLEED)
+            .forceAddTag(AstralItemTags.SUPPORTS_CAPACITY)
+            .forceAddTag(AstralItemTags.SUPPORTS_STATIC_RELEASE)
+            .forceAddTag(AstralItemTags.SUPPORTS_OVER_HEAT)
             .add(Items.SHIELD)
     }
 }

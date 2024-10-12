@@ -18,6 +18,7 @@ import org.teamvoided.astralarsenal.item.kosmogliph.ranged.AlchemistKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.CannonballLauncherKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.ShotgunKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams.*
+import org.teamvoided.astralarsenal.item.kosmogliph.ranged.nailgun.*
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.DevastateKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.LockOffKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.strikes.OrbitalKosmogliph
@@ -102,6 +103,10 @@ object AstralKosmogliphs {
 
     val TRIDENT_REDUCE = register("trident_reduce", ::TridentReduceKosmogliph)
     val TRIDENT_BLEED = register("trident_bleed", ::TridentBleedKosmogliph)
+
+    val CAPACITY = register("capacity", ::CapacityKosmogliph)
+    val OVER_HEAT = register("over_heat", ::OverHeatKosmogliph)
+    val STATIC_RELEASE = register("static_release", ::StaticReleaseKosmogliph)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))

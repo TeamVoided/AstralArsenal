@@ -65,6 +65,9 @@ object AstralItemTags {
     val SUPPORTS_TRIDENT_REDUCE = supports("trident_reduce")
     val SUPPORTS_TRIDENT_BLEED = supports("trident_bleed")
 
+    val SUPPORTS_CAPACITY = supports("capacity")
+    val SUPPORTS_OVER_HEAT = supports("capacity")
+    val SUPPORTS_STATIC_RELEASE = supports("static_release")
 
     private fun create(id: String): TagKey<Item> {
         val key = RegistryKeys.ITEM.tag(id(id))

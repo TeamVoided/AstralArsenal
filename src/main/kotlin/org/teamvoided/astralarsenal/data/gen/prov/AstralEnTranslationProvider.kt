@@ -48,6 +48,7 @@ class AstralEnTranslationProvider(
         gen.add("death.attack.boom", "%s was blown up")
         gen.add("death.attack.parry", "%s was parried by %s")
         gen.add("death.attack.richochet", "%s was electrocuted by %s")
+        gen.add("death.attack.nailed", "%s was nailed by %s")
 
         gen.add("death.attack.cannonball.item", "%s was dunked on by %s using %s")
         gen.add("death.attack.ballnt.item", "%s ain't ballin'")
@@ -59,6 +60,7 @@ class AstralEnTranslationProvider(
         gen.add("death.attack.boom.item", "%s was blown up by %s using %s")
         gen.add("death.attack.parry.item", "%s was parried by %s using %s")
         gen.add("death.attack.richochet.item", "%s was electrocuted by %s using %s")
+        gen.add("death.attack.nailed.item", "%s was nailed by %s using %s")
 
         gen.add("death.attack.bleed.player", "%s bled to death while fighting %s")
 
@@ -81,6 +83,7 @@ class AstralEnTranslationProvider(
         gen.add(AstralEffects.BLEED.value().translationKey, "Bleed")
         gen.add(AstralEffects.OVERHEAL.value().translationKey, "Overheal")
         gen.add(AstralEffects.HARD_DAMAGE.value().translationKey, "Weak Hard Damage")
+        gen.add(AstralEffects.CONDUCTIVE.value().translationKey, "Conductive")
 
         gen.add("container.cosmic_table", "Cosmic Table")
 

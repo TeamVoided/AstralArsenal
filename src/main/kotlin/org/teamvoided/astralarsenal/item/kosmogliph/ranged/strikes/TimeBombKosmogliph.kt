@@ -38,7 +38,7 @@ class TimeBombKosmogliph(
             snowballEntity.THRUST = 1.0
             snowballEntity.TIMEACTIVE = 40
             snowballEntity.WINDUP = 600
-            snowballEntity.DMG = 10
+            snowballEntity.DMG = 50
             snowballEntity.trackTime = 580
             snowballEntity.balls = player
             snowballEntity.hard_damage = 50
@@ -91,7 +91,7 @@ class TimeBombKosmogliph(
                 1.0f
             )
             if (!player.isCreative) {
-                player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
+                player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
             }
             if (hand == Hand.MAIN_HAND) {
                 stack.damageEquipment(1, player, EquipmentSlot.MAINHAND)

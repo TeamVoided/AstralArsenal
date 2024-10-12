@@ -20,7 +20,7 @@ public class DamageReductionMixin {
     private float modifyDamageEffect(float damage, DamageSource source) {
         var self = (LivingEntity) (Object) this;
         damage = DamageReductionKt.kosmogliphDamageReductionCall(self, damage, source, DamageModificationStage.PRE_EFFECT);
-        damage = AstralEffects.INSTANCE.modifyDamage(self, damage);
+        damage = AstralEffects.INSTANCE.modifyDamage(self, damage, source);
         damage = DamageReductionKt.kosmogliphDamageReductionCall(self, damage, source, DamageModificationStage.POST_EFFECT);
         return damage;
     }

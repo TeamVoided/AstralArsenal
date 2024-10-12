@@ -7,6 +7,7 @@ import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
+import org.teamvoided.astralarsenal.item.NailgunItem
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
@@ -23,7 +24,7 @@ object AstralItemComponents {
     val KOSMOGLIPHS: DataComponentType<KosmogliphsComponent> =
         register(
             "kosmogliphs",
-            { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem || it is ShieldItem},
+            { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem || it is ShieldItem || it is NailgunItem},
             { KosmogliphsComponent() }) { builder ->
             builder.codec(KosmogliphsComponent.CODEC).build()
         }
@@ -58,6 +59,11 @@ object AstralItemComponents {
     val MINIGUN_DATA: DataComponentType<MinigunKosmogliph.Data> =
         register("minigun_data", { it is RailgunItem }, { MinigunKosmogliph.Data(0, 0) }) { builder ->
             builder.codec(MinigunKosmogliph.Data.CODEC).build()
+        }
+
+    val NAILGUN_DATA: DataComponentType<NailgunItem.Data> =
+        register("nailgun_data", { it is NailgunItem }, { NailgunItem.Data(0, 0, 0, 0, 0) }) { builder ->
+            builder.codec(NailgunItem.Data.CODEC).build()
         }
 
     val GRAPPLE_DATA: DataComponentType<GrappleKosmogliph.Data> =
