@@ -7,7 +7,6 @@ import net.minecraft.client.render.item.ItemRenderer
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.Axis
-import org.teamvoided.astralarsenal.block.enity.CosmicTableBlockEntity
 import kotlin.math.sin
 
 class CosmicTableBlockEntityRenderer(context: BlockEntityRendererFactory.Context) :

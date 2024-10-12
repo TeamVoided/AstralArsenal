@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.block.enity
+package org.teamvoided.astralarsenal.block.entity
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.minecraft.block.BlockState

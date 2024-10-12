@@ -12,7 +12,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.block.CosmicTableBlock
-import org.teamvoided.astralarsenal.block.enity.CosmicTableBlockEntity
+import org.teamvoided.astralarsenal.block.entity.CosmicTableBlockEntity
 
 object AstralBlocks {
     fun init() = Unit

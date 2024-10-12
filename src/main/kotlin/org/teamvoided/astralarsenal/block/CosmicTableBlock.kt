@@ -20,7 +20,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
-import org.teamvoided.astralarsenal.block.enity.CosmicTableBlockEntity
+import org.teamvoided.astralarsenal.block.entity.CosmicTableBlockEntity
 import org.teamvoided.astralarsenal.init.AstralBlocks
 
 
