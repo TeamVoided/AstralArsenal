@@ -3,6 +3,8 @@ package org.teamvoided.astralarsenal.block
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityTicker
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
@@ -72,6 +74,11 @@ class CosmicTableBlock(settings: Settings) : BlockWithEntity(settings), Waterlog
         super.appendProperties(builder)
         builder.add(WATERLOGGED)
     }
+
+    override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>)
+            : BlockEntityTicker<T>? =
+        if (world.isClient) checkType(type, AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY, CosmicTableBlockEntity::tick)
+        else null
 
     companion object {
         val SHAPE = createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0)

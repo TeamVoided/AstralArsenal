@@ -6,55 +6,72 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.render.item.ItemRenderer
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.item.ItemStack
 import net.minecraft.util.math.Axis
 import org.teamvoided.astralarsenal.block.enity.CosmicTableBlockEntity
-import org.teamvoided.astralarsenal.init.AstralItems.KOSMIC_GEM
 import kotlin.math.sin
 
 class CosmicTableBlockEntityRenderer(context: BlockEntityRendererFactory.Context) :
     BlockEntityRenderer<CosmicTableBlockEntity> {
-    val SPEED = 200
-    val HALF_SPEED = SPEED / 2
-    var itemRenderer: ItemRenderer? = null
-
-    init {
-        this.itemRenderer = context.itemRenderer
-    }
+    private val SPEED = 200
+    private val HALF_SPEED = SPEED / 2
+    private var itemRenderer: ItemRenderer = context.itemRenderer
 
     override fun render(
-        entity: CosmicTableBlockEntity,
+        block: CosmicTableBlockEntity,
         tickDelta: Float,
-        matrices: MatrixStack?,
-        vertexConsumers: VertexConsumerProvider?,
+        matrices: MatrixStack,
+        vertexConsumers: VertexConsumerProvider,
         light: Int,
         overlay: Int
     ) {
-        matrices?.push()
-
-        val world = entity.world!!
-        var time = (world.time % SPEED).toFloat()
+        matrices.push()
+        val world = block.world ?: error("World is null in CosmicTableBlockEntityRenderer")
+        var time = ((world.time + block.pos.asLong()) % SPEED).toFloat()
         time += tickDelta
         time -= HALF_SPEED
         time /= HALF_SPEED
-        var bob = (Math.PI * 2 * time).toFloat()
-        bob = sin(bob) + 1f
+        var bob = sin(Math.PI * 2 * time) + 1f
         bob /= 2
+        val inventory = block.getInventory()
 
-        matrices?.translate(0.5, 1.0 + (bob / 4), 0.5)
-        matrices?.scale(0.5f, 0.5f, 0.5f)
-        matrices?.rotate(Axis.Y_NEGATIVE.rotation((time * 2 * Math.PI).toFloat()))
-        itemRenderer!!.renderItem(
-            ItemStack(KOSMIC_GEM),
+        if (!inventory[1].isEmpty) {
+            matrices.translate(0.5, 1.0 + (bob / 4), 0.5)
+            matrices.scale(0.5f, 0.5f, 0.5f)
+            matrices.rotate(Axis.Y_NEGATIVE.rotation((time * 2 * Math.PI).toFloat()))
+            itemRenderer.renderItem(
+                block.getInventory()[1],
+                ModelTransformationMode.FIXED,
+                light,
+                overlay,
+                matrices,
+                vertexConsumers,
+                block.world,
+                0
+            )
+        }
+        matrices.pop()
+
+        matrices.push()
+        matrices.translate(0.5, (12.0 / 16) + 0.03, 0.5)
+        matrices.scale(0.75f, 0.75f, 0.75f)
+
+        var h: Float = block.targetItemRotation - block.itemRotation
+        while (h >= Math.PI.toFloat()) h -= (Math.PI * 2).toFloat()
+        while (h < -Math.PI.toFloat())h += (Math.PI * 2).toFloat()
+        val k: Float = block.itemRotation + h * tickDelta
+        matrices.rotate(Axis.Y_POSITIVE.rotation(-k))
+        matrices.rotate(Axis.X_POSITIVE.rotationDegrees(90f))
+        itemRenderer.renderItem(
+            inventory[0],
             ModelTransformationMode.FIXED,
             light,
             overlay,
             matrices,
             vertexConsumers,
-            entity.world,
+            block.world,
             0
         )
 
-        matrices?.pop()
+        matrices.pop()
     }
 }

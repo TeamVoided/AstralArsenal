@@ -6,6 +6,7 @@ import net.minecraft.client.render.entity.model.EntityModel
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.Entity
 
+/*
 class NailEntityRenderer : EntityModel<Entity?>() {
     private var bb_main: ModelPart? = null
     fun Nail(root: ModelPart) {
@@ -55,3 +56,4 @@ class NailEntityRenderer : EntityModel<Entity?>() {
             }
     }
 }
+*/
