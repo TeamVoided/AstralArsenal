@@ -73,6 +73,11 @@ interface Kosmogliph {
         stack: ItemStack, original: ObjectArrayList<ItemStack>
     ): List<ItemStack> = original
 
+    fun modifyEntityDropLoot(
+        table: LootTable, parameters: LootContextParameterSet, world: ServerWorld,
+        stack: ItemStack, original: ItemStack
+    ): ItemStack = original
+
     fun id() = REGISTRY.getId(this)!!
     fun translationText(tooltip: Boolean = false) = id().path.toString()
 

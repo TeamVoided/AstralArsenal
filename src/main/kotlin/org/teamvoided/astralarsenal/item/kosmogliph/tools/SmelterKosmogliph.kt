@@ -12,9 +12,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import kotlin.jvm.optionals.getOrNull
 
-class SmelterKosmogliph(id: Identifier) : SimpleKosmogliph(
-    id,
-    { it.isIn(AstralItemTags.SUPPORTS_SMELTER) }) {
+class SmelterKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUPPORTS_SMELTER) {
     override fun modifyBlockBreakLoot(
         table: LootTable,
         parameters: LootContextParameterSet,
@@ -36,5 +34,17 @@ class SmelterKosmogliph(id: Identifier) : SimpleKosmogliph(
 
         return smeltedStacks
     }
+
+    override fun modifyEntityDropLoot(
+        table: LootTable,
+        parameters: LootContextParameterSet,
+        world: ServerWorld,
+        stack: ItemStack,
+        original: ItemStack
+    ): ItemStack = world.recipeManager
+        .getFirstMatch(RecipeType.SMELTING, SingleRecipeInput(original), world)
+        .getOrNull()
+        ?.value?.craft(SingleRecipeInput(original), world.registryManager)
+        ?.copyWithCount(original.count) ?: original
 
 }

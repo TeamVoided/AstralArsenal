@@ -46,6 +46,8 @@ class AstralItemTagProvider(
             .forceAddTag(ItemTags.SHOVELS)
             .forceAddTag(ItemTags.AXES)
             .forceAddTag(ItemTags.HOES)
+            .forceAddTag(ItemTags.SWORDS)
+            .forceAddTag(ConventionalItemTags.BOW_TOOLS)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_REAPER)
             .forceAddTag(ItemTags.HOES)
 
