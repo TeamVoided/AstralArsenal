@@ -9,6 +9,7 @@ import org.teamvoided.astralarsenal.menu.CosmicTableData
 import org.teamvoided.astralarsenal.menu.CosmicTableMenu
 
 object AstralMenus {
+    fun init() = Unit
     val COSMIC_TABLE = register<CosmicTableMenu>("cosmic_table", ::CosmicTableMenu)
 
     fun <T : ScreenHandler> register(

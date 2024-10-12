@@ -28,7 +28,7 @@ object AstralArsenal {
         AstralItems
         AstralItemComponents
         AstralScreenHandlers
-        AstralMenus
+        AstralMenus.init()
         AstralTabs
         AstralKosmogliphs
         AstralDamageTypes
