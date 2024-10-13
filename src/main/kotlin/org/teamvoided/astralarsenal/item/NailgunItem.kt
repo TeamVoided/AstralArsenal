@@ -46,8 +46,8 @@ class NailgunItem(settings: Settings) : Item(settings) {
     }
 
     fun setCooldown(stack: ItemStack): Int {
-        return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.CAPACITY)) 7
-        else 10
+        return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.CAPACITY)) 3
+        else 5
     }
 
     override fun use(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
@@ -80,7 +80,7 @@ class NailgunItem(settings: Settings) : Item(settings) {
                 val nail = NailEntity(world, user)
                 nail.setShootVelocity(user.pitch, user.yaw, 0.0f, 3.0f, 5.0f)
                 val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
-                nail.setPosition(offset.x, offset.y - 0.5, offset.z)
+                nail.setPosition(offset.x, offset.y, offset.z)
                 nail.pickupType = PickupPermission.DISALLOWED
                 if (data.usesSoFar >= 10 && (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT))) {
                     nail.nailType = NailEntity.NailType.FIRE
@@ -111,7 +111,7 @@ class NailgunItem(settings: Settings) : Item(settings) {
             cooldown = 8
             stack.set(
                 AstralItemComponents.NAILGUN_DATA,
-                Data(data.uses, data.cooldown, cooldown, 1, 0)
+                Data(data.uses, data.cooldown, cooldown, 1, data.usesSoFar)
             )
         }
         super.usageTick(world, user, stack, remainingUseTicks)
@@ -124,15 +124,15 @@ class NailgunItem(settings: Settings) : Item(settings) {
             AstralItemComponents.NAILGUN_DATA,
             Data(data.uses, data.cooldown, data.firecooldown, 0, 0)
         )
-        if (!(user as PlayerEntity).isCreative) user.itemCooldownManager.set(stack.item, 20)
+        if (!(user as PlayerEntity).isCreative) user.itemCooldownManager.set(stack.item, 60)
         if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.STATIC_RELEASE)) {
             val nail = NailEntity(world, user)
             nail.setShootVelocity(user.pitch, user.yaw, 0.0f, 3.0f, 5.0f)
             val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
-            nail.setPosition(offset.x, offset.y - 0.5, offset.z)
+            nail.setPosition(offset.x, offset.y, offset.z)
             nail.pickupType = PickupPermission.DISALLOWED
             nail.nailType = NailEntity.NailType.CHARGED
-            nail.chargedDamage = 0.1 * data.usesSoFar
+            nail.chargedDamage = 0.15 * data.usesSoFar
             world.spawnEntity(nail)
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)

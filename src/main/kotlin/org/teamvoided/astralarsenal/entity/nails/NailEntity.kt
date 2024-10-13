@@ -39,7 +39,7 @@ open class NailEntity : PersistentProjectileEntity {
     var chargedDamage = 0.0
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
-        if (entityHitResult.entity != owner && entityHitResult.entity is LivingEntity) {
+        if (entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity as LivingEntity
             if (nailType != NailType.CHARGED) {
                 hit.customDamage(AstralDamageTypes.NAILED, 2f, owner, owner)
