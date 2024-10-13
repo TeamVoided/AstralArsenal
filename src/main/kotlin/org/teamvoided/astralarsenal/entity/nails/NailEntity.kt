@@ -59,7 +59,11 @@ open class NailEntity : PersistentProjectileEntity {
 
             when (nailType) {
                 NailType.BASE -> Unit
-                NailType.FIRE -> hit.customDamage(AstralDamageTypes.BURN, 1f, owner, owner)
+                NailType.FIRE -> {
+                    hit.customDamage(AstralDamageTypes.BURN, 1f, owner, owner)
+                    hit.setOnFireFor(100)
+                }
+
                 NailType.CHARGED ->
                     hit.customDamage(AstralDamageTypes.RICHOCHET, this.chargedDamage.toFloat(), owner, owner)
             }
