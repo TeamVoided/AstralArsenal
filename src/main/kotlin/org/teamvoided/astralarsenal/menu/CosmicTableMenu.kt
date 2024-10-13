@@ -112,6 +112,8 @@ class CosmicTableMenu(
 
     fun createKosmogliphTooltip(kosmogliph: Kosmogliph): Text {
         val text = Text.translatable(kosmogliph.translationKey(true)).formatted(Formatting.DARK_PURPLE)
+        text.append("\n")
+            .append(Text.translatable("${kosmogliph.translationKey(true)}.desc").formatted(Formatting.GRAY))
 
         val applicationSlot = getSlot(0)
         if (!applicationSlot.hasStack()) return text
