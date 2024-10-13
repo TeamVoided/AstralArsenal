@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.item.components
+package org.teamvoided.astralarsenal.components
 
 import com.mojang.serialization.Codec
 import net.minecraft.client.item.TooltipConfig
@@ -14,7 +14,10 @@ class KosmogliphsComponent(
 ) : TooltipAppender, Set<Kosmogliph> by kosmogliphs {
     companion object {
         val CODEC: Codec<KosmogliphsComponent> =
-            Identifier.CODEC.xmap(::fromId, ::toId).listOf().xmap(::fromList, ::toList)
+            Identifier.CODEC.xmap(Companion::fromId, Companion::toId).listOf().xmap(
+                Companion::fromList,
+                Companion::toList
+            )
 
         fun toList(component: KosmogliphsComponent) = component.kosmogliphs.toList()
         fun fromList(list: List<Kosmogliph>) = KosmogliphsComponent(list.toSet())

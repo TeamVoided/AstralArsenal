@@ -33,8 +33,8 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
-import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent.Companion.toComponent
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent.Companion.toComponent
 import java.util.function.Consumer
 
 interface Kosmogliph {

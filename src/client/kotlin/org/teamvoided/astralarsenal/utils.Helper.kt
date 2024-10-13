@@ -16,7 +16,7 @@ import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HAMMER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.REAPER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.VEIN_MINER
 import org.teamvoided.astralarsenal.item.TillingActions
-import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.*

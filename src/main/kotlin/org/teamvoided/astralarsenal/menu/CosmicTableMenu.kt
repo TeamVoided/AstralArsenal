@@ -18,7 +18,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralMenus
-import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import kotlin.jvm.optionals.getOrNull
 

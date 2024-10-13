@@ -23,7 +23,7 @@ import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
-import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.BowKosmogliph

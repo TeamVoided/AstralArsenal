@@ -9,7 +9,7 @@ import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.item.NailgunItem
 import org.teamvoided.astralarsenal.item.RailgunItem
-import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
 import org.teamvoided.astralarsenal.item.kosmogliph.ranged.AlchemistKosmogliph
