@@ -84,5 +84,7 @@ class NailEntityRenderer<T : BaseNailEntity>(context: EntityRendererFactory.Cont
 
     companion object {
         val NAIL_TEXTURE = id("textures/entity/projectiles/nail.png")
+        val FIRE_NAIL_TEXTURE = id("textures/entity/projectiles/fire_nail.png")
+        val CHARGED_NAIL_TEXTURE = id("textures/entity/projectiles/charged_nail.png")
     }
 }
