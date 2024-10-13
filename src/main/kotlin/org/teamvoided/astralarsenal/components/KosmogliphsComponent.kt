@@ -6,7 +6,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.TooltipAppender
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
-import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import java.util.function.Consumer
 
 class KosmogliphsComponent(

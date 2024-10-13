@@ -16,7 +16,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
-import org.teamvoided.astralarsenal.item.kosmogliph.logic.setShootVelocity
+import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
 import java.awt.Color
 import java.lang.Math.clamp

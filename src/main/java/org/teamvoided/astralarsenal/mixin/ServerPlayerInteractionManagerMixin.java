@@ -16,7 +16,7 @@ import org.teamvoided.astralarsenal.init.AstralKosmogliphs;
 import org.teamvoided.astralarsenal.util.PlayerInteractionManagerExtension;
 import org.teamvoided.astralarsenal.util.UtilKt;
 
-import static org.teamvoided.astralarsenal.item.kosmogliph.logic.UtilKt.hammerTryBeakBlocks;
+import static org.teamvoided.astralarsenal.kosmogliph.logic.UtilKt.hammerTryBeakBlocks;
 
 // this code is a modified version fabric-hammers mod
 // https://github.com/bdani0717/fabric-hammers-1.20

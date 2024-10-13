@@ -12,14 +12,14 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HAMMER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.REAPER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.VEIN_MINER
 import org.teamvoided.astralarsenal.item.TillingActions
-import org.teamvoided.astralarsenal.components.KosmogliphsComponent
-import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.logic.*
+import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.logic.*
 import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
 import kotlin.math.min
 

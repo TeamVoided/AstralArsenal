@@ -16,7 +16,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags.ALL_TAGS
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralTabs
-import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import java.util.concurrent.CompletableFuture
 
 @Suppress("unused")

@@ -19,14 +19,14 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Vector3f
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
-import org.teamvoided.astralarsenal.components.KosmogliphsComponent
-import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.logic.setShootVelocity
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.BowKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
+import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
 import kotlin.math.roundToInt
 
 fun <T, R : Registry<T>> RegistryKey<R>.tag(id: Identifier) = TagKey.of(this, id)
