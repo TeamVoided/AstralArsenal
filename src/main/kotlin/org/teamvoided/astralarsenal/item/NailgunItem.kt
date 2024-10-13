@@ -18,6 +18,9 @@ import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.item.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
+import java.awt.Color
+import java.lang.Math.clamp
+import kotlin.math.round
 
 class NailgunItem(settings: Settings) : Item(settings) {
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
@@ -26,11 +29,11 @@ class NailgunItem(settings: Settings) : Item(settings) {
         var uses = data.uses
         var cooldown = data.cooldown
         var firecooldown = data.firecooldown
-        if (uses < setMaxUses(stack) && data.beingUsed != 1) {
+        if (uses < stack.maxUses() && data.beingUsed != 1) {
             cooldown--
             if (cooldown <= 0) {
                 uses++
-                cooldown = setCooldown(stack)
+                cooldown = stack.cooldown()
             }
         }
         if (firecooldown > 0) {
@@ -40,14 +43,12 @@ class NailgunItem(settings: Settings) : Item(settings) {
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 
-    fun setMaxUses(stack: ItemStack): Int {
-        return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.CAPACITY)) 100
-        else 50
+    private fun ItemStack.maxUses(): Int {
+        return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 100 else 50
     }
 
-    fun setCooldown(stack: ItemStack): Int {
-        return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.CAPACITY)) 3
-        else 5
+    private fun ItemStack.cooldown(): Int {
+        return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 3 else 5
     }
 
     override fun use(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
@@ -139,4 +140,22 @@ class NailgunItem(settings: Settings) : Item(settings) {
     }
 
     override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = 72000
+
+    override fun getItemBarColor(stack: ItemStack?): Int = Color.MAGENTA.rgb
+    override fun getItemBarStep(stack: ItemStack): Int {
+        val data = stack.get(AstralItemComponents.NAILGUN_DATA)
+        return if (data != null) funnyMath(stack.maxUses() - data.uses, stack.maxUses()) else BAR_LIMIT
+    }
+
+    override fun isItemBarVisible(stack: ItemStack): Boolean {
+        val data = stack.get(AstralItemComponents.NAILGUN_DATA)
+        return data != null && data.uses < stack.maxUses()
+    }
+
+    companion object {
+        val BAR_LIMIT = 12
+        fun funnyMath(x: Int, y: Int): Int =
+            clamp(round(BAR_LIMIT.toFloat() - x * BAR_LIMIT.toFloat() / y).toLong(), 0, BAR_LIMIT)
+
+    }
 }
