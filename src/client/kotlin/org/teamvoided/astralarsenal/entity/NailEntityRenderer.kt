@@ -11,9 +11,9 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Axis
 import net.minecraft.util.math.MathHelper
 import org.teamvoided.astralarsenal.AstralArsenal.id
-import org.teamvoided.astralarsenal.entity.nails.BaseNailEntity
+import org.teamvoided.astralarsenal.entity.nails.NailEntity
 
-class NailEntityRenderer<T : BaseNailEntity>(context: EntityRendererFactory.Context?) :
+class NailEntityRenderer<T : NailEntity>(context: EntityRendererFactory.Context?) :
     EntityRenderer<T>(context) {
     override fun render(
         persistentProjectileEntity: T, f: Float, g: Float, matrices: MatrixStack,
@@ -61,7 +61,7 @@ class NailEntityRenderer<T : BaseNailEntity>(context: EntityRendererFactory.Cont
 
         this.vertex(entry, vertexConsumer, -2, 2, -1, 0.375f, 0.0f, 1, 0, 0, i)
         this.vertex(entry, vertexConsumer, -2, 2, 2, 0.75f, 0.0f, 1, 0, 0, i)
-        this.vertex(entry, vertexConsumer, -2, -1, 2,0.75f, 0.375f, 1, 0, 0, i)
+        this.vertex(entry, vertexConsumer, -2, -1, 2, 0.75f, 0.375f, 1, 0, 0, i)
         this.vertex(entry, vertexConsumer, -2, -1, -1, 0.375f, 0.375f, 1, 0, 0, i)
 
         matrices.pop()
@@ -80,7 +80,11 @@ class NailEntityRenderer<T : BaseNailEntity>(context: EntityRendererFactory.Cont
             .normal(entry, normalX.toFloat(), normalY.toFloat(), normalZ.toFloat())
     }
 
-    override fun getTexture(entity: T): Identifier = NAIL_TEXTURE
+    override fun getTexture(entity: T): Identifier = when (entity.nailType) {
+        NailEntity.NailType.BASE -> NAIL_TEXTURE
+        NailEntity.NailType.FIRE -> FIRE_NAIL_TEXTURE
+        NailEntity.NailType.CHARGED -> CHARGED_NAIL_TEXTURE
+    }
 
     companion object {
         val NAIL_TEXTURE = id("textures/entity/projectiles/nail.png")

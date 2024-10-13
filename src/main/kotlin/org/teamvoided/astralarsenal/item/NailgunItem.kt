@@ -4,7 +4,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity.PickupPermission
-import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundCategory
@@ -13,11 +12,11 @@ import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.dynamic.Codecs
-import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.entity.nails.BaseNailEntity
+import org.teamvoided.astralarsenal.entity.nails.NailEntity
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
+import org.teamvoided.astralarsenal.item.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
 
 class NailgunItem(settings: Settings) : Item(settings) {
@@ -37,10 +36,7 @@ class NailgunItem(settings: Settings) : Item(settings) {
         if (firecooldown > 0) {
             firecooldown--
         }
-        stack.set(
-            AstralItemComponents.NAILGUN_DATA,
-            Data(uses, cooldown, firecooldown, data.beingUsed, data.usesSoFar)
-        )
+        stack.set(AstralItemComponents.NAILGUN_DATA, Data(uses, cooldown, firecooldown, data.beingUsed, data.usesSoFar))
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 
@@ -49,12 +45,12 @@ class NailgunItem(settings: Settings) : Item(settings) {
         else 50
     }
 
-    fun setCooldown(stack: ItemStack): Int{
+    fun setCooldown(stack: ItemStack): Int {
         return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.CAPACITY)) 7
         else 10
     }
 
-    override fun use(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
+    override fun use(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         player.setCurrentHand(hand)
         return TypedActionResult(ActionResult.CONSUME_PARTIAL, player.getStackInHand(hand))
     }
@@ -81,25 +77,20 @@ class NailgunItem(settings: Settings) : Item(settings) {
         var cooldown = data.firecooldown
         if (data.uses > 0 && cooldown <= 0) {
             if (!world.isClient) {
-                val nail = BaseNailEntity(world, user)
-                setPropertiesTwo(
-                    nail,
-                    user.pitch,
-                    user.yaw,
-                    0.0f, 3.0f, 5.0f
-                )
+                val nail = NailEntity(world, user)
+                nail.setShootVelocity(user.pitch, user.yaw, 0.0f, 3.0f, 5.0f)
                 val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
                 nail.setPosition(offset.x, offset.y - 0.5, offset.z)
                 nail.pickupType = PickupPermission.DISALLOWED
-                if(data.usesSoFar >= 10 && (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT))){
-                    nail.fireNail = true
+                if (data.usesSoFar >= 10 && (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT))) {
+                    nail.nailType = NailEntity.NailType.FIRE
                 }
                 world.spawnEntity(nail)
                 cooldown = 2
             }
             user.bodyYaw = user.yaw
             var uses = data.uses
-            if(!(user as PlayerEntity).isCreative){
+            if (!(user as PlayerEntity).isCreative) {
                 uses--
             }
             stack.set(
@@ -133,38 +124,19 @@ class NailgunItem(settings: Settings) : Item(settings) {
             AstralItemComponents.NAILGUN_DATA,
             Data(data.uses, data.cooldown, data.firecooldown, 0, 0)
         )
-        if (!(user as PlayerEntity).isCreative) {
-            user.itemCooldownManager.set(stack.item, 20)
-        }
-        if ((getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.STATIC_RELEASE))){
-            val nail = BaseNailEntity(world, user)
-            setPropertiesTwo(
-                nail,
-                user.pitch,
-                user.yaw,
-                0.0f, 3.0f, 5.0f
-            )
+        if (!(user as PlayerEntity).isCreative) user.itemCooldownManager.set(stack.item, 20)
+        if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.STATIC_RELEASE)) {
+            val nail = NailEntity(world, user)
+            nail.setShootVelocity(user.pitch, user.yaw, 0.0f, 3.0f, 5.0f)
             val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
             nail.setPosition(offset.x, offset.y - 0.5, offset.z)
             nail.pickupType = PickupPermission.DISALLOWED
-            nail.chargedNail = true
+            nail.nailType = NailEntity.NailType.CHARGED
             nail.chargedDamage = 0.1 * data.usesSoFar
             world.spawnEntity(nail)
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)
     }
 
-    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int {
-        return 72000
-    }
-
-    fun setPropertiesTwo(
-        entity: ProjectileEntity, pitch: Float, yaw: Float, roll: Float, speed: Float, modifierXYZ: Float
-    ) {
-        val f = -MathHelper.sin(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
-        val g = -MathHelper.sin((pitch + roll) * (Math.PI.toFloat() / 180))
-        val h = MathHelper.cos(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
-        entity.setVelocity(f.toDouble(), g.toDouble(), h.toDouble(), speed, modifierXYZ)
-    }
-
+    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = 72000
 }
