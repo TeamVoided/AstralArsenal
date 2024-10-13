@@ -89,7 +89,7 @@ class NailgunItem(settings: Settings) : Item(settings) {
                     0.0f, 3.0f, 5.0f
                 )
                 val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
-                nail.setPosition(offset.x, offset.y, offset.z)
+                nail.setPosition(offset.x, offset.y - 0.5, offset.z)
                 nail.pickupType = PickupPermission.DISALLOWED
                 if(data.usesSoFar >= 10 && (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT))){
                     nail.fireNail = true
@@ -98,7 +98,10 @@ class NailgunItem(settings: Settings) : Item(settings) {
                 cooldown = 2
             }
             user.bodyYaw = user.yaw
-            val uses = data.uses - 1
+            var uses = data.uses
+            if(!(user as PlayerEntity).isCreative){
+                uses--
+            }
             stack.set(
                 AstralItemComponents.NAILGUN_DATA,
                 Data(uses, data.cooldown, cooldown, 1, data.usesSoFar + 1)
@@ -142,10 +145,10 @@ class NailgunItem(settings: Settings) : Item(settings) {
                 0.0f, 3.0f, 5.0f
             )
             val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
-            nail.setPosition(offset.x, offset.y, offset.z)
+            nail.setPosition(offset.x, offset.y - 0.5, offset.z)
             nail.pickupType = PickupPermission.DISALLOWED
             nail.chargedNail = true
-            nail.chargedDamage = 0.25 * data.usesSoFar
+            nail.chargedDamage = 0.1 * data.usesSoFar
             world.spawnEntity(nail)
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)

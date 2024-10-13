@@ -13,7 +13,9 @@ import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.astralarsenal.util.UtilKt;
@@ -54,5 +56,9 @@ public abstract class LivingEntityMixin extends Entity {
         lootTable.generateRawLoot(parameterSet, this.getLootTableSeed(), (stack) ->
                 this.dropStack(fistGlyph.modifyEntityDropLoot(lootTable, parameterSet, world, tool, stack)));
         ci.cancel();
+    }
+    @ModifyConstant(method = "isBlocking", constant = @Constant(intValue = 5))
+    private int setShieldUseDelay(int constant) {
+        return 0;
     }
 }

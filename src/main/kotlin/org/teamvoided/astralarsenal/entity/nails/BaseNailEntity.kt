@@ -9,6 +9,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
@@ -26,7 +27,13 @@ open class BaseNailEntity : PersistentProjectileEntity {
             super(entityType as EntityType<out PersistentProjectileEntity?>?, world)
 
     constructor(world: World?, owner: LivingEntity?) :
-            super(AstralEntities.NAIL_ENTITY as EntityType<out PersistentProjectileEntity?>, owner, world, Items.ARROW.defaultStack, AstralItems.NAILGUN.defaultStack)
+            super(
+                AstralEntities.NAIL_ENTITY as EntityType<out PersistentProjectileEntity?>,
+                owner,
+                world,
+                Items.ARROW.defaultStack,
+                AstralItems.NAILGUN.defaultStack
+            )
 
     var fireNail = false
     var chargedNail = false
@@ -74,7 +81,7 @@ open class BaseNailEntity : PersistentProjectileEntity {
                         AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NAILED),
                         owner,
                         owner
-                    ), 1f
+                    ), 2f
                 )
                 var bleed_levels = 0
                 val effects_two = hit.statusEffects.filter { conductive.contains(it.effectType) }
@@ -124,28 +131,36 @@ open class BaseNailEntity : PersistentProjectileEntity {
     }
 
     override fun tick() {
-        if(this.fireNail){
-        world.addParticle(
-            ParticleTypes.FLAME,
-            true,
-            this.x + random.rangeInclusive(-1, 1).times(0.1),
-            this.y + random.rangeInclusive(-1, 1).times(0.1),
-            this.z + random.rangeInclusive(-1, 1).times(0.1),
-            random.nextDouble().times(2).minus(1).times(0.01),
-            random.nextDouble().times(0.1),
-            random.nextDouble().times(2).minus(1).times(0.01)
-        )}
-        else if(this.chargedNail){
-            world.addParticle(
-                ParticleTypes.ELECTRIC_SPARK,
-                true,
-                this.x + random.rangeInclusive(-1, 1).times(0.1),
-                this.y + random.rangeInclusive(-1, 1).times(0.1),
-                this.z + random.rangeInclusive(-1, 1).times(0.1),
-                random.nextDouble().times(2).minus(1).times(0.01),
-                random.nextDouble().times(0.1),
-                random.nextDouble().times(2).minus(1).times(0.01)
-            )
+        if (this.fireNail && world.random.rangeInclusive(0,1) == 0) {
+            if (world is ServerWorld) {
+                val wworld = world as ServerWorld
+                wworld.spawnParticles(
+                    ParticleTypes.FLAME,
+                    this.x,
+                    this.y,
+                    this.z,
+                    1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.0
+                )
+            }
+        } else if (this.chargedNail && world.random.rangeInclusive(0,1) == 0) {
+            if (world is ServerWorld) {
+                val wworld = world as ServerWorld
+                wworld.spawnParticles(
+                    ParticleTypes.ELECTRIC_SPARK,
+                    this.x,
+                    this.y,
+                    this.z,
+                    1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.0
+                )
+            }
         }
         super.tick()
     }
