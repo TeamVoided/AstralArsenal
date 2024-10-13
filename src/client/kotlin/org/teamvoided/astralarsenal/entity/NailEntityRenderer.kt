@@ -80,5 +80,9 @@ class NailEntityRenderer<T : BaseNailEntity>(context: EntityRendererFactory.Cont
             .normal(entry, normalX.toFloat(), normalY.toFloat(), normalZ.toFloat())
     }
 
-    override fun getTexture(entity: T): Identifier = id("textures/entity/projectiles/nail.png")
+    override fun getTexture(entity: T): Identifier = NAIL_TEXTURE
+
+    companion object {
+        val NAIL_TEXTURE = id("textures/entity/projectiles/nail.png")
+    }
 }
