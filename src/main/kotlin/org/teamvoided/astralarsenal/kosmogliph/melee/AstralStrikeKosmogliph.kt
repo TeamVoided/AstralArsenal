@@ -30,7 +30,7 @@ class AstralStrikeKosmogliph(id: Identifier) :
             beam.targetEntity = target
             beam.DOT = false
             beam.DMG = 5
-            beam.trackTime = 10
+            beam.trackTime = 15
             beam.hard_damage = 2
             attacker.world.spawnEntity(beam)
             hitTimes = 0

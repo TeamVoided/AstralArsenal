@@ -11,6 +11,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
+import net.minecraft.util.UseAction
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
@@ -36,6 +37,9 @@ class NailgunItem(settings: Settings) : Item(settings) {
                 cooldown = stack.cooldown()
             }
         }
+        else if(uses > stack.maxUses()){
+            uses = stack.maxUses()
+        }
         if (firecooldown > 0) {
             firecooldown--
         }
@@ -44,11 +48,11 @@ class NailgunItem(settings: Settings) : Item(settings) {
     }
 
     private fun ItemStack.maxUses(): Int {
-        return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 100 else 50
+        return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 200 else 100
     }
 
     private fun ItemStack.cooldown(): Int {
-        return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 3 else 5
+        return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 2 else 4
     }
 
     override fun use(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
@@ -87,7 +91,23 @@ class NailgunItem(settings: Settings) : Item(settings) {
                     nail.nailType = NailEntity.NailType.FIRE
                 }
                 world.spawnEntity(nail)
-                cooldown = 2
+                cooldown = if (data.usesSoFar >= 10) {
+                    1
+                } else {
+                    2
+                }
+                if(data.usesSoFar == 10){
+                    world.playSound(
+                        null,
+                        user.x,
+                        user.y,
+                        user.z,
+                        SoundEvents.ITEM_TRIDENT_RETURN,
+                        SoundCategory.PLAYERS,
+                        1.0F,
+                        1.0f
+                    )
+                }
             }
             user.bodyYaw = user.yaw
             var uses = data.uses
@@ -139,9 +159,15 @@ class NailgunItem(settings: Settings) : Item(settings) {
         super.onStoppedUsing(stack, world, user, remainingUseTicks)
     }
 
+
     override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = 72000
 
-    override fun getItemBarColor(stack: ItemStack?): Int = Color.MAGENTA.rgb
+    override fun getItemBarColor(stack: ItemStack): Int {
+        return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.STATIC_RELEASE)) Color.GRAY.rgb
+        else if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT)) Color.ORANGE.rgb
+        else Color.MAGENTA.rgb
+    }
+
     override fun getItemBarStep(stack: ItemStack): Int {
         val data = stack.get(AstralItemComponents.NAILGUN_DATA)
         return if (data != null) funnyMath(stack.maxUses() - data.uses, stack.maxUses()) else BAR_LIMIT
@@ -157,5 +183,9 @@ class NailgunItem(settings: Settings) : Item(settings) {
         fun funnyMath(x: Int, y: Int): Int =
             clamp(round(BAR_LIMIT.toFloat() - x * BAR_LIMIT.toFloat() / y).toLong(), 0, BAR_LIMIT)
 
+    }
+
+    override fun getUseAction(stack: ItemStack?): UseAction {
+        return UseAction.BOW
     }
 }
