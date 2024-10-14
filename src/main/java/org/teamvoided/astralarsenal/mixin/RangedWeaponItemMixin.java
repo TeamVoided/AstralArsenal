@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.RangedWeaponKosmogliph;
+import org.teamvoided.astralarsenal.kosmogliph.ranged.RangedWeaponKosmogliph;
 import org.teamvoided.astralarsenal.util.UtilKt;
 
 import java.util.List;

@@ -7,7 +7,7 @@ import net.minecraft.command.CommandBuildContext
 import net.minecraft.command.argument.IdentifierArgumentType
 import net.minecraft.server.command.CommandManager.*
 import net.minecraft.server.command.ServerCommandSource
-import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 
 object KosmogliphCommand {
     fun apply(
@@ -18,7 +18,7 @@ object KosmogliphCommand {
         val kosmogliphNode = literal("kosmogliph").requires { it.hasPermission(2) }
             .then(
                 literal("apply").then(
-                    argument("kosmogliph", IdentifierArgumentType.identifier()).suggests { ctx, builder ->
+                    argument("kosmogliph", IdentifierArgumentType.identifier()).suggests { ctax, builder ->
                         Kosmogliph.REGISTRY.keys
                             .map { it.value.toString() }
                             .forEach(builder::suggest)

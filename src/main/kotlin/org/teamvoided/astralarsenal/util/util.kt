@@ -13,18 +13,20 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Vec3d
+import net.minecraft.world.World
 import org.joml.Vector3f
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
-import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
-import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.logic.setShootVelocity
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.BowKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
+import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
 import kotlin.math.roundToInt
 
 fun <T, R : Registry<T>> RegistryKey<R>.tag(id: Identifier) = TagKey.of(this, id)
@@ -60,13 +62,21 @@ fun ProjectileEntity.setVelocity(vec3f: Vector3f, speed: Float, divergence: Floa
 fun ProjectileEntity.setVelocity(vec3d: Vec3d, speed: Float, divergence: Float) =
     this.setVelocity(vec3d.x, vec3d.y, vec3d.z, speed, divergence)
 
+fun World.playSound(pos: Vec3d, soundEvent: SoundEvent, category: SoundCategory, volume: Float, pitch: Float) {
+    this.playSound(null, pos.x, pos.y, pos.z, soundEvent, category, volume, pitch)
+}
+
+fun World.playSound(pos: Vec3d, soundEvent: Holder<SoundEvent>, category: SoundCategory, volume: Float, pitch: Float) {
+    this.method_60511(null, pos.x, pos.y, pos.z, soundEvent, category, volume, pitch)
+}
+
 // damage is the amount of damage the player would take if the shield didn't block it
 // attackingEntity is the entity that does the damage e.g. a mob or a projectile
 // sourceEntity is the entity that caused the attacking entity e.g. a player that shot an arrow
 fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?, damage: Float, source: DamageSource) {
-    if(target is LivingEntity){
+    if (target is LivingEntity) {
         val shield = target.activeItem
-        if(getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.PARRY)){
+        if (getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.PARRY)) {
             if (target.itemUseTime < 6) {
                 target.world.playSound(
                     null,
@@ -98,12 +108,11 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
                     )
                 }
             }
-        }
-        else if(getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.FROST_THORNS)){
-            val num = (damage/2).roundToInt() + 1
+        } else if (getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.FROST_THORNS)) {
+            val num = (damage / 2).roundToInt() + 1
             repeat(num) {
                 val freezeBallEntity = FreezeShotEntity(target.world, target)
-                freezeBallEntity.setPosition(target.pos.x,target.pos.y + 1, target.pos.z)
+                freezeBallEntity.setPosition(target.pos.x, target.pos.y + 1, target.pos.z)
                 freezeBallEntity.setShootVelocity(target.pitch, target.yaw, 0.0f, 1.0f, 20f)
                 target.world.spawnEntity(freezeBallEntity)
             }

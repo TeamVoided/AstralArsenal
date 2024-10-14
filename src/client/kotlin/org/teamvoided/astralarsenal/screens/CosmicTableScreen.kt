@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 import org.joml.Vector2i
 import org.teamvoided.astralarsenal.AstralArsenal
-import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.menu.CosmicTableMenu
 import org.teamvoided.astralarsenal.screens.widget.KosmogliphWidget
 import org.teamvoided.astralarsenal.screens.widget.KosmogliphWidget.Companion.SIZE

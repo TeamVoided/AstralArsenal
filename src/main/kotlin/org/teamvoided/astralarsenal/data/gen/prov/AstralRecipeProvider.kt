@@ -58,6 +58,17 @@ class AstralRecipeProvider(
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
 
+        shaped(AstralItems.NAILCANNON)
+            .pattern("IKI")
+            .pattern("KCK")
+            .pattern("IGI")
+            .ingredient('I', Items.IRON_INGOT)
+            .ingredient('K', Items.NETHERITE_SCRAP)
+            .ingredient('C', Items.CROSSBOW)
+            .ingredient('G', AstralItems.KOSMIC_GEM)
+            .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
+            .offerTo(this)
+
         simpleShapeless(
             AstralItems.AMERALD_BLEND,
             RecipeCategory.MISC, 1,

@@ -83,7 +83,7 @@ object AstralEffects {
     )
     val CONDUCTIVE_MULT = 0.01
     val CONDUCTIVE_MAX_TARGETS = 3
-    val CONDUCTIVE_DAMAGE_SHARE = 0.1
+    val CONDUCTIVE_DAMAGE_SHARE = 0.25
     val conductive = listOf(
         CONDUCTIVE
     )

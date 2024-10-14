@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.init
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.client.render.entity.*
+import org.teamvoided.astralarsenal.entity.NailEntityRenderer
 
 
 object AstralEntitiesClient {
@@ -19,6 +20,6 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.FREEZE_SHOT_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.FLAME_THROWER_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.RICHOCHET, ::EmptyEntityRenderer)
-        EntityRendererRegistry.register(AstralEntities.NAIL_ENTITY, ::EmptyEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.NAIL_ENTITY, ::NailEntityRenderer)
     }
 }

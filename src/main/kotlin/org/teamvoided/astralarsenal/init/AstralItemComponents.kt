@@ -7,14 +7,13 @@ import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.NailgunItem
 import org.teamvoided.astralarsenal.item.RailgunItem
-import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
-import org.teamvoided.astralarsenal.item.kosmogliph.armor.*
-import org.teamvoided.astralarsenal.item.kosmogliph.melee.AstralStrikeKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.AlchemistKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.BeamKosmogliph
-import org.teamvoided.astralarsenal.item.kosmogliph.ranged.beams.MinigunKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.armor.*
+import org.teamvoided.astralarsenal.kosmogliph.melee.AstralStrikeKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.AlchemistKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.MinigunKosmogliph
 import java.util.*
 
 object AstralItemComponents {
@@ -24,7 +23,7 @@ object AstralItemComponents {
     val KOSMOGLIPHS: DataComponentType<KosmogliphsComponent> =
         register(
             "kosmogliphs",
-            { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem || it is ShieldItem || it is NailgunItem},
+            { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem || it is ShieldItem || it is NailgunItem },
             { KosmogliphsComponent() }) { builder ->
             builder.codec(KosmogliphsComponent.CODEC).build()
         }
@@ -62,8 +61,13 @@ object AstralItemComponents {
         }
 
     val NAILGUN_DATA: DataComponentType<NailgunItem.Data> =
-        register("nailgun_data", { it is NailgunItem }, { NailgunItem.Data(0, 0, 0, 0, 0) }) { builder ->
+        register("nailgun_data", { it is NailgunItem }, { NailgunItem.Data(0, 0) }) { builder ->
             builder.codec(NailgunItem.Data.CODEC).build()
+        }
+
+    val NAILGUN_COOLDOWN_DATA: DataComponentType<NailgunItem.CooldownData> =
+        register("nailgun_cooldown_data", { it is NailgunItem }, { NailgunItem.CooldownData(0, 0) }) { builder ->
+            builder.codec(NailgunItem.CooldownData.CODEC).build()
         }
 
     val GRAPPLE_DATA: DataComponentType<GrappleKosmogliph.Data> =
@@ -77,12 +81,6 @@ object AstralItemComponents {
     val ALCHEMIST_DATA: DataComponentType<AlchemistKosmogliph.Data> =
         register("alchemist_data", { it is BowItem }, { AlchemistKosmogliph.Data(Optional.empty(), 0) }) { builder ->
             builder.codec(AlchemistKosmogliph.Data.CODEC).build()
-        }
-
-    //(ender) Delete this?
-    val BEAM_DATA: DataComponentType<BeamKosmogliph.Data> =
-        register("beam_data", { it is CrossbowItem }, { BeamKosmogliph.Data(false) }) { builder ->
-            builder.codec(BeamKosmogliph.Data.CODEC).build()
         }
 
     fun <T> register(

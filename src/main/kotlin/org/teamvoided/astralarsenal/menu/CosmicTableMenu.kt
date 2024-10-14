@@ -14,12 +14,12 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.slot.Slot
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralMenus
-import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent
-import org.teamvoided.astralarsenal.item.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import kotlin.jvm.optionals.getOrNull
 
 class CosmicTableMenu(
@@ -112,6 +112,8 @@ class CosmicTableMenu(
 
     fun createKosmogliphTooltip(kosmogliph: Kosmogliph): Text {
         val text = Text.translatable(kosmogliph.translationKey(true)).formatted(Formatting.DARK_PURPLE)
+        text.append("\n")
+            .append(Text.translatable("${kosmogliph.translationKey(true)}.desc").formatted(Formatting.GRAY))
 
         val applicationSlot = getSlot(0)
         if (!applicationSlot.hasStack()) return text

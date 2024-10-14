@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.astralarsenal.init.AstralItemComponents;
-import org.teamvoided.astralarsenal.item.components.KosmogliphsComponent;
+import org.teamvoided.astralarsenal.components.KosmogliphsComponent;
 
 import java.util.Optional;
 
