@@ -104,9 +104,9 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TRIDENT_REDUCE).forceAddTag(ConventionalItemTags.SPEAR_TOOLS)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TRIDENT_BLEED).forceAddTag(ConventionalItemTags.SPEAR_TOOLS)
 
-        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_CAPACITY).add(AstralItems.NAILGUN)
-        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_OVER_HEAT).add(AstralItems.NAILGUN)
-        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_STATIC_RELEASE).add(AstralItems.NAILGUN)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_CAPACITY).add(AstralItems.NAILCANNON)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_OVER_HEAT).add(AstralItems.NAILCANNON)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_STATIC_RELEASE).add(AstralItems.NAILCANNON)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_KOSMOGLIPHS)
             .forceAddTag(AstralItemTags.SUPPORTS_VEIN_MINER)

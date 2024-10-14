@@ -35,8 +35,8 @@ object AstralItems {
                 .attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.0F))
         )
     )
-    val NAILGUN = register(
-        "nailgun",
+    val NAILCANNON = register(
+        "nailcannon",
         NailgunItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).maxCount(1))
     )
     val RAILGUN = register("railgun", RailgunItem(Item.Settings().fireproof().maxCount(1).rarity(Rarity.EPIC)))

@@ -182,7 +182,7 @@ class AstralEnTranslationProvider(
             "Lets you till a 3x3 area. Lets you mine a 3x3x3 volume of fully grown crops"
         )
 
-        //railgun and nailgun
+        //railgun and nailcannon
         gen.add("kosmogliph.tooltip.astral_arsenal.basic_railgun.desc",
             "Fires a piercing beam, dealing 10 electric damage. costs 5hp to fire and takes 5 of your max hp for 20 seconds. 15 second cooldown"
         )
@@ -205,13 +205,13 @@ class AstralEnTranslationProvider(
             "Fires a bouncing beam that deals 1 damage per hit and bounces 20 times. 15 second cooldown."
         )
         gen.add("kosmogliph.tooltip.astral_arsenal.capacity.desc",
-            "Doubles the capacity of the nailgun and reduces how long it takes for each nail to charge by 50%"
+            "Doubles the capacity of the nailcannon and reduces how long it takes for each nail to charge by 50%"
         )
         gen.add("kosmogliph.tooltip.astral_arsenal.over_heat.desc",
             "After 10 nails have been fired, nails are ablaze, dealing 1 extra fire damage and setting entities on fire"
         )
         gen.add("kosmogliph.tooltip.astral_arsenal.static_release.desc",
-            "After firing a volley of nails, fire an extra nail that deals 0.15 electricity damage per nail fired in the volley"
+            "After firing a volley of nails, fire an extra nail that deals 1 extra electricity damage"
         )
 
         gen.add(AstralArsenal.DEFAULT_KEY_CATEGORY, "Astral Arsenal Keys")

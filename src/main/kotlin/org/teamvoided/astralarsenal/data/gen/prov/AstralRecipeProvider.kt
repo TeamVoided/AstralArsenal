@@ -58,7 +58,7 @@ class AstralRecipeProvider(
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
 
-        shaped(AstralItems.NAILGUN)
+        shaped(AstralItems.NAILCANNON)
             .pattern("IKI")
             .pattern("KCK")
             .pattern("IGI")

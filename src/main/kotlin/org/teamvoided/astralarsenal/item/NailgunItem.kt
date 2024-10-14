@@ -135,7 +135,6 @@ class NailgunItem(settings: Settings) : Item(settings) {
             nail.setPosition(offset.x, offset.y, offset.z)
             nail.pickupType = PickupPermission.DISALLOWED
             nail.nailType = NailEntity.NailType.CHARGED
-            nail.chargedDamage = 0.15 * getNailsUsed(remainingUseTicks)
             world.spawnEntity(nail)
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)
@@ -160,7 +159,7 @@ class NailgunItem(settings: Settings) : Item(settings) {
     }
 
     data class Data(
-        val uses: Int, val beingUsed: Int //please change this to a boolean ender, it doesn't like when I do it
+        val uses: Int, val beingUsed: Int
     ) {
         companion object {
             val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(

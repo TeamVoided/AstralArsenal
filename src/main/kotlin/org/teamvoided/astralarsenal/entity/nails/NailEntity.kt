@@ -30,19 +30,17 @@ open class NailEntity : PersistentProjectileEntity {
             super(entityType, world)
 
     constructor(world: World, owner: LivingEntity) :
-            super(AstralEntities.NAIL_ENTITY, owner, world, Items.ARROW.defaultStack, AstralItems.NAILGUN.defaultStack)
+            super(AstralEntities.NAIL_ENTITY, owner, world, Items.ARROW.defaultStack, AstralItems.NAILCANNON.defaultStack)
 
     var nailType
         get() = NailType.getById(dataTracker.get(NAIL_TYPE))
         set(value) = dataTracker.set(NAIL_TYPE, value.id)
 
-    var chargedDamage = 0.0
-
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         if (entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity as LivingEntity
+            hit.customDamage(AstralDamageTypes.NAILED, 2f, owner, owner)
             if (nailType != NailType.CHARGED) {
-                hit.customDamage(AstralDamageTypes.NAILED, 2f, owner, owner)
                 var effectLevel = 0
                 val currentEffect = hit.statusEffects.find { it.effectType == AstralEffects.CONDUCTIVE }
                 currentEffect?.let { effectLevel = it.amplifier + 1 }
@@ -61,11 +59,11 @@ open class NailEntity : PersistentProjectileEntity {
                 NailType.BASE -> Unit
                 NailType.FIRE -> {
                     hit.customDamage(AstralDamageTypes.BURN, 1f, owner, owner)
-                    hit.setOnFireFor(100)
+                    hit.setOnFireFor(200)
                 }
 
                 NailType.CHARGED ->
-                    hit.customDamage(AstralDamageTypes.RICHOCHET, this.chargedDamage.toFloat(), owner, owner)
+                    hit.customDamage(AstralDamageTypes.RICHOCHET, 1f, owner, owner)
             }
         }
         this.world.playSound(this.pos, SoundEvents.ITEM_TRIDENT_HIT, SoundCategory.PLAYERS, 1.0F, 1.0f)

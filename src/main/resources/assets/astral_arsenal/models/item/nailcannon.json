@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "astral_arsenal:item/nailgun",
-		"particle": "astral_arsenal:item/nailgun"
+		"0": "astral_arsenal:item/nailcannon",
+		"particle": "astral_arsenal:item/nailcannon"
 	},
 	"elements": [
 		{
