@@ -1,12 +1,16 @@
 package org.teamvoided.astralarsenal.block.entity
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.LootableContainerBlockEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventories
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.network.listener.ClientPlayPacketListener
+import net.minecraft.network.packet.Packet
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.HolderLookup
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
@@ -24,7 +28,7 @@ class CosmicTableBlockEntity(
     state: BlockState,
 ) : LootableContainerBlockEntity(AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY, pos, state),
     ExtendedScreenHandlerFactory<CosmicTableData> {
-    private val inventory = DefaultedList.ofSize(2, ItemStack.EMPTY)
+    private var inventory = DefaultedList.ofSize(2, ItemStack.EMPTY)
     var itemRotation = 0f
     var nextItemRotation = 0f
     var targetItemRotation = 0f
@@ -33,9 +37,14 @@ class CosmicTableBlockEntity(
 
     public override fun getInventory(): DefaultedList<ItemStack> = inventory
 
-    override fun setInventory(defaultedList: DefaultedList<ItemStack>) {
-        inventory.clear()
-        inventory.addAll(defaultedList)
+    override fun setInventory(newInventory: DefaultedList<ItemStack>) {
+        inventory = newInventory
+        markDirty()
+    }
+
+    override fun markDirty() {
+        super.markDirty()
+        world?.updateListeners(pos, cachedState, cachedState, Block.NOTIFY_ALL)
     }
 
     override fun createScreenHandler(
@@ -47,6 +56,19 @@ class CosmicTableBlockEntity(
 
     override fun size(): Int = inventory.size
 
+    override fun clear() {
+        super.clear()
+        markDirty()
+    }
+
+    override fun toUpdatePacket(): Packet<ClientPlayPacketListener>? {
+        return BlockEntityUpdateS2CPacket.of(this)
+    }
+
+    override fun toSyncedNbt(lookupProvider: HolderLookup.Provider?): NbtCompound {
+        return Inventories.writeNbt(NbtCompound(), inventory, lookupProvider)
+    }
+
     override fun writeNbt(nbt: NbtCompound, lookupProvider: HolderLookup.Provider) {
         super.writeNbt(nbt, lookupProvider)
         Inventories.writeNbt(nbt, inventory, lookupProvider)
@@ -54,6 +76,7 @@ class CosmicTableBlockEntity(
 
     override fun readNbtImpl(nbt: NbtCompound, lookupProvider: HolderLookup.Provider) {
         super.readNbtImpl(nbt, lookupProvider)
+        inventory.clear()
         Inventories.readNbt(nbt, inventory, lookupProvider)
     }
 
