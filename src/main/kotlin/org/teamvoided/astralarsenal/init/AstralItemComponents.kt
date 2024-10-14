@@ -65,9 +65,9 @@ object AstralItemComponents {
             builder.codec(NailgunItem.Data.CODEC).build()
         }
 
-    val NAILGUN_COOLDOWN_DATA: DataComponentType<NailgunItem.cooldownData> =
-        register("nailgun_data", { it is NailgunItem }, { NailgunItem.cooldownData(0, 0) }) { builder ->
-            builder.codec(NailgunItem.cooldownData.CODEC).build()
+    val NAILGUN_COOLDOWN_DATA: DataComponentType<NailgunItem.CooldownData> =
+        register("nailgun_cooldown_data", { it is NailgunItem }, { NailgunItem.CooldownData(0, 0) }) { builder ->
+            builder.codec(NailgunItem.CooldownData.CODEC).build()
         }
 
     val GRAPPLE_DATA: DataComponentType<GrappleKosmogliph.Data> =
