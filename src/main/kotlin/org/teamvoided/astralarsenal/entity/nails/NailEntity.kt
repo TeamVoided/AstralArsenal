@@ -29,8 +29,9 @@ open class NailEntity : PersistentProjectileEntity {
     constructor(entityType: EntityType<out NailEntity>, world: World) :
             super(entityType, world)
 
-    constructor(world: World, owner: LivingEntity) :
-            super(AstralEntities.NAIL_ENTITY, owner, world, Items.ARROW.defaultStack, AstralItems.NAILCANNON.defaultStack)
+    constructor(world: World, owner: LivingEntity) : super(
+        AstralEntities.NAIL_ENTITY, owner, world, Items.ARROW.defaultStack, AstralItems.NAILCANNON.defaultStack
+    )
 
     var nailType
         get() = NailType.getById(dataTracker.get(NAIL_TYPE))
@@ -70,47 +71,37 @@ open class NailEntity : PersistentProjectileEntity {
         this.discard()
     }
 
-
     override fun initDataTracker(builder: DataTracker.Builder) {
         builder.add(NAIL_TYPE, NailType.BASE.id)
         super.initDataTracker(builder)
     }
 
     override fun tick() {
-        val particle = when (nailType) {
-            NailType.BASE -> null
-            NailType.FIRE -> ParticleTypes.FLAME
-            NailType.CHARGED -> ParticleTypes.ELECTRIC_SPARK
+        val (particle, chance) = when (nailType) {
+            NailType.BASE -> null to 0
+            NailType.FIRE -> ParticleTypes.FLAME to 10
+            NailType.CHARGED -> ParticleTypes.ELECTRIC_SPARK to 4
         }
-        if (particle != null && world.time % 5 == 0L) {
-            if (world is ServerWorld) {
-                (world as ServerWorld).spawnParticles(
-                    particle,
-                    this.x,
-                    this.y,
-                    this.z,
-                    1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.0
-                )
-            }
+        if (particle != null && (world.time + blockPos.asLong()) % chance == 0L) {
+            if (world is ServerWorld) (world as ServerWorld).spawnParticles(
+                particle, this.x, this.y, this.z,
+                1,
+                0.1, 0.1, 0.1,
+                0.0
+            )
+
         }
         super.tick()
     }
 
-    override fun onBlockHit(blockHitResult: BlockHitResult?) {
+    override fun onBlockHit(blockHitResult: BlockHitResult) {
         super.onBlockHit(blockHitResult)
+        this.sound = getHitSound()
+        this.shake = 0
     }
 
-    override fun getDefaultItemStack(): ItemStack {
-        return Items.AIR.defaultStack
-    }
-
-    override fun getHitSound(): SoundEvent {
-        return SoundEvents.ITEM_TRIDENT_HIT_GROUND
-    }
+    override fun getDefaultItemStack(): ItemStack = Items.AIR.defaultStack
+    override fun getHitSound(): SoundEvent = SoundEvents.ITEM_TRIDENT_HIT_GROUND
 
     companion object {
         val NAIL_TYPE: TrackedData<Int> =
