@@ -98,6 +98,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
         getOrCreateTagBuilder(AstralDamageTypeTags.KEEPS_MOVEMENT)
             .add(DamageTypes.FALL)
             .add(DamageTypes.LAVA)
+            .add(AstralDamageTypes.NAILED)
 
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_COOLDOWN)
             .add(AstralDamageTypes.BURN)
