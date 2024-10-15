@@ -25,9 +25,7 @@ import java.awt.Color
 import java.lang.Math.clamp
 import kotlin.math.round
 
-class NailgunItem(settings: Settings) : Item(settings) {
-
-
+class NailCannonItem(settings: Settings) : Item(settings) {
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         val data = stack.get(AstralItemComponents.NAILGUN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
