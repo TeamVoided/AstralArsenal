@@ -13,7 +13,7 @@ import org.teamvoided.astralarsenal.AstralArsenal
 
 @Suppress("unused", "unused_parameter")
 object AstralTabs {
-    val TAB = register("tab", AstralBlocks.COSMIC_TABLE, ::tabESB)
+    val TAB = register("tab", AstralItems.KOSMIC_GEM, ::tabESB)
 
     fun tabESB(displayParameters: DisplayParameters): Set<ItemConvertible> {
         return AstralItems.items()
