@@ -174,7 +174,7 @@ class CosmicTableScreen(
         val x = (this.width - this.backgroundWidth) / 2
         val y = (this.height - this.backgroundHeight) / 2
         graphics.fillRenderLayer(RenderLayer.getEndPortal(), x + 5, y + 5, x + (WIDTH - 5), y + (HEIGHT / 2), 0)
-        graphics.drawTexture(TEXTURE, x, y, 0, 0, WIDTH, HEIGHT)
+        graphics.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight)
     }
 
     override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
@@ -184,7 +184,7 @@ class CosmicTableScreen(
 
     companion object {
         val TEXTURE = AstralArsenal.id("textures/gui/container/cosmic_table.png")
-        const val WIDTH = 175
+        const val WIDTH = 176
         const val HEIGHT = 165
 
         const val GAP = 4
