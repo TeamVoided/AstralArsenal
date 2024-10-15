@@ -112,8 +112,9 @@ class NailCannonItem(settings: Settings) : Item(settings) {
             }
             stack.set(AstralItemComponents.NAILGUN_DATA, Data(uses, 1))
             stack.set(AstralItemComponents.NAILGUN_COOLDOWN_DATA, CooldownData(cooldownData.cooldown, cooldown))
+            world.playSound(user.pos, SoundEvents.BLOCK_VAULT_INSERT_ITEM_FAIL, SoundCategory.PLAYERS, 0.4F, 0.3f)
         } else if (cooldown <= 0) {
-            world.playSound(user.pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.PLAYERS, 1.0F, 1.0f)
+            world.playSound(user.pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.PLAYERS, 1.0F, 2.0f)
             cooldown = 8
             stack.set(AstralItemComponents.NAILGUN_DATA, Data(data.uses, 1))
             stack.set(AstralItemComponents.NAILGUN_COOLDOWN_DATA, CooldownData(cooldownData.cooldown, cooldown))
@@ -134,6 +135,7 @@ class NailCannonItem(settings: Settings) : Item(settings) {
             nail.pickupType = PickupPermission.DISALLOWED
             nail.nailType = NailEntity.NailType.CHARGED
             world.spawnEntity(nail)
+            world.playSound(user.pos, SoundEvents.BLOCK_TRIAL_SPAWNER_SPAWN_ITEM, SoundCategory.PLAYERS, 0.4f, 5.0f)
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)
     }
@@ -141,7 +143,7 @@ class NailCannonItem(settings: Settings) : Item(settings) {
     override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = USE_TICKS
 
     override fun getItemBarColor(stack: ItemStack): Int {
-        return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.STATIC_RELEASE)) Color.GRAY.rgb
+        return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.STATIC_RELEASE)) Color.LIGHT_GRAY.rgb
         else if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT)) Color.ORANGE.rgb
         else Color.MAGENTA.rgb
     }
