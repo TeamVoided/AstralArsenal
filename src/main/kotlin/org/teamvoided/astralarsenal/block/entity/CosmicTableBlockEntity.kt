@@ -34,9 +34,7 @@ class CosmicTableBlockEntity(
     var targetItemRotation = 0f
 
     override fun getContainerName(): Text = Text.translatable("container.cosmic_table")
-
     public override fun getInventory(): DefaultedList<ItemStack> = inventory
-
     override fun setInventory(newInventory: DefaultedList<ItemStack>) {
         inventory = newInventory
         markDirty()

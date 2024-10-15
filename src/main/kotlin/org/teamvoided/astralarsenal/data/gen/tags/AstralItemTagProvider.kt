@@ -18,6 +18,7 @@ class AstralItemTagProvider(
         vanillaTags()
         enchantTags()
         kosmogliphTags()
+        kosmicTableTags()
     }
 
     private fun vanillaTags() {
@@ -153,6 +154,19 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_CAPACITY)
             .forceAddTag(AstralItemTags.SUPPORTS_STATIC_RELEASE)
             .forceAddTag(AstralItemTags.SUPPORTS_OVER_HEAT)
+            .add(Items.SHIELD)
+    }
+
+    private fun kosmicTableTags() {
+        getOrCreateTagBuilder(AstralItemTags.KOSMIC_TABLE_LEFT_FACING)
+            .forceAddTag(ConventionalItemTags.BOW_TOOLS)
+            .forceAddTag(ConventionalItemTags.CROSSBOW_TOOLS)
+            .add(AstralItems.RAILGUN)
+        getOrCreateTagBuilder(AstralItemTags.KOSMIC_TABLE_STRAIGHT)
+            .forceAddTag(ItemTags.HEAD_ARMOR)
+            .forceAddTag(ItemTags.CHEST_ARMOR)
+            .forceAddTag(ItemTags.LEG_ARMOR)
+            .forceAddTag(ItemTags.FOOT_ARMOR)
             .add(Items.SHIELD)
     }
 }
