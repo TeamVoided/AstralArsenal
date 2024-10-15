@@ -200,8 +200,6 @@ object AstralEffects {
             }
             count++
             val a = bendPos[i]
-            println("from: " + bendPos[i])
-            println("to: " + bendPos[i + 1])
             val b = bendPos[i + 1]
             val distance = a.distanceTo(b)
             val interval = (distance * 10)
