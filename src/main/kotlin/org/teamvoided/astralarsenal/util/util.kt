@@ -70,6 +70,8 @@ fun World.playSound(pos: Vec3d, soundEvent: Holder<SoundEvent>, category: SoundC
     this.method_60511(null, pos.x, pos.y, pos.z, soundEvent, category, volume, pitch)
 }
 
+val PARRY_DAMAGE_MULT = 1.25
+
 // damage is the amount of damage the player would take if the shield didn't block it
 // attackingEntity is the entity that does the damage e.g. a mob or a projectile
 // sourceEntity is the entity that caused the attacking entity e.g. a player that shot an arrow
@@ -104,7 +106,7 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
                             AstralDamageTypes.getHolder(attackingEntity.world.registryManager, AstralDamageTypes.PARRY),
                             target,
                             target
-                        ), (damage * 2)
+                        ), (damage * PARRY_DAMAGE_MULT).toFloat()
                     )
                 }
             }

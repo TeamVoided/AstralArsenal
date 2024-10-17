@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.world.explosion
+package org.teamvoided.astralarsenal.world.explosion.maceExplosions
 
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
@@ -10,8 +10,8 @@ import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.ExplosionBehavior
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 
-class ParryFireExplosionBehavior : ExplosionBehavior() {
-
+class MaceExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
+    val cause = causingEntity
     override fun canDestroyBlock(
         explosion: Explosion,
         world: BlockView,
@@ -23,12 +23,12 @@ class ParryFireExplosionBehavior : ExplosionBehavior() {
     }
 
     override fun getKnockbackMultiplier(target: Entity): Float {
-        return 0.5f
+        return if (target == cause) 0.0f else 2.5f
     }
 
-    override fun calculateDamage(explosion: Explosion, entity: Entity): Float {
-        entity.setOnFireFor(1000)
-            if (entity is LivingEntity && entity != explosion.causingEntity) {
+    override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {
+        if (explosion != null) {
+            if (entity is LivingEntity) {
                 entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
@@ -37,6 +37,7 @@ class ParryFireExplosionBehavior : ExplosionBehavior() {
                     ), 10f
                 )
             }
+        }
         return 0f
     }
 }

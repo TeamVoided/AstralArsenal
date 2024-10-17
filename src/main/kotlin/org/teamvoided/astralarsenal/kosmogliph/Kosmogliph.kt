@@ -28,6 +28,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.ClickType
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
+import net.minecraft.util.UseAction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
@@ -57,6 +58,8 @@ interface Kosmogliph {
     fun shouldNegateDamage(
         stack: ItemStack, entity: LivingEntity, source: DamageSource, equipmentSlot: EquipmentSlot
     ): Boolean = false
+    fun getUseAction(stack: ItemStack): UseAction? = null
+    fun onStoppedUsing(stack: ItemStack, world: World, user: LivingEntity, remainingUseTicks: Int) {}
 
     fun modifyDamage(
         stack: ItemStack, entity: LivingEntity, damage: Float, source: DamageSource,

@@ -56,7 +56,7 @@ class NailCannonItem(settings: Settings) : Item(settings) {
     }
 
     private fun ItemStack.cooldown(): Int {
-        return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 2 else 4
+        return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 7 else 10
     }
 
     private fun getNailsUsed(remainingUseTicks: Int): Int {
@@ -89,7 +89,7 @@ class NailCannonItem(settings: Settings) : Item(settings) {
         if (data.uses > 0 && cooldown <= 0) {
             if (!world.isClient) {
                 val nail = NailEntity(world, user)
-                nail.setShootVelocity(user.pitch, user.yaw, 0.0f, 3.0f, 5.0f)
+                nail.setShootVelocity(user.pitch, user.yaw, 0.0f, 3.0f, 7.5f)
                 val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
                 nail.setPosition(offset.x, offset.y, offset.z)
                 nail.pickupType = PickupPermission.DISALLOWED

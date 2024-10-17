@@ -40,7 +40,7 @@ open class NailEntity : PersistentProjectileEntity {
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         if (entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity as LivingEntity
-            hit.customDamage(AstralDamageTypes.NAILED, 2f, owner, owner)
+            hit.customDamage(AstralDamageTypes.NAILED, if(nailType == NailType.FIRE) 0.5f else 1.0f, owner, owner)
             if (nailType != NailType.CHARGED) {
                 var effectLevel = 0
                 val currentEffect = hit.statusEffects.find { it.effectType == AstralEffects.CONDUCTIVE }

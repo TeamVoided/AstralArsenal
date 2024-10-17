@@ -30,6 +30,7 @@ import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 import org.teamvoided.astralarsenal.effects.BleedStatusEffect
 import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
 import org.teamvoided.astralarsenal.util.registerHolder
+import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -82,8 +83,10 @@ object AstralEffects {
         REDUCE
     )
     val CONDUCTIVE_MULT = 0.01
-    val CONDUCTIVE_MAX_TARGETS = 3
-    val CONDUCTIVE_DAMAGE_SHARE = 0.25
+    val CONDUCTIVE_MAX_TARGETS = 10.0
+    // Note that if this is lower than 1 it will act as if it is 1, if it is negative then wtf are you doing?
+    val CONDUCTIVE_TARGETS_PER_LEVEL = 0.2
+    val CONDUCTIVE_DAMAGE_SHARE = 0.5
     val conductive = listOf(
         CONDUCTIVE
     )
@@ -108,17 +111,18 @@ object AstralEffects {
                 val levels = w + 1
                 val mult = levels * CONDUCTIVE_MULT
                 output = (output * (1 + mult)).toFloat()
-                conductiveDamage = (output * (CONDUCTIVE_DAMAGE_SHARE * levels)).toFloat()
+                conductiveDamage = (output * (CONDUCTIVE_DAMAGE_SHARE)).toFloat()
                 entity.removeStatusEffect(CONDUCTIVE)
-                if(levels > 5){
-                    entity.addStatusEffect(
-                        StatusEffectInstance(StatusEffectInstance(
-                            CONDUCTIVE,
-                            400, w - 5,
-                            false, false, true
-                ))
-                    )
-                }
+                // keep this chunk of code here in case we wanna add it back in again
+//                if(levels > 5){
+//                    entity.addStatusEffect(
+//                        StatusEffectInstance(StatusEffectInstance(
+//                            CONDUCTIVE,
+//                            400, w - 5,
+//                            false, false, true
+//                ))
+//                    )
+//                }
                 val entities = mutableListOf<Entity>()
                 entities.addAll(
                     entity.world.getOtherEntities(
@@ -135,7 +139,7 @@ object AstralEffects {
                 if (entities.isNotEmpty()) {
                     var count = 0
                     for (entiity in entities) {
-                        if (count >= CONDUCTIVE_MAX_TARGETS) {
+                        if (count >= min((CONDUCTIVE_TARGETS_PER_LEVEL * levels), CONDUCTIVE_MAX_TARGETS)) {
                             break
                         }
                         entiity.damage(

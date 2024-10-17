@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.world.explosion
+package org.teamvoided.astralarsenal.world.explosion.parryExplosions
 
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity

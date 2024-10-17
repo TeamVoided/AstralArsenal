@@ -24,7 +24,7 @@ import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.mixin.PersistentProjectileEntityAccessor
-import org.teamvoided.astralarsenal.world.explosion.*
+import org.teamvoided.astralarsenal.world.explosion.parryExplosions.*
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
