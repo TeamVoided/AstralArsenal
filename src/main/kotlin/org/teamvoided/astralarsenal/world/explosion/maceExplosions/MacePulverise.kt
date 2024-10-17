@@ -10,7 +10,7 @@ import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.ExplosionBehavior
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 
-class MaceWeakExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
+class MacePulverise (causingEntity: Entity) : ExplosionBehavior() {
     val cause = causingEntity
     override fun canDestroyBlock(
         explosion: Explosion,
@@ -23,7 +23,7 @@ class MaceWeakExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
     }
 
     override fun getKnockbackMultiplier(target: Entity): Float {
-        return if (target == cause) 0.0f else 1.0f
+        return if (target == cause) 0.0f else 2.5f
     }
 
     override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {
@@ -34,7 +34,7 @@ class MaceWeakExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
                         AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
                         explosion.causingEntity,
                         explosion.causingEntity
-                    ), 5f
+                    ), 15f
                 )
             }
         }

@@ -50,6 +50,7 @@ object AstralKosmogliphs {
     val DODGE = register("dodge", ::DodgeKosmogliph)
 
     //val SLIDE = register("slide", ::SlideKosmogliph)
+    @JvmField
     val SLAM = register("slam", ::SlamKosmogliph)
     val ANKLE_GUARD = register("ankle_guard", ::AnkleGuardKosmogliph)
 
@@ -112,6 +113,7 @@ object AstralKosmogliphs {
     val OVER_HEAT = register("over_heat", ::OverHeatKosmogliph)
     val STATIC_RELEASE = register("static_release", ::StaticReleaseKosmogliph)
 
+    @JvmField
     val PULVERISER = register("pulveriser", ::PulveriserKosmogliph)
     val WIND_ERUPTION = register("wind_eruption", ::WindEruptionKosmogliph)
 

@@ -4,10 +4,14 @@ import arrow.core.Predicate
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.effect.StatusEffectInstance
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -15,6 +19,7 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
+import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
@@ -22,11 +27,21 @@ import org.joml.Vector3f
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
+import org.teamvoided.astralarsenal.init.AstralItemComponents.PULVERISER_DATA
+import org.teamvoided.astralarsenal.init.AstralItemComponents.SLAM_DATA
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.armor.SlamKosmogliph.Data
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
+import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
+import org.teamvoided.astralarsenal.world.explosion.maceExplosions.*
+
+import java.util.*
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 fun <T, R : Registry<T>> RegistryKey<R>.tag(id: Identifier) = TagKey.of(this, id)
@@ -121,3 +136,82 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
         }
     }
 }
+
+fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity) {
+    val faller = entity as PlayerEntity
+    if (faller.isOnGround) {
+        var stack: ItemStack? = null
+        if (getKosmogliphsOnStack(faller.getStackInHand(Hand.MAIN_HAND)).contains(AstralKosmogliphs.PULVERISER)) {
+            stack = faller.getStackInHand(Hand.MAIN_HAND)
+        } else if (getKosmogliphsOnStack(faller.getStackInHand(Hand.OFF_HAND)).contains(AstralKosmogliphs.PULVERISER)) {
+            stack = faller.getStackInHand(Hand.OFF_HAND)
+        }
+        if (stack != null) {
+            val isSlamming = stack.get(PULVERISER_DATA)?.slamming ?: false
+            val ticks = stack.get(PULVERISER_DATA)?.ticks ?: 0
+            if (isSlamming) {
+                val explosionBehavior = (
+                        if (ticks >= 100) MaceStrongPulverise(faller)
+                        else if (ticks >= 50) MacePulverise(faller)
+                        else MaceWeakPulverise(faller)
+                        )
+                val power = min((2.0 + (0.1 * faller.fallDistance)).toFloat(), 20.0f)
+                faller.world.createExplosion(
+                    faller, faller.damageSources.explosion(null, faller),
+                    explosionBehavior,
+                    faller.x,
+                    faller.y,
+                    faller.z,
+                    power,
+                    false,
+                    World.ExplosionSourceType.MOB,
+                    ParticleTypes.GUST,
+                    ParticleTypes.GUST_EMITTER_LARGE,
+                    SoundEvents.ENTITY_BREEZE_WIND_BURST
+                )
+                stack.set(PULVERISER_DATA, PulveriserKosmogliph.Data(0, false))
+                faller.resetFallDistance()
+            }
+        }
+    }
+    var stack: ItemStack? = null
+    if (getKosmogliphsOnStack(faller.getEquippedStack(EquipmentSlot.HEAD)).contains(AstralKosmogliphs.SLAM)) {
+        stack = faller.getEquippedStack(EquipmentSlot.HEAD)
+    }
+    if (stack != null) {
+        if (faller.isOnGround) {
+            val isSlamming = stack.get(SLAM_DATA)?.slamming ?: false
+            if (isSlamming) {
+                if (faller.isOnGround) {
+                    faller.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
+                    faller.addStatusEffect(
+                        StatusEffectInstance(
+                            AstralEffects.SLAM_JUMP,
+                            20,
+                            (faller.fallDistance + 2).roundToInt(),
+                            false,
+                            false,
+                            true
+                        )
+                    )
+                    stack.set(SLAM_DATA, Data(0.0f, false))
+                    faller.resetFallDistance()
+                }
+                else{
+                    faller.setVelocity(0.0, -20.0, 0.0)
+                    faller.velocityModified
+                    faller.addStatusEffect(
+                        StatusEffectInstance(
+                            AstralEffects.SLAM_JUMP,
+                            20,
+                            (faller.fallDistance + 2).roundToInt(),
+                            false,
+                            false,
+                            true
+                        )
+                    )
+                }
+            }
+            }
+        }
+    }

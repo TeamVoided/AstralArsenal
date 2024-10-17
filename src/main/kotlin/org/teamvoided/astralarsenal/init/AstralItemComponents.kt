@@ -12,6 +12,7 @@ import org.teamvoided.astralarsenal.item.NailCannonItem
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.kosmogliph.melee.AstralStrikeKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.AlchemistKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.MinigunKosmogliph
 import java.util.*
@@ -81,6 +82,12 @@ object AstralItemComponents {
     val ALCHEMIST_DATA: DataComponentType<AlchemistKosmogliph.Data> =
         register("alchemist_data", { it is BowItem }, { AlchemistKosmogliph.Data(Optional.empty(), 0) }) { builder ->
             builder.codec(AlchemistKosmogliph.Data.CODEC).build()
+        }
+
+    @JvmField
+    val PULVERISER_DATA: DataComponentType<PulveriserKosmogliph.Data> =
+        register("pulveriser_data", { it is ArmorItem }, { PulveriserKosmogliph.Data(0, false) }) { builder ->
+            builder.codec(PulveriserKosmogliph.Data.CODEC).build()
         }
 
     fun <T> register(

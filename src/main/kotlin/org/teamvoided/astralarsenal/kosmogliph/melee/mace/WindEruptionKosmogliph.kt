@@ -65,6 +65,10 @@ class WindEruptionKosmogliph (id: Identifier) :
                 SoundEvents.ENTITY_BREEZE_WIND_BURST)
             user.addVelocity(0.0, jumpPower,0.0)
             user.velocityDirty
+            if(user is PlayerEntity){
+                if (!user.isCreative) {
+                    user.itemCooldownManager.set(stack.item, 200)}
+            }
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)
     }

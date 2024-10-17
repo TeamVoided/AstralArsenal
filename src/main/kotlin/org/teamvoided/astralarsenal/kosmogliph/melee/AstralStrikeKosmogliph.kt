@@ -15,12 +15,15 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 // I will fix this - Astra
 class AstralStrikeKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ASTRAL_STRIKE) }) {
+
+        val STRIKES_TO_TRIGGER = 8
+
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         val data = stack.get(AstralItemComponents.ASTRAL_STRIKE_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var hitTimes = data.hitTimes
         hitTimes++
-        if (hitTimes >= 3) {
+        if (hitTimes >= STRIKES_TO_TRIGGER) {
             val beam = BeamOfLightEntity(attacker.world, attacker)
             beam.setPosition(target.pos)
             beam.WINDUP = 20
@@ -31,7 +34,7 @@ class AstralStrikeKosmogliph(id: Identifier) :
             beam.DOT = false
             beam.DMG = 5
             beam.trackTime = 15
-            beam.hard_damage = 2
+            beam.hard_damage = 0
             attacker.world.spawnEntity(beam)
             hitTimes = 0
         }
