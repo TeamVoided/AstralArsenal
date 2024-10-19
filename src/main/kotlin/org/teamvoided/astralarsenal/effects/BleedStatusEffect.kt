@@ -12,7 +12,7 @@ class BleedStatusEffect(color: Int) : AstralStatusEffect(StatusEffectType.HARMFU
     }
 
     override fun applyUpdateEffect(entity: LivingEntity?, amplifier: Int): Boolean {
-        entity?.customDamage(AstralDamageTypes.BLEED, (0.5 * (amplifier + 1)).toFloat())
+        entity?.customDamage(AstralDamageTypes.BLEED, (0.75 * (amplifier + 1)).toFloat())
         return true
     }
 }

@@ -54,7 +54,7 @@ class SlashEntity : ThrownItemEntity {
 
     override fun tick() {
         this.setTime(this.getTime() + 1)
-        if (this.getTime() > 5) {
+        if (this.getTime() > 7) {
             this.discard()
         }
         if (!this.world.isClient) {

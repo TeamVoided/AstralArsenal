@@ -69,6 +69,23 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
                             )
                         )
                     }
+                    val y = entity.statusEffects.filter {
+                        it.effectType.value().isBeneficial &&
+                                !blacklist.contains(it.effectType) &&
+                                !it.isInfinite
+                    }
+                    y.forEach { effect ->
+                        if ((world.time % 2).toInt() == 0) {
+                            entity.statusEffects.remove(effect)
+                            entity.addStatusEffect(
+                                StatusEffectInstance(
+                                    effect.effectType,
+                                    effect.duration + 1, effect.amplifier,
+                                    effect.isAmbient, effect.shouldShowParticles(), effect.shouldShowIcon()
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -1,6 +1,7 @@
 package org.teamvoided.astralarsenal.util
 
 import arrow.core.Predicate
+import net.minecraft.block.BlockState
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
@@ -11,16 +12,21 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Vector3f
@@ -28,7 +34,6 @@ import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
-import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
 import org.teamvoided.astralarsenal.init.AstralItemComponents.PULVERISER_DATA
 import org.teamvoided.astralarsenal.init.AstralItemComponents.SLAM_DATA
@@ -39,7 +44,6 @@ import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.*
-
 import java.util.*
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -137,8 +141,11 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
     }
 }
 
-fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity) {
+fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPos: BlockPos) {
     val faller = entity as PlayerEntity
+    val serverFaller = if (faller is ServerPlayerEntity) {
+        faller as ServerPlayerEntity
+    } else null
     if (faller.isOnGround) {
         var stack: ItemStack? = null
         if (getKosmogliphsOnStack(faller.getStackInHand(Hand.MAIN_HAND)).contains(AstralKosmogliphs.PULVERISER)) {
@@ -155,7 +162,16 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity) {
                         else if (ticks >= 50) MacePulverise(faller)
                         else MaceWeakPulverise(faller)
                         )
-                val power = min((2.0 + (0.1 * faller.fallDistance)).toFloat(), 20.0f)
+                val sound = (
+                        if (ticks >= 100 || (ticks >= 50 && entity.fallDistance >= 10.0)) SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY
+                        else if (ticks >= 50 || entity.fallDistance >= 10.0) SoundEvents.ITEM_MACE_SMASH_GROUND
+                        else SoundEvents.ITEM_MACE_SMASH_AIR
+                        )
+                val gustSize = (
+                        if (ticks >= 100 || (ticks >= 50 && entity.fallDistance >= 10.0)) ParticleTypes.GUST_EMITTER_LARGE
+                        else ParticleTypes.GUST_EMITTER_SMALL
+                        )
+                val power = min((2.0 + (0.1 * faller.fallDistance)).toFloat(), 10.0f)
                 faller.world.createExplosion(
                     faller, faller.damageSources.explosion(null, faller),
                     explosionBehavior,
@@ -166,10 +182,14 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity) {
                     false,
                     World.ExplosionSourceType.MOB,
                     ParticleTypes.GUST,
-                    ParticleTypes.GUST_EMITTER_LARGE,
-                    SoundEvents.ENTITY_BREEZE_WIND_BURST
+                    gustSize,
+                    SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST
                 )
+                faller.playSound(sound)
                 stack.set(PULVERISER_DATA, PulveriserKosmogliph.Data(0, false))
+                if (!faller.isCreative) {
+                    faller.itemCooldownManager.set(stack.item, 200)
+                }
                 faller.resetFallDistance()
             }
         }
@@ -196,8 +216,7 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity) {
                     )
                     stack.set(SLAM_DATA, Data(0.0f, false))
                     faller.resetFallDistance()
-                }
-                else{
+                } else {
                     faller.setVelocity(0.0, -20.0, 0.0)
                     faller.velocityModified
                     faller.addStatusEffect(
@@ -212,6 +231,6 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity) {
                     )
                 }
             }
-            }
         }
     }
+}

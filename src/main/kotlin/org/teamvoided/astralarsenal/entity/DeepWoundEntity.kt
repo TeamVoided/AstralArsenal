@@ -49,13 +49,13 @@ class DeepWoundEntity : ThrownItemEntity {
 
     override fun tick() {
         this.setTime(this.getTime() + 1)
-        if (this.getTime() > 20) {
+        if (this.getTime() > 30) {
             this.discard()
         }
         if (!this.world.isClient) {
             val serverWorld = this.world as ServerWorld
             serverWorld.spawnParticles(
-                ParticleTypes.CRIMSON_SPORE,
+                ParticleTypes.TRIAL_OMEN,
                 this.x,
                 this.y,
                 this.z,
@@ -81,7 +81,7 @@ class DeepWoundEntity : ThrownItemEntity {
             val ent = entityHitResult.entity as LivingEntity
             val maxhp = ent.maxHealth
             val hp = ent.health
-            val levels = (maxhp - hp).roundToInt()
+            val levels = ((maxhp - hp)).roundToInt()
             var hard_levels = levels
             var over_levels = levels
             val effects = ent.statusEffects.filter { unhealable.contains(it.effectType) }

@@ -86,7 +86,7 @@ class RancidBrewKosmogliph(id: Identifier) :
                         AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
                         player,
                         player
-                    ), 5f
+                    ), 8f
                 )
                 if (entity is CannonballEntity || entity is MortarEntity) {
                     world.createExplosion(

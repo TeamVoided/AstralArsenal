@@ -34,7 +34,8 @@ class NailCannonItem(settings: Settings) : Item(settings) {
         var uses = data.uses
         var cooldown = cooldownData.cooldown
         var fireCooldown = cooldownData.fireCooldown
-        if (uses < stack.maxUses() && data.beingUsed != 1) {
+        var beingUsed = data.beingUsed
+        if (uses < stack.maxUses() && beingUsed != 1) {
             cooldown--
             if (cooldown <= 0) {
                 uses++
@@ -42,11 +43,16 @@ class NailCannonItem(settings: Settings) : Item(settings) {
             }
         } else if (uses > stack.maxUses()) {
             uses = stack.maxUses()
+        } else if (beingUsed == 1) {
+            if (entity is LivingEntity && entity.getStackInHand(Hand.MAIN_HAND) != stack && entity.getStackInHand(Hand.OFF_HAND) != stack) {
+                beingUsed = 0
+            }
+
         }
         if (fireCooldown > 0) {
             fireCooldown--
         }
-        stack.set(AstralItemComponents.NAILGUN_DATA, Data(uses, data.beingUsed))
+        stack.set(AstralItemComponents.NAILGUN_DATA, Data(uses, beingUsed))
         stack.set(AstralItemComponents.NAILGUN_COOLDOWN_DATA, CooldownData(cooldown, fireCooldown))
         super.inventoryTick(stack, world, entity, slot, selected)
     }
@@ -59,19 +65,9 @@ class NailCannonItem(settings: Settings) : Item(settings) {
         return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 7 else 10
     }
 
-    private fun getNailsUsed(remainingUseTicks: Int): Int {
-        var usedTicks = USE_TICKS - remainingUseTicks
-        var nails = 0
-        for (i in 1..10) {
-            if ((usedTicks - 2) < 0) break
-            nails++
-            usedTicks -= 2
-        }
-        while ((usedTicks - 1) >= 0) {
-            nails++
-            usedTicks--
-        }
-        return nails
+    private fun shouldBoost(remainingUseTicks: Int, isSneaking: Boolean): Boolean {
+        val usedTicks = USE_TICKS - remainingUseTicks
+        return if (usedTicks >= TICKS_BEFORE_BOOST && !isSneaking) true else false
     }
 
     override fun use(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
@@ -86,20 +82,32 @@ class NailCannonItem(settings: Settings) : Item(settings) {
         val cooldownData = stack.get(AstralItemComponents.NAILGUN_COOLDOWN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var cooldown = cooldownData.fireCooldown
-        if (data.uses > 0 && cooldown <= 0) {
+        if ((data.uses > 0 && cooldown <= 0) || (((USE_TICKS - remainingUseTicks) % 20) == 0 && USE_TICKS - remainingUseTicks > 10 && getKosmogliphsOnStack(
+                stack
+            ).contains(
+                AstralKosmogliphs.STATIC_RELEASE
+            ))
+        ) {
             if (!world.isClient) {
                 val nail = NailEntity(world, user)
-                nail.setShootVelocity(user.pitch, user.yaw, 0.0f, 3.0f, 7.5f)
+                val spread =
+                    if (shouldBoost(remainingUseTicks, user.isSneaking)) BOOSTED_SPREAD else SLOW_SPREAD
+                val speed =
+                    if (shouldBoost(remainingUseTicks, user.isSneaking)) BOOSTED_SPEED else SLOW_SPEED
+                nail.setShootVelocity(user.pitch, user.yaw, 0.0f, speed, spread)
                 val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
                 nail.setPosition(offset.x, offset.y, offset.z)
                 nail.pickupType = PickupPermission.DISALLOWED
-                if (getNailsUsed(remainingUseTicks) > NAILS_BEFORE_EXTRA
+                if (shouldBoost(remainingUseTicks, user.isSneaking)
                     && (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT))
                 ) nail.nailType = NailEntity.NailType.FIRE
+                else if (((USE_TICKS - remainingUseTicks) % 20 == 0) && getKosmogliphsOnStack(stack).contains(
+                        AstralKosmogliphs.STATIC_RELEASE
+                    )
+                ) nail.nailType = NailEntity.NailType.CHARGED
                 world.spawnEntity(nail)
-                cooldown = if (getNailsUsed(remainingUseTicks) > NAILS_BEFORE_EXTRA)
-                    BOOSTED_FIRE_INTERVAL else FIRE_INTERVAL
-                if (getNailsUsed(remainingUseTicks) == NAILS_BEFORE_EXTRA + 1) {
+                cooldown = if (shouldBoost(remainingUseTicks, user.isSneaking)) BOOSTED_FIRE_INTERVAL else FIRE_INTERVAL
+                if (USE_TICKS - remainingUseTicks == 60) {
                     world.playSound(
                         user.pos, SoundEvents.ITEM_TRIDENT_RETURN, SoundCategory.PLAYERS, 1.0F, 1.0f
                     )
@@ -126,17 +134,6 @@ class NailCannonItem(settings: Settings) : Item(settings) {
         val data = stack.get(AstralItemComponents.NAILGUN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         stack.set(AstralItemComponents.NAILGUN_DATA, Data(data.uses, 0))
-        if (!(user as PlayerEntity).isCreative) user.itemCooldownManager.set(stack.item, 60)
-        if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.STATIC_RELEASE)) {
-            val nail = NailEntity(world, user)
-            nail.setShootVelocity(user.pitch, user.yaw, 0.0f, 3.0f, 5.0f)
-            val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
-            nail.setPosition(offset.x, offset.y, offset.z)
-            nail.pickupType = PickupPermission.DISALLOWED
-            nail.nailType = NailEntity.NailType.CHARGED
-            world.spawnEntity(nail)
-            world.playSound(user.pos, SoundEvents.BLOCK_TRIAL_SPAWNER_SPAWN_ITEM, SoundCategory.PLAYERS, 0.4f, 5.0f)
-        }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)
     }
 
@@ -183,9 +180,14 @@ class NailCannonItem(settings: Settings) : Item(settings) {
     companion object {
         const val USE_TICKS = 72000
 
-        const val NAILS_BEFORE_EXTRA = 10
-        const val FIRE_INTERVAL = 2
+        // boost is the fast firing mode, it activates after NAILS_BEFORE_EXTRA nails have been fired.
+        const val TICKS_BEFORE_BOOST = 60
+        const val FIRE_INTERVAL = 3
         const val BOOSTED_FIRE_INTERVAL = 1
+        const val SLOW_SPREAD = 5.0f
+        const val BOOSTED_SPREAD = 10.0f
+        const val SLOW_SPEED = 3.0f
+        const val BOOSTED_SPEED = 1.5f
 
 
         const val BAR_LIMIT = 12

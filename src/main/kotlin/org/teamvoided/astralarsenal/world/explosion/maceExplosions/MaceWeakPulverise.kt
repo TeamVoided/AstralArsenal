@@ -23,7 +23,7 @@ class MaceWeakPulverise (causingEntity: Entity) : ExplosionBehavior() {
     }
 
     override fun getKnockbackMultiplier(target: Entity): Float {
-        return if (target == cause) 0.0f else 1.5f
+        return 1.5f
     }
 
     override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {

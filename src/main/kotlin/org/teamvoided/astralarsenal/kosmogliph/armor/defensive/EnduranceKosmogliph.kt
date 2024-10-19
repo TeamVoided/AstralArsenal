@@ -33,7 +33,7 @@ class EnduranceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
 
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_MELEE) && source.attacker !is GuardianEntity && source.attacker !is ElderGuardianEntity) {
-            outputDamage = (outputDamage * 0.35).toFloat()
+            outputDamage = (outputDamage * 0.5).toFloat()
         }
         return outputDamage
     }

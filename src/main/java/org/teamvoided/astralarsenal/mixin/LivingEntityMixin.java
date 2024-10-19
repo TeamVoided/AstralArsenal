@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -82,7 +83,7 @@ public abstract class LivingEntityMixin extends Entity {
     public void fall(double fallDistance, boolean onGround, BlockState landedState, BlockPos landedPosition, CallbackInfo ci) {
         if (((LivingEntity) (Object) this) instanceof PlayerEntity) {
             LivingEntity faller = (LivingEntity) (Object) this;
-            UtilKt.fall(fallDistance, onGround, faller);
+            UtilKt.fall(fallDistance, onGround, faller, landedPosition);
         }
     }
 }

@@ -1,5 +1,7 @@
 package org.teamvoided.astralarsenal.kosmogliph.ranged.beams
 
+import com.mojang.serialization.Codec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
@@ -22,8 +24,11 @@ import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralItemComponents.PULVERISER_DATA
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -36,14 +41,100 @@ class SnipeKosmogliph(id: Identifier) :
     )
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
-        var result = player.raycast(100.0, 1f, false)
-        var distance = sqrt(
+        val stack = player.getStackInHand(hand)
+        val data = stack.get(AstralItemComponents.SNIPE_DATA_V1)
+            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        var loaded = data.loaded
+        var ticks = data.ticks
+        if (!data.loaded) {
+            shot(world, player)
+            if (!player.isCreative) {
+                selfDamage(world, player)
+                loaded = true
+                ticks = 40
+                player.itemCooldownManager.set(stack.item, 10)
+            }
+        } else {
+            shot(world, player)
+            loaded = false
+            ticks = 0
+            if (!player.isCreative) {
+                player.itemCooldownManager.set(stack.item, 300)
+            }
+        }
+        stack.set(AstralItemComponents.SNIPE_DATA_V1, Data(ticks, loaded))
+        return null
+    }
+
+    override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
+        val data = stack.get(AstralItemComponents.SNIPE_DATA_V1)
+            ?: throw IllegalStateException("how the fuck?")
+        var ticks = data.ticks
+        var loaded = data.loaded
+        if (ticks > 0) ticks--
+        else if(loaded){
+            ticks = 0
+            loaded = false
+            if(entity is PlayerEntity && !entity.isCreative){
+                entity.itemCooldownManager.set(stack.item, 300)
+            }
+        }
+        stack.set(AstralItemComponents.SNIPE_DATA_V1, Data(ticks, loaded))
+        super.inventoryTick(stack, world, entity, slot, selected)
+    }
+
+    class Data(
+        val ticks: Int,
+        val loaded: Boolean
+    ) {
+        companion object {
+            val CODEC: Codec<Data> = RecordCodecBuilder.create { builder ->
+                val group = builder.group(
+                    Codec.INT.fieldOf("ticks").forGetter { it.ticks },
+                    Codec.BOOL.fieldOf("slamming").forGetter { it.loaded }
+                )
+
+                group.apply(builder, SnipeKosmogliph::Data)
+            }
+        }
+    }
+
+    fun selfDamage(world: World, player: PlayerEntity) {
+        if (!player.isCreative) {
+            player.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.DRAIN),
+                    player,
+                    player
+                ), 5f
+            )
+        }
+        var hard_levels = 10
+        val effects = player.statusEffects.filter { unhealable.contains(it.effectType) }
+        if (effects.isNotEmpty()) {
+            effects.forEach {
+                val w = it.amplifier
+                hard_levels += w
+            }
+        }
+        player.addStatusEffect(
+            StatusEffectInstance(
+                AstralEffects.UNHEALABLE_DAMAGE,
+                400, hard_levels,
+                false, true, true
+            )
+        )
+    }
+
+    fun shot(world: World, player: PlayerEntity) {
+        val result = player.raycast(100.0, 1f, false)
+        val distance = sqrt(
             sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y - 0.5) - result.pos.y).pow(
                 2
             )
         )
-        var entities = mutableListOf<Entity>()
-        var interval = (distance.times(2))
+        val entities = mutableListOf<Entity>()
+        val interval = (distance.times(2))
         for (i in 0..interval.roundToInt()) {
             entities.addAll(
                 world.getOtherEntities(
@@ -111,7 +202,10 @@ class SnipeKosmogliph(id: Identifier) :
                     } else {
                         entity.damage(
                             DamageSource(
-                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                                AstralDamageTypes.getHolder(
+                                    world.registryManager,
+                                    AstralDamageTypes.NON_RAILED
+                                ),
                                 player,
                                 player
                             ), 7.5f
@@ -128,132 +222,6 @@ class SnipeKosmogliph(id: Identifier) :
                 }
             }
         }
-        if (!player.isCreative) {
-            player.itemCooldownManager.set(player.getStackInHand(hand).item, 300)
-        }
-        if (!player.isCreative) {
-            player.damage(
-                DamageSource(
-                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.DRAIN),
-                    player,
-                    player
-                ), 5f
-            )
-        }
-        var hard_levels = 10
-        val effects = player.statusEffects.filter { unhealable.contains(it.effectType) }
-        if (effects.isNotEmpty()) {
-            effects.forEach {
-                val w = it.amplifier
-                hard_levels += w
-            }
-        }
-        player.addStatusEffect(
-            StatusEffectInstance(
-                AstralEffects.UNHEALABLE_DAMAGE,
-                400, hard_levels,
-                false, true, true
-            )
-        )
-        if (!world.isClient) {
-            mcCoroutineTask(delay = 20.ticks) {
-                result = player.raycast(100.0, 1f, false)
-                distance = sqrt(
-                    sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y - 0.5) - result.pos.y).pow(
-                        2
-                    )
-                )
-                entities = mutableListOf<Entity>()
-                interval = (distance.times(2))
-                for (i in 0..interval.roundToInt()) {
-                    entities.addAll(
-                        world.getOtherEntities(
-                            player, Box(
-                                (lerp(player.eyePos.x, result.pos.x, i / interval)) + 0.5,
-                                (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) + 0.5,
-                                (lerp(player.eyePos.z, result.pos.z, i / interval)) + 0.5,
-                                (lerp(player.eyePos.x, result.pos.x, i / interval)) - 0.5,
-                                (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
-                                (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
-                            )
-                        )
-                    )
-                    if (!player.world.isClient) {
-                        val serverWorld = player.world as ServerWorld
-                        serverWorld.spawnParticles(
-                            ParticleTypes.END_ROD,
-                            (lerp(player.eyePos.x, result.pos.x, i / interval)),
-                            (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
-                            (lerp(player.eyePos.z, result.pos.z, i / interval)),
-                            5,
-                            0.2,
-                            0.2,
-                            0.2,
-                            0.0
-                        )
-
-                    }
-                }
-                world.playSound(
-                    null,
-                    player.x,
-                    player.y,
-                    player.z,
-                    AstralSounds.RAILGUN,
-                    SoundCategory.PLAYERS,
-                    1.0F,
-                    1.0f
-                )
-                for (entity in entities) {
-                    if (entity is LivingEntity || entity is CannonballEntity || entity is MortarEntity) {
-                        if (entity is CannonballEntity || entity is MortarEntity) {
-                            world.createExplosion(
-                                entity,
-                                entity.damageSources.explosion(entity, player),
-                                WeakExplosionBehavior(),
-                                entity.x,
-                                entity.y,
-                                entity.z,
-                                2.0f,
-                                false,
-                                World.ExplosionSourceType.TNT
-                            )
-                            entity.discard()
-                        } else if (entity is PlayerEntity) {
-                            val rand = world.random.rangeInclusive(1, 10)
-                            if (rand == 1) {
-                                entity.damage(
-                                    DamageSource(
-                                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
-                                        player,
-                                        player
-                                    ), 7.5f
-                                )
-                            } else {
-                                entity.damage(
-                                    DamageSource(
-                                        AstralDamageTypes.getHolder(
-                                            world.registryManager,
-                                            AstralDamageTypes.NON_RAILED
-                                        ),
-                                        player,
-                                        player
-                                    ), 7.5f
-                                )
-                            }
-                        } else {
-                            entity.damage(
-                                DamageSource(
-                                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
-                                    player,
-                                    player
-                                ), 22.5f
-                            )
-                        }
-                    }
-                }
-            }
-        }
-        return null
     }
+
 }

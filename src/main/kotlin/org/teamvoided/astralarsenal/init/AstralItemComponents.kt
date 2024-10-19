@@ -11,10 +11,12 @@ import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.NailCannonItem
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.kosmogliph.armor.*
+import org.teamvoided.astralarsenal.kosmogliph.armor.defensive.CapacitanceKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.melee.AstralStrikeKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.AlchemistKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.MinigunKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.SnipeKosmogliph
 import java.util.*
 
 object AstralItemComponents {
@@ -86,8 +88,18 @@ object AstralItemComponents {
 
     @JvmField
     val PULVERISER_DATA: DataComponentType<PulveriserKosmogliph.Data> =
-        register("pulveriser_data", { it is ArmorItem }, { PulveriserKosmogliph.Data(0, false) }) { builder ->
+        register("pulveriser_data", { it is MaceItem }, { PulveriserKosmogliph.Data(0, false) }) { builder ->
             builder.codec(PulveriserKosmogliph.Data.CODEC).build()
+        }
+
+    val SNIPE_DATA_V1: DataComponentType<SnipeKosmogliph.Data> =
+        register("snipe_data_v1", { it is RailgunItem }, { SnipeKosmogliph.Data(0, false) }) { builder ->
+            builder.codec(SnipeKosmogliph.Data.CODEC).build()
+        }
+
+    val CAPACITANCE_DATA_V1: DataComponentType<CapacitanceKosmogliph.Data> =
+        register("capacitance_data_v1", { it is ArmorItem }, { CapacitanceKosmogliph.Data(0f) }) { builder ->
+            builder.codec(CapacitanceKosmogliph.Data.CODEC).build()
         }
 
     fun <T> register(
