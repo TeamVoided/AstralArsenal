@@ -19,6 +19,7 @@ class AstralEntityTagProvider(
             .add(EntityType.SKELETON_HORSE)
             .add(EntityType.DONKEY)
             .add(EntityType.MULE)
+            .add(EntityType.ZOMBIE_HORSE)
 
         getOrCreateTagBuilder(AstralEntityTags.PROTECTED_FROM_DEL)
             .add(EntityType.TRIDENT)
