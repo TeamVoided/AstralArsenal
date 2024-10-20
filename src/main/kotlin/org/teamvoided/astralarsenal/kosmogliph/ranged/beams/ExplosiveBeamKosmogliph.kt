@@ -96,7 +96,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                 world.createExplosion(
                     null,
                     entity.damageSources.explosion(null, player),
-                    StrongExplosionBehavior(),
+                    StrongExplosionBehavior(player),
                     entity.x,
                     entity.y,
                     entity.z,
@@ -125,7 +125,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
             world.createExplosion(
                 null,
                 player.damageSources.explosion(null, player),
-                StrongExplosionBehavior(),
+                StrongExplosionBehavior(player),
                 result.pos.x,
                 result.pos.y,
                 result.pos.z,

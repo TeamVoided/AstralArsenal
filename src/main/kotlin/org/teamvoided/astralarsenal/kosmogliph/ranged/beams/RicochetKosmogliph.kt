@@ -98,7 +98,7 @@ class RicochetKosmogliph(id: Identifier) :
                 world.createExplosion(
                     entity,
                     entity.damageSources.explosion(entity, player),
-                    WeakExplosionBehavior(),
+                    WeakExplosionBehavior(player),
                     entity.x,
                     entity.y,
                     entity.z,

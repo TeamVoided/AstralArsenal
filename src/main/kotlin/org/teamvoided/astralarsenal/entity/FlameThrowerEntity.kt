@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
@@ -35,7 +36,7 @@ class FlameThrowerEntity : ThrownItemEntity {
         super.onEntityHit(entityHitResult)
         if (entityHitResult.entity != owner && entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity
-            hit.customDamage(AstralDamageTypes.BURN, 0.25f, this, owner)
+            hit.customDamage(AstralDamageTypes.BURN, if(hit is PlayerEntity)0.1f else 0.25f, this, owner)
             hit.setOnFireFor(100)
         }
     }

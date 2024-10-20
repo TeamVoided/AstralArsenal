@@ -87,7 +87,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
                 world.createExplosion(
                     entity,
                     entity.damageSources.explosion(entity, player),
-                    StrongExplosionBehavior(),
+                    StrongExplosionBehavior(player),
                     entity.x,
                     entity.y,
                     entity.z,

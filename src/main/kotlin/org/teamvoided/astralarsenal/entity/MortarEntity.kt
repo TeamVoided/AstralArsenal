@@ -40,7 +40,7 @@ class MortarEntity : ThrownItemEntity {
             world.createExplosion(
                 this,
                 damageSources.explosion(this, this.owner),
-                WeakExplosionBehavior(),
+                this.owner?.let { WeakExplosionBehavior(it) },
                 this.x,
                 this.y,
                 this.z,
@@ -65,7 +65,7 @@ class MortarEntity : ThrownItemEntity {
             world.createExplosion(
                 this,
                 damageSources.explosion(this, this.owner),
-                StrongExplosionBehavior(),
+                this.owner?.let { StrongExplosionBehavior(it) },
                 this.x,
                 this.y,
                 this.z,

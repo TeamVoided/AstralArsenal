@@ -99,16 +99,14 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                 uses++
                 val x: Float = (uses * 2.0).toFloat()
                 var time = 20
-                if (entity is LivingEntity) {
-                    val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
-                    if (y.isNotEmpty()) {
-                        for (t in y) {
-                            time += (t.amplifier * 20)
-                        }
+                val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
+                if (y.isNotEmpty()) {
+                    for (t in y) {
+                        time += (t.amplifier * 20)
                     }
-                    val z: Int = (entity.frozenTicks / 20)
-                    time += z
                 }
+                val z: Int = (entity.frozenTicks / 20)
+                time += z
                 cooldown = time
                 if (entity is ServerPlayerEntity) {
                     entity.networkHandler.send(

@@ -57,15 +57,15 @@ class ParryKosmogliph(id: Identifier) :
                                 if (!(entity as PersistentProjectileEntityAccessor).getInGround()) {
                                     entity.discard()
                                     if (entity.isCritical) blowTheFuckUp(
-                                        ParryStrongExplosionBehavior(),
-                                        ParryBustedExplosionBehavior(),
+                                        ParryStrongExplosionBehavior(entity),
+                                        ParryBustedExplosionBehavior(entity),
                                         1f,
                                         user,
                                         world
                                     )
                                     else blowTheFuckUp(
-                                        ParryWeakExplosionBehavior(),
-                                        ParryStrongExplosionBehavior(),
+                                        ParryWeakExplosionBehavior(entity),
+                                        ParryStrongExplosionBehavior(entity),
                                         1f,
                                         user,
                                         world
@@ -75,8 +75,8 @@ class ParryKosmogliph(id: Identifier) :
                             } else if (entity is CannonballEntity || entity is MortarEntity || entity is FireworkRocketEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
-                                    ParryStrongExplosionBehavior(),
-                                    ParryBustedExplosionBehavior(),
+                                    ParryStrongExplosionBehavior(entity),
+                                    ParryBustedExplosionBehavior(entity),
                                     2f,
                                     user,
                                     world
@@ -84,13 +84,19 @@ class ParryKosmogliph(id: Identifier) :
                                 break
                             } else if (entity is SnowballEntity || entity is FreezeShotEntity) {
                                 entity.discard()
-                                blowTheFuckUp(ParryIceExplosionBehavior(), ParryIceExplosionBehavior(), 1f, user, world)
+                                blowTheFuckUp(
+                                    ParryIceExplosionBehavior(entity),
+                                    ParryIceExplosionBehavior(entity),
+                                    1f,
+                                    user,
+                                    world
+                                )
                                 break
                             } else if (entity is FireballEntity || entity is SmallFireballEntity || entity is FlameShotEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
-                                    ParryFireExplosionBehavior(),
-                                    ParryFireExplosionBehavior(),
+                                    ParryFireExplosionBehavior(entity),
+                                    ParryFireExplosionBehavior(entity),
                                     1f,
                                     user,
                                     world
@@ -99,8 +105,8 @@ class ParryKosmogliph(id: Identifier) :
                             } else if (entity is ShulkerBulletEntity || entity is PotionEntity || entity is WitherSkullEntity || entity is DragonFireballEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
-                                    ParryBrewExplosionBehavior(),
-                                    ParryBrewExplosionBehavior(),
+                                    ParryBrewExplosionBehavior(entity),
+                                    ParryBrewExplosionBehavior(entity),
                                     1f,
                                     user,
                                     world
@@ -109,8 +115,8 @@ class ParryKosmogliph(id: Identifier) :
                             } else if (entity is LlamaSpitEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
-                                    ParryBustedExplosionBehavior(),
-                                    ParryBustedExplosionBehavior(),
+                                    ParryBustedExplosionBehavior(entity),
+                                    ParryBustedExplosionBehavior(entity),
                                     3f,
                                     user,
                                     world
@@ -120,8 +126,8 @@ class ParryKosmogliph(id: Identifier) :
                             } else {
                                 entity.discard()
                                 blowTheFuckUp(
-                                    ParryWeakExplosionBehavior(),
-                                    ParryStrongExplosionBehavior(),
+                                    ParryWeakExplosionBehavior(entity),
+                                    ParryStrongExplosionBehavior(entity),
                                     1f,
                                     user,
                                     world

@@ -11,8 +11,8 @@ import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.ExplosionBehavior
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 
-class StrongExplosionBehavior : ExplosionBehavior() {
-
+class StrongExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
+    val causingEntity = causingEntity
     override fun canDestroyBlock(
         explosion: Explosion,
         world: BlockView,
@@ -33,8 +33,8 @@ class StrongExplosionBehavior : ExplosionBehavior() {
                 entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
-                        explosion.causingEntity,
-                        explosion.causingEntity
+                        causingEntity,
+                        causingEntity
                     ), 15f
                 )
             }
@@ -42,8 +42,8 @@ class StrongExplosionBehavior : ExplosionBehavior() {
                 entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
-                        explosion.causingEntity,
-                        explosion.causingEntity
+                        causingEntity,
+                        causingEntity
                     ), 30f
                 )
             }

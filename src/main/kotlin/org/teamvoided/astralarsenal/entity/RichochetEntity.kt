@@ -124,7 +124,7 @@ class RichochetEntity : Entity {
                 world.createExplosion(
                     entity,
                     entity.damageSources.explosion(entity, cause),
-                    WeakExplosionBehavior(),
+                    WeakExplosionBehavior(cause),
                     entity.x,
                     entity.y,
                     entity.z,

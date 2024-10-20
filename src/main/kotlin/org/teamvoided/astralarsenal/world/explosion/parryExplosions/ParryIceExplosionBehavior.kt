@@ -10,8 +10,8 @@ import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.ExplosionBehavior
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 
-class ParryIceExplosionBehavior : ExplosionBehavior() {
-
+class ParryIceExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
+    val causingEntity = causingEntity
     override fun canDestroyBlock(
         explosion: Explosion,
         world: BlockView,
@@ -28,12 +28,12 @@ class ParryIceExplosionBehavior : ExplosionBehavior() {
 
     override fun calculateDamage(explosion: Explosion, entity: Entity): Float {
         entity.frozenTicks += 1000
-        if (entity is LivingEntity && entity != explosion.causingEntity) {
+        if (entity is LivingEntity && entity != causingEntity) {
             entity.damage(
                 DamageSource(
-                    AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
-                    explosion.causingEntity,
-                    explosion.causingEntity
+                    AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.PARRY),
+                    causingEntity,
+                    causingEntity
                 ), 10f
             )
         }

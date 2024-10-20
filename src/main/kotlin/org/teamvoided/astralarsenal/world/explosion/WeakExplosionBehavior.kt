@@ -10,8 +10,8 @@ import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.ExplosionBehavior
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 
-class WeakExplosionBehavior : ExplosionBehavior() {
-
+class WeakExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
+val causingEntity = causingEntity
     override fun canDestroyBlock(
         explosion: Explosion,
         world: BlockView,
@@ -32,8 +32,8 @@ class WeakExplosionBehavior : ExplosionBehavior() {
                 entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
-                        explosion.causingEntity,
-                        explosion.causingEntity
+                        causingEntity,
+                        causingEntity
                     ), 10f
                 )
             }

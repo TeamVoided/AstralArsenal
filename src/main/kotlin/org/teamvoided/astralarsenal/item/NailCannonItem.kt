@@ -82,7 +82,7 @@ class NailCannonItem(settings: Settings) : Item(settings) {
         val cooldownData = stack.get(AstralItemComponents.NAILGUN_COOLDOWN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var cooldown = cooldownData.fireCooldown
-        if ((data.uses > 0 && cooldown <= 0) || (((USE_TICKS - remainingUseTicks) % 20) == 0 && USE_TICKS - remainingUseTicks > 10 && getKosmogliphsOnStack(
+        if ((data.uses > 0 && cooldown <= 0) || (data.uses > 0 && ((USE_TICKS - remainingUseTicks) % 20) == 0 && USE_TICKS - remainingUseTicks > 10 && getKosmogliphsOnStack(
                 stack
             ).contains(
                 AstralKosmogliphs.STATIC_RELEASE

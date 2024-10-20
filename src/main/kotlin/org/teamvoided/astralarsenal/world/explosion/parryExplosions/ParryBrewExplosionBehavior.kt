@@ -14,8 +14,8 @@ import net.minecraft.world.explosion.ExplosionBehavior
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
 
-class ParryBrewExplosionBehavior : ExplosionBehavior() {
-
+class ParryBrewExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
+    val causingEntity = causingEntity
     override fun canDestroyBlock(
         explosion: Explosion,
         world: BlockView,
@@ -68,12 +68,12 @@ class ParryBrewExplosionBehavior : ExplosionBehavior() {
                 )
             )
         }
-        if (entity is LivingEntity && entity != explosion.causingEntity) {
+        if (entity is LivingEntity && entity != causingEntity) {
             entity.damage(
                 DamageSource(
                     AstralDamageTypes.getHolder(entity.world.registryManager, DamageTypes.MAGIC),
-                    explosion.causingEntity,
-                    explosion.causingEntity
+                    causingEntity,
+                    causingEntity
                 ), 5f
             )
         }

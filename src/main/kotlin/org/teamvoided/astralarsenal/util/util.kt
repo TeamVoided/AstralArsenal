@@ -171,7 +171,7 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
                         if (ticks >= 100 || (ticks >= 50 && entity.fallDistance >= 10.0)) ParticleTypes.GUST_EMITTER_LARGE
                         else ParticleTypes.GUST_EMITTER_SMALL
                         )
-                val power = min((2.0 + (0.1 * faller.fallDistance)).toFloat(), 10.0f)
+                val power = min((2.0 + (0.03 * faller.fallDistance)).toFloat(), 5.0f)
                 faller.world.createExplosion(
                     faller, faller.damageSources.explosion(null, faller),
                     explosionBehavior,

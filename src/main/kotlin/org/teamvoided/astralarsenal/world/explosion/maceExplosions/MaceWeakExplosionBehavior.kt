@@ -31,9 +31,9 @@ class MaceWeakExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
             if (entity is LivingEntity) {
                 entity.damage(
                     DamageSource(
-                        AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
-                        explosion.causingEntity,
-                        explosion.causingEntity
+                        AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.PULVERISED),
+                        cause,
+                        cause
                     ), 5f
                 )
             }
