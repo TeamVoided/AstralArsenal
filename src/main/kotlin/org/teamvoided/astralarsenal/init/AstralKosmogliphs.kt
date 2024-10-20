@@ -28,6 +28,7 @@ import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.OrbitalKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.TimeBombKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.TridentBleedKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.TridentReduceKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.shield.FrostThornsKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.shield.ParryKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.tools.HammerKosmogliph
@@ -108,6 +109,8 @@ object AstralKosmogliphs {
 
     val TRIDENT_REDUCE = register("trident_reduce", ::TridentReduceKosmogliph)
     val TRIDENT_BLEED = register("trident_bleed", ::TridentBleedKosmogliph)
+    @JvmField
+    val ASTRAL_RAIN = register("astral_rain", ::AstralRainKosmogliph)
 
     val CAPACITY = register("capacity", ::CapacityKosmogliph)
     val OVER_HEAT = register("over_heat", ::OverHeatKosmogliph)

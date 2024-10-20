@@ -104,6 +104,7 @@ class AstralItemTagProvider(
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TRIDENT_REDUCE).forceAddTag(ConventionalItemTags.SPEAR_TOOLS)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TRIDENT_BLEED).forceAddTag(ConventionalItemTags.SPEAR_TOOLS)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ASTRAL_RAIN).forceAddTag(ConventionalItemTags.SPEAR_TOOLS)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_CAPACITY).add(AstralItems.NAILCANNON)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_OVER_HEAT).add(AstralItems.NAILCANNON)

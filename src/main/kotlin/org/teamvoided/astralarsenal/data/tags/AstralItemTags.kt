@@ -64,6 +64,7 @@ object AstralItemTags {
 
     val SUPPORTS_TRIDENT_REDUCE = supports("trident_reduce")
     val SUPPORTS_TRIDENT_BLEED = supports("trident_bleed")
+    val SUPPORTS_ASTRAL_RAIN = supports("astral_rain")
 
     val SUPPORTS_CAPACITY = supports("capacity")
     val SUPPORTS_OVER_HEAT = supports("capacity")

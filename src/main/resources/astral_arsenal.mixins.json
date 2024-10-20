@@ -19,6 +19,7 @@
     "RangedWeaponItemMixin",
     "ServerPlayerInteractionManagerMixin",
     "ToolItemMixin",
+    "TridentItemMixin",
     "TridentMixin"
   ],
   "injectors": {
