@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.mob.ElderGuardianEntity
 import net.minecraft.entity.mob.GuardianEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
@@ -27,6 +28,7 @@ import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import java.lang.IllegalStateException
 import kotlin.math.roundToInt
 import kotlin.math.max
+import kotlin.math.min
 
 class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_CAPACITANCE) }) {
     override fun modifyDamage(
@@ -51,14 +53,15 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA) || source.attacker is GuardianEntity || source.attacker is ElderGuardianEntity) {
             outputDamage = (outputDamage * 0.2).toFloat()
-            dmg += (damage * 0.5).toFloat()
+            dmg += (damage * 1.0).toFloat()
         } else {
             if (dmg >= 0.5 && source.attacker is LivingEntity && entity.world is ServerWorld && source.attacker != entity) {
                 val attacker = source.attacker as LivingEntity
                 val world = entity.world as ServerWorld
-                attacker.customDamage(AstralDamageTypes.NON_RAILED, dmg, entity, entity)
+                val damageToDeal = if(attacker is PlayerEntity) min(15f, dmg/5) else dmg/5
+                attacker.customDamage(AstralDamageTypes.NON_RAILED, damageToDeal, entity, entity)
                 sillyLightningTime(entity.pos, attacker.pos, world)
-                dmg = 0f
+                dmg -= damageToDeal
             }
         }
         stack.set(AstralItemComponents.CAPACITANCE_DATA_V1, Data(dmg))
@@ -69,7 +72,7 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
         if(entity is LivingEntity && entity.getEquippedStack(EquipmentSlot.CHEST) == stack){
             val data = stack.get(AstralItemComponents.CAPACITANCE_DATA_V1)
                 ?: throw IllegalStateException("how the fuck?")
-            if(data.damage > 0.5){
+            if(data.damage >= 0.5){
                 val height = entity.height
                 val width = entity.width
                 if (world is ServerWorld) {

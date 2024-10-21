@@ -85,7 +85,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.capacitance.desc",
-            "Reduces damage from electricity and light by 80% and stores 50% of the damage. Next time you are hit, redirect the stored damage to the attacker."
+            "Reduces damage from electricity and light by 80% and stores 100% of the damage. Next time you are hit, redirect some of that damage back at the attacker."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.thermal.desc",
@@ -128,6 +128,10 @@ class AstralEnTranslationProvider(
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.trident_bleed.desc",
             "on hit, give 1 level of bleed. on ranged hit, give 5. Bleed causes entities to take 0.75 damage per level every second."
+        )
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.astral_rain.desc",
+            "Stores water in a cosmic rift, letting you riptide 3 times while out of water. Recharges by entering water."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.cannonball.desc",

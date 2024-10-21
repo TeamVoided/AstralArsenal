@@ -40,9 +40,8 @@ class OrbitalKosmogliph(
             snowballEntity.TIMEACTIVE = 40
             snowballEntity.WINDUP = 60
             snowballEntity.DMG = 4
-            snowballEntity.trackTime = 55
+            snowballEntity.trackTime = 60
             snowballEntity.balls = player
-            snowballEntity.hard_damage = 4
             world.spawnEntity(snowballEntity)
             if (player.getStackInHand(hand).hasMultiShot()) {
                 val one: Int

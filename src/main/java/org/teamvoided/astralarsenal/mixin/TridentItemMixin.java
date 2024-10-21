@@ -41,7 +41,7 @@ public class TridentItemMixin {
                 stack.set(AstralItemComponents.ASTRAL_RAIN_DATA, new AstralRainKosmogliph.Data(charges - 1));
             }
             if (hasAstralRain) {
-                instance.playSound(SoundEvents.BLOCK_TRIAL_SPAWNER_SPAWN_ITEM_BEGIN, 2.0f, 0.5f);
+                instance.getWorld().playSoundFromEntity(instance, SoundEvents.BLOCK_TRIAL_SPAWNER_SPAWN_ITEM_BEGIN, SoundCategory.PLAYERS, 2.0f, 0.5f);
                 if (instance.getWorld() instanceof ServerWorld) {
                     ((ServerWorld) instance.getWorld()).spawnParticles(
                             ParticleTypes.GLOW,
@@ -52,7 +52,7 @@ public class TridentItemMixin {
                             instance.getVelocity().x,
                             instance.getVelocity().y,
                             instance.getVelocity().z,
-                            -0.2
+                            1.0
                     );
                 }
             }

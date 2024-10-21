@@ -180,8 +180,8 @@ class NailCannonItem(settings: Settings) : Item(settings) {
     companion object {
         const val USE_TICKS = 72000
 
-        // boost is the fast firing mode, it activates after NAILS_BEFORE_EXTRA nails have been fired.
-        const val TICKS_BEFORE_BOOST = 60
+        // boost is the fast firing mode, it activates after TICKS_BEFORE_BOOST ticks have passed
+        const val TICKS_BEFORE_BOOST = 30
         const val FIRE_INTERVAL = 3
         const val BOOSTED_FIRE_INTERVAL = 1
         const val SLOW_SPREAD = 5.0f

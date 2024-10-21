@@ -51,9 +51,6 @@ class BeamOfLightEntity : Entity {
     var trackTime = 0
     var owner: Entity? = null
     var hard_damage = 0
-    val unhealable = listOf(
-        AstralEffects.UNHEALABLE_DAMAGE
-    )
     val weak = listOf(
         AstralEffects.HARD_DAMAGE
     )
@@ -114,21 +111,21 @@ class BeamOfLightEntity : Entity {
                         if (!entitiesHit.contains(entity) && entity is LivingEntity) {
                             entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
                             entity.addVelocity(0.0, THRUST, 0.0)
-                            var hard_levels = this.hard_damage
-                            val effects = entity.statusEffects.filter { unhealable.contains(it.effectType) }
-                            if (effects.isNotEmpty()) {
-                                effects.forEach {
-                                    val w = it.amplifier
-                                    hard_levels += w
-                                }
-                            }
-                            entity.addStatusEffect(
-                                StatusEffectInstance(
-                                    AstralEffects.UNHEALABLE_DAMAGE,
-                                    400, hard_levels,
-                                    false, true, true
-                                )
-                            )
+//                            var hard_levels = this.hard_damage
+//                            val effects = entity.statusEffects.filter { unhealable.contains(it.effectType) }
+//                            if (effects.isNotEmpty()) {
+//                                effects.forEach {
+//                                    val w = it.amplifier
+//                                    hard_levels += w
+//                                }
+//                            }
+//                            entity.addStatusEffect(
+//                                StatusEffectInstance(
+//                                    AstralEffects.UNHEALABLE_DAMAGE,
+//                                    400, hard_levels,
+//                                    false, true, true
+//                                )
+//                            )
                             entitiesHit.add(entity)
                         }
                     }

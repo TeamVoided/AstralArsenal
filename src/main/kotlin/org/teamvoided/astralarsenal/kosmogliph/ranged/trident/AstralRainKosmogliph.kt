@@ -49,28 +49,6 @@ class AstralRainKosmogliph(id: Identifier) :
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 
-    override fun onStoppedUsing(stack: ItemStack, world: World, user: LivingEntity, remainingUseTicks: Int) {
-        val charges = Objects.requireNonNull(stack.get(AstralItemComponents.ASTRAL_RAIN_DATA))?.charges ?: 0
-        if (user.isTouchingWaterOrRain || charges > 0) {
-            println("within")
-            user.playSound(SoundEvents.BLOCK_TRIAL_SPAWNER_SPAWN_ITEM_BEGIN, 2.0f, 0.5f)
-            if(world is ServerWorld){
-                world.spawnParticles(
-                    ParticleTypes.GLOW,
-                    user.x + (world.random.nextDouble() - 0.5) * 1.7,
-                    user.y + 1 + (world.random.nextDouble() - 0.5) * 1.7,
-                    user.z + (world.random.nextDouble() - 0.5) * 1.7,
-                    20,
-                    user.velocity.x,
-                    user.velocity.y,
-                    user.velocity.z,
-                    -0.2,
-                )
-            }
-        }
-        super.onStoppedUsing(stack, world, user, remainingUseTicks)
-    }
-
     override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.RIPTIDE)
     }

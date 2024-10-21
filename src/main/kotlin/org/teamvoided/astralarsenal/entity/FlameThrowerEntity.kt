@@ -38,6 +38,7 @@ class FlameThrowerEntity : ThrownItemEntity {
             val hit = entityHitResult.entity
             hit.customDamage(AstralDamageTypes.BURN, if(hit is PlayerEntity)0.1f else 0.25f, this, owner)
             hit.setOnFireFor(100)
+            if(entityHitResult.entity is PlayerEntity) this.discard()
         }
     }
 
