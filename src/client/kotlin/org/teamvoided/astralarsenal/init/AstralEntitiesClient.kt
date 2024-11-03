@@ -21,5 +21,6 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.FLAME_THROWER_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.RICHOCHET, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.NAIL_ENTITY, ::NailEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.COMET_ENTITY, ::EmptyEntityRenderer)
     }
 }

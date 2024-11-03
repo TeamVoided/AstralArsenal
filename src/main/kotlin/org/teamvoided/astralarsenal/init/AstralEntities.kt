@@ -88,6 +88,11 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::NailEntity), SpawnGroup.MISC)
             .setDimensions(0.25f, 0.25f).maxTrackingRange(4).build()
     )
+    val COMET_ENTITY = register(
+        "comet_entity",
+        EntityType.Builder.create(EntityType.EntityFactory(::CometEntity), SpawnGroup.MISC)
+            .setDimensions(0.75f, 0.75f).maxTrackingRange(4).build()
+    )
 
     private fun <T : Entity> register(path: String, entry: EntityType<T>): EntityType<T> {
         return Registry.register(Registries.ENTITY_TYPE, id(path), entry)

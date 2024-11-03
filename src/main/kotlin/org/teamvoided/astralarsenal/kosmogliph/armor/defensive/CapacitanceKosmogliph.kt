@@ -18,19 +18,22 @@ import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import java.lang.IllegalStateException
 import kotlin.math.roundToInt
 import kotlin.math.max
 import kotlin.math.min
 
 class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_CAPACITANCE) }) {
+    val CHARGE_DRAIN_PER_SECOND = 0.05f
+    val MAX_PLAYER_DAMAGE = 5f
+    val DISCHARGE_PERCENT_PER_HIT = 0.1f
+    val DAMAGE_TO_CHARGE = 1.0
+
     override fun modifyDamage(
         stack: ItemStack,
         entity: LivingEntity,
@@ -53,13 +56,13 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA) || source.attacker is GuardianEntity || source.attacker is ElderGuardianEntity) {
             outputDamage = (outputDamage * 0.2).toFloat()
-            dmg += (damage * 1.0).toFloat()
+            dmg += (damage * DAMAGE_TO_CHARGE).toFloat()
         } else {
             if (dmg >= 0.5 && source.attacker is LivingEntity && entity.world is ServerWorld && source.attacker != entity) {
                 val attacker = source.attacker as LivingEntity
                 val world = entity.world as ServerWorld
-                val damageToDeal = if(attacker is PlayerEntity) min(15f, dmg/5) else dmg/5
-                attacker.customDamage(AstralDamageTypes.NON_RAILED, damageToDeal, entity, entity)
+                val damageToDeal = if(attacker is PlayerEntity) min(MAX_PLAYER_DAMAGE, dmg * DISCHARGE_PERCENT_PER_HIT) else dmg * DISCHARGE_PERCENT_PER_HIT
+                attacker.customDamage(AstralDamageTypes.RICHOCHET, damageToDeal, entity, entity)
                 sillyLightningTime(entity.pos, attacker.pos, world)
                 dmg -= damageToDeal
             }
@@ -72,6 +75,7 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
         if(entity is LivingEntity && entity.getEquippedStack(EquipmentSlot.CHEST) == stack){
             val data = stack.get(AstralItemComponents.CAPACITANCE_DATA_V1)
                 ?: throw IllegalStateException("how the fuck?")
+            var damage = data.damage
             if(data.damage >= 0.5){
                 val height = entity.height
                 val width = entity.width
@@ -88,6 +92,8 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                         0.0
                     )
                 }
+                damage -= (CHARGE_DRAIN_PER_SECOND / 20)
+                stack.set(AstralItemComponents.CAPACITANCE_DATA_V1, Data(damage))
             }
         }
         super.inventoryTick(stack, world, entity, slot, selected)

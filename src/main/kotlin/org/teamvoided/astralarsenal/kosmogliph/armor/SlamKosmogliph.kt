@@ -56,8 +56,12 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         if (entity !is LivingEntity) return
         val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return
-        val currentFallDistance = entity.fallDistance
-        var slamming = data.slamming
+//        val currentFallDistance = entity.fallDistance
+          var slamming = data.slamming
+        if(slamming){
+            entity.setVelocity(0.0, -20.0, 0.0)
+            entity.velocityModified = true
+        }
 //        if (slamming && currentFallDistance <= 0f && data.lastFallDistance > 0f) {
 ////            entity.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
 ////            entity.addStatusEffect(
@@ -74,9 +78,9 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 //            slamming = false
 //        }
 
-        if (entity.velocity.y >= 0) {
-            slamming = false
-        }
+//        if (entity.velocity.y >= 0) {
+//            slamming = false
+//        }
 
         //stack.set(AstralItemComponents.SLAM_DATA, Data(currentFallDistance, slamming))
     }

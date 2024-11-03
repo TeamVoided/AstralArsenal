@@ -113,6 +113,10 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_PULVERISER).add(Items.MACE)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_WIND_ERUPTION).add(Items.MACE)
 
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_GENERATOR).add(AstralItems.COMET_LAUNCHER)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_QUICKSHOT).add(AstralItems.COMET_LAUNCHER)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TARGET).add(AstralItems.COMET_LAUNCHER)
+
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_KOSMOGLIPHS)
             .forceAddTag(AstralItemTags.SUPPORTS_VEIN_MINER)
             .forceAddTag(AstralItemTags.SUPPORTS_HAMMER)
@@ -159,6 +163,10 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_STATIC_RELEASE)
             .forceAddTag(AstralItemTags.SUPPORTS_OVER_HEAT)
             .forceAddTag(AstralItemTags.SUPPORTS_PULVERISER)
+            .forceAddTag(AstralItemTags.SUPPORTS_ASTRAL_RAIN)
+            .forceAddTag(AstralItemTags.SUPPORTS_GENERATOR)
+            .forceAddTag(AstralItemTags.SUPPORTS_QUICKSHOT)
+            .forceAddTag(AstralItemTags.SUPPORTS_TARGET)
             .add(Items.SHIELD)
     }
 

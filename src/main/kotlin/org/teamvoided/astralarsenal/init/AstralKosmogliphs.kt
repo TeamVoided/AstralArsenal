@@ -15,26 +15,14 @@ import org.teamvoided.astralarsenal.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.kosmogliph.armor.defensive.*
 import org.teamvoided.astralarsenal.kosmogliph.melee.*
 import org.teamvoided.astralarsenal.kosmogliph.melee.mace.*
-import org.teamvoided.astralarsenal.kosmogliph.ranged.AlchemistKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.CannonballLauncherKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.ShotgunKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.*
 import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.*
-import org.teamvoided.astralarsenal.kosmogliph.ranged.nailgun.CapacityKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.nailgun.OverHeatKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.nailgun.StaticReleaseKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.DevastateKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.LockOffKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.OrbitalKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.TimeBombKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.TridentBleedKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.TridentReduceKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.shield.FrostThornsKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.shield.ParryKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.tools.HammerKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.tools.ReaperKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.tools.SmelterKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.tools.VeinmineKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.cometlauncher.*
+import org.teamvoided.astralarsenal.kosmogliph.ranged.nailgun.*
+import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.*
+import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.*
+import org.teamvoided.astralarsenal.kosmogliph.shield.*
+import org.teamvoided.astralarsenal.kosmogliph.tools.*
 
 @Suppress("unused")
 object AstralKosmogliphs {
@@ -104,8 +92,6 @@ object AstralKosmogliphs {
     val DEVASTATE = register("devastate", ::DevastateKosmogliph)
     val LOCK_OFF = register("lock_off", ::LockOffKosmogliph)
     val TIME_BOMB = register("time_bomb", ::TimeBombKosmogliph)
-    //2.0.0 content
-    // val BLACK_HOLE = register("black_hole", ::BlackHoleKosmogliph)
 
     val TRIDENT_REDUCE = register("trident_reduce", ::TridentReduceKosmogliph)
     val TRIDENT_BLEED = register("trident_bleed", ::TridentBleedKosmogliph)
@@ -119,6 +105,10 @@ object AstralKosmogliphs {
     @JvmField
     val PULVERISER = register("pulveriser", ::PulveriserKosmogliph)
     val WIND_ERUPTION = register("wind_eruption", ::WindEruptionKosmogliph)
+
+    val GENERATOR = register("generator", ::GeneratorKosmogliph)
+    val QUICKSHOT = register("quickshot", ::QuickshotKosmogliph)
+    val TARGET = register("target", ::TargetKosmogliph)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))

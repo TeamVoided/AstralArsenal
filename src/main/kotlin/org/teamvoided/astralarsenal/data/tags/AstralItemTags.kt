@@ -73,6 +73,10 @@ object AstralItemTags {
     val SUPPORTS_PULVERISER = supports("pulveriser")
     val SUPPORTS_WIND_ERUPTION = supports("wind_eruption")
 
+    val SUPPORTS_GENERATOR = supports("generator")
+    val SUPPORTS_QUICKSHOT = supports("quickshot")
+    val SUPPORTS_TARGET = supports("target")
+
     val KOSMIC_TABLE_LEFT_FACING =  create("kosmic_table/left_facing")
     val KOSMIC_TABLE_STRAIGHT = create("kosmic_table/straight")
 
