@@ -7,6 +7,7 @@ import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.entity.effect.StatusEffectInstance
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
@@ -51,17 +52,19 @@ class BeamOfLightEntity : Entity {
     var trackTime = 0
     var owner: Entity? = null
     var hard_damage = 0
+    var enraged = false
     val weak = listOf(
         AstralEffects.HARD_DAMAGE
     )
 
     override fun tick() {
         incrementTime()
+        var particles = if (enraged) ParticleTypes.GLOW else ParticleTypes.END_ROD
         if (this.getTime() < WINDUP) {
             if (!world.isClient) {
                 val serverWorld = world as ServerWorld
                 serverWorld.spawnParticles(
-                    ParticleTypes.END_ROD,
+                    particles,
                     this.x,
                     this.y,
                     this.z,
@@ -74,6 +77,20 @@ class BeamOfLightEntity : Entity {
             }
             if (targetEntity != null && this.getTime() < trackTime) {
                 this.setPosition(targetEntity!!.pos.x, targetEntity!!.pos.y + 1, targetEntity!!.pos.z)
+            } else if (targetEntity != null && this.getTime() == trackTime && enraged) {
+                if ((targetEntity is PlayerEntity)) {
+                    targetEntity as PlayerEntity
+                    val posx = targetEntity!!.x + (targetEntity!!.velocityAffectingPos.x * ((WINDUP) - trackTime))
+                    val posy = (targetEntity!!.y + 1) + (targetEntity!!.velocity.y * (WINDUP - trackTime))
+                    val posz = targetEntity!!.z + (targetEntity!!.velocityAffectingPos.z * (WINDUP - trackTime))
+                    this.setPosition(posx, posy, posz)
+                }
+                else{
+                    val posx = targetEntity!!.x + (targetEntity!!.velocity.x * ((WINDUP) - trackTime))
+                    val posy = (targetEntity!!.y + 1) + (targetEntity!!.velocity.y * (WINDUP - trackTime))
+                    val posz = targetEntity!!.z + (targetEntity!!.velocity.z * (WINDUP - trackTime))
+                    this.setPosition(posx, posy, posz)
+                }
             }
         } else if (this.getTime() == WINDUP) {
             this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)

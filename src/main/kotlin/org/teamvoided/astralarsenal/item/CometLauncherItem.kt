@@ -82,7 +82,7 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
         val data = stack.get(AstralItemComponents.COMET_LAUNCHER_DATA)
         return data != null && data.uses < 5
     }
-    val BAR_LIMIT = 12
+    val BAR_LIMIT = 10
     fun funnyMath(x: Int, y: Int): Int =
         clamp(round(BAR_LIMIT.toFloat() - x * BAR_LIMIT.toFloat() / y).toLong(), 0, BAR_LIMIT)
 

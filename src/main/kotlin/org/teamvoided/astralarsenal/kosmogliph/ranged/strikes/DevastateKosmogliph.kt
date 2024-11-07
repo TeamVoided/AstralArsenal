@@ -39,8 +39,9 @@ class DevastateKosmogliph(
             snowballEntity.TIMEACTIVE = 20
             snowballEntity.WINDUP = 50
             snowballEntity.DMG = 8
-            snowballEntity.trackTime = 50
+            snowballEntity.trackTime = 30
             snowballEntity.balls = player
+            snowballEntity.enraged = true
             world.spawnEntity(snowballEntity)
             if (player.getStackInHand(hand).hasMultiShot()) {
                 val one: Int

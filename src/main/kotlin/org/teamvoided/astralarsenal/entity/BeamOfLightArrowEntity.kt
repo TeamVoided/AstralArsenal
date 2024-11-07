@@ -29,12 +29,14 @@ class BeamOfLightArrowEntity : ArrowEntity {
     var trackTime = 0
     var balls: LivingEntity? = null
     var hard_damage = 0
+    var enraged = false
 
     override fun tick() {
+        var particles = if(enraged) ParticleTypes.GLOW else ParticleTypes.END_ROD
         if (!world.isClient) {
             val serverWorld = world as ServerWorld
             serverWorld.spawnParticles(
-                ParticleTypes.END_ROD,
+                particles,
                 this.x,
                 this.y,
                 this.z,
@@ -64,13 +66,14 @@ class BeamOfLightArrowEntity : ArrowEntity {
             snowballEntity.trackTime = trackTime / 4
             snowballEntity.owner = balls
             snowballEntity.hard_damage = hard_damage
+            snowballEntity.enraged = enraged
             world.spawnEntity(snowballEntity)
             this.discard()
         }
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
-        if (!world.isClient && entityHitResult.entity != this.balls) {
+        if (!world.isClient && (entityHitResult.entity != this.balls || this.age > 5)) {
             val snowballEntity = BeamOfLightEntity(world, balls)
             snowballEntity.setPosition(this.x, this.y, this.z)
             snowballEntity.DOT = DOT
@@ -82,6 +85,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
             snowballEntity.targetEntity = entityHitResult.entity
             snowballEntity.trackTime = trackTime
             snowballEntity.owner = balls
+            snowballEntity.enraged = enraged
             world.spawnEntity(snowballEntity)
             this.discard()
         }

@@ -12,6 +12,7 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.math.Box
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
@@ -98,9 +99,12 @@ class CometEntity : PersistentProjectileEntity {
                 val x = (entity.x - this.x)
                 val y = (entity.eyeY - this.y)
                 val z = (entity.z - this.z)
-                this.addVelocity(x.sign * 0.1, y.sign * 0.1, z.sign * 0.1)
+                val distance = this.distanceTo(entity)
+                val mult = 0.1
+                this.addVelocity(x.sign * mult, y.sign * mult, z.sign * mult)
                 this.velocityDirty
-                if (!entity.isAlive || x.absoluteValue > 15 || y.absoluteValue > 15 || z.absoluteValue > 15) {
+
+                if (!entity.isAlive || distance > 15) {
                     entities.removeFirst()
                 }
             }
