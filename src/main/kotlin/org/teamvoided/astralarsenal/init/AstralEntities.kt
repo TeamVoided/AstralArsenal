@@ -7,6 +7,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.entity.*
+import org.teamvoided.astralarsenal.entity.astralenemies.AstralStrikerEntityBeta
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
 
 object AstralEntities {
@@ -87,6 +88,11 @@ object AstralEntities {
         "nail_entity",
         EntityType.Builder.create(EntityType.EntityFactory(::NailEntity), SpawnGroup.MISC)
             .setDimensions(0.25f, 0.25f).maxTrackingRange(4).build()
+    )
+    val ASTRAL_BETA = register(
+        "astral_beta",
+        EntityType.Builder.create(EntityType.EntityFactory(::AstralStrikerEntityBeta), SpawnGroup.MISC)
+            .setDimensions(2f, 2f).maxTrackingRange(50).build()
     )
     val COMET_ENTITY = register(
         "comet_entity",

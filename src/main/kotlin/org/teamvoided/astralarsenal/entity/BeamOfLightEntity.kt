@@ -78,19 +78,10 @@ class BeamOfLightEntity : Entity {
             if (targetEntity != null && this.getTime() < trackTime) {
                 this.setPosition(targetEntity!!.pos.x, targetEntity!!.pos.y + 1, targetEntity!!.pos.z)
             } else if (targetEntity != null && this.getTime() == trackTime && enraged) {
-                if ((targetEntity is PlayerEntity)) {
-                    targetEntity as PlayerEntity
-                    val posx = targetEntity!!.x + (targetEntity!!.velocityAffectingPos.x * ((WINDUP) - trackTime))
-                    val posy = (targetEntity!!.y + 1) + (targetEntity!!.velocity.y * (WINDUP - trackTime))
-                    val posz = targetEntity!!.z + (targetEntity!!.velocityAffectingPos.z * (WINDUP - trackTime))
+                    val posx = targetEntity!!.x + (targetEntity!!.movement.x * ((WINDUP) - trackTime))
+                    val posy = (targetEntity!!.y + 1) + (targetEntity!!.movement.y * (WINDUP - trackTime))
+                    val posz = targetEntity!!.z + (targetEntity!!.movement.z * (WINDUP - trackTime))
                     this.setPosition(posx, posy, posz)
-                }
-                else{
-                    val posx = targetEntity!!.x + (targetEntity!!.velocity.x * ((WINDUP) - trackTime))
-                    val posy = (targetEntity!!.y + 1) + (targetEntity!!.velocity.y * (WINDUP - trackTime))
-                    val posz = targetEntity!!.z + (targetEntity!!.velocity.z * (WINDUP - trackTime))
-                    this.setPosition(posx, posy, posz)
-                }
             }
         } else if (this.getTime() == WINDUP) {
             this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)
