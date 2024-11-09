@@ -1,5 +1,8 @@
 package org.teamvoided.astralarsenal.entity.astralenemies
 
+import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
+import net.minecraft.data.client.model.Models.CUBE
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.ai.goal.Goal
@@ -13,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
+import org.teamvoided.astralarsenal.init.AstralEntities.ASTRAL_BETA
 import java.util.*
 import java.util.function.Predicate
 
@@ -22,14 +26,7 @@ class AstralStrikerEntityBeta(entityType: EntityType<out FlyingEntity>?, world: 
 ) {
     //this is a beta version of the future mob, when implementing properly to the game, with proper classes,
     //please rename this to a better name, thx <3
-
     var Enraged: Boolean = false
-
-    fun createAttributes(): DefaultAttributeContainer.Builder {
-        return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0)
-            .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 50.0)
-            .add(EntityAttributes.GENERIC_ARMOR, 5.0)
-    }
 
     override fun initGoals() {
         goalSelector.add(5, HoverRandomlyGoal(this))
@@ -204,6 +201,14 @@ class AstralStrikerEntityBeta(entityType: EntityType<out FlyingEntity>?, world: 
                     entity.bodyYaw = entity.yaw
                 }
             }
+        }
+    }
+
+    companion object {
+        fun createMobAttributes(): DefaultAttributeContainer.Builder {
+            return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 50.0)
+                .add(EntityAttributes.GENERIC_ARMOR, 5.0)
         }
     }
 }
