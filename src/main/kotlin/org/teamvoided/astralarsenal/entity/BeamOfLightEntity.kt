@@ -13,6 +13,7 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEffects
@@ -116,7 +117,7 @@ class BeamOfLightEntity : Entity {
                         )
                     )
                     for (entity in entities) {
-                        if (!entitiesHit.contains(entity) && entity is LivingEntity) {
+                        if (!entitiesHit.contains(entity) && entity is LivingEntity && !entity.type.isIn(AstralEntityTags.UNAFFECTED_BY_LIGHT)) {
                             entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
                             entity.addVelocity(0.0, THRUST, 0.0)
 //                            var hard_levels = this.hard_damage

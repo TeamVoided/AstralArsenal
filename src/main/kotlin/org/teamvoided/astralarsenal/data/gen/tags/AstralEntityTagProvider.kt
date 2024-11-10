@@ -25,5 +25,8 @@ class AstralEntityTagProvider(
             .add(EntityType.TRIDENT)
             .add(EntityType.ENDER_PEARL)
             .add(AstralEntities.NAIL_ENTITY)
+
+        getOrCreateTagBuilder(AstralEntityTags.UNAFFECTED_BY_LIGHT)
+            .add(AstralEntities.ASTRAL_BETA)
     }
 }
