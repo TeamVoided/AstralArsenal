@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.item
 
-import arrow.fx.coroutines.Use
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item

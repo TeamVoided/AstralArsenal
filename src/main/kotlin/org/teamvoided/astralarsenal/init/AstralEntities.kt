@@ -9,13 +9,13 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.entity.*
-import org.teamvoided.astralarsenal.entity.astralenemies.AstralStrikerEntityBeta
+import org.teamvoided.astralarsenal.entity.astralenemies.*
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
 
 object AstralEntities {
 
     fun init() {
-        FabricDefaultAttributeRegistry.register(ASTRAL_BETA, AstralStrikerEntityBeta.createMobAttributes())
+        FabricDefaultAttributeRegistry.register(ASTRAL_STRIKER, AstralStrikerEntity.createMobAttributes())
     }
 
     val CANNONBALL_ENTITY = register(
@@ -93,15 +93,17 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::NailEntity), SpawnGroup.MISC)
             .setDimensions(0.25f, 0.25f).maxTrackingRange(4).build()
     )
-    val ASTRAL_BETA = register(
-        "astral_beta",
-        EntityType.Builder.create(EntityType.EntityFactory(::AstralStrikerEntityBeta), SpawnGroup.MISC)
-            .setDimensions(2f, 2f).maxTrackingRange(50).build()
-    )
+
     val COMET_ENTITY = register(
         "comet_entity",
         EntityType.Builder.create(EntityType.EntityFactory(::CometEntity), SpawnGroup.MISC)
             .setDimensions(0.75f, 0.75f).maxTrackingRange(4).build()
+    )
+
+    val ASTRAL_STRIKER = register(
+        "astral_striker",
+        EntityType.Builder.create(EntityType.EntityFactory(::AstralStrikerEntity), SpawnGroup.MISC)
+            .setDimensions(2f, 2f).maxTrackingRange(50).build()
     )
 
     private fun <T : Entity> register(path: String, entry: EntityType<T>): EntityType<T> {
