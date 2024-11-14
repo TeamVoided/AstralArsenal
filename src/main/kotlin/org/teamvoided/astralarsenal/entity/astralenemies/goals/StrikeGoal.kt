@@ -13,10 +13,6 @@ class StrikeGoal(val entity: AstralStrikerEntity) : Goal() {
         return (entity.target != null && entity.distanceTo(entity.target) <= 50)
     }
 
-    override fun start() {
-        super.start()
-    }
-
     override fun stop() {
         entity.enraged = false
         super.stop()

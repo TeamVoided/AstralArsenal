@@ -24,5 +24,7 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.COMET_ENTITY, ::EmptyEntityRenderer)
 
         EntityRendererRegistry.register(AstralEntities.ASTRAL_STRIKER, ::EmptyEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.ASTRAL_SNIPER, ::EmptyEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.ASTRAL_SLASHER, ::EmptyEntityRenderer)
     }
 }

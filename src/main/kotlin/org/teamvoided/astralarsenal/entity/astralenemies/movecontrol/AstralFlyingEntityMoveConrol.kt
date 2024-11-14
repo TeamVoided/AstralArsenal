@@ -21,7 +21,7 @@ class AstralFlyingEntityMoveControl (private val astralEntity: AstralFlyingEnemy
 //                    if(predictedDistance > currentDistance && predictedDistance >= maxDistance) bool = true
 //                }
                 if (this.willCollide(vec3d, MathHelper.ceil(d))) {
-                    this.astralEntity.setVelocity(this.astralEntity.getVelocity().add(vec3d.multiply(0.1)))
+                    this.astralEntity.setVelocity(this.astralEntity.getVelocity().add(vec3d.multiply(0.02)))
                 } else {
                     this.state = State.WAIT
                 }

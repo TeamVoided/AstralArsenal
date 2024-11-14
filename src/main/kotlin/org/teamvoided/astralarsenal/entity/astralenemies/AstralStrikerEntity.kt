@@ -27,6 +27,9 @@ class AstralStrikerEntity(entityType: EntityType<out FlyingEntity>?,
     var enraged = false
     var cooldown = 0
     var strikesOnTarget = 0
+    override fun cannotDespawn(): Boolean {
+        return true
+    }
 
     init {
         this.moveControl = AstralFlyingEntityMoveControl(this, 10.0)
@@ -36,7 +39,7 @@ class AstralStrikerEntity(entityType: EntityType<out FlyingEntity>?,
         return if(world.difficulty == Difficulty.HARD) 1 else if(world.difficulty == Difficulty.NORMAL) 3 else 8
     }
     fun getTimeStrikeLasts(world: World): Int{
-        return if(world.difficulty == Difficulty.HARD) 300 else if(world.difficulty == Difficulty.NORMAL) 80 else 20
+        return if(world.difficulty == Difficulty.HARD) 150 else if(world.difficulty == Difficulty.NORMAL) 40 else 10
     }
 
     override fun applyEnchantmentsToDamage(source: DamageSource, amount: Float): Float {
@@ -52,7 +55,7 @@ class AstralStrikerEntity(entityType: EntityType<out FlyingEntity>?,
     }
 
     override fun initGoals() {
-        goalSelector.add(5, HoverRandomlyGoal(this, 10.0))
+        goalSelector.add(5, HoverRandomlyGoal(this, 10.0, 5.0))
         goalSelector.add(2, StrikeGoal(this))
         goalSelector.add(2, CustomLookAtTargetGoal(this))
         targetSelector.add(
