@@ -68,6 +68,9 @@ object AstralEffects {
     val REDUCE = register(
         "reduce", AstralStatusEffect(StatusEffectType.HARMFUL, 0x660000)
     )
+    val IMMORTAL = register(
+        "immortal", AstralStatusEffect(StatusEffectType.BENEFICIAL, 0xffffff)
+    )
     val BLEED = register(
         "bleed", BleedStatusEffect(0x660000)
     )
@@ -89,6 +92,9 @@ object AstralEffects {
     val CONDUCTIVE_DAMAGE_SHARE = 0.5
     val conductive = listOf(
         CONDUCTIVE
+    )
+    val immortality = listOf(
+        IMMORTAL
     )
 
     fun modifyDamage(entity: LivingEntity, damage: Float, source: DamageSource): Float {
@@ -168,6 +174,10 @@ object AstralEffects {
                     }
                 }
             }
+        }
+        val effects_immortal = entity.statusEffects.filter { immortality.contains(it.effectType) }
+        if (effects_immortal.isNotEmpty()) {
+            output *= 0
         }
         return output
     }

@@ -13,6 +13,7 @@ import net.minecraft.entity.mob.HostileEntity
 import net.minecraft.entity.mob.MobEntity
 import net.minecraft.entity.mob.Monster
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.nbt.NbtCompound
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.Difficulty
 import net.minecraft.world.World
@@ -59,7 +60,8 @@ class AstralSniperEntity(entityType: EntityType<out FlyingEntity>?,
         }
     }
     override fun initDataTracker(builder: DataTracker.Builder) {
-        builder.add(SNIPE_TYPE, SnipeType.UNASSIGNED.id)
+        val random = random.rangeInclusive(1,5)
+        builder.add(SNIPE_TYPE, random)
         super.initDataTracker(builder)
     }
     companion object {
@@ -71,6 +73,17 @@ class AstralSniperEntity(entityType: EntityType<out FlyingEntity>?,
                 .add(EntityAttributes.GENERIC_ARMOR, 5.0)
         }
     }
+
+    override fun writeCustomDataToNbt(nbt: NbtCompound) {
+        nbt.putInt("snipe_type", snipeType.id)
+        super.writeCustomDataToNbt(nbt)
+    }
+
+    override fun readCustomDataFromNbt(nbt: NbtCompound) {
+        this.snipeType = SnipeType.getById(nbt.getInt("snipe_type"))
+        super.readCustomDataFromNbt(nbt)
+    }
+
     override fun tick(){
         if(this.snipeType == SnipeType.UNASSIGNED){
             val random = this.world.random.rangeInclusive(1,5)

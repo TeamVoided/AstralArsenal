@@ -45,6 +45,7 @@ class SlashAtTargetGoal(val entity: AstralSlasherEntity) : Goal() {
             entity.attackingTicks--
         }
         else if(entity.attackTicks > 0){
+            println("Fuck")
             when(entity.attacks){
                 2 ->{
                     if(entity.attackTicks == 10){
@@ -94,13 +95,12 @@ class SlashAtTargetGoal(val entity: AstralSlasherEntity) : Goal() {
                     )
                     for(victim in hit){
                         victim.customDamage(DamageTypes.MOB_ATTACK, 15f, entity, entity)
-                        println("hit")
                     }
                 }
             }
             entity.attackTicks--
         }
-        else{
+        else if(entity.attackTicks <= 0){
             when (entity.attacks){
                 0 -> {
                     entity.attackingTicks = 20
