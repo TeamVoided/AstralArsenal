@@ -232,4 +232,8 @@ object AstralEffects {
             }
         }
     }
+
+    fun cancelDamage(entity: LivingEntity, damage: Float, source: DamageSource): Boolean {
+        return false
+    }
 }
