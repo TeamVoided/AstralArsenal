@@ -1,24 +1,25 @@
 package org.teamvoided.astralarsenal.entity.astralenemies
 
+import net.minecraft.command.argument.EntityAnchorArgumentType
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.ai.goal.TargetGoal
 import net.minecraft.entity.attribute.DefaultAttributeContainer
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.data.DataTracker
-import net.minecraft.entity.data.TrackedData
-import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.mob.MobEntity
 import net.minecraft.entity.mob.Monster
-import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.particle.ParticleEffect
+import net.minecraft.particle.ParticleTypes
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.world.World
+import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
-import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity.Companion
-import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity.SnipeType
-import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
+import kotlin.math.pow
+import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 class AstralIdol(
     entityType: EntityType<out AstralEnemyEntity>?,
@@ -41,19 +42,17 @@ class AstralIdol(
     }
 
     override fun tick() {
-        if (this.target != null && this.target is AstralIdol){
-            this.target = null
-        }
         if(this.target != null){
             this.target!!.addStatusEffect(StatusEffectInstance(AstralEffects.IMMORTAL, 2, 0, false, true))
             this.target!!.addStatusEffect(StatusEffectInstance(StatusEffects.GLOWING, 2, 0, false, true))
+            showTarget(this, ParticleTypes.END_ROD)
         }
         super.tick()
     }
 
     companion object {
         fun createMobAttributes(): DefaultAttributeContainer.Builder {
-            return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0)
+            return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 30.0)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
@@ -61,13 +60,43 @@ class AstralIdol(
     }
     override fun applyEnchantmentsToDamage(source: DamageSource, amount: Float): Float {
         var outputDamage = amount
-        outputDamage *= if (source.isTypeIn(AstralDamageTypeTags.IS_MELEE)) 5000f
-        else 0f
+        if(source.isTypeIn(AstralDamageTypeTags.IS_MELEE)){
+            outputDamage = (outputDamage + 99999) * 99999
+        }
+        else outputDamage = 0f
         return outputDamage
     }
 
     override fun isInvulnerableTo(source: DamageSource): Boolean {
         if (!source.isTypeIn(AstralDamageTypeTags.IS_MELEE)) return true
         return super.isInvulnerableTo(source)
+    }
+
+    fun showTarget(entity: AstralIdol, particle: ParticleEffect) {
+        entity.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, entity.target!!.pos)
+        val distance = sqrt(
+            sqrt((entity.eyePos.x - entity.target!!.x).pow(2) + (entity.eyePos.z - entity.target!!.z).pow(2)).pow(
+                2
+            ) + ((entity.eyePos.y - 0.5) - entity.target!!.y).pow(
+                2
+            )
+        )
+        val interval = (distance.times(2))
+        for (i in 0..interval.roundToInt()) {
+            if (entity.world is ServerWorld) {
+                val serverWorld = entity.world as ServerWorld
+                serverWorld.spawnParticles(
+                    particle,
+                    (lerp(entity.eyePos.x, entity.target!!.x, i / interval)),
+                    (lerp(entity.eyePos.y, entity.target!!.y, i / interval)),
+                    (lerp(entity.eyePos.z, entity.target!!.z, i / interval)),
+                    1,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                )
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.entity.astralenemies.movecontrol.AstralFlyingEntityMoveControl
 
-open class AstralFlyingEnemyEntity(entityType: EntityType<out FlyingEntity>?, world: World?) : FlyingEntity(entityType, world) {
+open class AstralFlyingEnemyEntity(entityType: EntityType<out AstralFlyingEnemyEntity>, world: World) : FlyingEntity(entityType, world) {
     override fun getBaseXpDropped(): Int {
         val extra = random.rangeInclusive(0,10)
         return 20 + extra

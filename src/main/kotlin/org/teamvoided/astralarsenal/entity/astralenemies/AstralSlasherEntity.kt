@@ -21,8 +21,8 @@ import org.teamvoided.astralarsenal.entity.astralenemies.goals.SlashAtTargetGoal
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 
 class AstralSlasherEntity(
-    entityType: EntityType<out AstralEnemyEntity>?,
-    world: World?
+    entityType: EntityType<out AstralSlasherEntity>,
+    world: World
 ) : AstralEnemyEntity(entityType, world), Monster {
 
     var shielding = false
@@ -51,8 +51,9 @@ class AstralSlasherEntity(
         return if(world.difficulty == Difficulty.HARD) 20 else if(world.difficulty == Difficulty.NORMAL) 40 else 60
     }
     companion object {
-        val SNIPE_TYPE: TrackedData<Int> =
-            DataTracker.registerData(AstralSniperEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
+        // Comment of shame, this two line bit of code cause me a WEEK of pain and suffering. Fuck you two lines of code. Fuck you.
+//        val SNIPE_TYPE: TrackedData<Int> =
+//            DataTracker.registerData(AstralSniperEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
         fun createMobAttributes(): DefaultAttributeContainer.Builder {
             return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 30.0)
@@ -69,7 +70,6 @@ class AstralSlasherEntity(
         )
         goalSelector.add(4, CustomMeleeAttackGoal(this, 1.0, false))
         goalSelector.add(5, CustomWanderGoal(this, 0.8))
-        goalSelector.add(6, LookAtEntityGoal(this, PlayerEntity::class.java, 8.0f))
         goalSelector.add(1, SlashAtTargetGoal(this))
         super.initGoals()
     }

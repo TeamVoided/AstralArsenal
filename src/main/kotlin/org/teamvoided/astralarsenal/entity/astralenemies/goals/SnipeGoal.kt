@@ -9,6 +9,9 @@ import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.projectile.ProjectileEntity
+import net.minecraft.particle.DefaultParticleType
+import net.minecraft.particle.ParticleEffect
+import net.minecraft.particle.ParticleType
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
@@ -56,7 +59,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
             entity.timeBeforeShot--
             entity.isShooting = true
             entity.targetPoint = entity.target!!.pos.add(0.0, 1.0, 0.0)
-            showTarget(entity)
+            var particle = ParticleTypes.FLAME
             if (entity.timeBeforeShot % 10 == 0) {
                 entity.world.playSoundFromEntity(
                     null,
@@ -66,7 +69,9 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
                     1.0f,
                     1.5f
                 )
+                particle = ParticleTypes.SOUL_FIRE_FLAME
             }
+            showTarget(entity, particle)
             if (!entity.canSee(entity.target)){
                 entity.cooldown += 20
                 entity.timeBeforeShot = min(entity.timeBeforeShot + 20, 50)
@@ -74,6 +79,9 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
         } else if (entity.shotBufferTime > 0) {
             if ((entity.shotBufferTime == 20 || (entity.enraged && entity.shotBufferTime == 10))) {
                 entity.targetPoint = entity.target!!.pos.add(0.0, 1.0, 0.0)
+                if(entity.enraged){
+                    entity.targetPoint = entity.target!!.pos.add(0.0, 1.0, 0.0).add(entity.target!!.movement.multiply(entity.shotBufferTime.toDouble().times(2.0)))
+                }
                 entity.world.playSoundFromEntity(
                     null,
                     entity.target!!,
@@ -89,7 +97,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
                 }
             }
             entity.shotBufferTime--
-            showTarget(entity)
+            showTarget(entity, ParticleTypes.SOUL_FIRE_FLAME)
         } else if (entity.shotBufferTime == 0) {
             if (entity.snipeType == AstralSniperEntity.SnipeType.EXPLOSIVE) explosiveBeam(entity)
             else laserBeam(entity)
@@ -162,7 +170,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
             entity.z,
             AstralSounds.RAILGUN,
             SoundCategory.PLAYERS,
-            1.0F,
+            50.0F,
             1.0f
         )
         for (victim in entities) {
@@ -314,7 +322,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
             entity.z,
             AstralSounds.RAILGUN,
             SoundCategory.PLAYERS,
-            1.0F,
+            50.0F,
             1.0f
         )
         for (victim in entities) {
@@ -390,7 +398,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
         }
     }
 
-    fun showTarget(entity: AstralSniperEntity) {
+    fun showTarget(entity: AstralSniperEntity, particle: ParticleEffect) {
         entity.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, entity.targetPoint)
         val distance = sqrt(
             sqrt((entity.eyePos.x - entity.targetPoint!!.x).pow(2) + (entity.eyePos.z - entity.targetPoint!!.z).pow(2)).pow(
@@ -404,7 +412,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
             if (entity.world is ServerWorld) {
                 val serverWorld = entity.world as ServerWorld
                 serverWorld.spawnParticles(
-                    ParticleTypes.FLAME,
+                    particle,
                     (lerp(entity.eyePos.x, entity.targetPoint!!.x, i / interval)),
                     (lerp(entity.eyePos.y, entity.targetPoint!!.y, i / interval)),
                     (lerp(entity.eyePos.z, entity.targetPoint!!.z, i / interval)),

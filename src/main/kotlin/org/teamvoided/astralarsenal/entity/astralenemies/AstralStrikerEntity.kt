@@ -21,8 +21,8 @@ import org.teamvoided.astralarsenal.entity.astralenemies.goals.HoverRandomlyGoal
 import org.teamvoided.astralarsenal.entity.astralenemies.goals.StrikeGoal
 import org.teamvoided.astralarsenal.entity.astralenemies.movecontrol.AstralFlyingEntityMoveControl
 
-class AstralStrikerEntity(entityType: EntityType<out FlyingEntity>?,
-                          world: World?
+class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
+                          world: World
 ) : AstralFlyingEnemyEntity(entityType, world), Monster {
     var enraged = false
     var cooldown = 0

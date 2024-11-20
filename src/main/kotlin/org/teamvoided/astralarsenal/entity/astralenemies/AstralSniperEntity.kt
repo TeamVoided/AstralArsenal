@@ -21,9 +21,9 @@ import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.entity.astralenemies.goals.*
 import org.teamvoided.astralarsenal.entity.astralenemies.movecontrol.AstralFlyingEntityMoveControl
 
-class AstralSniperEntity(entityType: EntityType<out FlyingEntity>?,
-                         world: World?
-) : AstralFlyingEnemyEntity(entityType, world), Monster {
+class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: World) : AstralFlyingEnemyEntity(entityType, world), Monster {
+
+
     var snipeType
         get() = SnipeType.getById(dataTracker.get(SNIPE_TYPE))
         set(value) = dataTracker.set(SNIPE_TYPE, value.id)
@@ -60,13 +60,14 @@ class AstralSniperEntity(entityType: EntityType<out FlyingEntity>?,
         }
     }
     override fun initDataTracker(builder: DataTracker.Builder) {
-        val random = random.rangeInclusive(1,5)
-        builder.add(SNIPE_TYPE, random)
+        builder.add(SNIPE_TYPE, 0)
         super.initDataTracker(builder)
     }
     companion object {
         val SNIPE_TYPE: TrackedData<Int> =
             DataTracker.registerData(AstralSniperEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
+//        val GARBAGE: TrackedData<Int> =
+//            DataTracker.registerData(AstralSniperEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
         fun createMobAttributes(): DefaultAttributeContainer.Builder {
             return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 50.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0)

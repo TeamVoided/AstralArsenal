@@ -35,11 +35,11 @@ class BulletEntity : ThrownItemEntity {
 
     companion object {
         private val DMG: TrackedData<Float> =
-            DataTracker.registerData(SlashEntity::class.java, TrackedDataHandlerRegistry.FLOAT)
+            DataTracker.registerData(BulletEntity::class.java, TrackedDataHandlerRegistry.FLOAT)
         private val time: TrackedData<Int> =
-            DataTracker.registerData(SlashEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
+            DataTracker.registerData(BulletEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
         private val newDMG: TrackedData<Float> =
-            DataTracker.registerData(SlashEntity::class.java, TrackedDataHandlerRegistry.FLOAT)
+            DataTracker.registerData(BulletEntity::class.java, TrackedDataHandlerRegistry.FLOAT)
     }
 
     override fun initDataTracker(builder: DataTracker.Builder) {
