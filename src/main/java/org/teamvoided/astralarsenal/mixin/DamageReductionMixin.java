@@ -29,7 +29,7 @@ public class DamageReductionMixin {
         return damage;
     }
 
-    @Inject(method = "damage", at = @At("HEAD"))
+    @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     private void cancelDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (AstralEffects.INSTANCE.cancelDamage(astralArsenal$self, amount, source)) {
             cir.cancel();
