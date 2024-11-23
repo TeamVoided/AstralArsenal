@@ -19,6 +19,7 @@ object AstralEntities {
         FabricDefaultAttributeRegistry.register(ASTRAL_SNIPER, AstralSniperEntity.createMobAttributes())
         FabricDefaultAttributeRegistry.register(ASTRAL_SLASHER, AstralSlasherEntity.createMobAttributes())
         FabricDefaultAttributeRegistry.register(ASTRAL_IDOL, AstralIdol.createMobAttributes())
+        FabricDefaultAttributeRegistry.register(ASTRAL_DRIFTER, AstralDrifterEntity.createMobAttributes())
     }
 
     val CANNONBALL_ENTITY = register(
@@ -123,7 +124,21 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::AstralIdol), SpawnGroup.MISC)
             .setDimensions(1f, 1.5f).maxTrackingRange(30).build()
     )
-
+    val ASTRAL_DRIFTER = register(
+        "astral_drifter",
+        EntityType.Builder.create(EntityType.EntityFactory(::AstralDrifterEntity), SpawnGroup.MISC)
+            .setDimensions(1f, 1f).maxTrackingRange(30).build()
+    )
+    val SLOW_BULLET = register(
+        "slow_bullet",
+        EntityType.Builder.create(EntityType.EntityFactory(::SlowBulletEntity), SpawnGroup.MISC)
+            .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
+    )
+    val HOMING_BULLET = register(
+        "homing_bullet",
+        EntityType.Builder.create(EntityType.EntityFactory(::HomingBulletEntity), SpawnGroup.MISC)
+            .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
+    )
     private fun <T : Entity> register(path: String, entry: EntityType<T>): EntityType<T> {
         return Registry.register(Registries.ENTITY_TYPE, id(path), entry)
     }

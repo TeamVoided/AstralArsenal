@@ -66,8 +66,6 @@ class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: 
     companion object {
         val SNIPE_TYPE: TrackedData<Int> =
             DataTracker.registerData(AstralSniperEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
-//        val GARBAGE: TrackedData<Int> =
-//            DataTracker.registerData(AstralSniperEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
         fun createMobAttributes(): DefaultAttributeContainer.Builder {
             return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 50.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0)

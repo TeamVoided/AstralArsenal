@@ -40,16 +40,16 @@ class HoverRandomlyGoal(private val entity: AstralFlyingEnemyEntity, val maxDist
         val minY = -2.0
         val maxZ = 3.0
         val minZ = -3.0
-        val d = clamp(minX, maxX, (randomGenerator.nextDouble() * 2f - 1f) * 3f).toDouble()
-        val e = clamp(minY, maxY, (randomGenerator.nextDouble() * 2f - 1f) * 2f).toDouble()
-        val f = clamp(minZ, maxZ, (randomGenerator.nextDouble() * 2f - 1f) * 3f).toDouble()
+        val d = clamp(minX, maxX, (randomGenerator.nextDouble() * 2f - 1f) * 1f).toDouble()
+        val e = clamp(minY, maxY, (randomGenerator.nextDouble() * 2f - 1f) * 0.5f).toDouble()
+        val f = clamp(minZ, maxZ, (randomGenerator.nextDouble() * 2f - 1f) * 1f).toDouble()
         var bool = false
         if(entity.target != null){
-            val vec3d = Vec3d(d,e,f)
+            val vec3d = entity.pos.add(d,e,f)
             val currentDistance = entity.squaredDistanceTo(entity.target!!)
             val predictedDistance = entity.target!!.squaredDistanceTo((vec3d.add(entity.pos)))
-            if(predictedDistance > currentDistance && predictedDistance >= maxDistance) bool = true
-            else if(currentDistance > predictedDistance && predictedDistance <= minDistance) bool = true
+            if(predictedDistance > currentDistance && currentDistance >= maxDistance) bool = true
+            else if(currentDistance > predictedDistance && currentDistance <= minDistance) bool = true
             if (entity is AstralSniperEntity && entity.isShooting) bool = true
         }
         if(!bool){

@@ -10,6 +10,7 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.mob.MobEntity
 import net.minecraft.entity.mob.Monster
+import net.minecraft.entity.mob.ZombieEntity
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
@@ -22,9 +23,9 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class AstralIdol(
-    entityType: EntityType<out AstralEnemyEntity>?,
+    entityType: EntityType<out ObeliskEnemyEntity>?,
     world: World?
-) : AstralEnemyEntity(entityType, world), Monster {
+) : ObeliskEnemyEntity(entityType, world), Monster {
     override fun initGoals() {
         targetSelector.add(
             1, TargetGoal(
@@ -35,6 +36,12 @@ class AstralIdol(
         targetSelector.add(
             1, TargetGoal(
                 this, AstralEnemyEntity::
+                class.java, 1, false, false
+            ) { ((it.distanceTo(this)) <= 100) }
+        )
+        targetSelector.add(
+            1, TargetGoal(
+                this, ZombieEntity::
                 class.java, 1, false, false
             ) { ((it.distanceTo(this)) <= 100) }
         )
@@ -60,10 +67,9 @@ class AstralIdol(
     }
     override fun applyEnchantmentsToDamage(source: DamageSource, amount: Float): Float {
         var outputDamage = amount
-        if(source.isTypeIn(AstralDamageTypeTags.IS_MELEE)){
-            outputDamage = (outputDamage + 99999) * 99999
-        }
-        else outputDamage = 0f
+        outputDamage = if(source.isTypeIn(AstralDamageTypeTags.IS_MELEE)){
+            Float.POSITIVE_INFINITY
+        } else 0f
         return outputDamage
     }
 
@@ -77,7 +83,7 @@ class AstralIdol(
         val distance = sqrt(
             sqrt((entity.eyePos.x - entity.target!!.x).pow(2) + (entity.eyePos.z - entity.target!!.z).pow(2)).pow(
                 2
-            ) + ((entity.eyePos.y - 0.5) - entity.target!!.y).pow(
+            ) + ((entity.eyePos.y - 0.5) - (entity.target!!.y.plus(entity.target!!.height.times(0.5)))).pow(
                 2
             )
         )
@@ -88,7 +94,7 @@ class AstralIdol(
                 serverWorld.spawnParticles(
                     particle,
                     (lerp(entity.eyePos.x, entity.target!!.x, i / interval)),
-                    (lerp(entity.eyePos.y, entity.target!!.y, i / interval)),
+                    (lerp(entity.eyePos.y, entity.target!!.y.plus(entity.target!!.height.times(0.5)), i / interval)),
                     (lerp(entity.eyePos.z, entity.target!!.z, i / interval)),
                     1,
                     0.0,

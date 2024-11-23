@@ -234,6 +234,10 @@ object AstralEffects {
     }
 
     fun cancelDamage(entity: LivingEntity, damage: Float, source: DamageSource): Boolean {
+        val effects_immortal = entity.statusEffects.filter { immortality.contains(it.effectType) }
+        if (effects_immortal.isNotEmpty()) {
+            return true
+        }
         return false
     }
 }
