@@ -115,6 +115,11 @@ object AstralItemComponents {
             builder.codec(CapacitanceKosmogliph.Data.CODEC).build()
         }
 
+    val CAPACITANCE_DATA_V2: DataComponentType<CapacitanceKosmogliph.Data_2> =
+        register("capacitance_data_v2", { it is ArmorItem }, { CapacitanceKosmogliph.Data_2(0, 0) }) { builder ->
+            builder.codec(CapacitanceKosmogliph.Data_2.CODEC).build()
+        }
+
     fun <T> register(
         name: String,
         predicate: (Item) -> Boolean,

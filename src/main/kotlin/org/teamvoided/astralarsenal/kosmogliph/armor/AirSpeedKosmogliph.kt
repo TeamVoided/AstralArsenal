@@ -10,8 +10,7 @@ import kotlin.math.min
 interface AirSpeedKosmogliph : Kosmogliph {
     companion object {
         val AIR_STRAFE_MODIFIER = 1.0f
-        val TICKS_BEFORE_MODIFIED = 5
-        val TICKS_FOR_FULL = 40
+        val TICKS_BEFORE_MODIFIED = 0
 
         val ticksMap = mutableMapOf<Entity, Int>()
     }
@@ -24,10 +23,7 @@ interface AirSpeedKosmogliph : Kosmogliph {
 
     override fun modifyAirStrafeSpeed(entity: LivingEntity, speed: Float): Float {
         if (entity.fallTime > TICKS_BEFORE_MODIFIED) {
-            return entity.movementSpeed * (AIR_STRAFE_MODIFIER * (1f / TICKS_FOR_FULL * min(
-                TICKS_FOR_FULL,
-                entity.fallTime
-            )))
+            return entity.movementSpeed * AIR_STRAFE_MODIFIER
         }
         return speed
     }

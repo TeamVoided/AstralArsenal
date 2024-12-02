@@ -66,7 +66,7 @@ class HomingBulletEntity : ThrownItemEntity {
                 0.0
             )
         }
-        if(this.target != null){
+        if(this.target != null && this.target!!.isAlive){
             val target = this.target!!
             val x = (target.x - this.x)
             val y = (target.eyeY - this.y)
@@ -76,6 +76,9 @@ class HomingBulletEntity : ThrownItemEntity {
             this.velocityDirty
             this.setVelocity(clamp(this.velocity.x, -0.5, 0.5), clamp(this.velocity.y, -0.5, 0.5), clamp(this.velocity.z, -0.5, 0.5))
             this.velocityDirty
+        }
+        else{
+            this.discard()
         }
         super.tick()
     }

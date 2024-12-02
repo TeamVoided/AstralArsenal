@@ -52,7 +52,7 @@ class SlowBulletEntity : ThrownItemEntity {
     }
 
     override fun tick() {
-        if(this.velocity == Vec3d(0.0,0.0,0.0)){
+        if(this.age >= 200){
             this.discard()
         }
         if (!this.world.isClient) {

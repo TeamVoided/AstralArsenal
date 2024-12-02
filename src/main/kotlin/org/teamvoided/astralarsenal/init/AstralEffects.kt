@@ -87,9 +87,12 @@ object AstralEffects {
     )
     val CONDUCTIVE_MULT = 0.01
     val CONDUCTIVE_MAX_TARGETS = 10.0
+
     // Note that if this is lower than 1 it will act as if it is 1, if it is negative then wtf are you doing?
     val CONDUCTIVE_TARGETS_PER_LEVEL = 0.2
-    val CONDUCTIVE_DAMAGE_SHARE = 0.5
+    val CONDUCTIVE_DAMAGE_SHARE = 1.0
+    val CONDUCTIVE_DAMAGE_SHARE_HARD = 0.5
+    val CONDUCTIVE_DAMAGE_SHARE_SOFT = 2.0
     val conductive = listOf(
         CONDUCTIVE
     )
@@ -117,7 +120,9 @@ object AstralEffects {
                 val levels = w + 1
                 val mult = levels * CONDUCTIVE_MULT
                 output = (output * (1 + mult)).toFloat()
-                conductiveDamage = (output * (CONDUCTIVE_DAMAGE_SHARE)).toFloat()
+                val shareMult =
+                    if (damage > 10) CONDUCTIVE_DAMAGE_SHARE_HARD else if (damage < 5) CONDUCTIVE_DAMAGE_SHARE_SOFT else CONDUCTIVE_DAMAGE_SHARE
+                conductiveDamage = (output * (shareMult)).toFloat()
                 entity.removeStatusEffect(CONDUCTIVE)
                 // keep this chunk of code here in case we wanna add it back in again
 //                if(levels > 5){
@@ -142,11 +147,15 @@ object AstralEffects {
                         )
                     ).filter { it is LivingEntity && it != source.attacker && it != entity }
                 )
+                val targets = min(3 + (CONDUCTIVE_TARGETS_PER_LEVEL * levels), CONDUCTIVE_MAX_TARGETS)
                 if (entities.isNotEmpty()) {
                     var count = 0
                     for (entiity in entities) {
-                        if (count >= min((CONDUCTIVE_TARGETS_PER_LEVEL * levels), CONDUCTIVE_MAX_TARGETS)) {
+                        if (count >= targets) {
                             break
+                        }
+                        if (entiity is PlayerEntity && conductiveDamage >= 10) {
+                            conductiveDamage = 10f
                         }
                         entiity.damage(
                             DamageSource(
@@ -158,17 +167,18 @@ object AstralEffects {
                                 source.attacker,
                             ), conductiveDamage
                         )
-                        if(entity.world is ServerWorld){
-                        sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)))}
+                        if (entity.world is ServerWorld) {
+                            sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)))
+                        }
                         entity.world.playSound(
                             null,
                             entiity.x,
                             entiity.y,
                             entiity.z,
-                            SoundEvents.BLOCK_NETHERITE_BLOCK_PLACE,
+                            SoundEvents.ITEM_TRIDENT_THUNDER.value(),
                             SoundCategory.PLAYERS,
                             1.0F,
-                            1.0f
+                            1.4f
                         )
                         count++
                     }

@@ -10,7 +10,8 @@ import org.teamvoided.astralarsenal.entity.astralenemies.AstralStrikerEntity
 
 import java.util.*
 
-class HoverRandomlyGoal(private val entity: AstralFlyingEnemyEntity, val maxDistance: Double, val minDistance: Double) : Goal() {
+class HoverRandomlyGoal(private val entity: AstralFlyingEnemyEntity, val maxDistance: Double, val minDistance: Double) :
+    Goal() {
     init {
         this.controls = EnumSet.of(Control.MOVE)
     }
@@ -32,6 +33,7 @@ class HoverRandomlyGoal(private val entity: AstralFlyingEnemyEntity, val maxDist
         return false
     }
 
+    var bool = false
     override fun start() {
         val randomGenerator = entity.random
         val maxX = 3.0
@@ -40,20 +42,31 @@ class HoverRandomlyGoal(private val entity: AstralFlyingEnemyEntity, val maxDist
         val minY = -2.0
         val maxZ = 3.0
         val minZ = -3.0
-        val d = clamp(minX, maxX, (randomGenerator.nextDouble() * 2f - 1f) * 1f).toDouble()
-        val e = clamp(minY, maxY, (randomGenerator.nextDouble() * 2f - 1f) * 0.5f).toDouble()
-        val f = clamp(minZ, maxZ, (randomGenerator.nextDouble() * 2f - 1f) * 1f).toDouble()
-        var bool = false
-        if(entity.target != null){
-            val vec3d = entity.pos.add(d,e,f)
-            val currentDistance = entity.squaredDistanceTo(entity.target!!)
-            val predictedDistance = entity.target!!.squaredDistanceTo((vec3d.add(entity.pos)))
-            if(predictedDistance > currentDistance && currentDistance >= maxDistance) bool = true
-            else if(currentDistance > predictedDistance && currentDistance <= minDistance) bool = true
-            if (entity is AstralSniperEntity && entity.isShooting) bool = true
-        }
-        if(!bool){
-            entity.moveControl.moveTo(d, e, f, 0.3)
+        var d = clamp(minX, maxX, (randomGenerator.nextDouble() * 2f - 1f) * 1f).toDouble()
+        var e = clamp(minY, maxY, (randomGenerator.nextDouble() * 2f - 1f) * 0.5f).toDouble()
+        var f = clamp(minZ, maxZ, (randomGenerator.nextDouble() * 2f - 1f) * 1f).toDouble()
+        bool = true
+        var int = 0
+        while (bool) {
+            bool = false
+            if (entity.target != null) {
+                val vec3d = entity.pos.add(d, e, f)
+                val currentDistance = entity.distanceTo(entity.target!!)
+                val predictedDistance = vec3d.add(entity.pos).distanceTo(entity.target!!.pos)
+                if (predictedDistance > currentDistance && currentDistance >= maxDistance) bool = true
+                else if (currentDistance > predictedDistance && currentDistance <= minDistance) bool = true
+                if (entity is AstralSniperEntity && entity.isShooting) bool = true
+            }
+            if (!bool) {
+                entity.moveControl.moveTo(d, e, f, 0.3)
+            }
+            else{
+                d = clamp(minX, maxX, (randomGenerator.nextDouble() * 2f - 1f) * 1f).toDouble()
+                e = clamp(minY, maxY, (randomGenerator.nextDouble() * 2f - 1f) * 0.5f).toDouble()
+                f = clamp(minZ, maxZ, (randomGenerator.nextDouble() * 2f - 1f) * 1f).toDouble()
+            }
+            int++
+            println(int)
         }
     }
 }
