@@ -32,8 +32,10 @@ import net.minecraft.world.World
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
+import org.teamvoided.astralarsenal.entity.ShockwaveEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
 import org.teamvoided.astralarsenal.init.AstralItemComponents.PULVERISER_DATA
 import org.teamvoided.astralarsenal.init.AstralItemComponents.SLAM_DATA
@@ -216,6 +218,16 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
                         )
                     )
                     stack.set(SLAM_DATA, Data(0.0f, false))
+                    if(entity.world is ServerWorld){
+                        val serverWorld = entity.world as ServerWorld
+                        val slamEntity = ShockwaveEntity(entity.world, entity)
+                        slamEntity.speed = 0.1
+                        slamEntity.distance = 10.0
+                        slamEntity.knockback = 3.0
+                        slamEntity.setPosition(entity.pos)
+                        serverWorld.spawnEntity(slamEntity)
+                    }
+
                     faller.resetFallDistance()
                 } else {
                     faller.setVelocity(0.0, -20.0, 0.0)
@@ -224,7 +236,8 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
                         StatusEffectInstance(
                             AstralEffects.SLAM_JUMP,
                             20,
-                            (faller.fallDistance + 2).roundToInt(),
+                            //(faller.fallDistance + 2).roundToInt(),
+                            5,
                             false,
                             false,
                             true

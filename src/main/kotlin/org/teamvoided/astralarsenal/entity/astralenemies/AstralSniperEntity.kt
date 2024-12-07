@@ -21,7 +21,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.entity.astralenemies.goals.*
 import org.teamvoided.astralarsenal.entity.astralenemies.movecontrol.AstralFlyingEntityMoveControl
 
-class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: World) : AstralFlyingEnemyEntity(entityType, world), Monster {
+class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: World) : AstralEnemyEntity(entityType, world), Monster {
 
 
     var snipeType
@@ -41,7 +41,6 @@ class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: 
     }
 
     override fun initGoals() {
-        goalSelector.add(5, HoverRandomlyGoal(this, 40.0, 5.0))
         goalSelector.add(2, SnipeGoal(this))
         goalSelector.add(2, LookAtPointGoal(this))
         targetSelector.add(
@@ -97,9 +96,6 @@ class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: 
             this.shotBufferTime = 20
         }
         super.tick()
-    }
-    init {
-        this.moveControl = AstralFlyingEntityMoveControl(this, 30.0)
     }
 
     fun getShotsBeforeEnrage(world: World) : Int{

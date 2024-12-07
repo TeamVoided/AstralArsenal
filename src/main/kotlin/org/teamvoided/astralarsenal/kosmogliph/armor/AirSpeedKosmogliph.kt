@@ -9,7 +9,7 @@ import kotlin.math.min
 
 interface AirSpeedKosmogliph : Kosmogliph {
     companion object {
-        val AIR_STRAFE_MODIFIER = 1.0f
+        val AIR_STRAFE_MODIFIER = 0.5f
         val TICKS_BEFORE_MODIFIED = 0
 
         val ticksMap = mutableMapOf<Entity, Int>()
