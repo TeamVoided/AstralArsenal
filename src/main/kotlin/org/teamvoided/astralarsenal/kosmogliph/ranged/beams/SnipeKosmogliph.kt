@@ -211,13 +211,14 @@ class SnipeKosmogliph(id: Identifier) :
                             ), 7.5f
                         )
                     }
-                } else {
+                } else if(entity is LivingEntity) {
+                    entity.addStatusEffect(StatusEffectInstance(AstralEffects.CONDUCTIVE, 20, 19))
                     entity.damage(
                         DamageSource(
                             AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
                             player,
                             player
-                        ), 22.5f
+                        ), 15f
                     )
                 }
             }

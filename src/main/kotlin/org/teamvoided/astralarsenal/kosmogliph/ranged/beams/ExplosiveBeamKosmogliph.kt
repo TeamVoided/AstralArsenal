@@ -46,7 +46,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                         (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
-                ).filter { it !is ProjectileEntity }
+                ).filter { it !is ProjectileEntity || it is CannonballEntity || it is MortarEntity }
             )
             if (entities.isNotEmpty()) {
                 break

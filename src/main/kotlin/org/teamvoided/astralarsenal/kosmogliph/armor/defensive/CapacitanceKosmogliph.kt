@@ -69,27 +69,74 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
             outputDamage = (outputDamage * 0.2).toFloat()
             countdownTime = TICKS_BEFORE_DISCHARGE
             dmg += (damage * DAMAGE_TO_CHARGE).toFloat()
+            entity.world.playSound(
+                null,
+                entity.x,
+                entity.y,
+                entity.z,
+                SoundEvents.BLOCK_COPPER_BULB_BREAK,
+                SoundCategory.PLAYERS,
+                1.0F,
+                1.4f
+            )
         } else {
             if (countdownTime > 0) {
                 countdownTime = TICKS_BEFORE_DISCHARGE
                 dmg += (damage * DAMAGE_TO_CHARGE).toFloat()
+                entity.world.playSound(
+                    null,
+                    entity.x,
+                    entity.y,
+                    entity.z,
+                    SoundEvents.BLOCK_COPPER_BULB_BREAK,
+                    SoundCategory.PLAYERS,
+                    1.0F,
+                    1.4f
+                )
             } else if (dischargeTime > 0) {
-                if (dmg >= 0.5 && source.attacker is LivingEntity && entity.world is ServerWorld && source.attacker != entity) {
+                if (source.attacker is LivingEntity && entity.world is ServerWorld && source.attacker != entity) {
                     val attacker = source.attacker as LivingEntity
                     val world = entity.world as ServerWorld
                     var damageToDeal = if (attacker is PlayerEntity) min(
                         MAX_PLAYER_DAMAGE,
                         dmg * DISCHARGE_PERCENT_PER_HIT
                     ) else dmg * DISCHARGE_PERCENT_PER_HIT
-                    if(damageToDeal > attacker.health){
+                    if (damageToDeal > attacker.health) {
                         damageToDeal = attacker.health
                     }
                     attacker.customDamage(AstralDamageTypes.RICHOCHET, damageToDeal, entity, entity)
                     sillyLightningTime(entity.pos, attacker.pos, world)
-                    if(dmg != damageToDeal){
+                    if (dmg != damageToDeal) {
                         shockNearbyEntities(entity, attacker, dmg - damageToDeal)
                     }
+                    else{
+                        if (entity.world is ServerWorld) {
+                            val sworld = entity.world as ServerWorld
+                            sworld.spawnParticles(
+                                ParticleTypes.END_ROD,
+                                entity.x,
+                                entity.eyeY,
+                                entity.z,
+                                20,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.3
+                            )
+                        }
+                    }
+                    entity.world.playSound(
+                        null,
+                        entity.x,
+                        entity.y,
+                        entity.z,
+                        SoundEvents.ITEM_TRIDENT_THUNDER.value(),
+                        SoundCategory.PLAYERS,
+                        1.0F,
+                        1.4f
+                    )
                     dmg = 0.0f
+                    dischargeTime = 0
                 }
             }
         }
@@ -124,16 +171,26 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                     )
                 }
             }
-            if (countdownTime > 0){
+            if (countdownTime > 0) {
                 countdownTime--
-                if(countdownTime <= 0){
+                if (countdownTime <= 0) {
                     dischargeTime = TICKS_TO_DISCHARGE
+                    entity.world.playSound(
+                        null,
+                        entity.x,
+                        entity.y,
+                        entity.z,
+                        SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE,
+                        SoundCategory.PLAYERS,
+                        1.0F,
+                        1.6f
+                    )
                 }
-            }
-            else if(dischargeTime > 0){
+            } else if (dischargeTime > 0) {
                 dischargeTime--
-                if(dischargeTime <= 0){
+                if (dischargeTime <= 0) {
                     shockNearbyEntities(entity, entity, damage)
+                    damage = 0.0f
                 }
             }
             stack.set(AstralItemComponents.CAPACITANCE_DATA_V1, Data(damage))
@@ -201,20 +258,45 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                         cause,
                     ), tempDamageValue
                 )
-                cause.world.playSound(
-                    null,
-                    entiity.x,
-                    entiity.y,
-                    entiity.z,
-                    SoundEvents.ITEM_TRIDENT_THUNDER.value(),
-                    SoundCategory.PLAYERS,
-                    1.0F,
-                    1.4f
-                )
                 if (base.world is ServerWorld) {
                     sillyLightningTime(base.pos, entiity.pos, ((base.world as ServerWorld)))
                 }
             }
+            cause.world.playSound(
+                null,
+                cause.x,
+                cause.y,
+                cause.z,
+                SoundEvents.ITEM_TRIDENT_THUNDER.value(),
+                SoundCategory.PLAYERS,
+                1.0F,
+                1.4f
+            )
+        } else {
+            cause.world.playSound(
+                null,
+                cause.x,
+                cause.y,
+                cause.z,
+                SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE.value(),
+                SoundCategory.PLAYERS,
+                1.0F,
+                1.4f
+            )
+        }
+        if (cause.world is ServerWorld) {
+            val sworld = cause.world as ServerWorld
+            sworld.spawnParticles(
+                ParticleTypes.END_ROD,
+                cause.x,
+                cause.eyeY,
+                cause.z,
+                20,
+                0.0,
+                0.0,
+                0.0,
+                0.3
+            )
         }
     }
 

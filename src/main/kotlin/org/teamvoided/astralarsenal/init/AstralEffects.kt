@@ -170,18 +170,18 @@ object AstralEffects {
                         if (entity.world is ServerWorld) {
                             sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)))
                         }
-                        entity.world.playSound(
-                            null,
-                            entiity.x,
-                            entiity.y,
-                            entiity.z,
-                            SoundEvents.ITEM_TRIDENT_THUNDER.value(),
-                            SoundCategory.PLAYERS,
-                            1.0F,
-                            1.4f
-                        )
                         count++
                     }
+                    entity.world.playSound(
+                        null,
+                        entity.x,
+                        entity.y,
+                        entity.z,
+                        SoundEvents.ITEM_TRIDENT_THUNDER.value(),
+                        SoundCategory.PLAYERS,
+                        1.0F,
+                        1.6f
+                    )
                 }
             }
         }
