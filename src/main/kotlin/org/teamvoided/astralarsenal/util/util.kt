@@ -208,7 +208,8 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
                         StatusEffectInstance(
                             AstralEffects.SLAM_JUMP,
                             20,
-                            (faller.fallDistance + 2).roundToInt(),
+                            //(faller.fallDistance + 2).roundToInt(),  [previous amplifier equation in case we want to bring it back - Astra]
+                            5,
                             false,
                             false,
                             true

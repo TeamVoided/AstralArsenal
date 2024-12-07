@@ -217,11 +217,9 @@ class BeamOfLightEntity : Entity {
     }
 
     override fun readCustomDataFromNbt(nbt: NbtCompound?) {
-        //TODO("Not yet implemented")
     }
 
     override fun writeCustomDataToNbt(nbt: NbtCompound?) {
-        //TODO("Not yet implemented")
     }
 
     fun setTime(time: Int) {

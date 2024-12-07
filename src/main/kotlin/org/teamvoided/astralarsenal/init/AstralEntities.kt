@@ -37,6 +37,11 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::BeamOfLightEntity), SpawnGroup.MISC)
             .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
+    val SHOCKWAVE = register(
+        "shockwave",
+        EntityType.Builder.create(EntityType.EntityFactory(::ShockwaveEntity), SpawnGroup.MISC)
+            .setDimensions(0f,0f).maxTrackingRange(4).build()
+    )
     val RICHOCHET = register(
         "richochet",
         EntityType.Builder.create(EntityType.EntityFactory(::RichochetEntity), SpawnGroup.MISC)
