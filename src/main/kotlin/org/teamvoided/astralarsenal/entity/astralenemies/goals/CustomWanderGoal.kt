@@ -85,5 +85,3 @@ class CustomWanderGoal : Goal() {
         this.chance = chance
     }
 }
-
-}
