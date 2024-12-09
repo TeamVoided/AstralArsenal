@@ -9,5 +9,6 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 
 open class AstralEnemyEntity(entityType: EntityType<out HostileEntity>?, world: World?) : HostileEntity(entityType, world), Monster {
-
+    var usingSpecialMovement = false
+    var cantMove = false
 }

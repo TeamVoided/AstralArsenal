@@ -122,34 +122,7 @@ class CustomMeleeAttackGoal(
             }
 
             this.cooldown = max((this.cooldown - 1).toDouble(), 0.0).toInt()
-            this.attack(livingEntity)
         }
-    }
-
-    protected open fun attack(target: LivingEntity?) {
-        if (this.canAttack(target)) {
-            this.resetCooldown()
-            mob.swingHand(Hand.MAIN_HAND)
-            mob.tryAttack(target)
-        }
-    }
-
-    protected fun resetCooldown() {
-        this.cooldown = this.getTickCount(20)
-    }
-
-    protected val isCooledDown: Boolean
-        get() = this.cooldown <= 0
-
-    protected fun canAttack(entity: LivingEntity?): Boolean {
-        return this.isCooledDown && mob.isIntersecting(entity) && mob.visibilityCache.canSee(entity)
-    }
-
-    protected val maxCooldown: Int
-        get() = this.getTickCount(20)
-
-    companion object {
-        private const val MAX_ATTACK_TIME = 20L
     }
 }
 

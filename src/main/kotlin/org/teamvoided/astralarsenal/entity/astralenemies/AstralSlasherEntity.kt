@@ -69,7 +69,6 @@ class AstralSlasherEntity(
             ) { ((it.distanceTo(this)) <= 50) }
         )
         goalSelector.add(4, CustomMeleeAttackGoal(this, 1.0, false))
-        goalSelector.add(5, CustomWanderGoal(this, 0.8))
         goalSelector.add(1, SlashAtTargetGoal(this))
         super.initGoals()
     }

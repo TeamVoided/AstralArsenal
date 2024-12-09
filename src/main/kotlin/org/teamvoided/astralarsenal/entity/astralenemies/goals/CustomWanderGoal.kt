@@ -1,39 +1,89 @@
 package org.teamvoided.astralarsenal.entity.astralenemies.goals
 
-import net.minecraft.entity.ai.FuzzyTargeting
-import net.minecraft.entity.ai.goal.WanderAroundGoal
+import net.minecraft.entity.ai.NoPenaltyTargeting
+import net.minecraft.entity.ai.goal.Goal
+import net.minecraft.entity.mob.PathAwareEntity
 import net.minecraft.util.math.Vec3d
-import org.teamvoided.astralarsenal.entity.astralenemies.AstralSlasherEntity
+import java.util.*
 
-class CustomWanderGoal(mob: AstralSlasherEntity?, speed: Double, protected val probability: Float) :
-    WanderAroundGoal(mob, speed) {
-    constructor(pathAwareEntity: AstralSlasherEntity?, d: Double) : this(pathAwareEntity, d, 0.001f)
+class CustomWanderGoal : Goal() {
+    val DEFAULT_CHANCE: Int = 120
+    var mob: PathAwareEntity? = null
+    var targetX: Double = 0.0
+    var targetY: Double = 0.0
+    var targetZ: Double = 0.0
+    var speed: Double = 0.0
+    var chance: Int = 0
+    var ignoringChance: Boolean = false
+    var canDespawn = false
+
+    fun CustomWanderGoal(mob: PathAwareEntity?, speed: Double) {
+        CustomWanderGoal(mob, speed, 120)
+    }
+
+    fun CustomWanderGoal(mob: PathAwareEntity?, speed: Double, chance: Int) {
+        CustomWanderGoal(mob, speed, chance, true)
+    }
+
+    fun CustomWanderGoal(entity: PathAwareEntity?, speed: Double, chance: Int, canDespawn: Boolean) {
+        this.mob = entity
+        this.speed = speed
+        this.chance = chance
+        this.canDespawn = canDespawn
+        this.controls = EnumSet.of<Control>(Control.MOVE)
+    }
 
     override fun canStart(): Boolean {
-        if(mob != null && mob is AstralSlasherEntity && (mob as AstralSlasherEntity).slashing) return false
-        return super.canStart()
-    }
-
-    override fun shouldContinue(): Boolean {
-        if(mob != null && mob is AstralSlasherEntity && (mob as AstralSlasherEntity).slashing) return false
-        return super.shouldContinue()
-    }
-
-    override fun getWanderTarget(): Vec3d? {
-        if (mob.isInsideWaterOrBubbleColumn) {
-            val vec3d = FuzzyTargeting.find(this.mob, 15, 7)
-            return vec3d ?: super.getWanderTarget()
+        if (mob!!.hasControllingPassenger()) {
+            return false
         } else {
-            return if (mob.random.nextFloat() >= this.probability) FuzzyTargeting.find(
-                this.mob,
-                10,
-                7
-            ) else super.getWanderTarget()
+            if (!this.ignoringChance) {
+                if (this.canDespawn && mob!!.despawnCounter >= 100) {
+                    return false
+                }
+
+                if (mob!!.random.nextInt(toGoalTicks(this.chance)) != 0) {
+                    return false
+                }
+            }
+
+            val vec3d = this.getWanderTarget()
+            if (vec3d == null) {
+                return false
+            } else {
+                this.targetX = vec3d.x
+                this.targetY = vec3d.y
+                this.targetZ = vec3d.z
+                this.ignoringChance = false
+                return true
+            }
         }
     }
 
-    companion object {
-        const val CHANCE: Float = 0.001f
+    protected open fun getWanderTarget(): Vec3d? {
+        return NoPenaltyTargeting.find(this.mob, 10, 7)
+    }
+
+    override fun shouldContinue(): Boolean {
+        return !mob!!.navigation.isIdle && !mob!!.hasControllingPassenger()
+    }
+
+    override fun start() {
+        mob!!.navigation.startMovingTo(this.targetX, this.targetY, this.targetZ, this.speed)
+    }
+
+    override fun stop() {
+        mob!!.navigation.stop()
+        super.stop()
+    }
+
+    fun ignoreChanceOnce() {
+        this.ignoringChance = true
+    }
+
+    fun setChance(chance: Int) {
+        this.chance = chance
     }
 }
 
+}

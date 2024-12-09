@@ -42,6 +42,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
         entity.timeBeforeShot = 80
         entity.shotBufferTime = 20
         entity.isShooting = false
+        entity.cantMove = false
         super.stop()
     }
 
@@ -55,9 +56,11 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
             entity.isShooting = false
             entity.targetPoint = entity.target!!.pos.add(0.0, 1.0, 0.0)
             entity.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, entity.targetPoint)
+            entity.cantMove = false
         } else if (entity.timeBeforeShot > 0) {
             entity.timeBeforeShot--
             entity.isShooting = true
+            entity.cantMove = true
             entity.targetPoint = entity.target!!.pos.add(0.0, 1.0, 0.0)
             var particle = ParticleTypes.FLAME
             if (entity.timeBeforeShot % 10 == 0) {
