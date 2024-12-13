@@ -58,7 +58,7 @@ class BeamOfLightEntity : Entity {
     val weak = listOf(
         AstralEffects.HARD_DAMAGE
     )
-
+//test
 
     override fun tick() {
         if(this.owner != null && !this.owner!!.isAlive){
