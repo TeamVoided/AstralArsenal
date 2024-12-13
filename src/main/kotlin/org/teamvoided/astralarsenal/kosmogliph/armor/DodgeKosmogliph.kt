@@ -24,6 +24,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import kotlin.math.max
 import kotlin.math.sqrt
 
 class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DODGE) }),
@@ -101,7 +102,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
                 val a = entity.statusEffects.filter { it.effectType == StatusEffects.SPEED }
                 if (a.isNotEmpty()) {
                     for (t in a) {
-                        time *= (1.0/(t.amplifier + 1.0)).toInt()
+                        time = max((time * (1.0 / (t.amplifier + 1.0))).toInt(), 1)
                     }
                 }
                 val z: Int = (entity.frozenTicks / 20)

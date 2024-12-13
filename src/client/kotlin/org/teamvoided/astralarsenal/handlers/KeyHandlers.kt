@@ -5,8 +5,11 @@ import kotlinx.atomicfu.atomic
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.client.MinecraftClient
+import net.minecraft.entity.EquipmentSlot
+import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.AstralKeyBindings
 import org.teamvoided.astralarsenal.handlers.KeyHandlers.ClientCtxInvokable
+import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.networking.DashKosmogliphPayload
 import org.teamvoided.astralarsenal.networking.DodgeKosmogliphPayload
 import org.teamvoided.astralarsenal.networking.JumpKosmogliphPayload
@@ -33,6 +36,7 @@ object KeyHandlers {
             holdingJump.value = false
         } else if (!holdingJump.value) {
             ClientPlayNetworking.send(JumpKosmogliphPayload)
+            AstralKosmogliphs.JUMP.handleJump(client.player!!.getEquippedStack(EquipmentSlot.FEET), client.player!!)
             holdingJump.value = true
         }
     }

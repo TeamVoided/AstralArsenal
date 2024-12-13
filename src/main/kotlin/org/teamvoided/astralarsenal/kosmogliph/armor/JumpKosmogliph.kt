@@ -16,21 +16,26 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
+import net.minecraft.stat.Stat
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
+import kotlin.math.max
 
 class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_JUMP) }),
     AirSpeedKosmogliph {
-    // Change this to change how much boost is given when double-jumping.
-    val JUMP_FORWARD_BOOST = 0.3
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
+        if (!getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.JUMP)) {
+            return
+        }
         val data = stack.get(AstralItemComponents.JUMP_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world
@@ -38,12 +43,16 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         if (player.vehicle != null) return
 
         if (data.uses > 0 && !player.isOnGround) {
-            var boost = player.rotationVector.multiply(0.0, 0.0, 0.0)
-            if (player.velocity.x > 0.0 || player.velocity.z > 0.0) {
-                boost = player.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(JUMP_FORWARD_BOOST)
+            val mult =
+                if (player.hasStatusEffect(StatusEffects.JUMP_BOOST)) ((player.getStatusEffect(StatusEffects.JUMP_BOOST)!!.amplifier)) else 0
+            if (world.isClient) {
+                if (player.velocity.y > 0) {
+                    player.addVelocity(0.0, 0.5 + (0.2 * mult), 0.0)
+                } else {
+                    player.setVelocity(player.velocity.x, 0.5 + (0.2 * mult), player.velocity.z)
+                }
+                player.velocityModified = true
             }
-            player.setVelocity(player.velocity.x + boost.x, 0.5, player.velocity.z + boost.z)
-            player.velocityModified = true
             player.hungerManager.add(0, -0.1f)
             world.playSound(
                 null,
@@ -108,7 +117,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                 val a = entity.statusEffects.filter { it.effectType == StatusEffects.SPEED }
                 if (a.isNotEmpty()) {
                     for (t in a) {
-                        time *= (1.0/(t.amplifier + 1.0)).toInt()
+                        time = max((time * (1.0 / (t.amplifier + 1.0))).toInt(), 1)
                     }
                 }
                 val z: Int = (entity.frozenTicks / 20)

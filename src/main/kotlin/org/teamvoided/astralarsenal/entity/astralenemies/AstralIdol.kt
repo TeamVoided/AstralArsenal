@@ -14,6 +14,8 @@ import net.minecraft.entity.mob.ZombieEntity
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundEvent
+import net.minecraft.sound.SoundEvents
 import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
@@ -48,6 +50,10 @@ class AstralIdol(
         super.initGoals()
     }
 
+    override fun getDeathSound(): SoundEvent? {
+        return SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE.value()
+    }
+
     override fun tick() {
         if(this.target != null){
             this.target!!.addStatusEffect(StatusEffectInstance(AstralEffects.IMMORTAL, 2, 0, false, true))
@@ -61,8 +67,9 @@ class AstralIdol(
         fun createMobAttributes(): DefaultAttributeContainer.Builder {
             return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 30.0)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.0)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 500.0)
+                .add(EntityAttributes.GENERIC_EXPLOSION_KNOCKBACK_RESISTANCE, 500.0)
         }
     }
     override fun applyEnchantmentsToDamage(source: DamageSource, amount: Float): Float {

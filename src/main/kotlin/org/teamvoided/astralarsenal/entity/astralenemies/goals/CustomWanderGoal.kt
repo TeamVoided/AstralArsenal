@@ -13,7 +13,7 @@ class CustomWanderGoal : Goal() {
     var targetY: Double = 0.0
     var targetZ: Double = 0.0
     var speed: Double = 0.0
-    var chance: Int = 0
+    private var chance: Int = 0
     var ignoringChance: Boolean = false
     var canDespawn = false
 
@@ -79,9 +79,5 @@ class CustomWanderGoal : Goal() {
 
     fun ignoreChanceOnce() {
         this.ignoringChance = true
-    }
-
-    fun setChance(chance: Int) {
-        this.chance = chance
     }
 }

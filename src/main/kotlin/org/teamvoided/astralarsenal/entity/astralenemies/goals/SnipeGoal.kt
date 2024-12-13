@@ -19,6 +19,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Math.lerp
+import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity
@@ -75,15 +76,16 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
                 particle = ParticleTypes.SOUL_FIRE_FLAME
             }
             showTarget(entity, particle)
-            if (!entity.canSee(entity.target)){
+            if (!entity.canSee(entity.target)) {
                 entity.cooldown += 20
                 entity.timeBeforeShot = min(entity.timeBeforeShot + 20, 50)
             }
         } else if (entity.shotBufferTime > 0) {
             if ((entity.shotBufferTime == 20 || (entity.enraged && entity.shotBufferTime == 10))) {
                 entity.targetPoint = entity.target!!.pos.add(0.0, 1.0, 0.0)
-                if(entity.enraged){
-                    entity.targetPoint = entity.target!!.pos.add(0.0, 1.0, 0.0).add(entity.target!!.movement.multiply(entity.shotBufferTime.toDouble().times(2.0)))
+                if (entity.enraged) {
+                    entity.targetPoint = entity.target!!.pos.add(0.0, 1.0, 0.0)
+                        .add(entity.target!!.movement.x * (entity.shotBufferTime.toDouble().times(2.0)),0.0,entity.target!!.movement.z * (entity.shotBufferTime.toDouble().times(2.0)))
                 }
                 entity.world.playSoundFromEntity(
                     null,
@@ -93,10 +95,10 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
                     1.0f,
                     1.5f
                 )
-                if (!entity.canSee(entity.target)){
+                if (!entity.canSee(entity.target)) {
                     entity.cooldown += 20
                     entity.timeBeforeShot += 20
-                    entity.shotBufferTime = if(entity.enraged) 11 else 21
+                    entity.shotBufferTime = if (entity.enraged) 11 else 21
                 }
             }
             entity.shotBufferTime--
@@ -188,7 +190,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
                 world.createExplosion(
                     victim,
                     victim.damageSources.explosion(victim, entity),
-                    StrongExplosionBehavior(entity),
+                    explosion,
                     victim.x,
                     victim.y,
                     victim.z,
@@ -197,6 +199,20 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
                     World.ExplosionSourceType.TNT
                 )
                 entity.discard()
+            }
+            if (victim is BeamOfLightEntity && victim.targetEntity != null && victim.targetEntity == entity) {
+                world.createExplosion(
+                    victim,
+                    victim.damageSources.explosion(victim, entity),
+                    PenopticonExplosionBehavior(entity),
+                    victim.x,
+                    victim.y,
+                    victim.z,
+                    1.0f,
+                    false,
+                    World.ExplosionSourceType.TNT
+                )
+                break
             }
             if (victim is LivingEntity) {
                 when (entity.snipeType) {
@@ -333,7 +349,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
                 world.createExplosion(
                     victim,
                     victim.damageSources.explosion(victim, entity),
-                    PenopticonExplosionBehavior(),
+                    PenopticonExplosionBehavior(entity),
                     victim.x,
                     victim.y,
                     victim.z,
@@ -342,6 +358,19 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
                     World.ExplosionSourceType.TNT
                 )
                 victim.discard()
+                break
+            } else if (victim is BeamOfLightEntity && victim.targetEntity != null && victim.targetEntity == entity) {
+                world.createExplosion(
+                    victim,
+                    victim.damageSources.explosion(victim, entity),
+                    PenopticonExplosionBehavior(entity),
+                    victim.x,
+                    victim.y,
+                    victim.z,
+                    1.0f,
+                    false,
+                    World.ExplosionSourceType.TNT
+                )
                 break
             } else {
                 world.createExplosion(

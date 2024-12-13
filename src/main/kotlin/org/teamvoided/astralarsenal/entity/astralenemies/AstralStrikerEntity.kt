@@ -55,7 +55,6 @@ class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
     }
 
     override fun initGoals() {
-        goalSelector.add(5, HoverRandomlyGoal(this, 10.0, 5.0))
         goalSelector.add(2, StrikeGoal(this))
         goalSelector.add(2, CustomLookAtTargetGoal(this))
         targetSelector.add(

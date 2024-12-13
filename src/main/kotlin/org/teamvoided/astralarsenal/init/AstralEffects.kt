@@ -109,6 +109,14 @@ object AstralEffects {
                 val levels = w + 1
                 val mult = levels * REDUCE_MULT
                 output = (output * (1 + mult)).toFloat()
+                if(source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)){
+                    if(entity is PlayerEntity && output > 15f && (damage < 15f)){
+                        output = 15f
+                    }
+                    else if(damage > 15f && entity is PlayerEntity && output > 15f){
+                        output = damage
+                    }
+                }
             }
         }
         //conductive starts here
@@ -246,6 +254,7 @@ object AstralEffects {
     fun cancelDamage(entity: LivingEntity, damage: Float, source: DamageSource): Boolean {
         val effects_immortal = entity.statusEffects.filter { immortality.contains(it.effectType) }
         if (effects_immortal.isNotEmpty()) {
+            entity.world.playSoundFromEntity(null,entity,SoundEvents.BLOCK_AMETHYST_BLOCK_FALL,SoundCategory.NEUTRAL,1.0f,0.8f)
             return true
         }
         return false

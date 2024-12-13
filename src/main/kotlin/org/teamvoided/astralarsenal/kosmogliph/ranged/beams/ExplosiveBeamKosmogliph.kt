@@ -82,7 +82,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                 world.createExplosion(
                     entity,
                     entity.damageSources.explosion(entity, player),
-                    PenopticonExplosionBehavior(),
+                    PenopticonExplosionBehavior(entity),
                     entity.x,
                     entity.y,
                     entity.z,

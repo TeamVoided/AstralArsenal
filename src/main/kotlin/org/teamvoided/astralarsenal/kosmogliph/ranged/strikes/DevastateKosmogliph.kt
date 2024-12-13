@@ -6,6 +6,7 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.Items
 import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -28,6 +29,7 @@ class DevastateKosmogliph(
         val stack = player.getStackInHand(hand)
         val chargedProjectiles = stack.get(DataComponentTypes.CHARGED_PROJECTILES)
         val fireBall = chargedProjectiles != null && !chargedProjectiles.isEmpty
+        val angee = chargedProjectiles != null && chargedProjectiles.contains(Items.FIREWORK_ROCKET)
         if (fireBall) {
             stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
             val snowballEntity = BeamOfLightArrowEntity(world, player)
@@ -41,7 +43,7 @@ class DevastateKosmogliph(
             snowballEntity.DMG = 8
             snowballEntity.trackTime = 30
             snowballEntity.balls = player
-            snowballEntity.enraged = true
+            snowballEntity.enraged = angee
             world.spawnEntity(snowballEntity)
             if (player.getStackInHand(hand).hasMultiShot()) {
                 val one: Int

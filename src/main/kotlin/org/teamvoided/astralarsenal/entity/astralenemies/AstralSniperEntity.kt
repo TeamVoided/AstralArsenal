@@ -70,6 +70,7 @@ class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: 
             return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 50.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0)
                 .add(EntityAttributes.GENERIC_ARMOR, 5.0)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1.0)
         }
     }
 

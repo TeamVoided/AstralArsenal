@@ -14,6 +14,7 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
+import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEffects
@@ -58,9 +59,19 @@ class BeamOfLightEntity : Entity {
         AstralEffects.HARD_DAMAGE
     )
 
+
     override fun tick() {
+        if(this.owner != null && !this.owner!!.isAlive){
+            this.discard()
+        }
+        if(this.targetEntity != null && !this.targetEntity!!.isAlive){
+            this.targetEntity = null
+        }
+        if(this.enraged && this.targetEntity == null){
+            this.enraged = false
+        }
         incrementTime()
-        var particles = if (enraged) ParticleTypes.GLOW else ParticleTypes.END_ROD
+        val particles = if (enraged) ParticleTypes.GLOW else ParticleTypes.END_ROD
         if (this.getTime() < WINDUP) {
             if (!world.isClient) {
                 val serverWorld = world as ServerWorld
@@ -77,12 +88,16 @@ class BeamOfLightEntity : Entity {
                 )
             }
             if (targetEntity != null && this.getTime() < trackTime) {
-                this.setPosition(targetEntity!!.pos.x, targetEntity!!.pos.y + 1, targetEntity!!.pos.z)
+                val x =
+                    if (targetEntity!! is AstralSniperEntity) (targetEntity!!.eyePos.y - 0.05) else targetEntity!!.y + 1
+                this.setPosition(targetEntity!!.pos.x, x, targetEntity!!.pos.z)
             } else if (targetEntity != null && this.getTime() == trackTime && enraged) {
-                    val posx = targetEntity!!.x + (targetEntity!!.movement.x * ((WINDUP) - trackTime))
-                    val posy = (targetEntity!!.y + 1) + (targetEntity!!.movement.y * (WINDUP - trackTime))
-                    val posz = targetEntity!!.z + (targetEntity!!.movement.z * (WINDUP - trackTime))
-                    this.setPosition(posx, posy, posz)
+                val x =
+                    if (targetEntity!! is AstralSniperEntity) (targetEntity!!.eyePos.y - 0.05) else targetEntity!!.y + 1
+                val posx = targetEntity!!.x + (targetEntity!!.movement.x * ((WINDUP) - trackTime))
+                val posy = (x)
+                val posz = targetEntity!!.z + (targetEntity!!.movement.z * (WINDUP - trackTime))
+                this.setPosition(posx, posy, posz)
             }
         } else if (this.getTime() == WINDUP) {
             this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)
@@ -117,7 +132,10 @@ class BeamOfLightEntity : Entity {
                         )
                     )
                     for (entity in entities) {
-                        if (!entitiesHit.contains(entity) && entity is LivingEntity && !entity.type.isIn(AstralEntityTags.UNAFFECTED_BY_LIGHT)) {
+                        if (!entitiesHit.contains(entity) && entity is LivingEntity && !entity.type.isIn(
+                                AstralEntityTags.UNAFFECTED_BY_LIGHT
+                            )
+                        ) {
                             entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
                             entity.addVelocity(0.0, THRUST, 0.0)
 //                            var hard_levels = this.hard_damage
