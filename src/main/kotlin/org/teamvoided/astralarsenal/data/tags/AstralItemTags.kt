@@ -69,6 +69,7 @@ object AstralItemTags {
     val SUPPORTS_CAPACITY = supports("capacity")
     val SUPPORTS_OVER_HEAT = supports("capacity")
     val SUPPORTS_STATIC_RELEASE = supports("static_release")
+    val SUPPORTS_TEAR = supports("tear")
 
     val SUPPORTS_PULVERISER = supports("pulveriser")
     val SUPPORTS_WIND_ERUPTION = supports("wind_eruption")

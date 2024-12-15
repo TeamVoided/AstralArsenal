@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.entity.nails
 
+import com.ibm.icu.text.MessagePattern.Part
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.data.DataTracker
@@ -41,7 +42,7 @@ open class NailEntity : PersistentProjectileEntity {
         if (entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity as LivingEntity
             hit.customDamage(AstralDamageTypes.NAILED, if(nailType == NailType.FIRE) 0.5f else if(nailType == NailType.CHARGED) 0.0f else 1.0f, owner, owner)
-            if (nailType != NailType.CHARGED) {
+            if (nailType != NailType.CHARGED && nailType != NailType.IMPALE) {
                 var effectLevel = 0
                 val currentEffect = hit.statusEffects.find { it.effectType == AstralEffects.CONDUCTIVE }
                 currentEffect?.let { effectLevel = it.amplifier + 1 }
@@ -50,6 +51,20 @@ open class NailEntity : PersistentProjectileEntity {
                 hit.addStatusEffect(
                     StatusEffectInstance(
                         AstralEffects.CONDUCTIVE,
+                        400, effectLevel,
+                        false, false, true
+                    )
+                )
+            }
+            else if(nailType == NailType.IMPALE){
+                var effectLevel = 0
+                val currentEffect = hit.statusEffects.find { it.effectType == AstralEffects.IMPALED }
+                currentEffect?.let { effectLevel = it.amplifier + 1 }
+
+                hit.removeStatusEffect(AstralEffects.IMPALED)
+                hit.addStatusEffect(
+                    StatusEffectInstance(
+                        AstralEffects.IMPALED,
                         400, effectLevel,
                         false, false, true
                     )
@@ -64,6 +79,7 @@ open class NailEntity : PersistentProjectileEntity {
                 }
                 NailType.CHARGED ->
                     hit.customDamage(AstralDamageTypes.RICHOCHET, 1f, owner, owner)
+                NailType.IMPALE -> Unit
             }
         }
         this.world.playSound(this.pos, SoundEvents.ITEM_TRIDENT_HIT, SoundCategory.PLAYERS, 1.0F, 1.0f)
@@ -80,6 +96,7 @@ open class NailEntity : PersistentProjectileEntity {
             NailType.BASE -> null to 0
             NailType.FIRE -> ParticleTypes.FLAME to 10
             NailType.CHARGED -> ParticleTypes.ELECTRIC_SPARK to 4
+            NailType.IMPALE -> ParticleTypes.CRIMSON_SPORE to 20
         }
         if (particle != null && (world.time + blockPos.asLong()) % chance == 0L) {
             if (world is ServerWorld) (world as ServerWorld).spawnParticles(
@@ -108,7 +125,7 @@ open class NailEntity : PersistentProjectileEntity {
     }
 
     enum class NailType(val id: Int) {
-        BASE(0), FIRE(1), CHARGED(2);
+        BASE(0), FIRE(1), CHARGED(2), IMPALE(3);
 
         companion object {
             fun getById(id: Int): NailType = entries.first { it.id == id }

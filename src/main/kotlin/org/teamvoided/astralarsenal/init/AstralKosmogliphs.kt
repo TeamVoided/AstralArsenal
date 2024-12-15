@@ -101,6 +101,7 @@ object AstralKosmogliphs {
     val CAPACITY = register("capacity", ::CapacityKosmogliph)
     val OVER_HEAT = register("over_heat", ::OverHeatKosmogliph)
     val STATIC_RELEASE = register("static_release", ::StaticReleaseKosmogliph)
+    val TEAR = register("tear", ::TearKosmogliph)
 
     @JvmField
     val PULVERISER = register("pulveriser", ::PulveriserKosmogliph)

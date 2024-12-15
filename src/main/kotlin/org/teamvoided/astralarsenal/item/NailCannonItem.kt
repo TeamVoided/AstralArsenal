@@ -101,6 +101,8 @@ class NailCannonItem(settings: Settings) : Item(settings) {
                 if (shouldBoost(remainingUseTicks, user.isSneaking)
                     && (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT))
                 ) nail.nailType = NailEntity.NailType.FIRE
+                else if ((getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.TEAR))) nail.nailType =
+                    NailEntity.NailType.IMPALE
                 else if (((USE_TICKS - remainingUseTicks) % 20 == 0) && getKosmogliphsOnStack(stack).contains(
                         AstralKosmogliphs.STATIC_RELEASE
                     )
@@ -142,6 +144,7 @@ class NailCannonItem(settings: Settings) : Item(settings) {
     override fun getItemBarColor(stack: ItemStack): Int {
         return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.STATIC_RELEASE)) Color.LIGHT_GRAY.rgb
         else if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT)) Color.ORANGE.rgb
+        else if(getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.TEAR)) Color.RED.rgb
         else Color.MAGENTA.rgb
     }
 

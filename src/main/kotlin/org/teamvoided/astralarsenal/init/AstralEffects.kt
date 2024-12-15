@@ -77,6 +77,9 @@ object AstralEffects {
     val CONDUCTIVE = register(
         "conductive", ParticleStatusEffect(StatusEffectType.HARMFUL, 0x00a2ff, ParticleTypes.ELECTRIC_SPARK)
     )
+    val IMPALED = register(
+        "impaled", ParticleStatusEffect(StatusEffectType.HARMFUL, 0x590000, ParticleTypes.CRIMSON_SPORE)
+    )
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
         Registries.STATUS_EFFECT.registerHolder(id(id), entry)
@@ -98,6 +101,9 @@ object AstralEffects {
     )
     val immortality = listOf(
         IMMORTAL
+    )
+    val impaled = listOf(
+        IMPALED
     )
 
     fun modifyDamage(entity: LivingEntity, damage: Float, source: DamageSource): Float {
@@ -196,6 +202,25 @@ object AstralEffects {
         val effects_immortal = entity.statusEffects.filter { immortality.contains(it.effectType) }
         if (effects_immortal.isNotEmpty()) {
             output *= 0
+        }
+
+        //Impaled starts here
+        val effects_impaled = entity.statusEffects.filter { impaled.contains(it.effectType) }
+        if(effects_impaled.isNotEmpty() && source.isTypeIn(AstralDamageTypeTags.IS_MELEE)){
+            for(e in effects_impaled){
+                output += min((0.5f * (e.amplifier + 1)), 15f)
+                entity.world.playSound(
+                    null,
+                    entity.x,
+                    entity.y,
+                    entity.z,
+                    SoundEvents.ENTITY_WITHER_BREAK_BLOCK,
+                    SoundCategory.PLAYERS,
+                    1.0F,
+                    1.6f
+                )
+                entity.removeStatusEffect(e.effectType)
+            }
         }
         return output
     }

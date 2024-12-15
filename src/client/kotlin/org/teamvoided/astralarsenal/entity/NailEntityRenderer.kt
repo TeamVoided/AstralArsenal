@@ -84,11 +84,13 @@ class NailEntityRenderer<T : NailEntity>(context: EntityRendererFactory.Context?
         NailEntity.NailType.BASE -> NAIL_TEXTURE
         NailEntity.NailType.FIRE -> FIRE_NAIL_TEXTURE
         NailEntity.NailType.CHARGED -> CHARGED_NAIL_TEXTURE
+        NailEntity.NailType.IMPALE -> IMPALE_NAIL_TEXTURE
     }
 
     companion object {
         val NAIL_TEXTURE = id("textures/entity/projectiles/nail.png")
         val FIRE_NAIL_TEXTURE = id("textures/entity/projectiles/fire_nail.png")
         val CHARGED_NAIL_TEXTURE = id("textures/entity/projectiles/charged_nail.png")
+        val IMPALE_NAIL_TEXTURE = id("textures/entity/projectiles/impale_nail.png")
     }
 }

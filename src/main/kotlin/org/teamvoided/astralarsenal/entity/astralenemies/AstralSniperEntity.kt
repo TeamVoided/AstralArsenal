@@ -43,7 +43,7 @@ class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: 
     override fun initGoals() {
         goalSelector.add(2, SnipeGoal(this))
         goalSelector.add(2, LookAtPointGoal(this))
-        goalSelector.add(2, StayDistantGoal(this,20,10))
+        //goalSelector.add(2, StayDistantGoal<Any>(this,20,10))
         targetSelector.add(
             1, TargetGoal(
                 this, PlayerEntity::

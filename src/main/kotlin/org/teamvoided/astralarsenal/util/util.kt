@@ -218,19 +218,19 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
                         )
                     )
                     stack.set(SLAM_DATA, Data(0.0f, false))
-                    if(entity.world is ServerWorld){
-                        val serverWorld = entity.world as ServerWorld
-                        val slamEntity = ShockwaveEntity(entity.world, entity)
-                        slamEntity.speed = 0.1
-                        slamEntity.distance = 10.0
-                        slamEntity.knockback = 3.0
-                        slamEntity.setPosition(entity.pos)
-                        serverWorld.spawnEntity(slamEntity)
-                    }
+//                    if(entity.world is ServerWorld){
+//                        val serverWorld = entity.world as ServerWorld
+//                        val slamEntity = ShockwaveEntity(entity.world, entity)
+//                        slamEntity.speed = 0.1
+//                        slamEntity.distance = 10.0
+//                        slamEntity.knockback = 3.0
+//                        slamEntity.setPosition(entity.pos)
+//                        serverWorld.spawnEntity(slamEntity)
+//                    } [This will come back and be tweaked for 2.0
 
                     faller.resetFallDistance()
                 } else {
-                    faller.setVelocity(0.0, -20.0, 0.0)
+                    faller.setVelocity(0.0, -5.0, 0.0)
                     faller.velocityModified
                     faller.addStatusEffect(
                         StatusEffectInstance(

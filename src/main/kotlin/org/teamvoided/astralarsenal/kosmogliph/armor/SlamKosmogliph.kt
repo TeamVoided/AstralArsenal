@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.kosmogliph.armor
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
@@ -10,14 +11,18 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.network.listener.ClientPlayPacketListener
+import net.minecraft.network.packet.payload.CustomPayload
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.DamageTypeTags
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralItemComponents.SLAM_DATA
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import kotlin.math.roundToInt
@@ -27,7 +32,7 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return
         if (!player.isOnGround && !data.slamming) {
             stack.set(AstralItemComponents.SLAM_DATA, Data(0.0f, true))
-            player.setVelocity(0.0, -20.0, 0.0)
+            player.setVelocity(0.0, -5.0, 0.0)
             player.velocityModified = true
         }
     }
@@ -54,16 +59,20 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 //    }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        if (entity !is LivingEntity) return
+        if (entity !is PlayerEntity) return
         val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return
 //        val currentFallDistance = entity.fallDistance
-          var slamming = data.slamming
-        if(slamming){
-            entity.setVelocity(0.0, -20.0, 0.0)
-            entity.velocityModified = true
+        val slamming = data.slamming
+        if (slamming) {
+            if (entity.velocity.y >= 0 && !world.isClient) {
+                stack.set(SLAM_DATA, Data(0.0f, false))
+            } else if(entity.velocity.y < 0f && world.isClient) {
+                entity.setVelocity(0.0, -5.0, 0.0)
+                entity.velocityModified = true
+            }
         }
 //        if (slamming && currentFallDistance <= 0f && data.lastFallDistance > 0f) {
-////            entity.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
+////            entity.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)v
 ////            entity.addStatusEffect(
 ////                StatusEffectInstance(
 ////                    AstralEffects.SLAM_JUMP,

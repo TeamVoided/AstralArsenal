@@ -109,6 +109,7 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_CAPACITY).add(AstralItems.NAILCANNON)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_OVER_HEAT).add(AstralItems.NAILCANNON)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_STATIC_RELEASE).add(AstralItems.NAILCANNON)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TEAR).add(AstralItems.NAILCANNON)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_PULVERISER).add(Items.MACE)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_WIND_ERUPTION).add(Items.MACE)
@@ -167,6 +168,7 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_GENERATOR)
             .forceAddTag(AstralItemTags.SUPPORTS_QUICKSHOT)
             .forceAddTag(AstralItemTags.SUPPORTS_TARGET)
+            .forceAddTag(AstralItemTags.SUPPORTS_TEAR)
             .add(Items.SHIELD)
     }
 
