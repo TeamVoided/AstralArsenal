@@ -64,11 +64,14 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 //        val currentFallDistance = entity.fallDistance
         val slamming = data.slamming
         if (slamming) {
-            if (entity.velocity.y >= 0 && !world.isClient) {
-                stack.set(SLAM_DATA, Data(0.0f, false))
-            } else if(entity.velocity.y < 0f && world.isClient) {
+//            if (entity.velocity.y >= 0 && !world.isClient) {
+//                stack.set(SLAM_DATA, Data(0.0f, false))
+//            } else if(entity.velocity.y < 0f && world.isClient) {
+//                entity.setVelocity(0.0, -5.0, 0.0)
+//                entity.velocityModified = true
+//            }
+            if(world.isClient){
                 entity.setVelocity(0.0, -5.0, 0.0)
-                entity.velocityModified = true
             }
         }
 //        if (slamming && currentFallDistance <= 0f && data.lastFallDistance > 0f) {

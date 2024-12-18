@@ -138,16 +138,6 @@ object AstralEffects {
                     if (damage > 10) CONDUCTIVE_DAMAGE_SHARE_HARD else if (damage < 5) CONDUCTIVE_DAMAGE_SHARE_SOFT else CONDUCTIVE_DAMAGE_SHARE
                 conductiveDamage = (output * (shareMult)).toFloat()
                 entity.removeStatusEffect(CONDUCTIVE)
-                // keep this chunk of code here in case we wanna add it back in again
-//                if(levels > 5){
-//                    entity.addStatusEffect(
-//                        StatusEffectInstance(StatusEffectInstance(
-//                            CONDUCTIVE,
-//                            400, w - 5,
-//                            false, false, true
-//                ))
-//                    )
-//                }
                 val entities = mutableListOf<Entity>()
                 entities.addAll(
                     entity.world.getOtherEntities(
