@@ -27,6 +27,6 @@ class AstralEntityTagProvider(
             .add(AstralEntities.NAIL_ENTITY)
 
         getOrCreateTagBuilder(AstralEntityTags.UNAFFECTED_BY_LIGHT)
-            .add(AstralEntities.ASTRAL_STRIKER)
+//            .add(AstralEntities.ASTRAL_STRIKER)
     }
 }

@@ -26,11 +26,11 @@ class SlowBulletEntity : ThrownItemEntity {
     constructor(entityType: EntityType<out SlowBulletEntity?>?, world: World?) :
             super(entityType as EntityType<out ThrownItemEntity?>?, world)
 
-    constructor(world: World?, owner: LivingEntity?) :
-            super(AstralEntities.SLOW_BULLET as EntityType<out ThrownItemEntity?>, owner, world)
+    //constructor(world: World?, owner: LivingEntity?) :
+            //super(AstralEntities.SLOW_BULLET as EntityType<out ThrownItemEntity?>, owner, world)
 
-    constructor(world: World?, x: Double, y: Double, z: Double) :
-            super(AstralEntities.SLOW_BULLET as EntityType<out ThrownItemEntity?>, x, y, z, world)
+    //constructor(world: World?, x: Double, y: Double, z: Double) :
+            //super(AstralEntities.SLOW_BULLET as EntityType<out ThrownItemEntity?>, x, y, z, world)
 
     override fun getDefaultItem(): Item {
         return Items.COD

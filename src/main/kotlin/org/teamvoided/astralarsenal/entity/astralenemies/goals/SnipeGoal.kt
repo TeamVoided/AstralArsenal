@@ -27,10 +27,7 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.world.explosion.*
-import kotlin.math.min
-import kotlin.math.pow
-import kotlin.math.roundToInt
-import kotlin.math.sqrt
+import kotlin.math.*
 
 class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
     override fun canStart(): Boolean {
@@ -456,5 +453,31 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
                 )
             }
         }
+    }
+
+    fun findTargetSpot(entity: AstralSniperEntity){
+        if(entity.target != null && shouldMove(entity, 50f, 10f)){
+            var r = 0f
+            val distance = entity.distanceTo(entity.target)
+            if(distance > 50f){
+                r = distance - 45
+            }
+            else if(distance < 10f){
+                r = distance + 15
+            }
+            val targX = entity.target!!.x
+            val targZ = entity.target!!.z
+            val posX = entity.x
+            val posZ = entity.z
+            val theta = atan2((targZ - posZ),(targX - posX))
+
+        }
+    }
+
+    fun shouldMove(entity: AstralSniperEntity, maxDistance: Float, minDistance: Float): Boolean {
+        if(entity.target != null && entity.distanceTo(entity.target) > minDistance && entity.distanceTo(entity.target) < maxDistance){
+            return false
+        }
+        else{return true}
     }
 }

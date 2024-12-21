@@ -59,10 +59,10 @@ class ShootGoal(val entity: AstralDrifterEntity) : Goal() {
             } else {
                 rotation = 1
             }
-            val bullet = SlowBulletEntity(entity.world, entity)
-            bullet.setDmg(8f)
-            setPropertiesTwo(bullet, entity.pitch + p, entity.yaw + y, 0.0f, 0.5f, (0.1f * distance))
-            entity.world.spawnEntity(bullet)
+//            val bullet = SlowBulletEntity(entity.world, entity)
+//            bullet.setDmg(8f)
+//            setPropertiesTwo(bullet, entity.pitch + p, entity.yaw + y, 0.0f, 0.5f, (0.1f * distance))
+//            entity.world.spawnEntity(bullet)
         }
     }
 
@@ -91,11 +91,11 @@ class ShootGoal(val entity: AstralDrifterEntity) : Goal() {
             } else {
                 rotation = 1
             }
-            val bullet = HomingBulletEntity(entity.world, entity)
-            bullet.setDmg(6f)
-            bullet.target = entity.target!!
-            setPropertiesTwo(bullet, entity.pitch + p, entity.yaw + y, 0.0f, 0.2f, (0.1f * distance))
-            entity.world.spawnEntity(bullet)
+//            val bullet = HomingBulletEntity(entity.world, entity)
+//            bullet.setDmg(6f)
+//            bullet.target = entity.target!!
+//            setPropertiesTwo(bullet, entity.pitch + p, entity.yaw + y, 0.0f, 0.2f, (0.1f * distance))
+//            entity.world.spawnEntity(bullet)
         }
     }
 

@@ -15,11 +15,11 @@ import org.teamvoided.astralarsenal.entity.nails.NailEntity
 object AstralEntities {
 
     fun init() {
-        FabricDefaultAttributeRegistry.register(ASTRAL_STRIKER, AstralStrikerEntity.createMobAttributes())
-        FabricDefaultAttributeRegistry.register(ASTRAL_SNIPER, AstralSniperEntity.createMobAttributes())
-        FabricDefaultAttributeRegistry.register(ASTRAL_SLASHER, AstralSlasherEntity.createMobAttributes())
-        FabricDefaultAttributeRegistry.register(ASTRAL_IDOL, AstralIdol.createMobAttributes())
-        FabricDefaultAttributeRegistry.register(ASTRAL_DRIFTER, AstralDrifterEntity.createMobAttributes())
+//        FabricDefaultAttributeRegistry.register(ASTRAL_STRIKER, AstralStrikerEntity.createMobAttributes())
+//        FabricDefaultAttributeRegistry.register(ASTRAL_SNIPER, AstralSniperEntity.createMobAttributes())
+//        FabricDefaultAttributeRegistry.register(ASTRAL_SLASHER, AstralSlasherEntity.createMobAttributes())
+//        FabricDefaultAttributeRegistry.register(ASTRAL_IDOL, AstralIdol.createMobAttributes())
+//        FabricDefaultAttributeRegistry.register(ASTRAL_DRIFTER, AstralDrifterEntity.createMobAttributes())
     }
 
     val CANNONBALL_ENTITY = register(
@@ -40,7 +40,7 @@ object AstralEntities {
     val SHOCKWAVE = register(
         "shockwave",
         EntityType.Builder.create(EntityType.EntityFactory(::ShockwaveEntity), SpawnGroup.MISC)
-            .setDimensions(0f,0f).maxTrackingRange(4).build()
+            .setDimensions(0f, 0f).maxTrackingRange(4).build()
     )
     val RICHOCHET = register(
         "richochet",
@@ -109,41 +109,6 @@ object AstralEntities {
             .setDimensions(0.75f, 0.75f).maxTrackingRange(4).build()
     )
 
-    val ASTRAL_STRIKER = register(
-        "astral_striker",
-        EntityType.Builder.create(EntityType.EntityFactory(::AstralStrikerEntity), SpawnGroup.MISC)
-            .setDimensions(2f, 2f).maxTrackingRange(100).build()
-    )
-    val ASTRAL_SNIPER = register(
-        "astral_sniper",
-        EntityType.Builder.create(EntityType.EntityFactory(::AstralSniperEntity), SpawnGroup.MISC)
-            .setDimensions(2f, 2f).maxTrackingRange(100).build()
-    )
-    val ASTRAL_SLASHER = register(
-        "astral_slasher",
-        EntityType.Builder.create(EntityType.EntityFactory(::AstralSlasherEntity), SpawnGroup.MISC)
-            .setDimensions(1f, 2f).maxTrackingRange(30).build()
-    )
-    val ASTRAL_IDOL = register(
-        "astral_idol",
-        EntityType.Builder.create(EntityType.EntityFactory(::AstralIdol), SpawnGroup.MISC)
-            .setDimensions(1f, 1.5f).maxTrackingRange(30).build()
-    )
-    val ASTRAL_DRIFTER = register(
-        "astral_drifter",
-        EntityType.Builder.create(EntityType.EntityFactory(::AstralDrifterEntity), SpawnGroup.MISC)
-            .setDimensions(1f, 1f).maxTrackingRange(30).build()
-    )
-    val SLOW_BULLET = register(
-        "slow_bullet",
-        EntityType.Builder.create(EntityType.EntityFactory(::SlowBulletEntity), SpawnGroup.MISC)
-            .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
-    )
-    val HOMING_BULLET = register(
-        "homing_bullet",
-        EntityType.Builder.create(EntityType.EntityFactory(::HomingBulletEntity), SpawnGroup.MISC)
-            .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
-    )
     private fun <T : Entity> register(path: String, entry: EntityType<T>): EntityType<T> {
         return Registry.register(Registries.ENTITY_TYPE, id(path), entry)
     }
