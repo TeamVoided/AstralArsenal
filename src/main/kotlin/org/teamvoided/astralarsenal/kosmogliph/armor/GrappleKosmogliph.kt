@@ -6,8 +6,10 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralItemComponents
@@ -18,25 +20,30 @@ class GrappleKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.HELMET
 }) {
     //im removing this shit - astra
-    // THIS SHIT SHAL RISE AGAIN - astra
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
+        if(world is ServerWorld) println("1")
         if (slot == 3) {
+            if(world is ServerWorld) println("2")
             val data = stack.get(AstralItemComponents.GRAPPLE_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
             var negateFallDamage = data.negateFallDamage
-            if (entity.isOnGround) {
-
-                if (negateFallDamage) negateFallDamage = false
-            }
-            if (!entity.isOnGround && entity.horizontalCollision && entity.velocity.y < -0.1) {
+            if (!entity.isOnGround && entity.horizontalCollision) {
+                if(world.isClient){
                 entity.setVelocity(
                     entity.movement.x,
-                    (entity.movement.y - 0.006).coerceAtLeast(-0.1),
+                    (entity.movement.y).coerceAtLeast(-0.1),
                     entity.movement.z
                 )
                 entity.velocityModified = true
+                println("velocity modified")
+                }
+                else {
+                    println("fall set to 0")
+                    entity.fallDistance = 0f
+                }
+            }
+            if(entity.velocity.y > -0.1){
                 entity.resetFallDistance()
-                negateFallDamage = true
             }
             stack.set(AstralItemComponents.GRAPPLE_DATA, Data(0, 0, negateFallDamage))
         }
@@ -50,7 +57,7 @@ class GrappleKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     ): Boolean {
         val data = stack.get(AstralItemComponents.GRAPPLE_DATA) ?: return false
 
-        if (data.negateFallDamage) {
+        if (data.negateFallDamage && source.isType(DamageTypes.FALL)) {
             stack.set(AstralItemComponents.GRAPPLE_DATA, Data(data.jumps, data.timer, false))
             return true
         }

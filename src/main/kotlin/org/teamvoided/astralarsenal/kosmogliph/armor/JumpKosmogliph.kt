@@ -36,6 +36,14 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         if (!getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.JUMP)) {
             return
         }
+//        if (getKosmogliphsOnStack(player.getEquippedStack(EquipmentSlot.HEAD)).contains(AstralKosmogliphs.GRAPPLE) && player.getEquippedStack(
+//                EquipmentSlot.HEAD
+//            ).get(AstralItemComponents.GRAPPLE_DATA) != null && player.getEquippedStack(
+//                EquipmentSlot.HEAD
+//            ).get(AstralItemComponents.GRAPPLE_DATA)!!.jumps > 0
+//        ){
+//            return
+//        }
         val data = stack.get(AstralItemComponents.JUMP_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world

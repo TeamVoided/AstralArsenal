@@ -109,6 +109,12 @@ object AstralEntities {
             .setDimensions(0.75f, 0.75f).maxTrackingRange(4).build()
     )
 
+    val BEAM_RENDERER = register(
+        "beam_renderer",
+        EntityType.Builder.create(EntityType.EntityFactory(::BeamRenderEntity), SpawnGroup.MISC)
+            .setDimensions(0.0f,0.0f).maxTrackingRange(4).build()
+    )
+
     private fun <T : Entity> register(path: String, entry: EntityType<T>): EntityType<T> {
         return Registry.register(Registries.ENTITY_TYPE, id(path), entry)
     }

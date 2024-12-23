@@ -2,7 +2,7 @@ package org.teamvoided.astralarsenal.init
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.client.render.entity.*
-import org.teamvoided.astralarsenal.entity.NailEntityRenderer
+import org.teamvoided.astralarsenal.entity.*
 
 
 object AstralEntitiesClient {
@@ -23,6 +23,7 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.RICHOCHET, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.NAIL_ENTITY, ::NailEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.COMET_ENTITY, ::EmptyEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.BEAM_RENDERER, ::BeamRenderer)
 //        EntityRendererRegistry.register(AstralEntities.SLOW_BULLET, ::EmptyEntityRenderer)
 //        EntityRendererRegistry.register(AstralEntities.HOMING_BULLET, ::EmptyEntityRenderer)
 //

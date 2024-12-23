@@ -16,10 +16,12 @@ import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
@@ -82,6 +84,16 @@ class BasicRailgunKosmogliph(id: Identifier) :
             1.0F,
             1.0f
         )
+        if(world is ServerWorld){
+            val beamRenderer = BeamRenderEntity(world, player.x, player.y, player.z)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0xffffff)
+            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 5000)
+            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 50)
+            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 1f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 1f)
+            world.spawnEntity(beamRenderer)
+        }
         for (entity in entities) {
             if (entity is CannonballEntity || entity is MortarEntity) {
                 world.createExplosion(

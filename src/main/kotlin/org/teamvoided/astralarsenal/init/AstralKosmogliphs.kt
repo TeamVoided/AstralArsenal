@@ -38,7 +38,6 @@ object AstralKosmogliphs {
     val DASH = register("dash", ::DashKosmogliph)
     val DODGE = register("dodge", ::DodgeKosmogliph)
 
-    //val SLIDE = register("slide", ::SlideKosmogliph)
     @JvmField
     val SLAM = register("slam", ::SlamKosmogliph)
     val ANKLE_GUARD = register("ankle_guard", ::AnkleGuardKosmogliph)
@@ -46,8 +45,6 @@ object AstralKosmogliphs {
     val PARRY = register("parry", ::ParryKosmogliph)
     val FROST_THORNS = register("frost_thorns", ::FrostThornsKosmogliph)
 
-    // val GRAPPLE = register("grapple", ::GrappleKosmogliph)
-    // val BEAM = register("beam", ::BeamKosmogliph)
     val ALCHEMIST = register("alchemist", ::AlchemistKosmogliph)
 
     val ASTRAL_STRIKE = register("astral_strike", ::AstralStrikeKosmogliph)

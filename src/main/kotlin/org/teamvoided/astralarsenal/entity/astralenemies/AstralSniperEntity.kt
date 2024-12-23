@@ -59,6 +59,7 @@ class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: 
             fun getById(id: Int): SnipeType = entries.first { it.id == id }
         }
     }
+
     override fun initDataTracker(builder: DataTracker.Builder) {
         builder.add(SNIPE_TYPE, 0)
         super.initDataTracker(builder)
