@@ -7,10 +7,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import org.teamvoided.astralarsenal.block.entity.KosmicTableBlockEntityRenderer
 import org.teamvoided.astralarsenal.handlers.KeyHandlers
 import org.teamvoided.astralarsenal.handlers.LaserBeamPayloadHandler
-import org.teamvoided.astralarsenal.init.AstralBlocks
-import org.teamvoided.astralarsenal.init.AstralEntitiesClient
-import org.teamvoided.astralarsenal.init.AstralHandledScreens
-import org.teamvoided.astralarsenal.init.AstralHudRendering
+import org.teamvoided.astralarsenal.init.*
 import org.teamvoided.astralarsenal.networking.LaserBeamPayload
 
 @Suppress("unused")
@@ -20,6 +17,7 @@ object AstralArsenalClient {
         AstralHandledScreens
         AstralKeyBindings
         AstralEntitiesClient.clientInit()
+        AstralParticlesClient
         MinecraftClient.getInstance()
 
         ClientTickEvents.END_CLIENT_TICK.register(KeyHandlers.compileHandlers())
