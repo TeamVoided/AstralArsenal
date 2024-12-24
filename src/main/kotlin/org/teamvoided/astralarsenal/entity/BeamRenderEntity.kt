@@ -14,6 +14,7 @@ import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity
 import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity.Companion.SNIPE_TYPE
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.w3c.dom.css.RGBColor
+import javax.sound.midi.Track
 
 class BeamRenderEntity : Entity {
 
@@ -53,14 +54,19 @@ class BeamRenderEntity : Entity {
         }
     }
 
+    override fun shouldRender(distance: Double): Boolean {
+        return true
+    }
+
     override fun initDataTracker(builder: DataTracker.Builder) {
-        builder.add(InterColour, 0xffffff)
-        builder.add(OuterColour, 0xffffff)
+        builder.add(InterColour, 0xffffffff.toInt())
+        builder.add(OuterColour, 0xffffffff.toInt())
         builder.add(TargetPos, Vector3f(0f,0f,0f))
         builder.add(MaxOuterThickness, 0f)
         builder.add(OuterThickness, 0f)
         builder.add(ShrinkTime, 0)
         builder.add(LiveTime, 0)
+        builder.add(InnerCubes, 0)
     }
     companion object{
         val InterColour: TrackedData<Int> =
@@ -77,7 +83,10 @@ class BeamRenderEntity : Entity {
             DataTracker.registerData(BeamRenderEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
         val LiveTime: TrackedData<Int> =
             DataTracker.registerData(BeamRenderEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
+        val InnerCubes: TrackedData<Int> =
+            DataTracker.registerData(BeamRenderEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
     }
+
 
     override fun readCustomDataFromNbt(nbt: NbtCompound?) {
     }

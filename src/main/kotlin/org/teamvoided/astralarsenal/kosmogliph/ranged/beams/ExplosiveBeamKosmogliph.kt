@@ -1,6 +1,8 @@
 package org.teamvoided.astralarsenal.kosmogliph.ranged.beams
 
+import net.fabricmc.loader.impl.lib.sat4j.core.Vec
 import net.minecraft.entity.Entity
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
@@ -11,9 +13,11 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.Box
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralSounds
@@ -35,6 +39,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
         )
         val entities = mutableListOf<Entity>()
         val interval = (distance.times(2))
+        var finalPosition : Vec3d? = null
         for (i in 0..interval.roundToInt()) {
             entities.addAll(
                 world.getOtherEntities(
@@ -46,9 +51,12 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                         (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
-                ).filter { it !is ProjectileEntity || it is CannonballEntity || it is MortarEntity }
+                ).filter { it is LivingEntity || it is CannonballEntity || it is MortarEntity }
             )
             if (entities.isNotEmpty()) {
+                finalPosition = Vec3d((lerp(player.eyePos.x, result.pos.x, i / interval)),
+                    (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
+                    (lerp(player.eyePos.z, result.pos.z, i / interval)))
                 break
             }
             if (!player.world.isClient) {
@@ -58,7 +66,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
                     (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),
-                    5,
+                    1,
                     0.2,
                     0.2,
                     0.2,
@@ -133,6 +141,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                 false,
                 World.ExplosionSourceType.TNT
             )
+            finalPosition = result.pos
             if (!player.world.isClient) {
                 val serverWorld = player.world as ServerWorld
                 serverWorld.spawnParticles(
@@ -150,6 +159,19 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
         }
         if (!player.isCreative) {
             player.itemCooldownManager.set(player.getStackInHand(hand).item, 600)
+        }
+        if(world is ServerWorld){
+            val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00630000.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00d69600.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
+            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
+            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, finalPosition!!.toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
+            beamRenderer.setPosition(player.x,player.y +1, player.z)
+            world.spawnEntity(beamRenderer)
         }
         return null
     }

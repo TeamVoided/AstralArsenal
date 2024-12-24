@@ -65,7 +65,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
                     (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),
-                    10,
+                    1,
                     0.2,
                     0.2,
                     0.2,
@@ -85,14 +85,16 @@ class BasicRailgunKosmogliph(id: Identifier) :
             1.0f
         )
         if(world is ServerWorld){
-            val beamRenderer = BeamRenderEntity(world, player.x, player.y, player.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0xffffff)
-            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 5000)
-            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 50)
+            val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
+            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 1f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 1f)
-            beamRenderer.setPosition(player.pos)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
+            beamRenderer.setPosition(player.x,player.y +1, player.z)
             world.spawnEntity(beamRenderer)
         }
         for (entity in entities) {

@@ -16,6 +16,7 @@ import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
@@ -36,6 +37,19 @@ class RayofFrostKosmogliph(id: Identifier) :
                 2
             )
         )
+        if(world is ServerWorld){
+            val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
+            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
+            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
+            beamRenderer.setPosition(player.x,player.y +1, player.z)
+            world.spawnEntity(beamRenderer)
+        }
         val entities = mutableListOf<Entity>()
         val interval = (distance.times(2))
         for (i in 0..interval.roundToInt()) {
@@ -58,7 +72,7 @@ class RayofFrostKosmogliph(id: Identifier) :
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
                     (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),
-                    10,
+                    1,
                     0.2,
                     0.2,
                     0.2,
