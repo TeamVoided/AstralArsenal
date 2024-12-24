@@ -92,6 +92,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 1f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 1f)
+            beamRenderer.setPosition(player.pos)
             world.spawnEntity(beamRenderer)
         }
         for (entity in entities) {

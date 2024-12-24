@@ -25,7 +25,6 @@ class BeamRenderer(context: EntityRendererFactory.Context?) :
         vertexConsumers: VertexConsumerProvider,
         light: Int
     ) {
-        println("heya :3")
         matrices.push()
         val thickness = entity.dataTracker.get(BeamRenderEntity.OuterThickness)
         val pos = entity.pos
