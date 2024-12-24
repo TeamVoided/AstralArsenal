@@ -64,7 +64,7 @@ class BeamRenderer(context: EntityRendererFactory.Context?) :
 
         val vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getLightning())
 
-        vertexConsumer.xyz(matrices.peek(), pos.x.toFloat(), pos.y.toFloat(), pos.z.toFloat()).color(entity.dataTracker.get(BeamRenderEntity.OuterColour))
+        vertexConsumer.xyz(matrices.peek().model, pos.x.toFloat(), pos.y.toFloat(), pos.z.toFloat()).color(entity.dataTracker.get(BeamRenderEntity.OuterColour))
         matrices.pop()
 
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light)

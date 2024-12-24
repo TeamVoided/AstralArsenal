@@ -36,6 +36,7 @@ object AstralArsenal {
         AstralEffects.init()
         AstralEntities.init()
         AstralNetworking.init()
+        AstralParticles.init()
 
         ServerLifecycleEvents.SERVER_STARTING.register { server ->
             mcCoroutineDispatcher = server.asCoroutineDispatcher()

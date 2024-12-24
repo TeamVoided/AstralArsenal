@@ -19,6 +19,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralParticles
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.FrostExplosionBehavior
@@ -53,7 +54,7 @@ class RayofFrostKosmogliph(id: Identifier) :
             if (!player.world.isClient) {
                 val serverWorld = player.world as ServerWorld
                 serverWorld.spawnParticles(
-                    ParticleTypes.SNOWFLAKE,
+                    AstralParticles.SNOWFLAKE,
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
                     (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),
