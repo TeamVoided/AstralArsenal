@@ -18,6 +18,7 @@ import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.entity.RichochetEntity
@@ -36,7 +37,7 @@ class RicochetKosmogliph(id: Identifier) :
     val COUNTDOWN = 20
 
     //Modify this to change how much damage it does per hit, remember this will ignore cooldowns.
-    val DAMAGE = 1.0
+    val DAMAGE = 5.0
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
         val entitiesHit = mutableListOf<Entity>()
@@ -52,7 +53,23 @@ class RicochetKosmogliph(id: Identifier) :
                 2
             )
         )
+        if(world is ServerWorld){
+            val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
+            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
+            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
+            beamRenderer.setPosition(player.x,player.y +1, player.z)
+            world.spawnEntity(beamRenderer)
+        }
         val entities = mutableListOf<Entity>()
+        val hitOnce = mutableListOf<Entity>()
+        val hitTwice = mutableListOf<Entity>()
+        val hitThrice = mutableListOf<Entity>()
         val interval = (distance.times(2))
         for (i in 0..interval.roundToInt()) {
             entities.addAll(
@@ -67,7 +84,7 @@ class RicochetKosmogliph(id: Identifier) :
                     )
                 )
             )
-            if (!player.world.isClient) {
+            if (!player.world.isClient && world.random.nextInt(1) == 0) {
                 val serverWorld = player.world as ServerWorld
                 serverWorld.spawnParticles(
                     ParticleTypes.END_ROD,
@@ -118,6 +135,14 @@ class RicochetKosmogliph(id: Identifier) :
                         ), DAMAGE.toFloat()
                     )
                 entitiesHit.add(entity)
+                if(entity is PlayerEntity){
+                    when{
+                        hitOnce.contains(entity) -> {hitTwice.add(entity); hitOnce.remove(entity)}
+                        hitTwice.contains(entity) -> {hitThrice.add(entity); hitTwice.remove(entity)}
+                        hitThrice.contains(entity) -> {}
+                        else -> hitOnce.add(entity)
+                    }
+                }
             }
         }
         if (!player.isCreative) {
@@ -130,6 +155,9 @@ class RicochetKosmogliph(id: Identifier) :
             richochet.COUNTDOWN = COUNTDOWN
             richochet.dmg = DAMAGE
             richochet.owner = player
+            richochet.hitOnce.addAll(hitOnce)
+            richochet.hitTwice.addAll(hitTwice)
+            richochet.hitThrice.addAll(hitThrice)
             val y = richochet.yaw
             when (result.side) {
                 Direction.DOWN, Direction.UP -> {
@@ -141,7 +169,6 @@ class RicochetKosmogliph(id: Identifier) :
                     )
                     else richochet.setPosition(result.pos.x, result.pos.y - 0.1, result.pos.z)
                 }
-                // North and sound send it back 180 degrees instead of doing what they should be doing.
                 Direction.SOUTH -> {
                     if (richochet.yaw >= 0) richochet.yaw = ((180) - y)
                     else richochet.yaw = ((-180) - y)
@@ -153,7 +180,6 @@ class RicochetKosmogliph(id: Identifier) :
                     else richochet.yaw = ((-180) - y)
                     richochet.setPosition(result.pos.x, result.pos.y, result.pos.z - 0.1)
                 }
-                //East and west send it further into the block instead of having it richochet.
                 Direction.WEST -> {
                     richochet.yaw = y * -1
                     richochet.setPosition(result.pos.x - 0.1, result.pos.y, result.pos.z)

@@ -122,35 +122,21 @@ class RancidBrewKosmogliph(id: Identifier) :
                     entity.addStatusEffect(
                         StatusEffectInstance(
                             StatusEffects.SLOWNESS,
-                            300, 0,
-                            false, true, true
-                        )
-                    )
-                    entity.addStatusEffect(
-                        StatusEffectInstance(
-                            StatusEffects.POISON,
-                            300, 0,
+                            200, 0,
                             false, true, true
                         )
                     )
                     entity.addStatusEffect(
                         StatusEffectInstance(
                             StatusEffects.WEAKNESS,
-                            300, 0,
-                            false, true, true
-                        )
-                    )
-                    entity.addStatusEffect(
-                        StatusEffectInstance(
-                            AstralEffects.REDUCE,
-                            300, 9,
+                            200, 0,
                             false, true, true
                         )
                     )
                     entity.addStatusEffect(
                         StatusEffectInstance(
                             AstralEffects.BLEED,
-                            300, 0,
+                            200, 0,
                             false, true, true
                         )
                     )
@@ -160,27 +146,6 @@ class RancidBrewKosmogliph(id: Identifier) :
         if (!player.isCreative) {
             player.itemCooldownManager.set(player.getStackInHand(hand).item, 400)
         }
-        player.addStatusEffect(
-            StatusEffectInstance(
-                StatusEffects.SLOWNESS,
-                100, 0,
-                false, true, true
-            )
-        )
-        player.addStatusEffect(
-            StatusEffectInstance(
-                AstralEffects.REDUCE,
-                100, 19,
-                false, true, true
-            )
-        )
-        player.addStatusEffect(
-            StatusEffectInstance(
-                StatusEffects.HUNGER,
-                100, 0,
-                false, true, true
-            )
-        )
         return null
     }
 }

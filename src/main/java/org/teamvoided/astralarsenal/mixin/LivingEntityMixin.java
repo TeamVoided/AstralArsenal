@@ -86,4 +86,10 @@ public abstract class LivingEntityMixin extends Entity {
             UtilKt.fall(fallDistance, onGround, faller, landedPosition);
         }
     }
+
+    @Inject(method = "tickMovement", at = @At(value = "HEAD"))
+    public void tickMovement(CallbackInfo ci){
+        LivingEntity freezer = (LivingEntity) (Object) this;
+        UtilKt.tickMovement(freezer);
+    }
 }

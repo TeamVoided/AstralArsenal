@@ -76,7 +76,7 @@ class RayofFrostKosmogliph(id: Identifier) :
                     0.2,
                     0.2,
                     0.2,
-                    0.0
+                    0.2
                 )
 
             }

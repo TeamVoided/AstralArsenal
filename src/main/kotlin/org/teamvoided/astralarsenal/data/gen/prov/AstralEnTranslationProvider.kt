@@ -85,7 +85,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.capacitance.desc",
-            "Reduces damage from electricity and light by 80% and stores 100% of the damage. Next time you are hit, redirect some of that damage back at the attacker."
+            "Reduces damage from electricity and light by 80% and stores some of the damage. After taking plasma damage, build up charge by taking damage, releasing all of it when either struck later, or after a cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.thermal.desc",
@@ -173,7 +173,7 @@ class AstralEnTranslationProvider(
         //other armor and shield
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.slam.desc",
-            "Crouching mid-air lets you slam, taking no fall damage. Gives a short-lasting jump-boost when slamming, letting you jump higher then you fell from"
+            "Crouching mid-air lets you slam, taking no fall damage. Gives a short-lasting jump-boost when slamming, letting you jump 5 blocks."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.ankle_guard.desc",
@@ -189,7 +189,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.jump.desc",
-            "Gives you 3 mid-air jumps. Jumps start recharging when you hit the ground, each take 1 second to recharge"
+            "Gives you 3 mid-air jumps. Jumps start recharging when you hit the ground, each take 1 second to recharge. applies jump boost."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.step_up.desc",
@@ -225,7 +225,7 @@ class AstralEnTranslationProvider(
         //railgun and nailcannon
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.basic_railgun.desc",
-            "Fires a piercing beam, dealing 10 electric damage. costs 5hp to fire and takes 5 of your max hp for 20 seconds. 15 second cooldown"
+            "Fires a piercing beam, dealing 10 electric damage. costs 5hp to fire and takes 5 of your max hp for 20 seconds. 15 second cooldown. Deals 2x damage and spreads lightning on non-players."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.explosive_beam.desc",
@@ -245,11 +245,11 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.snipe.desc",
-            "Fires a piercing beam, dealing 7.5 damage. After one second, get a 5 second window to fire again. costs 5hp to fire the first shot and takes 5 of your max hp for 20 seconds. 15 second cooldown"
+            "Fires a piercing beam, dealing 7.5 damage. After one second, get a 5 second window to fire again. costs 5hp to fire the first shot and takes 5 of your max hp for 20 seconds. 15 second cooldown. Deals 2x damage and spreads lightning on non-players."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.ricochet.desc",
-            "Fires a bouncing beam that deals 1 damage per hit and bounces 20 times. 15 second cooldown."
+            "Fires a bouncing beam that deals 5 damage per hit and bounces 20 times. 15 second cooldown. Maximum 15 damage on players."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.capacity.desc",
@@ -262,6 +262,10 @@ class AstralEnTranslationProvider(
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.static_release.desc",
             "Every second fire an extra nail that deals 1 electric damage. This nail does take from your supply."
+        )
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.tear.desc",
+            "Replaces Conductive with Impaled. When dealing melee damage to an impaled entity, deal 0.5 more per nail impaled into them, to a maximum of 15."
         )
 
         //mace :3

@@ -29,7 +29,7 @@ class BeamRenderer(context: EntityRendererFactory.Context?) :
         light: Int
     ) {
         val cubes = entity.dataTracker.get(BeamRenderEntity.InnerCubes)
-        val colour : Int = entity.dataTracker.get(BeamRenderEntity.OuterColour) + (0x01000000 * (255f / (cubes * 3f)).toInt())
+        val colour : Int = entity.dataTracker.get(BeamRenderEntity.OuterColour) + (0x01000000 * (255f / (cubes + 1)).toInt())
         val thickness = entity.dataTracker.get(BeamRenderEntity.OuterThickness)
         val innerColour: Int = entity.dataTracker.get(BeamRenderEntity.InterColour)
 
@@ -68,7 +68,7 @@ class BeamRenderer(context: EntityRendererFactory.Context?) :
 
         val vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getLightning())
         
-        val modifiedDistance = distance.toFloat() + 1f
+        val modifiedDistance = distance.toFloat() + (if(entity.dataTracker.get(BeamRenderEntity.MaxOuterThickness) > 1f) 1f else 0f)
 
         vertexConsumer.xyz(matrices.peek(), Vector3f(0f,0f,0f)).color(colour)
         vertexConsumer.xyz(matrices.peek(), Vector3f(thickness,0f,0f)).color(colour)

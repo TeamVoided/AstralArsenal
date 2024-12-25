@@ -13,6 +13,7 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
+import org.joml.Vector3f
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
@@ -100,6 +101,19 @@ class BeamOfLightEntity : Entity {
             }
         } else if (this.getTime() == WINDUP) {
             this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)
+            if(world is ServerWorld){
+                val beamRenderer = BeamRenderEntity(world, this.x, this.y + 1, this.z)
+                beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
+                beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
+                beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, (this.TIMEACTIVE + 20))
+                beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, (20))
+                beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vector3f(this.x.toFloat(), this.y.toFloat() + 100f, this.z.toFloat()))
+                beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, this.side.div(2).toFloat())
+                beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, this.side.div(2).toFloat())
+                beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, this.side)
+                beamRenderer.setPosition(this.x, if(this.y -50 < -64) {-64.0} else {this.y - 50}, this.z)
+                world.spawnEntity(beamRenderer)
+            }
         } else if (this.getTime() in WINDUP..(TIMEACTIVE + WINDUP)) {
             if (!DOT) {
                 if (!world.isClient) {
@@ -107,19 +121,6 @@ class BeamOfLightEntity : Entity {
                         this.playSound(AstralSounds.BEAM_VIBRATE, 2.0f, 1.0f)
                     }
                     val serverWorld = world as ServerWorld
-                    for (i in 0..100) {
-                        serverWorld.spawnParticles(
-                            ParticleTypes.END_ROD,
-                            this.x,
-                            (this.y + (i * 0.5)) - 5,
-                            this.z,
-                            1,
-                            random.nextDouble().minus(0.5).times(side).times(0.5),
-                            random.nextDouble().minus(0.5).times(1),
-                            random.nextDouble().minus(0.5).times(side).times(0.5),
-                            0.0
-                        )
-                    }
                     val entities = world.getOtherEntities(
                         null, Box(
                             pos.x + side.times(0.5),

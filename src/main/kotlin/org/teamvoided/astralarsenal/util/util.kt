@@ -29,17 +29,15 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import org.joml.Math.lerp
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.entity.ShockwaveEntity
-import org.teamvoided.astralarsenal.init.AstralDamageTypes
-import org.teamvoided.astralarsenal.init.AstralEffects
-import org.teamvoided.astralarsenal.init.AstralEntities
+import org.teamvoided.astralarsenal.init.*
 import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
 import org.teamvoided.astralarsenal.init.AstralItemComponents.PULVERISER_DATA
 import org.teamvoided.astralarsenal.init.AstralItemComponents.SLAM_DATA
-import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.armor.SlamKosmogliph.Data
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
@@ -246,5 +244,36 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
                 }
             }
         }
+    }
+}
+
+fun tickMovement(freezer: LivingEntity) {
+    if(freezer.world is ServerWorld && freezer.age % 4 == 0 && freezer.canFreeze() && freezer.frozenTicks > 0){
+        val serverWorld = freezer.world as ServerWorld
+        serverWorld.spawnParticles(
+            AstralParticles.SNOWFLAKE,
+            freezer.x,
+            freezer.y + (freezer.height)/2,
+            freezer.z,
+            1,
+            (freezer.width / 2).toDouble(),
+            (freezer.height / 2).toDouble(),
+            (freezer.width / 2).toDouble(),
+            0.0
+        )
+    }
+    if(freezer.world is ServerWorld && freezer.age % 40 == 0 && freezer.canFreeze() && freezer.isFrozen){
+        val serverWorld = freezer.world as ServerWorld
+        serverWorld.spawnParticles(
+            AstralParticles.SNOWFLAKE,
+            freezer.x,
+            freezer.y + (freezer.height)/2,
+            freezer.z,
+            5,
+            (freezer.width / 2).toDouble(),
+            (freezer.height / 2).toDouble(),
+            (freezer.width / 2).toDouble(),
+            0.1
+        )
     }
 }

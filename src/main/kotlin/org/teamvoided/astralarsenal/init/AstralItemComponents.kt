@@ -28,7 +28,7 @@ object AstralItemComponents {
     val KOSMOGLIPHS: DataComponentType<KosmogliphsComponent> =
         register(
             "kosmogliphs",
-            { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem || it is ShieldItem || it is NailCannonItem || it is MaceItem || it is CometLauncherItem },
+            { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem || it is ShieldItem || it is NailCannonItem || it is MaceItem },
             { KosmogliphsComponent() }) { builder ->
             builder.codec(KosmogliphsComponent.CODEC).build()
         }

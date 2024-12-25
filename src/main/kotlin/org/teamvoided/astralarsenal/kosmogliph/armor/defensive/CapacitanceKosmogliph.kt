@@ -22,6 +22,7 @@ import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralItemComponents
@@ -108,8 +109,7 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                     sillyLightningTime(entity.pos, attacker.pos, world)
                     if (dmg != damageToDeal) {
                         shockNearbyEntities(entity, attacker, dmg - damageToDeal)
-                    }
-                    else{
+                    } else {
                         if (entity.world is ServerWorld) {
                             val sworld = entity.world as ServerWorld
                             sworld.spawnParticles(
@@ -335,19 +335,17 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
             val b = bendPos[i + 1]
             val distance = a.distanceTo(b)
             val interval = (distance * 10)
-            for (j in 0..interval.roundToInt()) {
-                world.spawnParticles(
-                    ParticleTypes.END_ROD,
-                    (lerp(a.x, b.x, j / interval)),
-                    (lerp(a.y + 1, b.y + 1, j / interval)),
-                    (lerp(a.z, b.z, j / interval)),
-                    1,
-                    0.01,
-                    0.01,
-                    0.01,
-                    0.0
-                )
-            }
+            val beamRenderer = BeamRenderEntity(world, a.x, a.y + 1, a.z)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 10)
+            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
+            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y + 1, b.z).toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.05f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.05f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 1)
+            beamRenderer.setPosition(a.x, a.y + 1, a.z)
+            world.spawnEntity(beamRenderer)
         }
     }
 }

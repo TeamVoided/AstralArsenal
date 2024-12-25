@@ -52,7 +52,7 @@ class FlameThrowerKosmogliph(id: Identifier) :
                 fire,
                 user.pitch,
                 user.yaw,
-                0.0f, 1.0f, 5.0f
+                0.0f, 1.0f, 30.0f
             )
             val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
             fire.setPosition(offset.x, offset.y, offset.z)

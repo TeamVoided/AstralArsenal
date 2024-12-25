@@ -17,7 +17,7 @@ object AstralArsenalClient {
         AstralHandledScreens
         AstralKeyBindings
         AstralEntitiesClient.clientInit()
-        AstralParticlesClient
+        AstralParticlesClient.init()
         MinecraftClient.getInstance()
 
         ClientTickEvents.END_CLIENT_TICK.register(KeyHandlers.compileHandlers())

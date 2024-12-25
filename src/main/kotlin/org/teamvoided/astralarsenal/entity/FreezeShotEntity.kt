@@ -13,6 +13,7 @@ import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities
+import org.teamvoided.astralarsenal.init.AstralParticles
 
 class FreezeShotEntity : ThrownItemEntity {
 
@@ -48,7 +49,7 @@ class FreezeShotEntity : ThrownItemEntity {
 
     override fun tick() {
         world.addParticle(
-            ParticleTypes.SNOWFLAKE,
+            AstralParticles.SNOWFLAKE,
             true,
             this.x + random.rangeInclusive(-1, 1).times(0.1),
             this.y + random.rangeInclusive(-1, 1).times(0.1),
