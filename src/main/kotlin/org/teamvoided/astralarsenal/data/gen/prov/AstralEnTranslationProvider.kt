@@ -257,7 +257,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.over_heat.desc",
-            "After firing for 3 seconds, nails are set ablaze, dealing 0.5 fire damage instead of nail damage and setting entities on fire."
+            "After firing for 3 seconds, nails are set ablaze, dealing 0.25 fire damage instead of nail damage and setting entities on fire."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.static_release.desc",
