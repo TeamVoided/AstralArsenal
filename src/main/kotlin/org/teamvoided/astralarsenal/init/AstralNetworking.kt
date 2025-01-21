@@ -31,7 +31,7 @@ object AstralNetworking {
             val stack = player.getEquippedStack(EquipmentSlot.LEGS)
             val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
             if (!kosmogliphs.contains(AstralKosmogliphs.DODGE)) return@registerGlobalReceiver
-            AstralKosmogliphs.DODGE.handleJump(stack, player)
+            AstralKosmogliphs.DODGE.handleJump(stack, player, false, false, false, false)
         }
         PayloadTypeRegistry.playC2S().register(SlamKosmogliphPayload.ID, SlamKosmogliphPayload.CODEC)
         ServerPlayNetworking.registerGlobalReceiver(SlamKosmogliphPayload.ID) { _, ctx ->

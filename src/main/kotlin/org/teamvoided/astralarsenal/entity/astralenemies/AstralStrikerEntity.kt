@@ -1,6 +1,7 @@
 package org.teamvoided.astralarsenal.entity.astralenemies
 
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.ai.goal.TargetGoal
 import net.minecraft.entity.attribute.DefaultAttributeContainer
 import net.minecraft.entity.attribute.EntityAttributes
@@ -27,6 +28,9 @@ class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
     var enraged = false
     var cooldown = 0
     var strikesOnTarget = 0
+    var passedTarget: LivingEntity? = null
+    var owner: LivingEntity? = null
+
     override fun cannotDespawn(): Boolean {
         return true
     }
@@ -36,10 +40,10 @@ class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
     }
 
     fun getStrikesBeforeEnrage(world: World): Int{
-        return if(world.difficulty == Difficulty.HARD) 1 else if(world.difficulty == Difficulty.NORMAL) 3 else 8
+        return 5
     }
     fun getTimeStrikeLasts(world: World): Int{
-        return if(world.difficulty == Difficulty.HARD) 150 else if(world.difficulty == Difficulty.NORMAL) 40 else 10
+        return 40
     }
 
     override fun applyEnchantmentsToDamage(source: DamageSource, amount: Float): Float {
@@ -61,45 +65,31 @@ class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
             1, TargetGoal(
                 this, PlayerEntity::
                 class.java, 1, false, false
+            ) { ((it.distanceTo(this)) <= 100) && (owner == null || it != owner)}
+        )
+        targetSelector.add(
+            1, TargetGoal(
+                this, PlayerEntity::
+                class.java, 1, false, false
             ) { ((it.distanceTo(this)) <= 100) }
         )
     }
 
     override fun tick() {
+        if(this.passedTarget != null && this.passedTarget!!.distanceTo(this) < 100){
+            this.target = passedTarget
+        }
         if (this.target == null) {
             this.cooldown = 0
             this.strikesOnTarget = 0
             this.enraged = false
-        }
-        if (this.enraged && this.world is ServerWorld) {
-            val serverWorld = this.world as ServerWorld
-            serverWorld.spawnParticles(
-                ParticleTypes.END_ROD,
-                this.x,
-                this.y,
-                this.z,
-                1,
-                random.nextDouble().minus(0.5).times(2),
-                random.nextDouble().minus(0.5).times(2),
-                random.nextDouble().minus(0.5).times(2),
-                0.0
-            )
-            if ((serverWorld.time % 5).toDouble() == 0.0)
-                serverWorld.playSoundFromEntity(
-                    null,
-                    this,
-                    SoundEvents.BLOCK_BASALT_PLACE,
-                    SoundCategory.HOSTILE,
-                    1.0f,
-                    0.3f
-                )
         }
         super.tick()
     }
 
     companion object {
         fun createMobAttributes(): DefaultAttributeContainer.Builder {
-            return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0)
+            return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0)
                 .add(EntityAttributes.GENERIC_ARMOR, 5.0)
         }

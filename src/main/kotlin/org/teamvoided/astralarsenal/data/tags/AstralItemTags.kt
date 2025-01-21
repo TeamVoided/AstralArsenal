@@ -78,6 +78,8 @@ object AstralItemTags {
     val SUPPORTS_QUICKSHOT = supports("quickshot")
     val SUPPORTS_TARGET = supports("target")
 
+    val SUPPORTS_TOTEM = supports("totem")
+
     val KOSMIC_TABLE_LEFT_FACING =  create("kosmic_table/left_facing")
     val KOSMIC_TABLE_STRAIGHT = create("kosmic_table/straight")
 

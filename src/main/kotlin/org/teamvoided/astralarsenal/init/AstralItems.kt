@@ -39,6 +39,10 @@ object AstralItems {
         "nailcannon",
         NailCannonItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).maxCount(1))
     )
+    val ASTRAL_TOTEM = register(
+        "astral_totem",
+        SupportTotemItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).maxCount(1))
+    )
 //    val COMET_LAUNCHER = register(
 //        "comet_launcher",
 //        CometLauncherItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).maxCount(1))

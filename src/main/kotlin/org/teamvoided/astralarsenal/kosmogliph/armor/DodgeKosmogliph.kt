@@ -18,12 +18,16 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import org.joml.Vector3d
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -33,46 +37,67 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
     val SPEED_CAP = 1.0
     val SPEED_MULT = sqrt(2 * SPEED_CAP * SPEED_CAP)
 
-    fun handleJump(stack: ItemStack, player: PlayerEntity) {
-        val data = stack.get(AstralItemComponents.DODGE_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
-        val world = player.world
-
-        if (player.vehicle != null || player.isClimbing) return
-
-        if (data.uses > 0 && !world.isClient) {
-            val boost = player.movement.multiply(1.0, 0.0, 1.0).multiply(JUMP_FORWARD_BOOST)
-            player.addVelocity(boost)
-            if (player.velocity.horizontalLength() > SPEED_CAP)
-                player.velocity = boost.normalize().multiply(SPEED_MULT)
-
-            player.velocityModified = true
-            world.playSound(
-                null,
-                player.x,
-                player.y,
-                player.z,
-                SoundEvents.ENTITY_BREEZE_LAND,
-                SoundCategory.PLAYERS,
-                1.0F,
-                1.0F
-            )
-            if (world is ServerWorld) {
-                repeat(20) {
-                    world.spawnParticles(
-                        ParticleTypes.CLOUD,
-                        player.x + (world.random.nextDouble() - 0.5) * 1.7,
-                        player.y + 1 + (world.random.nextDouble() - 0.5) * 1.7,
-                        player.z + (world.random.nextDouble() - 0.5) * 1.7,
-                        0,
-                        player.velocity.x,
-                        player.velocity.y,
-                        player.velocity.z,
-                        -0.2,
-                    )
-                }
+    fun handleJump(
+        stack: ItemStack,
+        player: PlayerEntity,
+        forward: Boolean,
+        backward: Boolean,
+        left: Boolean,
+        right: Boolean
+    ) {
+        if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.DODGE)) {
+            val data = stack.get(AstralItemComponents.DODGE_DATA)
+                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+            val world = player.world
+            if(world is ServerWorld) return
+            var LRbias = 0 // 1 is right, -1 is left, 0 is neither
+            var BFbias = 0 // 1 for forward, -1 for back, 0 for neither
+            if(left xor right){
+                LRbias = if(left) 1 else -1
             }
-            stack.set(AstralItemComponents.DODGE_DATA, Data(data.uses - 1, data.cooldown))
+            if(forward xor backward){
+                BFbias = if(backward) -1 else 1
+            }
+            if(!(backward || forward || left || right)){
+                BFbias = 1
+            }
+
+            val vector = Vec3d(LRbias.toDouble(), 0.0, BFbias.toDouble())
+            vector.multiply(player.rotationVector.multiply(1.0,0.0,1.0).normalize())
+
+            if (player.vehicle != null || player.isClimbing) return
+
+            if (data.uses > 0 && !player.isFallFlying) {
+                println(vector)
+                player.setVelocity(vector)
+                player.velocityModified = true
+                world.playSound(
+                    null,
+                    player.x,
+                    player.y,
+                    player.z,
+                    SoundEvents.ENTITY_BREEZE_LAND,
+                    SoundCategory.PLAYERS,
+                    1.0F,
+                    1.0F
+                )
+                if (world is ServerWorld) {
+                    repeat(20) {
+                        world.spawnParticles(
+                            ParticleTypes.CLOUD,
+                            player.x + (world.random.nextDouble() - 0.5) * 1.7,
+                            player.y + 1 + (world.random.nextDouble() - 0.5) * 1.7,
+                            player.z + (world.random.nextDouble() - 0.5) * 1.7,
+                            0,
+                            player.velocity.x,
+                            player.velocity.y,
+                            player.velocity.z,
+                            -0.2,
+                        )
+                    }
+                }
+                stack.set(AstralItemComponents.DODGE_DATA, Data(data.uses - 1, data.cooldown))
+            }
         }
     }
 

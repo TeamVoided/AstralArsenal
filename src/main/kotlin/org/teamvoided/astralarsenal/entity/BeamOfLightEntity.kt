@@ -67,9 +67,6 @@ class BeamOfLightEntity : Entity {
         if(this.targetEntity != null && !this.targetEntity!!.isAlive){
             this.targetEntity = null
         }
-        if(this.enraged && this.targetEntity == null){
-            this.enraged = false
-        }
         incrementTime()
         val particles = if (enraged) ParticleTypes.GLOW else ParticleTypes.END_ROD
         if (this.getTime() < WINDUP) {
@@ -103,14 +100,15 @@ class BeamOfLightEntity : Entity {
             this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)
             if(world is ServerWorld){
                 val beamRenderer = BeamRenderEntity(world, this.x, this.y + 1, this.z)
-                beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
-                beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
+                beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, if(!enraged) 0x00ffffff.toInt() else 0x00000000)
+                beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, if(!enraged) 0x00ffffff.toInt() else 0x00730000)
                 beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, (this.TIMEACTIVE + 20))
                 beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, (20))
                 beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vector3f(this.x.toFloat(), this.y.toFloat() + 100f, this.z.toFloat()))
                 beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, this.side.div(2).toFloat())
                 beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, this.side.div(2).toFloat())
                 beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, this.side)
+                beamRenderer.dataTracker.set(BeamRenderEntity.Opacity, if(!enraged) 0.1f else 0.3f)
                 beamRenderer.setPosition(this.x, if(this.y -50 < -64) {-64.0} else {this.y - 50}, this.z)
                 world.spawnEntity(beamRenderer)
             }

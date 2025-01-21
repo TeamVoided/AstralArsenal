@@ -67,6 +67,7 @@ class BeamRenderEntity : Entity {
         builder.add(ShrinkTime, 0)
         builder.add(LiveTime, 0)
         builder.add(InnerCubes, 0)
+        builder.add(Opacity, 0.3f)
     }
     companion object{
         val InterColour: TrackedData<Int> =
@@ -85,6 +86,8 @@ class BeamRenderEntity : Entity {
             DataTracker.registerData(BeamRenderEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
         val InnerCubes: TrackedData<Int> =
             DataTracker.registerData(BeamRenderEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
+        val Opacity: TrackedData<Float> =
+            DataTracker.registerData(BeamRenderEntity::class.java, TrackedDataHandlerRegistry.FLOAT)
     }
 
 

@@ -1,6 +1,7 @@
 package org.teamvoided.astralarsenal.init
 
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
+import net.minecraft.component.DataComponent
 import net.minecraft.component.DataComponentMap
 import net.minecraft.component.DataComponentType
 import net.minecraft.item.*
@@ -11,6 +12,7 @@ import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.item.CometLauncherItem
 import org.teamvoided.astralarsenal.item.NailCannonItem
 import org.teamvoided.astralarsenal.item.RailgunItem
+import org.teamvoided.astralarsenal.item.SupportTotemItem
 import org.teamvoided.astralarsenal.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.kosmogliph.armor.defensive.CapacitanceKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.melee.AstralStrikeKosmogliph
@@ -28,7 +30,7 @@ object AstralItemComponents {
     val KOSMOGLIPHS: DataComponentType<KosmogliphsComponent> =
         register(
             "kosmogliphs",
-            { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem || it is ShieldItem || it is NailCannonItem || it is MaceItem },
+            { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem || it is ShieldItem || it is NailCannonItem || it is MaceItem || it is SupportTotemItem},
             { KosmogliphsComponent() }) { builder ->
             builder.codec(KosmogliphsComponent.CODEC).build()
         }
@@ -118,6 +120,11 @@ object AstralItemComponents {
     val CAPACITANCE_DATA_V2: DataComponentType<CapacitanceKosmogliph.Data_2> =
         register("capacitance_data_v2", { it is ArmorItem }, { CapacitanceKosmogliph.Data_2(0, 0) }) { builder ->
             builder.codec(CapacitanceKosmogliph.Data_2.CODEC).build()
+        }
+
+    val TOTEM_DATA: DataComponentType<SupportTotemItem.TotemData> =
+        register("totem_data", {false}, { SupportTotemItem.TotemData(null)}) { builder ->
+            builder.codec(SupportTotemItem.TotemData.CODEC).build()
         }
 
     fun <T> register(

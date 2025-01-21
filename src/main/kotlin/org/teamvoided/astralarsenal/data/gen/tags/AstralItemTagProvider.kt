@@ -114,6 +114,8 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_PULVERISER).add(Items.MACE)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_WIND_ERUPTION).add(Items.MACE)
 
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TOTEM).add(AstralItems.ASTRAL_TOTEM)
+
 //        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_GENERATOR).add(AstralItems.COMET_LAUNCHER)
 //        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_QUICKSHOT).add(AstralItems.COMET_LAUNCHER)
 //        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TARGET).add(AstralItems.COMET_LAUNCHER)

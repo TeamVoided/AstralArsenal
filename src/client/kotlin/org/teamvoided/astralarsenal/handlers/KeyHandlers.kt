@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.handlers
 
+import arrow.core.right
 import kotlinx.atomicfu.AtomicBoolean
 import kotlinx.atomicfu.atomic
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -63,6 +64,12 @@ object KeyHandlers {
         } else if (key.isPressed && !holdingSprint.value) {
             ClientPlayNetworking.send(DashKosmogliphPayload)
             ClientPlayNetworking.send(DodgeKosmogliphPayload)
+
+            val forward = client.options.forwardKey.isPressed
+            val backward = client.options.backKey.isPressed
+            val left = client.options.leftKey.isPressed
+            val right = client.options.rightKey.isPressed
+            AstralKosmogliphs.DODGE.handleJump(client.player!!.getEquippedStack(EquipmentSlot.LEGS), client.player!!, forward, backward, left, right)
             holdingSprint.value = true
         }
 //        else if (key.isPressed) {

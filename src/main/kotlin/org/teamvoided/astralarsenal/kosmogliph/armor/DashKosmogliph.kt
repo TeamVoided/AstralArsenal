@@ -34,6 +34,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
     val JUMP_FORWARD_BOOST = 1.0
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
+
         val data = stack.get(AstralItemComponents.DASH_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world
@@ -48,7 +49,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 
         if (dashingEntity.isClimbing) return
 
-        if (data.uses > 0) {
+        if (data.uses > 0 && !dashingEntity.isFallFlying) {
             val boo = JUMP_FORWARD_BOOST * if (dashingEntity.health <= (dashingEntity.maxHealth * 0.25)) 0.75 else 1.0
             val boost = dashingEntity.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(boo)
             dashingEntity.setVelocity(dashingEntity.velocity.x + boost.x, 0.1, dashingEntity.velocity.z + boost.z)
@@ -84,7 +85,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
-        if (slot == 1) {
+        if (slot == 1 && (entity !is LivingEntity || !entity.isFallFlying )) {
             val data = stack.get(AstralItemComponents.DASH_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
             var uses = data.uses
