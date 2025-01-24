@@ -7,11 +7,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.util.dynamic.Codecs
 import java.util.*
 
-interface SimpleStorageComponents
+interface SimpleStorageComponent
 
 // The suppression is here to not show warnings for the bad names on EXAMPLE_COMPONENT
 @Suppress("ClassName", "PropertyName", "unused")
-data class EXAMPLE_COMPONENT(val VALUE: Int) : SimpleStorageComponents {
+data class EXAMPLE_COMPONENT(val VALUE: Int) : SimpleStorageComponent {
     companion object {
         fun default(): EXAMPLE_COMPONENT = EXAMPLE_COMPONENT(0)
         val CODEC = Codec.INT.xmap({ int -> EXAMPLE_COMPONENT(int) }, { component -> component.VALUE })
@@ -19,7 +19,7 @@ data class EXAMPLE_COMPONENT(val VALUE: Int) : SimpleStorageComponents {
 }
 
 
-data class CapacitanceData(val damage: Float) : SimpleStorageComponents {
+data class CapacitanceData(val damage: Float) : SimpleStorageComponent {
     companion object {
         fun default(): CapacitanceData = CapacitanceData(0f)
         val CODEC = RecordCodecBuilder.create<CapacitanceData> { builder ->
@@ -32,7 +32,7 @@ data class CapacitanceData(val damage: Float) : SimpleStorageComponents {
 data class CapacitanceDataV2(
     val dischargeTime: Int, // dischargeTime is the time during witch discharge is possible, countdown time is time until the discharge starts
     val countdownTime: Int,
-) : SimpleStorageComponents {
+) : SimpleStorageComponent {
     companion object {
         fun default(): CapacitanceDataV2 = CapacitanceDataV2(0, 0)
         val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
@@ -42,7 +42,7 @@ data class CapacitanceDataV2(
     }
 }
 
-data class TotemData(val target: UUID?) : SimpleStorageComponents {
+data class TotemData(val target: UUID?) : SimpleStorageComponent {
     companion object {
         fun default(): TotemData = TotemData(null)
         val CODEC = Codecs.ESCAPED_STRING.xmap(

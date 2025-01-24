@@ -14,7 +14,6 @@ import org.teamvoided.astralarsenal.item.NailCannonItem
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.item.SupportTotemItem
 import org.teamvoided.astralarsenal.kosmogliph.armor.*
-import org.teamvoided.astralarsenal.kosmogliph.armor.defensive.CapacitanceKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.melee.AstralStrikeKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.AlchemistKosmogliph
@@ -123,7 +122,7 @@ object AstralItemComponents {
           return type
       }*/
 
-    fun <T : SimpleStorageComponents> registerSimple(name: String, codec: Codec<T>): DataComponentType<T> =
+    fun <T : SimpleStorageComponent> registerSimple(name: String, codec: Codec<T>): DataComponentType<T> =
         Registry.register(Registries.DATA_COMPONENT_TYPE, id(name), DataComponentType.builder<T>().codec(codec).build())
 
     fun <T> register(
