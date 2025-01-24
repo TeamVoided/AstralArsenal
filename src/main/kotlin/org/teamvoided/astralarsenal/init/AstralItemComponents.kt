@@ -107,15 +107,8 @@ object AstralItemComponents {
             builder.codec(SnipeKosmogliph.Data.CODEC).build()
         }
 
-    val CAPACITANCE_DATA_V1 =
-        register("capacitance_data_v1", { it is ArmorItem }, { CapacitanceKosmogliph.Data(0f) }) { builder ->
-            builder.codec(CapacitanceKosmogliph.Data.CODEC).build()
-        }
-
-    val CAPACITANCE_DATA_V2 =
-        register("capacitance_data_v2", { it is ArmorItem }, { CapacitanceKosmogliph.Data_2(0, 0) }) { builder ->
-            builder.codec(CapacitanceKosmogliph.Data_2.CODEC).build()
-        }
+    val CAPACITANCE_DATA_V1 = registerSimple("capacitance_data_v1", CapacitanceData.CODEC)
+    val CAPACITANCE_DATA_V2 = registerSimple("capacitance_data_v2", CapacitanceDataV2.CODEC)
 
     val TOTEM_DATA = registerSimple("totem_data", TotemData.CODEC)
 
