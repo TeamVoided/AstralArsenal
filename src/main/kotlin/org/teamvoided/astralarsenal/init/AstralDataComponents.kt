@@ -10,7 +10,6 @@ import org.teamvoided.astralarsenal.item.CometLauncherItem
 import org.teamvoided.astralarsenal.item.NailCannonItem
 import org.teamvoided.astralarsenal.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.kosmogliph.melee.AstralStrikeKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.AlchemistKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.MinigunKosmogliph
 
 object AstralDataComponents {
@@ -52,8 +51,7 @@ object AstralDataComponents {
     // GrappleKosmogliph.Data(0, 0, false)
     val GRAPPLE_DATA = register("grapple_data") { builder -> builder.codec(GrappleKosmogliph.Data.CODEC).build() }
 
-    //AlchemistKosmogliph.Data(Optional.empty(), 0)
-    val ALCHEMIST_DATA = register("alchemist_data") { builder -> builder.codec(AlchemistKosmogliph.Data.CODEC).build() }
+    val ALCHEMIST_DATA = registerSimple("alchemist_data", AlchemistData.CODEC)
 
     val PULVERISER_DATA = registerSimple("pulveriser_data", PulveriserData.CODEC)
 

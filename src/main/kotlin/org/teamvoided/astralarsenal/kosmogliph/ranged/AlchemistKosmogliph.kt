@@ -1,8 +1,6 @@
 package org.teamvoided.astralarsenal.kosmogliph.ranged
 
 import arrow.core.collectionSizeOrDefault
-import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.client.item.TooltipConfig
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.PotionContentsComponent
@@ -25,6 +23,7 @@ import net.minecraft.util.ClickType
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import org.teamvoided.astralarsenal.components.AlchemistData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
@@ -57,7 +56,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         charges += 4
 
         reference.set(other.copyWithCount(other.count - 1))
-        stack.set(AstralDataComponents.ALCHEMIST_DATA, Data(thisPotion, charges))
+        stack.set(AstralDataComponents.ALCHEMIST_DATA, AlchemistData(thisPotion, charges))
 
         return true
     }
@@ -82,7 +81,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
             potion = Optional.empty()
         }
 
-        stack.set(AstralDataComponents.ALCHEMIST_DATA, Data(potion, charges.coerceAtLeast(0)))
+        stack.set(AstralDataComponents.ALCHEMIST_DATA, AlchemistData(potion, charges.coerceAtLeast(0)))
 
         return false
     }
@@ -138,22 +137,6 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         tooltipConsumer.accept(
             Text.translatable("kosmogliph.alchemist.charges", data.charges.toString()).formatted(Formatting.DARK_PURPLE)
         )
-    }
-
-    class Data(
-        val contents: Optional<PotionContentsComponent>,
-        val charges: Int
-    ) {
-        companion object {
-            val CODEC: Codec<Data> = RecordCodecBuilder.create { builder ->
-                val group = builder.group(
-                    Codec.optionalField("contents", PotionContentsComponent.CODEC, true).forGetter(Data::contents),
-                    Codec.INT.fieldOf("charges").orElse(0).forGetter(Data::charges)
-                )
-
-                group.apply(builder, AlchemistKosmogliph::Data)
-            }
-        }
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {

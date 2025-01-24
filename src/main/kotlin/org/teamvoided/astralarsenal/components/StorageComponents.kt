@@ -4,14 +4,29 @@ package org.teamvoided.astralarsenal.components
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.component.type.PotionContentsComponent
 import net.minecraft.util.dynamic.Codecs
 import java.util.*
 
 /*
 
-    Examples cant be found in - StorageComponents.kt
+    Examples cant be found in - SimpleStorageComponent.kt
 
  */
+
+
+data class AlchemistData(val contents: Optional<PotionContentsComponent>, val charges: Int) :
+    SimpleStorageComponent {
+    companion object {
+        fun default(): AlchemistData = AlchemistData(Optional.empty(), 0)
+        val CODEC = RecordCodecBuilder.create<AlchemistData> { builder ->
+            builder.group(
+                PotionContentsComponent.CODEC.lenientOptionalFieldOf("contents").forGetter { it.contents },
+                Codec.INT.fieldOf("charges").orElse(0).forGetter { it.charges }
+            ).apply(builder, ::AlchemistData)
+        }
+    }
+}
 
 data class PulveriserData(val ticks: Int, val slamming: Boolean) : SimpleStorageComponent {
     companion object {
