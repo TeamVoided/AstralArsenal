@@ -14,6 +14,18 @@ import java.util.*
 
  */
 
+data class GrappleData(val jumps: Int, val timer: Int, val negateFallDamage: Boolean) : SimpleStorageComponent {
+    companion object {
+        fun default(): GrappleData = GrappleData(0, 0, false)
+        val CODEC = RecordCodecBuilder.create<GrappleData> { builder ->
+            builder.group(
+                Codec.INT.fieldOf("jumps").forGetter { it.jumps },
+                Codec.INT.fieldOf("timer").forGetter { it.timer },
+                Codec.BOOL.fieldOf("negateFallDamage").forGetter { it.negateFallDamage },
+            ).apply(builder, ::GrappleData)
+        }
+    }
+}
 
 data class AlchemistData(val contents: Optional<PotionContentsComponent>, val charges: Int) :
     SimpleStorageComponent {

@@ -48,8 +48,7 @@ object AstralDataComponents {
     val COMET_LAUNCHER_DATA =
         register("comet_launcher_data") { builder -> builder.codec(CometLauncherItem.Data.CODEC).build() }
 
-    // GrappleKosmogliph.Data(0, 0, false)
-    val GRAPPLE_DATA = register("grapple_data") { builder -> builder.codec(GrappleKosmogliph.Data.CODEC).build() }
+    val GRAPPLE_DATA = registerSimple("grapple_data", GrappleData.CODEC)
 
     val ALCHEMIST_DATA = registerSimple("alchemist_data", AlchemistData.CODEC)
 
