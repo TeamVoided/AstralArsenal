@@ -2,36 +2,22 @@ package org.teamvoided.astralarsenal.kosmogliph.armor
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
-import net.minecraft.entity.EquipmentSlot
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.network.listener.ClientPlayPacketListener
-import net.minecraft.network.packet.payload.CustomPayload
 import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.tag.DamageTypeTags
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.init.AstralEffects
-import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.init.AstralItemComponents.SLAM_DATA
-import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import kotlin.math.roundToInt
 
 class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_SLAM) }) {
     fun handleSlam(stack: ItemStack, player: PlayerEntity) {
-        val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return
+        val data = stack.get(AstralDataComponents.SLAM_DATA) ?: return
         if (!player.isOnGround && !data.slamming) {
-            stack.set(AstralItemComponents.SLAM_DATA, Data(0.0f, true))
+            stack.set(AstralDataComponents.SLAM_DATA, Data(0.0f, true))
             player.setVelocity(0.0, -5.0, 0.0)
             player.velocityModified = true
         }
@@ -60,7 +46,7 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         if (entity !is PlayerEntity) return
-        val data = stack.get(AstralItemComponents.SLAM_DATA) ?: return
+        val data = stack.get(AstralDataComponents.SLAM_DATA) ?: return
 //        val currentFallDistance = entity.fallDistance
         val slamming = data.slamming
         if (slamming) {

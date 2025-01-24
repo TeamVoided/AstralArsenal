@@ -13,7 +13,7 @@ object AstralNetworking {
         ServerPlayNetworking.registerGlobalReceiver(JumpKosmogliphPayload.ID) { _, ctx ->
             val player = ctx.player()
             val stack = player.getEquippedStack(EquipmentSlot.FEET)
-            val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
+            val kosmogliphs = stack.get(AstralDataComponents.KOSMOGLIPHS) ?: setOf()
             if (!kosmogliphs.contains(AstralKosmogliphs.JUMP)) return@registerGlobalReceiver
             AstralKosmogliphs.JUMP.handleJump(stack, player)
         }
@@ -21,7 +21,7 @@ object AstralNetworking {
         ServerPlayNetworking.registerGlobalReceiver(DashKosmogliphPayload.ID) { _, ctx ->
             val player = ctx.player()
             val stack = player.getEquippedStack(EquipmentSlot.LEGS)
-            val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
+            val kosmogliphs = stack.get(AstralDataComponents.KOSMOGLIPHS) ?: setOf()
             if (!kosmogliphs.contains(AstralKosmogliphs.DASH)) return@registerGlobalReceiver
             AstralKosmogliphs.DASH.handleJump(stack, player)
         }
@@ -29,7 +29,7 @@ object AstralNetworking {
         ServerPlayNetworking.registerGlobalReceiver(DodgeKosmogliphPayload.ID) { _, ctx ->
             val player = ctx.player()
             val stack = player.getEquippedStack(EquipmentSlot.LEGS)
-            val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
+            val kosmogliphs = stack.get(AstralDataComponents.KOSMOGLIPHS) ?: setOf()
             if (!kosmogliphs.contains(AstralKosmogliphs.DODGE)) return@registerGlobalReceiver
             AstralKosmogliphs.DODGE.handleJump(stack, player, false, false, false, false)
         }
@@ -37,7 +37,7 @@ object AstralNetworking {
         ServerPlayNetworking.registerGlobalReceiver(SlamKosmogliphPayload.ID) { _, ctx ->
             val player = ctx.player()
             val stack = player.getEquippedStack(EquipmentSlot.HEAD)
-            val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()
+            val kosmogliphs = stack.get(AstralDataComponents.KOSMOGLIPHS) ?: setOf()
             if (!kosmogliphs.contains(AstralKosmogliphs.SLAM)) return@registerGlobalReceiver
             AstralKosmogliphs.SLAM.handleSlam(stack, player)
         }

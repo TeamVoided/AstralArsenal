@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
@@ -16,7 +16,7 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 class MinigunKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.item is RailgunItem }) {
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralItemComponents.MINIGUN_DATA)
+        val data = stack.get(AstralDataComponents.MINIGUN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
         if (uses >= 50) return
@@ -28,7 +28,7 @@ class MinigunKosmogliph(id: Identifier) :
         }
 
         stack.set(
-            AstralItemComponents.MINIGUN_DATA,
+            AstralDataComponents.MINIGUN_DATA,
             Data(uses, cooldown)
         )
         super.inventoryTick(stack, world, entity, slot, selected)

@@ -18,7 +18,7 @@ import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.MinigunKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.SnipeKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph
 
-object AstralItemComponents {
+object AstralDataComponents {
 
 //    private val mods = mutableSetOf<DataComponentTypeModificationContext<*>>()
 

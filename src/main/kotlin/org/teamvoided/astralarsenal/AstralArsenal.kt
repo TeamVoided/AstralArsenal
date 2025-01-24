@@ -26,7 +26,7 @@ object AstralArsenal {
         //Referencing object will initialize them
         AstralBlocks.init()
         AstralItems
-        AstralItemComponents.init()
+        AstralDataComponents.init()
         AstralScreenHandlers
         AstralMenus.init()
         AstralTabs

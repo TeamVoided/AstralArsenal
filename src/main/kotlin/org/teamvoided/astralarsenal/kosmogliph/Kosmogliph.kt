@@ -35,7 +35,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent.Companion.toComponent
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import java.util.function.Consumer
 
 interface Kosmogliph {
@@ -109,20 +109,20 @@ interface Kosmogliph {
         val PACKET_CODEC = PacketCodecs.fromCodec(REGISTRY.codec)
 
         fun addToComponent(stack: ItemStack, kosmogliph: Kosmogliph): Either<Failure, ItemStack> {
-            val kosmogliphs = stack.getOrDefault(AstralItemComponents.KOSMOGLIPHS, KosmogliphsComponent())
+            val kosmogliphs = stack.getOrDefault(AstralDataComponents.KOSMOGLIPHS, KosmogliphsComponent())
             val mutableClone = kosmogliphs.toMutableSet()
             mutableClone.add(kosmogliph)
-            stack.set(AstralItemComponents.KOSMOGLIPHS, mutableClone.toComponent())
+            stack.set(AstralDataComponents.KOSMOGLIPHS, mutableClone.toComponent())
             kosmogliph.onApply(stack)
 
             return stack.right()
         }
 
         fun removeFromComponent(stack: ItemStack, kosmogliph: Kosmogliph): Either<Failure, ItemStack> {
-            val kosmogliphs = stack.getOrDefault(AstralItemComponents.KOSMOGLIPHS, KosmogliphsComponent())
+            val kosmogliphs = stack.getOrDefault(AstralDataComponents.KOSMOGLIPHS, KosmogliphsComponent())
             val mutableClone = kosmogliphs.toMutableSet()
             mutableClone.remove(kosmogliph)
-            stack.set(AstralItemComponents.KOSMOGLIPHS, mutableClone.toComponent())
+            stack.set(AstralDataComponents.KOSMOGLIPHS, mutableClone.toComponent())
             kosmogliph.onUnapply(stack)
 
             return stack.right()

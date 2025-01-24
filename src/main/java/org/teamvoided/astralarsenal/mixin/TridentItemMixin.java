@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent;
-import org.teamvoided.astralarsenal.init.AstralItemComponents;
+import org.teamvoided.astralarsenal.init.AstralDataComponents;
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs;
 import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph;
 
@@ -31,14 +31,14 @@ public class TridentItemMixin {
 
     @Redirect(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isTouchingWaterOrRain()Z"))
     private boolean isWetOrUsingKosmogliph(PlayerEntity instance, @Local(argsOnly = true) ItemStack stack) {
-        var charges = Objects.requireNonNull(stack.get(AstralItemComponents.ASTRAL_RAIN_DATA)).getCharges();
+        var charges = Objects.requireNonNull(stack.get(AstralDataComponents.ASTRAL_RAIN_DATA)).getCharges();
         boolean hasAstralRain = getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.ASTRAL_RAIN);
-        if (stack.get(AstralItemComponents.ASTRAL_RAIN_DATA) == null) {
+        if (stack.get(AstralDataComponents.ASTRAL_RAIN_DATA) == null) {
             charges = 0;
         }
         if (instance.isTouchingWaterOrRain() || (hasAstralRain && charges > 0)) {
             if (!instance.isTouchingWaterOrRain()) {
-                stack.set(AstralItemComponents.ASTRAL_RAIN_DATA, new AstralRainKosmogliph.Data(charges - 1));
+                stack.set(AstralDataComponents.ASTRAL_RAIN_DATA, new AstralRainKosmogliph.Data(charges - 1));
             }
             if (hasAstralRain) {
                 instance.getWorld().playSoundFromEntity(instance, SoundEvents.BLOCK_TRIAL_SPAWNER_SPAWN_ITEM_BEGIN, SoundCategory.PLAYERS, 2.0f, 0.5f);
@@ -75,8 +75,8 @@ public class TridentItemMixin {
     private boolean isWetOrUsingKosmogliph2(PlayerEntity instance, @Local(argsOnly = true) Hand hand) {
         ItemStack stack = instance.getStackInHand(hand);
         boolean hasAstralRain = getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.ASTRAL_RAIN);
-        var charges = Objects.requireNonNull(stack.get(AstralItemComponents.ASTRAL_RAIN_DATA)).getCharges();
-        if (stack.get(AstralItemComponents.ASTRAL_RAIN_DATA) == null) {
+        var charges = Objects.requireNonNull(stack.get(AstralDataComponents.ASTRAL_RAIN_DATA)).getCharges();
+        if (stack.get(AstralDataComponents.ASTRAL_RAIN_DATA) == null) {
             charges = 0;
         }
         return instance.isTouchingWaterOrRain() || (hasAstralRain && charges > 0);

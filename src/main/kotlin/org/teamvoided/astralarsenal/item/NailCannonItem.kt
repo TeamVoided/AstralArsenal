@@ -16,7 +16,7 @@ import net.minecraft.util.UseAction
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
@@ -27,9 +27,9 @@ import kotlin.math.round
 
 class NailCannonItem(settings: Settings) : Item(settings) {
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralItemComponents.NAILGUN_DATA)
+        val data = stack.get(AstralDataComponents.NAILGUN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
-        val cooldownData = stack.get(AstralItemComponents.NAILGUN_COOLDOWN_DATA)
+        val cooldownData = stack.get(AstralDataComponents.NAILGUN_COOLDOWN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
         var cooldown = cooldownData.cooldown
@@ -52,8 +52,8 @@ class NailCannonItem(settings: Settings) : Item(settings) {
         if (fireCooldown > 0) {
             fireCooldown--
         }
-        stack.set(AstralItemComponents.NAILGUN_DATA, Data(uses, beingUsed))
-        stack.set(AstralItemComponents.NAILGUN_COOLDOWN_DATA, CooldownData(cooldown, fireCooldown))
+        stack.set(AstralDataComponents.NAILGUN_DATA, Data(uses, beingUsed))
+        stack.set(AstralDataComponents.NAILGUN_COOLDOWN_DATA, CooldownData(cooldown, fireCooldown))
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 
@@ -77,9 +77,9 @@ class NailCannonItem(settings: Settings) : Item(settings) {
 
 
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
-        val data = stack.get(AstralItemComponents.NAILGUN_DATA)
+        val data = stack.get(AstralDataComponents.NAILGUN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
-        val cooldownData = stack.get(AstralItemComponents.NAILGUN_COOLDOWN_DATA)
+        val cooldownData = stack.get(AstralDataComponents.NAILGUN_COOLDOWN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var cooldown = cooldownData.fireCooldown
         if ((data.uses > 0 && cooldown <= 0) || (data.uses > 0 && ((USE_TICKS - remainingUseTicks) % 20) == 0 && USE_TICKS - remainingUseTicks > 10 && getKosmogliphsOnStack(
@@ -120,22 +120,22 @@ class NailCannonItem(settings: Settings) : Item(settings) {
             if (!(user as PlayerEntity).isCreative) {
                 uses--
             }
-            stack.set(AstralItemComponents.NAILGUN_DATA, Data(uses, 1))
-            stack.set(AstralItemComponents.NAILGUN_COOLDOWN_DATA, CooldownData(cooldownData.cooldown, cooldown))
+            stack.set(AstralDataComponents.NAILGUN_DATA, Data(uses, 1))
+            stack.set(AstralDataComponents.NAILGUN_COOLDOWN_DATA, CooldownData(cooldownData.cooldown, cooldown))
             world.playSound(user.pos, SoundEvents.BLOCK_VAULT_INSERT_ITEM_FAIL, SoundCategory.PLAYERS, 0.4F, 0.3f)
         } else if (cooldown <= 0) {
             world.playSound(user.pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.PLAYERS, 1.0F, 2.0f)
             cooldown = 8
-            stack.set(AstralItemComponents.NAILGUN_DATA, Data(data.uses, 1))
-            stack.set(AstralItemComponents.NAILGUN_COOLDOWN_DATA, CooldownData(cooldownData.cooldown, cooldown))
+            stack.set(AstralDataComponents.NAILGUN_DATA, Data(data.uses, 1))
+            stack.set(AstralDataComponents.NAILGUN_COOLDOWN_DATA, CooldownData(cooldownData.cooldown, cooldown))
         }
         super.usageTick(world, user, stack, remainingUseTicks)
     }
 
     override fun onStoppedUsing(stack: ItemStack, world: World, user: LivingEntity?, remainingUseTicks: Int) {
-        val data = stack.get(AstralItemComponents.NAILGUN_DATA)
+        val data = stack.get(AstralDataComponents.NAILGUN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
-        stack.set(AstralItemComponents.NAILGUN_DATA, Data(data.uses, 0))
+        stack.set(AstralDataComponents.NAILGUN_DATA, Data(data.uses, 0))
         super.onStoppedUsing(stack, world, user, remainingUseTicks)
     }
 
@@ -149,12 +149,12 @@ class NailCannonItem(settings: Settings) : Item(settings) {
     }
 
     override fun getItemBarStep(stack: ItemStack): Int {
-        val data = stack.get(AstralItemComponents.NAILGUN_DATA)
+        val data = stack.get(AstralDataComponents.NAILGUN_DATA)
         return if (data != null) funnyMath(stack.maxUses() - data.uses, stack.maxUses()) else BAR_LIMIT
     }
 
     override fun isItemBarVisible(stack: ItemStack): Boolean {
-        val data = stack.get(AstralItemComponents.NAILGUN_DATA)
+        val data = stack.get(AstralDataComponents.NAILGUN_DATA)
         return data != null && data.uses < stack.maxUses()
     }
 

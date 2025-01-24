@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
 class GrappleKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
@@ -24,7 +24,7 @@ class GrappleKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         if(world is ServerWorld) println("1")
         if (slot == 3) {
             if(world is ServerWorld) println("2")
-            val data = stack.get(AstralItemComponents.GRAPPLE_DATA)
+            val data = stack.get(AstralDataComponents.GRAPPLE_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
             var negateFallDamage = data.negateFallDamage
             if (!entity.isOnGround && entity.horizontalCollision) {
@@ -45,7 +45,7 @@ class GrappleKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
             if(entity.velocity.y > -0.1){
                 entity.resetFallDistance()
             }
-            stack.set(AstralItemComponents.GRAPPLE_DATA, Data(0, 0, negateFallDamage))
+            stack.set(AstralDataComponents.GRAPPLE_DATA, Data(0, 0, negateFallDamage))
         }
     }
 
@@ -55,10 +55,10 @@ class GrappleKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         source: DamageSource,
         equipmentSlot: EquipmentSlot
     ): Boolean {
-        val data = stack.get(AstralItemComponents.GRAPPLE_DATA) ?: return false
+        val data = stack.get(AstralDataComponents.GRAPPLE_DATA) ?: return false
 
         if (data.negateFallDamage && source.isType(DamageTypes.FALL)) {
-            stack.set(AstralItemComponents.GRAPPLE_DATA, Data(data.jumps, data.timer, false))
+            stack.set(AstralDataComponents.GRAPPLE_DATA, Data(data.jumps, data.timer, false))
             return true
         }
 

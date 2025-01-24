@@ -68,9 +68,9 @@ object AstralHudRendering {
     private fun getRightIconUses(leggings: ItemStack): Int? {
         val kosmo = getKosmogliphsOnStack(leggings)
         if (kosmo.contains(AstralKosmogliphs.DASH))
-            return leggings.get(AstralItemComponents.DASH_DATA)?.uses
+            return leggings.get(AstralDataComponents.DASH_DATA)?.uses
         if (kosmo.contains(AstralKosmogliphs.DODGE))
-            return leggings.get(AstralItemComponents.DODGE_DATA)?.uses
+            return leggings.get(AstralDataComponents.DODGE_DATA)?.uses
         return null
     }
 
@@ -79,7 +79,7 @@ object AstralHudRendering {
         if (boots.isEmpty) return
 
         if (!getKosmogliphsOnStack(boots).contains(AstralKosmogliphs.JUMP)) return
-        val uses = boots.get(AstralItemComponents.JUMP_DATA)?.uses ?: return
+        val uses = boots.get(AstralDataComponents.JUMP_DATA)?.uses ?: return
 
         if (uses < 3) leftIconTicks = 40
         if (leftIconTicks <= 0) return

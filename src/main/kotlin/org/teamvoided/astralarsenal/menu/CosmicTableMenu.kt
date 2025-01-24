@@ -16,7 +16,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralMenus
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
@@ -62,7 +62,7 @@ class CosmicTableMenu(
         val applicable = applicableKosmogliphs()
         val kosmogliph = applicable[id]
 
-        val kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS) ?: return false
+        val kosmogliphs = stack.get(AstralDataComponents.KOSMOGLIPHS) ?: return false
         val enchantments = stack.enchantments.enchantments
         val missing = missingEnchantments(kosmogliph, enchantments)
         val incompatible = incompatibleEnchantments(kosmogliph, enchantments)
@@ -85,14 +85,14 @@ class CosmicTableMenu(
             return false
         }
 
-        stack.set(AstralItemComponents.KOSMOGLIPHS, KosmogliphsComponent(setOf(kosmogliph)))
+        stack.set(AstralDataComponents.KOSMOGLIPHS, KosmogliphsComponent(setOf(kosmogliph)))
         if (kosmogliphs.isEmpty()) kosmicGemStack.count--
 
         return true
     }
 
     fun hasKosmogliph(stack: ItemStack): Boolean {
-        return (stack.get(AstralItemComponents.KOSMOGLIPHS) ?: setOf()).isNotEmpty()
+        return (stack.get(AstralDataComponents.KOSMOGLIPHS) ?: setOf()).isNotEmpty()
     }
 
     fun applicableKosmogliphs(): List<Kosmogliph> {

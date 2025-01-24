@@ -9,11 +9,8 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.CometEntity
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
-import org.teamvoided.astralarsenal.item.NailCannonItem.Companion.BAR_LIMIT
-import org.teamvoided.astralarsenal.item.NailCannonItem.Companion.funnyMath
-import org.teamvoided.astralarsenal.item.NailCannonItem.Data
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
 import java.awt.Color
@@ -26,7 +23,7 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
     val BASE_SPEED = 1.5f
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralItemComponents.COMET_LAUNCHER_DATA)
+        val data = stack.get(AstralDataComponents.COMET_LAUNCHER_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val kosmogliphs = getKosmogliphsOnStack(stack)
         var cooldown = data.cooldown
@@ -38,13 +35,13 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
                 cooldown = if(kosmogliphs.contains(AstralKosmogliphs.GENERATOR)) 200 else 300
             }
         }
-        stack.set(AstralItemComponents.COMET_LAUNCHER_DATA, Data(uses, cooldown)
+        stack.set(AstralDataComponents.COMET_LAUNCHER_DATA, Data(uses, cooldown)
         )
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
-        val data = user.getStackInHand(hand).get(AstralItemComponents.COMET_LAUNCHER_DATA)
+        val data = user.getStackInHand(hand).get(AstralDataComponents.COMET_LAUNCHER_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val kosmogliphs = getKosmogliphsOnStack(user.getStackInHand(hand))
         var cooldown = data.cooldown
@@ -62,7 +59,7 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
             world.spawnEntity(comet)
         }
 
-        user.getStackInHand(hand).set(AstralItemComponents.COMET_LAUNCHER_DATA, Data(uses, cooldown))
+        user.getStackInHand(hand).set(AstralDataComponents.COMET_LAUNCHER_DATA, Data(uses, cooldown))
         return super.use(world, user, hand)
     }
 
@@ -73,12 +70,12 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
     }
 
     override fun getItemBarStep(stack: ItemStack): Int {
-        val data = stack.get(AstralItemComponents.COMET_LAUNCHER_DATA)
+        val data = stack.get(AstralDataComponents.COMET_LAUNCHER_DATA)
         return if (data != null) funnyMath(5 - data.uses, 5) else BAR_LIMIT
     }
 
     override fun isItemBarVisible(stack: ItemStack): Boolean {
-        val data = stack.get(AstralItemComponents.COMET_LAUNCHER_DATA)
+        val data = stack.get(AstralDataComponents.COMET_LAUNCHER_DATA)
         return data != null && data.uses < 5
     }
     val BAR_LIMIT = 10

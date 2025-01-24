@@ -14,7 +14,7 @@ import net.minecraft.screen.ScreenHandlerType;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.teamvoided.astralarsenal.init.AstralItemComponents;
+import org.teamvoided.astralarsenal.init.AstralDataComponents;
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent;
 
 import java.util.Optional;
@@ -30,7 +30,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
     private boolean supportsEnchantments(boolean original) {
         ItemStack inputStack1 = ingredientInventory.getStack(0);
         ItemStack inputStack2 = ingredientInventory.getStack(1);
-        KosmogliphsComponent kosmogliphs = inputStack1.get(AstralItemComponents.KOSMOGLIPHS);
+        KosmogliphsComponent kosmogliphs = inputStack1.get(AstralDataComponents.KOSMOGLIPHS);
         boolean[] hasDisallowedEnchantments = {false};
 
         if (kosmogliphs != null && !kosmogliphs.isEmpty()) {

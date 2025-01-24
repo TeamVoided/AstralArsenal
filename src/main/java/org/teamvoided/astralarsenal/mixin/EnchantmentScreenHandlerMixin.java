@@ -13,7 +13,7 @@ import net.minecraft.util.random.RandomGenerator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.teamvoided.astralarsenal.init.AstralItemComponents;
+import org.teamvoided.astralarsenal.init.AstralDataComponents;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -28,7 +28,7 @@ public class EnchantmentScreenHandlerMixin {
                                                            @Local(argsOnly = true) DynamicRegistryManager registryManager) {
         var newList = possibleEnchantments.toList();
         var x = EnchantmentHelper.generateEnchantments(random, stack, level, newList.stream());
-        var kosmogliphs = stack.get(AstralItemComponents.KOSMOGLIPHS);
+        var kosmogliphs = stack.get(AstralDataComponents.KOSMOGLIPHS);
         if (kosmogliphs == null || kosmogliphs.isEmpty()) return x;
 
         var lookup = registryManager.get(RegistryKeys.ENCHANTMENT);

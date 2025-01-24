@@ -17,19 +17,15 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Math.lerp
-import org.teamvoided.astralarsenal.coroutine.mcCoroutineTask
-import org.teamvoided.astralarsenal.coroutine.ticks
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
-import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.init.AstralItemComponents.PULVERISER_DATA
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -43,7 +39,7 @@ class SnipeKosmogliph(id: Identifier) :
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
         val stack = player.getStackInHand(hand)
-        val data = stack.get(AstralItemComponents.SNIPE_DATA_V1)
+        val data = stack.get(AstralDataComponents.SNIPE_DATA_V1)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var loaded = data.loaded
         var ticks = data.ticks
@@ -63,12 +59,12 @@ class SnipeKosmogliph(id: Identifier) :
                 player.itemCooldownManager.set(stack.item, 300)
             }
         }
-        stack.set(AstralItemComponents.SNIPE_DATA_V1, Data(ticks, loaded))
+        stack.set(AstralDataComponents.SNIPE_DATA_V1, Data(ticks, loaded))
         return null
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralItemComponents.SNIPE_DATA_V1)
+        val data = stack.get(AstralDataComponents.SNIPE_DATA_V1)
             ?: throw IllegalStateException("how the fuck?")
         var ticks = data.ticks
         var loaded = data.loaded
@@ -80,7 +76,7 @@ class SnipeKosmogliph(id: Identifier) :
                 entity.itemCooldownManager.set(stack.item, 300)
             }
         }
-        stack.set(AstralItemComponents.SNIPE_DATA_V1, Data(ticks, loaded))
+        stack.set(AstralDataComponents.SNIPE_DATA_V1, Data(ticks, loaded))
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 

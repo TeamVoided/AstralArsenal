@@ -1,7 +1,6 @@
 package org.teamvoided.astralarsenal.util
 
 import arrow.core.Predicate
-import net.minecraft.block.BlockState
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
@@ -12,7 +11,6 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
@@ -26,25 +24,21 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import org.joml.Math.lerp
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
-import org.teamvoided.astralarsenal.entity.ShockwaveEntity
 import org.teamvoided.astralarsenal.init.*
-import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
-import org.teamvoided.astralarsenal.init.AstralItemComponents.PULVERISER_DATA
-import org.teamvoided.astralarsenal.init.AstralItemComponents.SLAM_DATA
+import org.teamvoided.astralarsenal.init.AstralDataComponents.KOSMOGLIPHS
+import org.teamvoided.astralarsenal.init.AstralDataComponents.PULVERISER_DATA
+import org.teamvoided.astralarsenal.init.AstralDataComponents.SLAM_DATA
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.armor.SlamKosmogliph.Data
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.*
-import java.util.*
 import kotlin.math.min
 import kotlin.math.roundToInt
 

@@ -20,10 +20,9 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import org.joml.Vector3d
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
@@ -46,7 +45,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
         right: Boolean
     ) {
         if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.DODGE)) {
-            val data = stack.get(AstralItemComponents.DODGE_DATA)
+            val data = stack.get(AstralDataComponents.DODGE_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
             val world = player.world
             if(world is ServerWorld) return
@@ -96,7 +95,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
                         )
                     }
                 }
-                stack.set(AstralItemComponents.DODGE_DATA, Data(data.uses - 1, data.cooldown))
+                stack.set(AstralDataComponents.DODGE_DATA, Data(data.uses - 1, data.cooldown))
             }
         }
     }
@@ -104,7 +103,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
         if ((entity is PlayerEntity) && entity.inventory.armor.contains(stack) && slot == 1) {
-            val data = stack.get(AstralItemComponents.DODGE_DATA)
+            val data = stack.get(AstralDataComponents.DODGE_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
             var uses = data.uses
             if (uses >= 3) return
@@ -150,7 +149,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
                 }
             }
 
-            stack.set(AstralItemComponents.DODGE_DATA, Data(uses, cooldown))
+            stack.set(AstralDataComponents.DODGE_DATA, Data(uses, cooldown))
         }
     }
 
@@ -171,7 +170,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
             stage
         )
 
-        val data = stack.get(AstralItemComponents.DODGE_DATA)
+        val data = stack.get(AstralDataComponents.DODGE_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
         var cooldown = data.cooldown
@@ -186,7 +185,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
             }
         }
         stack.set(
-            AstralItemComponents.DODGE_DATA,
+            AstralDataComponents.DODGE_DATA,
             Data(uses, cooldown)
         )
         return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)

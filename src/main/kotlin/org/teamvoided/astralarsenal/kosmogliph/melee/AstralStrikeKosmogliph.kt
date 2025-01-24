@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
 // I will fix this - Astra
@@ -19,7 +19,7 @@ class AstralStrikeKosmogliph(id: Identifier) :
         val STRIKES_TO_TRIGGER = 8
 
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
-        val data = stack.get(AstralItemComponents.ASTRAL_STRIKE_DATA)
+        val data = stack.get(AstralDataComponents.ASTRAL_STRIKE_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var hitTimes = data.hitTimes
         hitTimes++
@@ -38,7 +38,7 @@ class AstralStrikeKosmogliph(id: Identifier) :
             attacker.world.spawnEntity(beam)
             hitTimes = 0
         }
-        stack.set(AstralItemComponents.ASTRAL_STRIKE_DATA, Data(hitTimes))
+        stack.set(AstralDataComponents.ASTRAL_STRIKE_DATA, Data(hitTimes))
         return super.postHit(stack, target, attacker)
     }
 

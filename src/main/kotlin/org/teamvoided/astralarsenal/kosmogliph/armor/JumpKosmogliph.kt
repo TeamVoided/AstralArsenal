@@ -16,13 +16,12 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
-import net.minecraft.stat.Stat
 import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
@@ -44,7 +43,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 //        ){
 //            return
 //        }
-        val data = stack.get(AstralItemComponents.JUMP_DATA)
+        val data = stack.get(AstralDataComponents.JUMP_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         val world = player.world
 
@@ -88,7 +87,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                     )
                 }
             }
-            stack.set(AstralItemComponents.JUMP_DATA, Data(data.uses - 1, data.cooldown, 0, data.maxUses - 1))
+            stack.set(AstralDataComponents.JUMP_DATA, Data(data.uses - 1, data.cooldown, 0, data.maxUses - 1))
         }
     }
 
@@ -96,7 +95,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
         if (entity !is LivingEntity) return
         if (slot == 0) {
-            val data = stack.get(AstralItemComponents.JUMP_DATA)
+            val data = stack.get(AstralDataComponents.JUMP_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
             var uses = data.uses
             var lastJump = data.lastJump
@@ -149,7 +148,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 
             if (lastJump < 20) lastJump++
 
-            stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, lastJump, maxUses))
+            stack.set(AstralDataComponents.JUMP_DATA, Data(uses, cooldown, lastJump, maxUses))
         }
     }
 
@@ -170,7 +169,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
             stage
         )
 
-        val data = stack.get(AstralItemComponents.JUMP_DATA)
+        val data = stack.get(AstralDataComponents.JUMP_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var uses = data.uses
         var cooldown = data.cooldown
@@ -187,7 +186,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                 cooldown += 15
             }
         }
-        stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, 0, maxUses))
+        stack.set(AstralDataComponents.JUMP_DATA, Data(uses, cooldown, 0, maxUses))
         return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
     }
 
