@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph.armor
 
-import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -11,14 +10,13 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.s2c.play.SoundPlayS2CPacket
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
-import net.minecraft.registry.RegistryKey
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
-import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.components.JumpData
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
@@ -87,7 +85,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                     )
                 }
             }
-            stack.set(AstralDataComponents.JUMP_DATA, Data(data.uses - 1, data.cooldown, 0, data.maxUses - 1))
+            stack.set(AstralDataComponents.JUMP_DATA, JumpData(data.uses - 1, data.cooldown, 0, data.maxUses - 1))
         }
     }
 
@@ -148,7 +146,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 
             if (lastJump < 20) lastJump++
 
-            stack.set(AstralDataComponents.JUMP_DATA, Data(uses, cooldown, lastJump, maxUses))
+            stack.set(AstralDataComponents.JUMP_DATA, JumpData(uses, cooldown, lastJump, maxUses))
         }
     }
 
@@ -186,30 +184,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                 cooldown += 15
             }
         }
-        stack.set(AstralDataComponents.JUMP_DATA, Data(uses, cooldown, 0, maxUses))
+        stack.set(AstralDataComponents.JUMP_DATA, JumpData(uses, cooldown, 0, maxUses))
         return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
-    }
-
-    data class Data(
-        val uses: Int,
-        val cooldown: Int,
-        val lastJump: Int,
-        val maxUses: Int
-    ) {
-        companion object {
-            val CODEC = Codecs.NONNEGATIVE_INT.listOf()
-                .xmap(
-                    { list -> Data(list[0], list[1], list.getOrNull(2) ?: 0, list[3]) },
-                    { data -> listOf(data.uses, data.cooldown, data.lastJump, data.maxUses) }
-                )
-        }
-    }
-
-    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf()
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
     }
 }

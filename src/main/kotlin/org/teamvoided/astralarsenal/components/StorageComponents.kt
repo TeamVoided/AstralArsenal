@@ -14,6 +14,17 @@ import java.util.*
 
  */
 
+data class JumpData(val uses: Int, val cooldown: Int, val lastJump: Int, val maxUses: Int) :
+    SimpleStorageComponent {
+    companion object {
+        fun default(): JumpData = JumpData(0, 0, 0, 0)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> JumpData(list[0], list[1], list.getOrNull(2) ?: 0, list[3]) },
+            { data -> listOf(data.uses, data.cooldown, data.lastJump, data.maxUses) }
+        )
+    }
+}
+
 data class DashData(val uses: Int, val cooldown: Int): SimpleStorageComponent {
     companion object {
         fun default(): DashData = DashData(0, 0)
