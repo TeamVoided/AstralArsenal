@@ -14,6 +14,16 @@ import java.util.*
 
  */
 
+data class CometLauncherData(val uses: Int, val cooldown: Int): SimpleStorageComponent {
+    companion object {
+        fun default(): CometLauncherData = CometLauncherData(0, 0)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> CometLauncherData(list[0], list[1]) },
+            { data -> listOf(data.uses, data.cooldown) }
+        )
+    }
+}
+
 data class GrappleData(val jumps: Int, val timer: Int, val negateFallDamage: Boolean) : SimpleStorageComponent {
     companion object {
         fun default(): GrappleData = GrappleData(0, 0, false)

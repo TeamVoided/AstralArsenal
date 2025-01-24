@@ -6,9 +6,11 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.components.*
-import org.teamvoided.astralarsenal.item.CometLauncherItem
 import org.teamvoided.astralarsenal.item.NailCannonItem
-import org.teamvoided.astralarsenal.kosmogliph.armor.*
+import org.teamvoided.astralarsenal.kosmogliph.armor.DashKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.armor.DodgeKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.armor.JumpKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.armor.SlamKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.melee.AstralStrikeKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.MinigunKosmogliph
 
@@ -44,9 +46,7 @@ object AstralDataComponents {
     val NAILGUN_COOLDOWN_DATA =
         register("nailgun_cooldown_data") { builder -> builder.codec(NailCannonItem.CooldownData.CODEC).build() }
 
-    // CometLauncherItem.Data(0, 0) }
-    val COMET_LAUNCHER_DATA =
-        register("comet_launcher_data") { builder -> builder.codec(CometLauncherItem.Data.CODEC).build() }
+    val COMET_LAUNCHER_DATA = registerSimple("comet_launcher_data", CometLauncherData.CODEC)
 
     val GRAPPLE_DATA = registerSimple("grapple_data", GrappleData.CODEC)
 
