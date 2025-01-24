@@ -5,7 +5,6 @@ package org.teamvoided.astralarsenal.components
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.util.dynamic.Codecs
-import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph
 import java.util.*
 
 /*
@@ -13,6 +12,18 @@ import java.util.*
     Examples cant be found in - StorageComponents.kt
 
  */
+
+data class PulveriserData(val ticks: Int, val slamming: Boolean) : SimpleStorageComponent {
+    companion object {
+        fun default(): PulveriserData = PulveriserData(0, false)
+        val CODEC = RecordCodecBuilder.create<PulveriserData> { builder ->
+            builder.group(
+                Codec.INT.fieldOf("ticks").forGetter { it.ticks },
+                Codec.BOOL.fieldOf("slamming").forGetter { it.slamming }
+            ).apply(builder, ::PulveriserData)
+        }
+    }
+}
 
 data class AstralRainData(val charges: Int) : SimpleStorageComponent {
     companion object {
@@ -24,7 +35,7 @@ data class AstralRainData(val charges: Int) : SimpleStorageComponent {
     }
 }
 
-class SnipeDataV1(val ticks: Int, val loaded: Boolean) : SimpleStorageComponent {
+data class SnipeDataV1(val ticks: Int, val loaded: Boolean) : SimpleStorageComponent {
     companion object {
         fun default(): SnipeDataV1 = SnipeDataV1(0, false)
         val CODEC = RecordCodecBuilder.create<SnipeDataV1> { builder ->

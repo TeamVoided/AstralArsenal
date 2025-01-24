@@ -28,6 +28,7 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.components.PulveriserData
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.init.*
 import org.teamvoided.astralarsenal.init.AstralDataComponents.KOSMOGLIPHS
@@ -36,7 +37,6 @@ import org.teamvoided.astralarsenal.init.AstralDataComponents.SLAM_DATA
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.armor.SlamKosmogliph.Data
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
-import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.*
 import kotlin.math.min
@@ -180,7 +180,7 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
                     SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST
                 )
                 faller.playSound(sound)
-                stack.set(PULVERISER_DATA, PulveriserKosmogliph.Data(0, false))
+                stack.set(PULVERISER_DATA, PulveriserData(0, false))
                 if (!faller.isCreative) {
                     faller.itemCooldownManager.set(stack.item, 200)
                 }
