@@ -13,7 +13,6 @@ import org.teamvoided.astralarsenal.kosmogliph.melee.AstralStrikeKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.AlchemistKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.MinigunKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph
 
 object AstralDataComponents {
     // KosmogliphsComponent()
@@ -62,10 +61,8 @@ object AstralDataComponents {
     val PULVERISER_DATA =
         register("pulveriser_data") { builder -> builder.codec(PulveriserKosmogliph.Data.CODEC).build() }
 
-    //  AstralRainKosmogliph.Data(0)
     @JvmField
-    val ASTRAL_RAIN_DATA =
-        register("astral_rain_data") { builder -> builder.codec(AstralRainKosmogliph.Data.CODEC).build() }
+    val ASTRAL_RAIN_DATA = registerSimple("astral_rain_data", AstralRainData.CODEC)
 
     val SNIPE_DATA_V1 = registerSimple("snipe_data_v1", SnipeDataV1.CODEC)
 

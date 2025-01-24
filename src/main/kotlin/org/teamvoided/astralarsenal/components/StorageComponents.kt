@@ -5,6 +5,7 @@ package org.teamvoided.astralarsenal.components
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.util.dynamic.Codecs
+import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph
 import java.util.*
 
 /*
@@ -12,6 +13,16 @@ import java.util.*
     Examples cant be found in - StorageComponents.kt
 
  */
+
+data class AstralRainData(val charges: Int) : SimpleStorageComponent {
+    companion object {
+        fun default(): AstralRainData = AstralRainData(0)
+        val CODEC = RecordCodecBuilder.create<AstralRainData> { builder ->
+            builder.group(Codec.INT.fieldOf("ticks").forGetter { it.charges })
+                .apply(builder, ::AstralRainData)
+        }
+    }
+}
 
 class SnipeDataV1(val ticks: Int, val loaded: Boolean) : SimpleStorageComponent {
     companion object {

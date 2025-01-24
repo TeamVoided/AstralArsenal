@@ -17,10 +17,10 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.teamvoided.astralarsenal.components.AstralRainData;
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent;
 import org.teamvoided.astralarsenal.init.AstralDataComponents;
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs;
-import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph;
 
 import java.util.Objects;
 
@@ -38,7 +38,7 @@ public class TridentItemMixin {
         }
         if (instance.isTouchingWaterOrRain() || (hasAstralRain && charges > 0)) {
             if (!instance.isTouchingWaterOrRain()) {
-                stack.set(AstralDataComponents.ASTRAL_RAIN_DATA, new AstralRainKosmogliph.Data(charges - 1));
+                stack.set(AstralDataComponents.ASTRAL_RAIN_DATA, new AstralRainData(charges - 1));
             }
             if (hasAstralRain) {
                 instance.getWorld().playSoundFromEntity(instance, SoundEvents.BLOCK_TRIAL_SPAWNER_SPAWN_ITEM_BEGIN, SoundCategory.PLAYERS, 2.0f, 0.5f);
