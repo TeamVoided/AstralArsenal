@@ -14,7 +14,7 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
 class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_SLAM) }) {
     fun handleSlam(stack: ItemStack, player: PlayerEntity) {
-        val data = stack.get(AstralDataComponents.SLAM_DATA) ?: return
+        val data = stack.getOrDefault(AstralDataComponents.SLAM_DATA, SlamData.DEFAULT)
         if (!player.isOnGround && !data.slamming) {
             stack.set(AstralDataComponents.SLAM_DATA, SlamData(0.0f, true))
             player.setVelocity(0.0, -5.0, 0.0)
@@ -45,7 +45,7 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         if (entity !is PlayerEntity) return
-        val data = stack.get(AstralDataComponents.SLAM_DATA) ?: return
+        val data = stack.getOrDefault(AstralDataComponents.SLAM_DATA, SlamData.DEFAULT)
 //        val currentFallDistance = entity.fallDistance
         val slamming = data.slamming
         if (slamming) {

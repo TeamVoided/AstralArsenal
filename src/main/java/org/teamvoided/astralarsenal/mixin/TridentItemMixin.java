@@ -21,8 +21,6 @@ import org.teamvoided.astralarsenal.components.AstralRainData;
 import org.teamvoided.astralarsenal.init.AstralDataComponents;
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs;
 
-import java.util.Objects;
-
 import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.hasKosmogliph;
 
 @Mixin(TridentItem.class)
@@ -30,11 +28,8 @@ public class TridentItemMixin {
 
     @Redirect(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isTouchingWaterOrRain()Z"))
     private boolean isWetOrUsingKosmogliph(PlayerEntity instance, @Local(argsOnly = true) ItemStack stack) {
-        var charges = Objects.requireNonNull(stack.get(AstralDataComponents.ASTRAL_RAIN_DATA)).getCharges();
+        var charges = stack.getOrDefault(AstralDataComponents.ASTRAL_RAIN_DATA, AstralRainData.DEFAULT).getCharges();
         boolean hasAstralRain = hasKosmogliph(stack, AstralKosmogliphs.ASTRAL_RAIN);
-        if (stack.get(AstralDataComponents.ASTRAL_RAIN_DATA) == null) {
-            charges = 0;
-        }
         if (instance.isTouchingWaterOrRain() || (hasAstralRain && charges > 0)) {
             if (!instance.isTouchingWaterOrRain()) {
                 stack.set(AstralDataComponents.ASTRAL_RAIN_DATA, new AstralRainData(charges - 1));
@@ -72,10 +67,7 @@ public class TridentItemMixin {
     private boolean isWetOrUsingKosmogliph2(PlayerEntity instance, @Local(argsOnly = true) Hand hand) {
         ItemStack stack = instance.getStackInHand(hand);
         boolean hasAstralRain = hasKosmogliph(stack, AstralKosmogliphs.ASTRAL_RAIN);
-        var charges = Objects.requireNonNull(stack.get(AstralDataComponents.ASTRAL_RAIN_DATA)).getCharges();
-        if (stack.get(AstralDataComponents.ASTRAL_RAIN_DATA) == null) {
-            charges = 0;
-        }
+        var charges = stack.getOrDefault(AstralDataComponents.ASTRAL_RAIN_DATA, AstralRainData.DEFAULT).getCharges();
         return instance.isTouchingWaterOrRain() || (hasAstralRain && charges > 0);
     }
 }

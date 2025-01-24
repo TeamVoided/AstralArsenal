@@ -43,8 +43,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
         right: Boolean
     ) {
         if (stack.hasKosmogliph(AstralKosmogliphs.DODGE)) {
-            val data = stack.get(AstralDataComponents.DODGE_DATA)
-                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+            val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
             val world = player.world
             if (world is ServerWorld) return
             var LRbias = 0 // 1 is right, -1 is left, 0 is neither
@@ -101,8 +100,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
         if ((entity is PlayerEntity) && entity.inventory.armor.contains(stack) && slot == 1) {
-            val data = stack.get(AstralDataComponents.DODGE_DATA)
-                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+            val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
             var uses = data.uses
             if (uses >= 3) return
             var cooldown = data.cooldown
@@ -168,8 +166,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
             stage
         )
 
-        val data = stack.get(AstralDataComponents.DODGE_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
         var uses = data.uses
         var cooldown = data.cooldown
         if (damage >= 5 && !source.isTypeIn(AstralDamageTypeTags.KEEPS_MOVEMENT) && entity.lastDamageTaken < damage) {

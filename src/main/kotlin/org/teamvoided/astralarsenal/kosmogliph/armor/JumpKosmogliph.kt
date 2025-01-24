@@ -40,8 +40,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 //        ){
 //            return
 //        }
-        val data = stack.get(AstralDataComponents.JUMP_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.JUMP_DATA, JumpData.DEFAULT)
         val world = player.world
 
         if (player.vehicle != null) return
@@ -92,8 +91,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
         if (entity !is LivingEntity) return
         if (slot == 0) {
-            val data = stack.get(AstralDataComponents.JUMP_DATA)
-                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+            val data = stack.getOrDefault(AstralDataComponents.JUMP_DATA, JumpData.DEFAULT)
             var uses = data.uses
             var lastJump = data.lastJump
             var maxUses = data.maxUses
@@ -166,8 +164,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
             stage
         )
 
-        val data = stack.get(AstralDataComponents.JUMP_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.JUMP_DATA, JumpData.DEFAULT)
         var uses = data.uses
         var cooldown = data.cooldown
         var maxUses = data.maxUses

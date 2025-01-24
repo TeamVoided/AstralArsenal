@@ -38,8 +38,7 @@ class SnipeKosmogliph(id: Identifier) :
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
         val stack = player.getStackInHand(hand)
-        val data = stack.get(AstralDataComponents.SNIPE_DATA_V1)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.SNIPE_DATA_V1, SnipeDataV1.DEFAULT)
         var loaded = data.loaded
         var ticks = data.ticks
         if (!data.loaded) {
@@ -63,8 +62,7 @@ class SnipeKosmogliph(id: Identifier) :
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralDataComponents.SNIPE_DATA_V1)
-            ?: throw IllegalStateException("how the fuck?")
+        val data = stack.getOrDefault(AstralDataComponents.SNIPE_DATA_V1, SnipeDataV1.DEFAULT)
         var ticks = data.ticks
         var loaded = data.loaded
         if (ticks > 0) ticks--

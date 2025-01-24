@@ -156,9 +156,9 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
             faller.getStackInHand(Hand.OFF_HAND)
         } else null
         if (stack != null) {
-            val isSlamming = stack.get(PULVERISER_DATA)?.slamming ?: false
-            val ticks = stack.get(PULVERISER_DATA)?.ticks ?: 0
-            if (isSlamming) {
+            val pulveriserData = stack.getOrDefault(PULVERISER_DATA, PulveriserData.DEFAULT)
+            val ticks = pulveriserData.ticks
+            if (pulveriserData.slamming) {
                 val explosionBehavior = (
                         if (ticks >= 100) MaceStrongPulverise(faller)
                         else if (ticks >= 50) MacePulverise(faller)
@@ -202,7 +202,7 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
     }
     if (stack != null) {
         if (faller.isOnGround) {
-            val isSlamming = stack.get(SLAM_DATA)?.slamming ?: false
+            val isSlamming = stack.getOrDefault(SLAM_DATA, SlamData.DEFAULT).slamming
             if (isSlamming) {
                 if (faller.isOnGround) {
                     faller.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)

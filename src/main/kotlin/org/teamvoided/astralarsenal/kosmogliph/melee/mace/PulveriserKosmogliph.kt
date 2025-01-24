@@ -29,7 +29,7 @@ class PulveriserKosmogliph(id: Identifier) :
     }
 
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
-        val data = stack.get(AstralDataComponents.PULVERISER_DATA) ?: return
+        val data = stack.getOrDefault(AstralDataComponents.PULVERISER_DATA, PulveriserData.DEFAULT)
         if (data.slamming) {
             user.stopUsingItem()
             if (user is PlayerEntity && !user.isCreative) {
@@ -62,7 +62,7 @@ class PulveriserKosmogliph(id: Identifier) :
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralDataComponents.PULVERISER_DATA) ?: return
+        val data = stack.getOrDefault(AstralDataComponents.PULVERISER_DATA, PulveriserData.DEFAULT)
         if (data.slamming) {
             if (entity is LivingEntity && entity.getStackInHand(Hand.MAIN_HAND) != stack && entity.getStackInHand(Hand.OFF_HAND) != stack) {
                 stack.set(AstralDataComponents.PULVERISER_DATA, PulveriserData(0, false))

@@ -12,8 +12,7 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 //This needs to be moved to a crossbow kosmogliph
 class MinigunKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is RailgunItem }) {
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralDataComponents.MINIGUN_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.MINIGUN_DATA, MinigunData.DEFAULT)
         var uses = data.uses
         if (uses >= 50) return
         var cooldown = data.cooldown

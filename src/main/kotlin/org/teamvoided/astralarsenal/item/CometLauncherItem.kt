@@ -24,8 +24,7 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
     val BASE_SPEED = 1.5f
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralDataComponents.COMET_LAUNCHER_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.COMET_LAUNCHER_DATA, CometLauncherData.DEFAULT)
         var cooldown = data.cooldown
         var uses = data.uses
         if (uses < 5) {
@@ -42,9 +41,9 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
     }
 
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
-        val data = user.getStackInHand(hand).get(AstralDataComponents.COMET_LAUNCHER_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
-        val kosmogliphs = user.getStackInHand(hand).getKosmogliphs()
+        val stack = user.getStackInHand(hand)
+        val data = stack.getOrDefault(AstralDataComponents.COMET_LAUNCHER_DATA, CometLauncherData.DEFAULT)
+        val kosmogliphs = stack.getKosmogliphs()
         var cooldown = data.cooldown
         var uses = data.uses
         if (uses > 0) {
@@ -70,7 +69,7 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
             world.spawnEntity(comet)
         }
 
-        user.getStackInHand(hand).set(AstralDataComponents.COMET_LAUNCHER_DATA, CometLauncherData(uses, cooldown))
+        stack.set(AstralDataComponents.COMET_LAUNCHER_DATA, CometLauncherData(uses, cooldown))
         return super.use(world, user, hand)
     }
 
@@ -81,12 +80,12 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
     }
 
     override fun getItemBarStep(stack: ItemStack): Int {
-        val data = stack.get(AstralDataComponents.COMET_LAUNCHER_DATA)
+        val data = stack.getOrDefault(AstralDataComponents.COMET_LAUNCHER_DATA, CometLauncherData.DEFAULT)
         return if (data != null) funnyMath(5 - data.uses, 5) else BAR_LIMIT
     }
 
     override fun isItemBarVisible(stack: ItemStack): Boolean {
-        val data = stack.get(AstralDataComponents.COMET_LAUNCHER_DATA)
+        val data = stack.getOrDefault(AstralDataComponents.COMET_LAUNCHER_DATA, CometLauncherData.DEFAULT)
         return data != null && data.uses < 5
     }
 

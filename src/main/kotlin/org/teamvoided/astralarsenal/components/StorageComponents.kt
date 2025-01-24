@@ -147,6 +147,7 @@ data class PulveriserData(val ticks: Int, val slamming: Boolean) : SimpleStorage
 
 data class AstralRainData(val charges: Int) : SimpleStorageComponent {
     companion object {
+        @JvmField
         val DEFAULT: AstralRainData = AstralRainData(0)
         val CODEC = RecordCodecBuilder.create<AstralRainData> { builder ->
             builder.group(Codec.INT.fieldOf("ticks").forGetter { it.charges })

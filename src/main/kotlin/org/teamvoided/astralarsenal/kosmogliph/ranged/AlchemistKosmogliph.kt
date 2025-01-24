@@ -41,7 +41,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         player: PlayerEntity,
         reference: StackReference
     ): Boolean {
-        val data = stack.get(AstralDataComponents.ALCHEMIST_DATA) ?: return false
+        val data = stack.getOrDefault(AstralDataComponents.ALCHEMIST_DATA, AlchemistData.DEFAULT)
         if (other.item !is PotionItem) return false
         val potionContent = other.get(DataComponentTypes.POTION_CONTENTS) ?: return false
         var thisPotion = data.contents
@@ -74,7 +74,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
     ): Boolean {
         if (user.isInCreativeMode) return false
 
-        val data = stack.get(AstralDataComponents.ALCHEMIST_DATA) ?: return false
+        val data = stack.getOrDefault(AstralDataComponents.ALCHEMIST_DATA, AlchemistData.DEFAULT)
         var potion = data.contents
         var charges = data.charges
         if (--charges <= 0) {
@@ -90,7 +90,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         if (original.isEmpty) return null
         original.decrement(1)
 
-        val data = stack.get(AstralDataComponents.ALCHEMIST_DATA) ?: return null
+        val data = stack.getOrDefault(AstralDataComponents.ALCHEMIST_DATA, AlchemistData.DEFAULT)
         if (data.charges <= 0 || data.contents.isEmpty) return null
         val potion = data.contents.getOrNull() ?: return null
         val tippedArrow = ItemStack(Items.TIPPED_ARROW)
@@ -107,7 +107,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
     ) {
         super.modifyItemTooltip(stack, ctx, tooltipConsumer, config)
 
-        val data = stack.get(AstralDataComponents.ALCHEMIST_DATA) ?: return
+        val data = stack.getOrDefault(AstralDataComponents.ALCHEMIST_DATA, AlchemistData.DEFAULT)
         tooltipConsumer.accept(CommonTexts.EMPTY)
         if (data.charges <= 0 || data.contents.isEmpty) {
             tooltipConsumer.accept(Text.translatable("effect.none").formatted(Formatting.DARK_PURPLE))

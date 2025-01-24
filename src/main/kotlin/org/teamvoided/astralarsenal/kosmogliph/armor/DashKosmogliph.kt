@@ -32,8 +32,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
 
-        val data = stack.get(AstralDataComponents.DASH_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.DASH_DATA, DashData.DEFAULT)
         val world = player.world
         var dashingEntity: LivingEntity = player
 
@@ -83,8 +82,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
         if (slot == 1 && (entity !is LivingEntity || !entity.isFallFlying)) {
-            val data = stack.get(AstralDataComponents.DASH_DATA)
-                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+            val data = stack.getOrDefault(AstralDataComponents.DASH_DATA, DashData.DEFAULT)
             var uses = data.uses
             if (uses >= 3) return
             var cooldown = data.cooldown
@@ -154,8 +152,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
             stage
         )
 
-        val data = stack.get(AstralDataComponents.DASH_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.DASH_DATA, DashData.DEFAULT)
         var uses = data.uses
         var cooldown = data.cooldown
         if (!entity.world.isClient)

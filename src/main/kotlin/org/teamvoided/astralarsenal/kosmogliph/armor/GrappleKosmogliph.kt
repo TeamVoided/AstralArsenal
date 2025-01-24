@@ -23,8 +23,7 @@ class GrappleKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         if (world is ServerWorld) println("1")
         if (slot == 3) {
             if (world is ServerWorld) println("2")
-            val data = stack.get(AstralDataComponents.GRAPPLE_DATA)
-                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+            val data = stack.getOrDefault(AstralDataComponents.GRAPPLE_DATA, GrappleData.DEFAULT)
             var negateFallDamage = data.negateFallDamage
             if (!entity.isOnGround && entity.horizontalCollision) {
                 if (world.isClient) {
@@ -53,7 +52,7 @@ class GrappleKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
         source: DamageSource,
         equipmentSlot: EquipmentSlot
     ): Boolean {
-        val data = stack.get(AstralDataComponents.GRAPPLE_DATA) ?: return false
+        val data = stack.getOrDefault(AstralDataComponents.GRAPPLE_DATA, GrappleData.DEFAULT)
 
         if (data.negateFallDamage && source.isType(DamageTypes.FALL)) {
             stack.set(AstralDataComponents.GRAPPLE_DATA, GrappleData(data.jumps, data.timer, false))

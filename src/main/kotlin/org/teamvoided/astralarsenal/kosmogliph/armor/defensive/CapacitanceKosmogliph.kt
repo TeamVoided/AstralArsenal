@@ -55,10 +55,8 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
             equipmentSlot,
             stage
         )
-        val data = stack.get(AstralDataComponents.CAPACITANCE_DATA_V1)
-            ?: throw IllegalStateException("how the fuck?")
-        val dataTwo = stack.get(AstralDataComponents.CAPACITANCE_DATA_V2)
-            ?: throw IllegalStateException("wuh?")
+        val data = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1.DEFAULT)
+        val dataTwo = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2.DEFAULT)
         var dmg = data.damage
         var dischargeTime = dataTwo.dischargeTime
         var countdownTime = dataTwo.countdownTime
@@ -144,10 +142,8 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         if (entity is LivingEntity && entity.getEquippedStack(EquipmentSlot.CHEST) == stack) {
-            val data = stack.get(AstralDataComponents.CAPACITANCE_DATA_V1)
-                ?: throw IllegalStateException("how the fuck?")
-            val data2 = stack.get(AstralDataComponents.CAPACITANCE_DATA_V2)
-                ?: throw IllegalStateException("why?")
+            val data = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1.DEFAULT)
+            val data2 = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2.DEFAULT)
             var damage = data.damage
             var dischargeTime = data2.dischargeTime
             var countdownTime = data2.countdownTime

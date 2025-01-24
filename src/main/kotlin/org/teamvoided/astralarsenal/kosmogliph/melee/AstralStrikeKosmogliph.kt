@@ -19,8 +19,7 @@ class AstralStrikeKosmogliph(id: Identifier) :
     val STRIKES_TO_TRIGGER = 8
 
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
-        val data = stack.get(AstralDataComponents.ASTRAL_STRIKE_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.ASTRAL_STRIKE_DATA, AstralStrikeData.DEFAULT)
         var hitTimes = data.hitTimes
         hitTimes++
         if (hitTimes >= STRIKES_TO_TRIGGER) {
