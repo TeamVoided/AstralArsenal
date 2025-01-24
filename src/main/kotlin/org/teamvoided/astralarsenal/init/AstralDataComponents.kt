@@ -69,7 +69,7 @@ object AstralDataComponents {
 
     val SNIPE_DATA_V1 = registerSimple("snipe_data_v1", SnipeDataV1.CODEC)
 
-    val CAPACITANCE_DATA_V1 = registerSimple("capacitance_data_v1", CapacitanceData.CODEC)
+    val CAPACITANCE_DATA_V1 = registerSimple("capacitance_data_v1", CapacitanceDataV1.CODEC)
     val CAPACITANCE_DATA_V2 = registerSimple("capacitance_data_v2", CapacitanceDataV2.CODEC)
 
     val TOTEM_DATA = registerSimple("totem_data", TotemData.CODEC)

@@ -17,7 +17,7 @@ import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Math.lerp
-import org.teamvoided.astralarsenal.components.CapacitanceData
+import org.teamvoided.astralarsenal.components.CapacitanceDataV1
 import org.teamvoided.astralarsenal.components.CapacitanceDataV2
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
@@ -137,7 +137,7 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                 }
             }
         }
-        stack.set(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceData(dmg))
+        stack.set(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1(dmg))
         stack.set(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2(dischargeTime, countdownTime))
         return outputDamage
     }
@@ -190,7 +190,7 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                     damage = 0.0f
                 }
             }
-            stack.set(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceData(damage))
+            stack.set(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1(damage))
             stack.set(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2(dischargeTime, countdownTime))
         }
         super.inventoryTick(stack, world, entity, slot, selected)

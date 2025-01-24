@@ -25,12 +25,12 @@ class SnipeDataV1(val ticks: Int, val loaded: Boolean) : SimpleStorageComponent 
     }
 }
 
-data class CapacitanceData(val damage: Float) : SimpleStorageComponent {
+data class CapacitanceDataV1(val damage: Float) : SimpleStorageComponent {
     companion object {
-        fun default(): CapacitanceData = CapacitanceData(0f)
-        val CODEC = RecordCodecBuilder.create<CapacitanceData> { builder ->
+        fun default(): CapacitanceDataV1 = CapacitanceDataV1(0f)
+        val CODEC = RecordCodecBuilder.create<CapacitanceDataV1> { builder ->
             builder.group(Codec.FLOAT.fieldOf("ticks").forGetter { it.damage })
-                .apply(builder, ::CapacitanceData)
+                .apply(builder, ::CapacitanceDataV1)
         }
     }
 }
