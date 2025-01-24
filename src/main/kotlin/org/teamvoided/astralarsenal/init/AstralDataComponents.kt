@@ -13,7 +13,6 @@ import org.teamvoided.astralarsenal.kosmogliph.melee.AstralStrikeKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.AlchemistKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.MinigunKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.SnipeKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph
 
 object AstralDataComponents {
@@ -68,8 +67,7 @@ object AstralDataComponents {
     val ASTRAL_RAIN_DATA =
         register("astral_rain_data") { builder -> builder.codec(AstralRainKosmogliph.Data.CODEC).build() }
 
-    // SnipeKosmogliph.Data(0, false)
-    val SNIPE_DATA_V1 = register("snipe_data_v1") { builder -> builder.codec(SnipeKosmogliph.Data.CODEC).build() }
+    val SNIPE_DATA_V1 = registerSimple("snipe_data_v1", SnipeDataV1.CODEC)
 
     val CAPACITANCE_DATA_V1 = registerSimple("capacitance_data_v1", CapacitanceData.CODEC)
     val CAPACITANCE_DATA_V2 = registerSimple("capacitance_data_v2", CapacitanceDataV2.CODEC)
@@ -80,8 +78,7 @@ object AstralDataComponents {
         Registry.register(Registries.DATA_COMPONENT_TYPE, id(name), DataComponentType.builder<T>().codec(codec).build())
 
     fun <T> register(
-        name: String,
-        build: (DataComponentType.Builder<T>) -> DataComponentType<T>
+        name: String, build: (DataComponentType.Builder<T>) -> DataComponentType<T>
     ): DataComponentType<T> =
         Registry.register(Registries.DATA_COMPONENT_TYPE, id(name), build(DataComponentType.builder()))
 

@@ -13,6 +13,17 @@ import java.util.*
 
  */
 
+class SnipeDataV1(val ticks: Int, val loaded: Boolean) : SimpleStorageComponent {
+    companion object {
+        fun default(): SnipeDataV1 = SnipeDataV1(0, false)
+        val CODEC = RecordCodecBuilder.create<SnipeDataV1> { builder ->
+            builder.group(
+                Codec.INT.fieldOf("ticks").forGetter { it.ticks },
+                Codec.BOOL.fieldOf("slamming").forGetter { it.loaded }
+            ).apply(builder, ::SnipeDataV1)
+        }
+    }
+}
 
 data class CapacitanceData(val damage: Float) : SimpleStorageComponent {
     companion object {
