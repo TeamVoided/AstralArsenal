@@ -6,8 +6,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.components.*
-import org.teamvoided.astralarsenal.kosmogliph.armor.DashKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.armor.DodgeKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.armor.JumpKosmogliph
 
 object AstralDataComponents {
@@ -20,7 +18,7 @@ object AstralDataComponents {
     val JUMP_DATA = register("jump_data") { builder -> builder.codec(JumpKosmogliph.Data.CODEC).build() }
 
     // DashKosmogliph.Data(0, 0)
-    val DASH_DATA = register("dash_data") { builder -> builder.codec(DashKosmogliph.Data.CODEC).build() }
+    val DASH_DATA = registerSimple("dash_data", DashData.CODEC)
 
     val DODGE_DATA = registerSimple("dodge_data", DodgeData.CODEC)
 

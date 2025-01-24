@@ -14,6 +14,16 @@ import java.util.*
 
  */
 
+data class DashData(val uses: Int, val cooldown: Int): SimpleStorageComponent {
+    companion object {
+        fun default(): DashData = DashData(0, 0)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> DashData(list[0], list[1]) },
+            { data -> listOf(data.uses, data.cooldown) }
+        )
+    }
+}
+
 data class DodgeData(val uses: Int, val cooldown: Int) : SimpleStorageComponent {
     companion object {
         fun default(): DodgeData = DodgeData(0, 0)
