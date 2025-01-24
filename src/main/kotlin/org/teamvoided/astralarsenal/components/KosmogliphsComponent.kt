@@ -9,25 +9,17 @@ import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import java.util.function.Consumer
 
-class KosmogliphsComponent(
-    private val kosmogliphs: Set<Kosmogliph> = mutableSetOf()
-) : TooltipAppender, Set<Kosmogliph> by kosmogliphs {
+class KosmogliphsComponent(private val kosmogliphs: Set<Kosmogliph> = mutableSetOf()) : TooltipAppender,
+    Set<Kosmogliph> by kosmogliphs {
+    override fun appendToTooltip(context: Item.TooltipContext, tooltipConsumer: Consumer<Text>, config: TooltipConfig) =
+        kosmogliphs.forEach { tooltipConsumer.accept(Text.translatable(it.translationKey(true)).setColor(0x915eb4)) }
+
     companion object {
-        val CODEC: Codec<KosmogliphsComponent> =
-            Identifier.CODEC.xmap(Companion::fromId, Companion::toId).listOf().xmap(
-                Companion::fromList,
-                Companion::toList
-            )
-
-        fun toList(component: KosmogliphsComponent) = component.kosmogliphs.toList()
-        fun fromList(list: List<Kosmogliph>) = KosmogliphsComponent(list.toSet())
-
-        fun toId(kosmogliph: Kosmogliph) = Kosmogliph.REGISTRY.getId(kosmogliph)!!
-        fun fromId(id: Identifier): Kosmogliph = Kosmogliph.REGISTRY.get(id)!!
+        val DEFAULT = KosmogliphsComponent()
+        val CODEC: Codec<KosmogliphsComponent> = Identifier.CODEC
+            .xmap({ Kosmogliph.REGISTRY.get(it)!! }, { Kosmogliph.REGISTRY.getId(it)!! })
+            .listOf().xmap({ it.toComponent() }, { it.kosmogliphs.toList() })
 
         fun Collection<Kosmogliph>.toComponent() = KosmogliphsComponent(this.toSet())
     }
-
-    override fun appendToTooltip(context: Item.TooltipContext, tooltipConsumer: Consumer<Text>, config: TooltipConfig) =
-        kosmogliphs.forEach { tooltipConsumer.accept(Text.translatable(it.translationKey(true)).setColor(0x915eb4)) }
 }
