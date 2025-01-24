@@ -19,7 +19,8 @@ import org.teamvoided.astralarsenal.entity.nails.NailEntity
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
-import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
+import org.teamvoided.astralarsenal.util.getKosmogliphs
+import org.teamvoided.astralarsenal.util.hasKosmogliph
 import org.teamvoided.astralarsenal.util.playSound
 import java.awt.Color
 import java.lang.Math.clamp
@@ -58,11 +59,11 @@ class NailCannonItem(settings: Settings) : Item(settings) {
     }
 
     private fun ItemStack.maxUses(): Int {
-        return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 200 else 100
+        return if (this.hasKosmogliph(AstralKosmogliphs.CAPACITY)) 200 else 100
     }
 
     private fun ItemStack.cooldown(): Int {
-        return if (getKosmogliphsOnStack(this).contains(AstralKosmogliphs.CAPACITY)) 7 else 10
+        return if (this.hasKosmogliph(AstralKosmogliphs.CAPACITY)) 7 else 10
     }
 
     private fun shouldBoost(remainingUseTicks: Int, isSneaking: Boolean): Boolean {
@@ -82,11 +83,9 @@ class NailCannonItem(settings: Settings) : Item(settings) {
         val cooldownData = stack.get(AstralDataComponents.NAILGUN_COOLDOWN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
         var cooldown = cooldownData.fireCooldown
-        if ((data.uses > 0 && cooldown <= 0) || (data.uses > 0 && ((USE_TICKS - remainingUseTicks) % 20) == 0 && USE_TICKS - remainingUseTicks > 10 && getKosmogliphsOnStack(
-                stack
-            ).contains(
-                AstralKosmogliphs.STATIC_RELEASE
-            ))
+        if ((data.uses > 0 && cooldown <= 0) || (data.uses > 0 && ((USE_TICKS - remainingUseTicks) % 20) == 0
+                    && USE_TICKS - remainingUseTicks > 10 && stack.hasKosmogliph(AstralKosmogliphs.STATIC_RELEASE)
+                    )
         ) {
             if (!world.isClient) {
                 val nail = NailEntity(world, user)
@@ -99,14 +98,12 @@ class NailCannonItem(settings: Settings) : Item(settings) {
                 nail.setPosition(offset.x, offset.y, offset.z)
                 nail.pickupType = PickupPermission.DISALLOWED
                 if (shouldBoost(remainingUseTicks, user.isSneaking)
-                    && (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT))
+                    && (stack.hasKosmogliph(AstralKosmogliphs.OVER_HEAT))
                 ) nail.nailType = NailEntity.NailType.FIRE
-                else if ((getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.TEAR))) nail.nailType =
-                    NailEntity.NailType.IMPALE
-                else if (((USE_TICKS - remainingUseTicks) % 20 == 0) && getKosmogliphsOnStack(stack).contains(
-                        AstralKosmogliphs.STATIC_RELEASE
-                    )
-                ) nail.nailType = NailEntity.NailType.CHARGED
+                else if (stack.hasKosmogliph(AstralKosmogliphs.TEAR))
+                    nail.nailType = NailEntity.NailType.IMPALE
+                else if ((USE_TICKS - remainingUseTicks) % 20 == 0 && stack.hasKosmogliph(AstralKosmogliphs.STATIC_RELEASE))
+                    nail.nailType = NailEntity.NailType.CHARGED
                 world.spawnEntity(nail)
                 cooldown = if (shouldBoost(remainingUseTicks, user.isSneaking)) BOOSTED_FIRE_INTERVAL else FIRE_INTERVAL
                 if (USE_TICKS - remainingUseTicks == 60) {
@@ -148,9 +145,10 @@ class NailCannonItem(settings: Settings) : Item(settings) {
     override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = USE_TICKS
 
     override fun getItemBarColor(stack: ItemStack): Int {
-        return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.STATIC_RELEASE)) Color.LIGHT_GRAY.rgb
-        else if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.OVER_HEAT)) Color.ORANGE.rgb
-        else if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.TEAR)) Color.RED.rgb
+        val kosmogliphs = stack.getKosmogliphs()
+        return if (kosmogliphs.has(AstralKosmogliphs.STATIC_RELEASE)) Color.LIGHT_GRAY.rgb
+        else if (kosmogliphs.has(AstralKosmogliphs.OVER_HEAT)) Color.ORANGE.rgb
+        else if (kosmogliphs.has(AstralKosmogliphs.TEAR)) Color.RED.rgb
         else Color.MAGENTA.rgb
     }
 

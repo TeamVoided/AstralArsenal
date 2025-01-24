@@ -11,7 +11,7 @@ import net.minecraft.loot.context.LootContextParameters;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import static org.teamvoided.astralarsenal.util.UtilKt.getKosmogliphsOnStack;
+import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
 @Mixin(AbstractBlock.class)
 public class AbstractBlockMixin {
@@ -20,7 +20,7 @@ public class AbstractBlockMixin {
         var world = parameterSet.getWorld();
         var stack = parameterSet.getParameterOrNull(LootContextParameters.TOOL);
         if (stack == null) return original.call(instance, parameterSet);
-        var kosmogliphs = getKosmogliphsOnStack(stack);
+        var kosmogliphs = getKosmogliphs(stack);
         if (kosmogliphs.isEmpty()) return original.call(instance, parameterSet);
         var priority = kosmogliphs.stream().toList().getFirst();
         var modifiedLoot = priority.modifyBlockBreakLoot(instance, parameterSet, world, stack, original.call(instance, parameterSet));

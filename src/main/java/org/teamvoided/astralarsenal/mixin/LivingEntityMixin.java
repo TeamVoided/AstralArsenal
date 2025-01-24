@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.astralarsenal.util.UtilKt;
 
-import static org.teamvoided.astralarsenal.util.UtilKt.getKosmogliphsOnStack;
+import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
 @Debug(export = true)
 @Mixin(LivingEntity.class)
@@ -59,7 +59,7 @@ public abstract class LivingEntityMixin extends Entity {
         var world = parameterSet.getWorld();
         if (this.attacker == null) return;
         var tool = this.attacker.getWeaponStack();
-        var kosmogliphs = getKosmogliphsOnStack(this.attacker.getWeaponStack());
+        var kosmogliphs = getKosmogliphs(this.attacker.getWeaponStack());
         if (kosmogliphs.isEmpty()) return;
         var fistGlyph = kosmogliphs.stream().toList().getFirst();
         lootTable.generateRawLoot(parameterSet, this.getLootTableSeed(), (stack) ->
@@ -82,7 +82,7 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "tickMovement", at = @At(value = "HEAD"))
-    public void tickMovement(CallbackInfo ci){
+    public void tickMovement(CallbackInfo ci) {
         LivingEntity freezer = (LivingEntity) (Object) this;
         UtilKt.tickMovement(freezer);
     }

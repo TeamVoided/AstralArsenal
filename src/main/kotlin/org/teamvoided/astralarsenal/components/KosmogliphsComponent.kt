@@ -11,8 +11,10 @@ import java.util.function.Consumer
 
 class KosmogliphsComponent(private val kosmogliphs: Set<Kosmogliph> = mutableSetOf()) : TooltipAppender,
     Set<Kosmogliph> by kosmogliphs {
+    fun has(kosmogliph: Kosmogliph) = kosmogliphs.contains(kosmogliph)
     override fun appendToTooltip(context: Item.TooltipContext, tooltipConsumer: Consumer<Text>, config: TooltipConfig) =
         kosmogliphs.forEach { tooltipConsumer.accept(Text.translatable(it.translationKey(true)).setColor(0x915eb4)) }
+
 
     companion object {
         val DEFAULT = KosmogliphsComponent()

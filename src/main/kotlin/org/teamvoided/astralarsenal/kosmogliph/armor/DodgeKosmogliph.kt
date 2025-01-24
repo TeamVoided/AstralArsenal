@@ -24,7 +24,7 @@ import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
+import org.teamvoided.astralarsenal.util.hasKosmogliph
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -42,7 +42,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
         left: Boolean,
         right: Boolean
     ) {
-        if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.DODGE)) {
+        if (stack.hasKosmogliph(AstralKosmogliphs.DODGE)) {
             val data = stack.get(AstralDataComponents.DODGE_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
             val world = player.world

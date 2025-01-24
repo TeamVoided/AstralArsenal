@@ -20,7 +20,7 @@ import org.teamvoided.astralarsenal.item.TillingActions
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.logic.*
-import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
+import org.teamvoided.astralarsenal.util.getKosmogliphs
 import kotlin.math.min
 
 
@@ -33,7 +33,7 @@ fun getShapeAndPos(client: MinecraftClient): Pair<VoxelShape, BlockPos>? {
     if (player.isSneaking) return null
 
     val stack = player.mainHandStack
-    val comp = getKosmogliphsOnStack(stack)
+    val comp = stack.getKosmogliphs()
     if (comp.isEmpty()) return null
 
     val glyph = comp.outShapeChanger() ?: return null

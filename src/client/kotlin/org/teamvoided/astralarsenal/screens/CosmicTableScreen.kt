@@ -12,6 +12,8 @@ import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.menu.CosmicTableMenu
 import org.teamvoided.astralarsenal.screens.widget.KosmogliphWidget
 import org.teamvoided.astralarsenal.screens.widget.KosmogliphWidget.Companion.SIZE
+import org.teamvoided.astralarsenal.util.hasKosmogliphs
+import org.teamvoided.astralarsenal.util.setKosmogliphs
 
 class CosmicTableScreen(
     handler: CosmicTableMenu, inventory: PlayerInventory, title: Text
@@ -38,7 +40,7 @@ class CosmicTableScreen(
         val applicationSlot = handler.getSlot(0)
         val gemSlot = handler.getSlot(1)
 
-        if (!(applicationSlot.hasStack() && (gemSlot.hasStack() || handler.hasKosmogliph(applicationSlot.stack) || handler.playerInventory.player.isCreative) && (lastTickStack == applicationSlot.stack))) {
+        if (!(applicationSlot.hasStack() && (gemSlot.hasStack() || applicationSlot.stack.hasKosmogliphs() || handler.playerInventory.player.isCreative) && (lastTickStack == applicationSlot.stack))) {
             currentWidgets.forEach(::remove)
             currentWidgets.clear()
         } else if (currentWidgets.isEmpty()) {
@@ -67,7 +69,7 @@ class CosmicTableScreen(
                 handler
             ) { x, y ->
                 client!!.interactionManager!!.clickButton(handler.syncId, index)
-                Kosmogliph.addToComponent(handler.getSlot(0).stack, kosmogliph)
+                handler.getSlot(0).stack.setKosmogliphs(kosmogliph)
             }
         }
 

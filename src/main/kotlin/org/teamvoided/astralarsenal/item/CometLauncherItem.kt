@@ -12,7 +12,8 @@ import org.teamvoided.astralarsenal.entity.CometEntity
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
-import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
+import org.teamvoided.astralarsenal.util.getKosmogliphs
+import org.teamvoided.astralarsenal.util.hasKosmogliph
 import java.awt.Color
 import java.lang.Math.clamp
 import kotlin.math.round
@@ -25,14 +26,13 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         val data = stack.get(AstralDataComponents.COMET_LAUNCHER_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
-        val kosmogliphs = getKosmogliphsOnStack(stack)
         var cooldown = data.cooldown
         var uses = data.uses
         if (uses < 5) {
             cooldown--
             if (cooldown <= 0) {
                 uses++
-                cooldown = if (kosmogliphs.contains(AstralKosmogliphs.GENERATOR)) 200 else 300
+                cooldown = if (stack.hasKosmogliph(AstralKosmogliphs.GENERATOR)) 200 else 300
             }
         }
         stack.set(
@@ -44,14 +44,14 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val data = user.getStackInHand(hand).get(AstralDataComponents.COMET_LAUNCHER_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
-        val kosmogliphs = getKosmogliphsOnStack(user.getStackInHand(hand))
+        val kosmogliphs = user.getStackInHand(hand).getKosmogliphs()
         var cooldown = data.cooldown
         var uses = data.uses
         if (uses > 0) {
             uses--
             val comet = CometEntity(world, user)
             comet.damage =
-                if (kosmogliphs.contains(AstralKosmogliphs.TARGET)) BASE_DAMAGE * (2 / 3) else if (kosmogliphs.contains(
+                if (kosmogliphs.has(AstralKosmogliphs.TARGET)) BASE_DAMAGE * (2 / 3) else if (kosmogliphs.contains(
                         AstralKosmogliphs.QUICKSHOT
                     )
                 ) (BASE_DAMAGE * 0.75f) else BASE_DAMAGE
@@ -61,10 +61,10 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
                 user.pitch,
                 user.yaw,
                 0f,
-                if (kosmogliphs.contains(AstralKosmogliphs.QUICKSHOT)) (BASE_SPEED * 2f) else BASE_SPEED,
+                if (kosmogliphs.has(AstralKosmogliphs.QUICKSHOT)) (BASE_SPEED * 2f) else BASE_SPEED,
                 0.25f
             )
-            if (kosmogliphs.contains(AstralKosmogliphs.TARGET)) {
+            if (kosmogliphs.has(AstralKosmogliphs.TARGET)) {
                 comet.homing = true
             }
             world.spawnEntity(comet)
@@ -75,8 +75,8 @@ class CometLauncherItem(settings: Settings) : Item(settings) {
     }
 
     override fun getItemBarColor(stack: ItemStack): Int {
-        return if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.TARGET)) Color.HSBtoRGB(340f, 0.34f, 0.59f)
-        else if (getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.QUICKSHOT)) Color.ORANGE.rgb
+        return if (stack.hasKosmogliph(AstralKosmogliphs.TARGET)) Color.HSBtoRGB(340f, 0.34f, 0.59f)
+        else if (stack.hasKosmogliph(AstralKosmogliphs.QUICKSHOT)) Color.ORANGE.rgb
         else Color.MAGENTA.rgb
     }
 

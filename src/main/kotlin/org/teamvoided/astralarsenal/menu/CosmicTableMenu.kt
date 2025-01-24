@@ -14,12 +14,13 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.slot.Slot
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
-import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralMenus
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.util.getKosmogliphs
+import org.teamvoided.astralarsenal.util.hasKosmogliphs
+import org.teamvoided.astralarsenal.util.setKosmogliphs
 import kotlin.jvm.optionals.getOrNull
 
 class CosmicTableMenu(
@@ -51,9 +52,8 @@ class CosmicTableMenu(
     override fun onButtonClick(player: PlayerEntity, id: Int): Boolean {
         val applicationSlot = getSlot(0)
         val kosmicGemSlot = getSlot(1)
-        if ((!kosmicGemSlot.hasStack() || !kosmicGemSlot.stack.isOf(AstralItems.KOSMIC_GEM)) && !(hasKosmogliph(
-                applicationSlot.stack
-            ) || player.isCreative)
+        if ((!kosmicGemSlot.hasStack() || !kosmicGemSlot.stack.isOf(AstralItems.KOSMIC_GEM))
+            && !(applicationSlot.stack.hasKosmogliphs() || player.isCreative)
         ) return false
         val stack = applicationSlot.stack
         val kosmicGemStack = kosmicGemSlot.stack
@@ -62,7 +62,7 @@ class CosmicTableMenu(
         val applicable = applicableKosmogliphs()
         val kosmogliph = applicable[id]
 
-        val kosmogliphs = stack.get(AstralDataComponents.KOSMOGLIPHS) ?: return false
+        val kosmogliphs = stack.getKosmogliphs()
         val enchantments = stack.enchantments.enchantments
         val missing = missingEnchantments(kosmogliph, enchantments)
         val incompatible = incompatibleEnchantments(kosmogliph, enchantments)
@@ -85,14 +85,10 @@ class CosmicTableMenu(
             return false
         }
 
-        stack.set(AstralDataComponents.KOSMOGLIPHS, KosmogliphsComponent(setOf(kosmogliph)))
+        stack.setKosmogliphs(kosmogliph)
         if (kosmogliphs.isEmpty()) kosmicGemStack.count--
 
         return true
-    }
-
-    fun hasKosmogliph(stack: ItemStack): Boolean {
-        return (stack.get(AstralDataComponents.KOSMOGLIPHS) ?: setOf()).isNotEmpty()
     }
 
     fun applicableKosmogliphs(): List<Kosmogliph> {

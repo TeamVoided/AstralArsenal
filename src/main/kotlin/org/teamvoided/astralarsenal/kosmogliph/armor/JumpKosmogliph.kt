@@ -23,16 +23,15 @@ import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
+import org.teamvoided.astralarsenal.util.hasKosmogliph
 import kotlin.math.max
 
 class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_JUMP) }),
     AirSpeedKosmogliph {
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
-        if (!getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.JUMP)) {
-            return
-        }
+        if (!stack.hasKosmogliph(AstralKosmogliphs.JUMP)) return
+
 //        if (getKosmogliphsOnStack(player.getEquippedStack(EquipmentSlot.HEAD)).contains(AstralKosmogliphs.GRAPPLE) && player.getEquippedStack(
 //                EquipmentSlot.HEAD
 //            ).get(AstralItemComponents.GRAPPLE_DATA) != null && player.getEquippedStack(

@@ -27,18 +27,21 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Vector3f
-import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.components.PulveriserData
+import org.teamvoided.astralarsenal.components.SlamData
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
-import org.teamvoided.astralarsenal.init.*
-import org.teamvoided.astralarsenal.init.AstralDataComponents.KOSMOGLIPHS
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDataComponents.PULVERISER_DATA
 import org.teamvoided.astralarsenal.init.AstralDataComponents.SLAM_DATA
+import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.init.AstralKosmogliphs
+import org.teamvoided.astralarsenal.init.AstralParticles
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
-import org.teamvoided.astralarsenal.components.SlamData
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
-import org.teamvoided.astralarsenal.world.explosion.maceExplosions.*
+import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MacePulverise
+import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceStrongPulverise
+import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceWeakPulverise
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -48,12 +51,6 @@ fun <T> Registry<T>.registerHolder(id: Identifier, entry: T): Holder.Reference<T
     Registry.registerHolder(this, id, entry)
 
 fun <T> Registry<T>.register(id: Identifier, entry: T): T = Registry.register(this, id, entry)
-
-fun getKosmogliphsOnStack(stack: ItemStack): KosmogliphsComponent {
-    val component = stack.components.get(KOSMOGLIPHS)
-        ?: return KosmogliphsComponent()
-    return component
-}
 
 fun interface BPredicate<T> : Predicate<T>, java.util.function.Predicate<T> {
     override fun test(t: T): Boolean = this(t)
@@ -91,7 +88,7 @@ val PARRY_DAMAGE_MULT = 1.25
 fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?, damage: Float, source: DamageSource) {
     if (target is LivingEntity) {
         val shield = target.activeItem
-        if (getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.PARRY)) {
+        if (shield.hasKosmogliph(AstralKosmogliphs.PARRY)) {
             if (target.itemUseTime < 6) {
                 target.world.playSound(
                     null,
@@ -123,7 +120,7 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
                     )
                 }
             }
-        } else if (getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.FROST_THORNS)) {
+        } else if (shield.hasKosmogliph(AstralKosmogliphs.FROST_THORNS)) {
             val num = (damage / 2).roundToInt() + 1
             repeat(num) {
                 val freezeBallEntity = FreezeShotEntity(target.world, target)
@@ -138,15 +135,14 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
 fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPos: BlockPos) {
     val faller = entity as PlayerEntity
     val serverFaller = if (faller is ServerPlayerEntity) {
-        faller as ServerPlayerEntity
+        faller
     } else null
     if (faller.isOnGround) {
-        var stack: ItemStack? = null
-        if (getKosmogliphsOnStack(faller.getStackInHand(Hand.MAIN_HAND)).contains(AstralKosmogliphs.PULVERISER)) {
-            stack = faller.getStackInHand(Hand.MAIN_HAND)
-        } else if (getKosmogliphsOnStack(faller.getStackInHand(Hand.OFF_HAND)).contains(AstralKosmogliphs.PULVERISER)) {
-            stack = faller.getStackInHand(Hand.OFF_HAND)
-        }
+        val stack: ItemStack? = if (faller.getStackInHand(Hand.MAIN_HAND).hasKosmogliph(AstralKosmogliphs.PULVERISER)) {
+            faller.getStackInHand(Hand.MAIN_HAND)
+        } else if (faller.getStackInHand(Hand.OFF_HAND).hasKosmogliph(AstralKosmogliphs.PULVERISER)) {
+            faller.getStackInHand(Hand.OFF_HAND)
+        } else null
         if (stack != null) {
             val isSlamming = stack.get(PULVERISER_DATA)?.slamming ?: false
             val ticks = stack.get(PULVERISER_DATA)?.ticks ?: 0
@@ -189,7 +185,7 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
         }
     }
     var stack: ItemStack? = null
-    if (getKosmogliphsOnStack(faller.getEquippedStack(EquipmentSlot.HEAD)).contains(AstralKosmogliphs.SLAM)) {
+    if (faller.getEquippedStack(EquipmentSlot.HEAD).hasKosmogliph(AstralKosmogliphs.SLAM)) {
         stack = faller.getEquippedStack(EquipmentSlot.HEAD)
     }
     if (stack != null) {
@@ -242,12 +238,12 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
 }
 
 fun tickMovement(freezer: LivingEntity) {
-    if(freezer.world is ServerWorld && freezer.age % 4 == 0 && freezer.canFreeze() && freezer.frozenTicks > 0){
+    if (freezer.world is ServerWorld && freezer.age % 4 == 0 && freezer.canFreeze() && freezer.frozenTicks > 0) {
         val serverWorld = freezer.world as ServerWorld
         serverWorld.spawnParticles(
             AstralParticles.SNOWFLAKE,
             freezer.x,
-            freezer.y + (freezer.height)/2,
+            freezer.y + (freezer.height) / 2,
             freezer.z,
             1,
             (freezer.width / 2).toDouble(),
@@ -256,12 +252,12 @@ fun tickMovement(freezer: LivingEntity) {
             0.0
         )
     }
-    if(freezer.world is ServerWorld && freezer.age % 40 == 0 && freezer.canFreeze() && freezer.isFrozen){
+    if (freezer.world is ServerWorld && freezer.age % 40 == 0 && freezer.canFreeze() && freezer.isFrozen) {
         val serverWorld = freezer.world as ServerWorld
         serverWorld.spawnParticles(
             AstralParticles.SNOWFLAKE,
             freezer.x,
-            freezer.y + (freezer.height)/2,
+            freezer.y + (freezer.height) / 2,
             freezer.z,
             5,
             (freezer.width / 2).toDouble(),

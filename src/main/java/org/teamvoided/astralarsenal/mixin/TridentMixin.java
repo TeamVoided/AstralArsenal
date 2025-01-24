@@ -8,7 +8,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.ThrownTridentKosmogliph;
-import org.teamvoided.astralarsenal.util.UtilKt;
+
+import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
 @Mixin(TridentEntity.class)
 public class TridentMixin {
@@ -17,7 +18,7 @@ public class TridentMixin {
         TridentEntity entity = (TridentEntity) (Object) this;
         var stack = entity.getWeaponStack();
         if (entityHitResult.getEntity() instanceof LivingEntity target && stack != null)
-            UtilKt.getKosmogliphsOnStack(stack).forEach(kosmogliph -> {
+            getKosmogliphs(stack).forEach(kosmogliph -> {
                 if (kosmogliph instanceof ThrownTridentKosmogliph tridentKosmogliph)
                     tridentKosmogliph.onHit(entity.getOwner(), target);
             });

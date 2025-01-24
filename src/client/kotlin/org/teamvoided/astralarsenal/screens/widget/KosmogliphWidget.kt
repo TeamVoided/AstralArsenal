@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.menu.CosmicTableMenu
-import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
+import org.teamvoided.astralarsenal.util.hasKosmogliph
 
 abstract class KosmogliphWidget(
     x: Int, y: Int,
@@ -40,7 +40,7 @@ abstract class KosmogliphWidget(
 
     private fun getTexture(): Identifier {
         return if (handler.isIncompatible(kosmogliph, handler.getSlot(0).stack)) INCOMPATIBLE_TEXTURE
-        else if (getKosmogliphsOnStack(handler.getSlot(0).stack).contains(kosmogliph)) SELECTED_TEXTURE
+        else if (handler.getSlot(0).stack.hasKosmogliph(kosmogliph)) SELECTED_TEXTURE
         else COMPATIBLE_TEXTURE
     }
 

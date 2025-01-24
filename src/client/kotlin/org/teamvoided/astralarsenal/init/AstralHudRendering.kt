@@ -7,7 +7,8 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.item.ItemStack
 import org.teamvoided.astralarsenal.AstralArsenal.id
-import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
+import org.teamvoided.astralarsenal.util.getKosmogliphs
+import org.teamvoided.astralarsenal.util.hasKosmogliph
 
 object AstralHudRendering {
     var rightIconTicks = 0
@@ -66,10 +67,10 @@ object AstralHudRendering {
     }
 
     private fun getRightIconUses(leggings: ItemStack): Int? {
-        val kosmo = getKosmogliphsOnStack(leggings)
-        if (kosmo.contains(AstralKosmogliphs.DASH))
+        val kosmogliphs = leggings.getKosmogliphs()
+        if (kosmogliphs.has(AstralKosmogliphs.DASH))
             return leggings.get(AstralDataComponents.DASH_DATA)?.uses
-        if (kosmo.contains(AstralKosmogliphs.DODGE))
+        if (kosmogliphs.has(AstralKosmogliphs.DODGE))
             return leggings.get(AstralDataComponents.DODGE_DATA)?.uses
         return null
     }
@@ -78,7 +79,7 @@ object AstralHudRendering {
         val boots = player.inventory.armor[0]
         if (boots.isEmpty) return
 
-        if (!getKosmogliphsOnStack(boots).contains(AstralKosmogliphs.JUMP)) return
+        if (!boots.hasKosmogliph(AstralKosmogliphs.JUMP)) return
         val uses = boots.get(AstralDataComponents.JUMP_DATA)?.uses ?: return
 
         if (uses < 3) leftIconTicks = 40
@@ -103,7 +104,7 @@ object AstralHudRendering {
     }
 
     private fun GuiGraphics.renderCrimsonCrosshair() {
-        if(crimsonCrosshair)
+        if (crimsonCrosshair)
             this.drawGuiTexture(
                 id("hud/crimson_crosshair"),
                 (this.scaledWindowWidth - 15) / 2,

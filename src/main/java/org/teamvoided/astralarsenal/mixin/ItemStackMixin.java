@@ -18,7 +18,7 @@ import org.teamvoided.astralarsenal.init.AstralDataComponents;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.teamvoided.astralarsenal.util.UtilKt.getKosmogliphsOnStack;
+import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
@@ -31,7 +31,7 @@ public abstract class ItemStackMixin {
                        @Local Consumer<Text> consumer) {
         this.appendTooltip(AstralDataComponents.KOSMOGLIPHS, context, consumer, config);
 
-        var glyph = getKosmogliphsOnStack((ItemStack) (Object) this);
+        var glyph = getKosmogliphs((ItemStack) (Object) this);
         if (!glyph.isEmpty())
             glyph.forEach(it -> it.modifyItemTooltip((ItemStack) (Object) this, context, consumer, config));
 

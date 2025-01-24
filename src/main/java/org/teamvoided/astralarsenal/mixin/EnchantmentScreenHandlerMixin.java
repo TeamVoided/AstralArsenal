@@ -13,10 +13,11 @@ import net.minecraft.util.random.RandomGenerator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.teamvoided.astralarsenal.init.AstralDataComponents;
 
 import java.util.List;
 import java.util.stream.Stream;
+
+import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
 
 @Mixin(EnchantmentScreenHandler.class)
@@ -27,13 +28,15 @@ public class EnchantmentScreenHandlerMixin {
     private List<EnchantmentLevelEntry> filterEnchantments(RandomGenerator random, ItemStack stack, int level, Stream<Holder<Enchantment>> possibleEnchantments,
                                                            @Local(argsOnly = true) DynamicRegistryManager registryManager) {
         var newList = possibleEnchantments.toList();
-        var x = EnchantmentHelper.generateEnchantments(random, stack, level, newList.stream());
-        var kosmogliphs = stack.get(AstralDataComponents.KOSMOGLIPHS);
-        if (kosmogliphs == null || kosmogliphs.isEmpty()) return x;
+        var originalList = EnchantmentHelper.generateEnchantments(random, stack, level, newList.stream());
+        var kosmogliphs = getKosmogliphs(stack);
+        if (kosmogliphs.isEmpty()) return originalList;
 
-        var lookup = registryManager.get(RegistryKeys.ENCHANTMENT);
-        var bannedEnchants = kosmogliphs.stream().flatMap(list -> list.disallowedEnchantment().stream().map(lookup::getHolderOrThrow)).toList();
-        if (bannedEnchants.isEmpty()) return x;
+        var bannedEnchants = kosmogliphs.stream()
+                .flatMap(list ->
+                        list.disallowedEnchantment().stream().map(registryManager.get(RegistryKeys.ENCHANTMENT)::getHolderOrThrow)
+                ).toList();
+        if (bannedEnchants.isEmpty()) return originalList;
 
         return EnchantmentHelper.generateEnchantments(random, stack, level, newList.stream().filter(it -> !bannedEnchants.contains(it)).toList().stream());
     }

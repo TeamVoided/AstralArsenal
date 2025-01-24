@@ -37,9 +37,7 @@ object KosmogliphCommand {
         val kosmogliph = Kosmogliph.REGISTRY.get(id) ?: return -1
         val player = ctx.source.player ?: return -1
         if (!kosmogliph.canBeAppliedTo(player.mainHandStack)) return -1
-        val result = Kosmogliph.addToComponent(player.mainHandStack, kosmogliph)
-
-        if (result.isLeft()) return -1
+        Kosmogliph.addToComponent(player.mainHandStack, kosmogliph)
 
         return Command.SINGLE_SUCCESS
     }

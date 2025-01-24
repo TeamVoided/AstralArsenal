@@ -18,13 +18,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.teamvoided.astralarsenal.components.AstralRainData;
-import org.teamvoided.astralarsenal.components.KosmogliphsComponent;
 import org.teamvoided.astralarsenal.init.AstralDataComponents;
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs;
 
 import java.util.Objects;
 
-import static org.teamvoided.astralarsenal.util.UtilKt.getKosmogliphsOnStack;
+import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.hasKosmogliph;
 
 @Mixin(TridentItem.class)
 public class TridentItemMixin {
@@ -32,7 +31,7 @@ public class TridentItemMixin {
     @Redirect(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isTouchingWaterOrRain()Z"))
     private boolean isWetOrUsingKosmogliph(PlayerEntity instance, @Local(argsOnly = true) ItemStack stack) {
         var charges = Objects.requireNonNull(stack.get(AstralDataComponents.ASTRAL_RAIN_DATA)).getCharges();
-        boolean hasAstralRain = getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.ASTRAL_RAIN);
+        boolean hasAstralRain = hasKosmogliph(stack, AstralKosmogliphs.ASTRAL_RAIN);
         if (stack.get(AstralDataComponents.ASTRAL_RAIN_DATA) == null) {
             charges = 0;
         }
@@ -57,16 +56,14 @@ public class TridentItemMixin {
                 }
             }
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     @WrapOperation(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;playSoundFromEntity(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FF)V", ordinal = 1))
     private void canPlaySoundFromEntity(World instance, PlayerEntity except, Entity entity, SoundEvent sound, SoundCategory category, float volume, float pitch, Operation<Void> original, ItemStack stack) {
-        KosmogliphsComponent kosmogliphs = getKosmogliphsOnStack(stack);
-        if (!kosmogliphs.contains(AstralKosmogliphs.ASTRAL_RAIN)) {
+        if (!hasKosmogliph(stack, AstralKosmogliphs.ASTRAL_RAIN)) {
             original.call(instance, except, entity, sound, category, volume, pitch);
         }
     }
@@ -74,7 +71,7 @@ public class TridentItemMixin {
     @Redirect(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isTouchingWaterOrRain()Z"))
     private boolean isWetOrUsingKosmogliph2(PlayerEntity instance, @Local(argsOnly = true) Hand hand) {
         ItemStack stack = instance.getStackInHand(hand);
-        boolean hasAstralRain = getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.ASTRAL_RAIN);
+        boolean hasAstralRain = hasKosmogliph(stack, AstralKosmogliphs.ASTRAL_RAIN);
         var charges = Objects.requireNonNull(stack.get(AstralDataComponents.ASTRAL_RAIN_DATA)).getCharges();
         if (stack.get(AstralDataComponents.ASTRAL_RAIN_DATA) == null) {
             charges = 0;
