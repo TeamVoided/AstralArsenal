@@ -14,7 +14,27 @@ import java.util.*
 
  */
 
-data class CometLauncherData(val uses: Int, val cooldown: Int): SimpleStorageComponent {
+data class NailCannonDataV1(val uses: Int, val beingUsed: Int) : SimpleStorageComponent {
+    companion object {
+        fun default(): NailCannonDataV1 = NailCannonDataV1(0, 0)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> NailCannonDataV1(list[0], list[1]) },
+            { data -> listOf(data.uses, data.beingUsed) }
+        )
+    }
+}
+
+data class NailCannonCooldownData(val cooldown: Int, val fireCooldown: Int) : SimpleStorageComponent {
+    companion object {
+        fun default(): NailCannonCooldownData = NailCannonCooldownData(0, 0)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> NailCannonCooldownData(list[0], list[1]) },
+            { data -> listOf(data.cooldown, data.fireCooldown) }
+        )
+    }
+}
+
+data class CometLauncherData(val uses: Int, val cooldown: Int) : SimpleStorageComponent {
     companion object {
         fun default(): CometLauncherData = CometLauncherData(0, 0)
         val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
