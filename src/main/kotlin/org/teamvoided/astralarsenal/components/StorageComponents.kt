@@ -14,6 +14,16 @@ import java.util.*
 
  */
 
+data class DodgeData(val uses: Int, val cooldown: Int) : SimpleStorageComponent {
+    companion object {
+        fun default(): DodgeData = DodgeData(0, 0)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> DodgeData(list[0], list[1]) },
+            { data -> listOf(data.uses, data.cooldown) }
+        )
+    }
+}
+
 data class SlamData(val lastFallDistance: Float, val slamming: Boolean) : SimpleStorageComponent {
     companion object {
         fun default(): SlamData = SlamData(0f, false)

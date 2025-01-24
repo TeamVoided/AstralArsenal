@@ -22,8 +22,7 @@ object AstralDataComponents {
     // DashKosmogliph.Data(0, 0)
     val DASH_DATA = register("dash_data") { builder -> builder.codec(DashKosmogliph.Data.CODEC).build() }
 
-    // DodgeKosmogliph.Data(0, 0)
-    val DODGE_DATA = register("dodge_data") { builder -> builder.codec(DodgeKosmogliph.Data.CODEC).build() }
+    val DODGE_DATA = registerSimple("dodge_data", DodgeData.CODEC)
 
     val SLAM_DATA = registerSimple("slam_data", SlamData.CODEC)
 

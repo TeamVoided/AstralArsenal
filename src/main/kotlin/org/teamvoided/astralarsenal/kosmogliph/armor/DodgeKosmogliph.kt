@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph.armor
 
-import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -11,7 +10,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.s2c.play.SoundPlayS2CPacket
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
-import net.minecraft.registry.RegistryKey
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
@@ -20,6 +18,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.components.DodgeData
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
@@ -48,27 +47,27 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
             val data = stack.get(AstralDataComponents.DODGE_DATA)
                 ?: throw IllegalStateException("Erm, how the fuck did you manage this")
             val world = player.world
-            if(world is ServerWorld) return
+            if (world is ServerWorld) return
             var LRbias = 0 // 1 is right, -1 is left, 0 is neither
             var BFbias = 0 // 1 for forward, -1 for back, 0 for neither
-            if(left xor right){
-                LRbias = if(left) 1 else -1
+            if (left xor right) {
+                LRbias = if (left) 1 else -1
             }
-            if(forward xor backward){
-                BFbias = if(backward) -1 else 1
+            if (forward xor backward) {
+                BFbias = if (backward) -1 else 1
             }
-            if(!(backward || forward || left || right)){
+            if (!(backward || forward || left || right)) {
                 BFbias = 1
             }
 
             val vector = Vec3d(LRbias.toDouble(), 0.0, BFbias.toDouble())
-            vector.multiply(player.rotationVector.multiply(1.0,0.0,1.0).normalize())
+            vector.multiply(player.rotationVector.multiply(1.0, 0.0, 1.0).normalize())
 
             if (player.vehicle != null || player.isClimbing) return
 
             if (data.uses > 0 && !player.isFallFlying) {
                 println(vector)
-                player.setVelocity(vector)
+                player.velocity = vector
                 player.velocityModified = true
                 world.playSound(
                     null,
@@ -95,7 +94,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
                         )
                     }
                 }
-                stack.set(AstralDataComponents.DODGE_DATA, Data(data.uses - 1, data.cooldown))
+                stack.set(AstralDataComponents.DODGE_DATA, DodgeData(data.uses - 1, data.cooldown))
             }
         }
     }
@@ -149,7 +148,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
                 }
             }
 
-            stack.set(AstralDataComponents.DODGE_DATA, Data(uses, cooldown))
+            stack.set(AstralDataComponents.DODGE_DATA, DodgeData(uses, cooldown))
         }
     }
 
@@ -184,31 +183,8 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
                 cooldown += 15
             }
         }
-        stack.set(
-            AstralDataComponents.DODGE_DATA,
-            Data(uses, cooldown)
-        )
+        stack.set(AstralDataComponents.DODGE_DATA, DodgeData(uses, cooldown))
         return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
     }
 
-    data class Data(
-        val uses: Int,
-        val cooldown: Int
-    ) {
-        companion object {
-            val CODEC = Codecs.NONNEGATIVE_INT.listOf()
-                .xmap(
-                    { list -> Data(list[0], list[1]) },
-                    { data -> listOf(data.uses, data.cooldown) }
-                )
-        }
-    }
-
-    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf()
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
-    }
 }
