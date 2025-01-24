@@ -1,13 +1,13 @@
 [versions]
 kotlin = "2.0.21"
-fabric-loom = "1.7-SNAPSHOT"
+fabric-loom = "1.9-SNAPSHOT"
 iridium = "3.3.2"
 
 farrow = "1.0.0+arrow.1.2.4"
-modmenu = "11.0.1"
+modmenu = "11.0.3"
 waygl = "1.1.5+1.21"
 
-emi = "1.1.12+1.21"
+emi = "1.1.19+1.21.1"
 
 [libraries]
 farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
