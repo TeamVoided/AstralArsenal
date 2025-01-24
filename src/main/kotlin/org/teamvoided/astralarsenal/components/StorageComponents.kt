@@ -14,6 +14,18 @@ import java.util.*
 
  */
 
+data class SlamData(val lastFallDistance: Float, val slamming: Boolean) : SimpleStorageComponent {
+    companion object {
+        fun default(): SlamData = SlamData(0f, false)
+        val CODEC = RecordCodecBuilder.create<SlamData> { builder ->
+            builder.group(
+                Codec.FLOAT.fieldOf("lastFallDistance").forGetter { it.lastFallDistance },
+                Codec.BOOL.fieldOf("slamming").forGetter { it.slamming }
+            ).apply(builder, ::SlamData)
+        }
+    }
+}
+
 data class AstralStrikeData(val hitTimes: Int) : SimpleStorageComponent {
     companion object {
         fun default(): AstralStrikeData = AstralStrikeData(0)

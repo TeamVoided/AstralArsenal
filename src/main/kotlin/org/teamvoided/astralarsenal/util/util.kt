@@ -35,7 +35,7 @@ import org.teamvoided.astralarsenal.init.AstralDataComponents.KOSMOGLIPHS
 import org.teamvoided.astralarsenal.init.AstralDataComponents.PULVERISER_DATA
 import org.teamvoided.astralarsenal.init.AstralDataComponents.SLAM_DATA
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.armor.SlamKosmogliph.Data
+import org.teamvoided.astralarsenal.components.SlamData
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.*
@@ -209,7 +209,7 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
                             true
                         )
                     )
-                    stack.set(SLAM_DATA, Data(0.0f, false))
+                    stack.set(SLAM_DATA, SlamData(0.0f, false))
 //                    if(entity.world is ServerWorld){
 //                        val serverWorld = entity.world as ServerWorld
 //                        val slamEntity = ShockwaveEntity(entity.world, entity)

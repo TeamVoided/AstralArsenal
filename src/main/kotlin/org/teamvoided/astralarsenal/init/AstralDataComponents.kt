@@ -9,7 +9,6 @@ import org.teamvoided.astralarsenal.components.*
 import org.teamvoided.astralarsenal.kosmogliph.armor.DashKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.armor.DodgeKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.armor.JumpKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.armor.SlamKosmogliph
 
 object AstralDataComponents {
     // KosmogliphsComponent()
@@ -26,8 +25,7 @@ object AstralDataComponents {
     // DodgeKosmogliph.Data(0, 0)
     val DODGE_DATA = register("dodge_data") { builder -> builder.codec(DodgeKosmogliph.Data.CODEC).build() }
 
-    // SlamKosmogliph.Data(0f, false)
-    val SLAM_DATA = register("slam_data") { builder -> builder.codec(SlamKosmogliph.Data.CODEC).build() }
+    val SLAM_DATA = registerSimple("slam_data", SlamData.CODEC)
 
     val ASTRAL_STRIKE_DATA = registerSimple("astral_strike_data", AstralStrikeData.CODEC)
 

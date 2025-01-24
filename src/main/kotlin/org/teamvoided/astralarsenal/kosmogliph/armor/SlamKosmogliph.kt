@@ -1,7 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph.armor
 
-import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
@@ -9,6 +7,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.components.SlamData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
@@ -17,7 +16,7 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
     fun handleSlam(stack: ItemStack, player: PlayerEntity) {
         val data = stack.get(AstralDataComponents.SLAM_DATA) ?: return
         if (!player.isOnGround && !data.slamming) {
-            stack.set(AstralDataComponents.SLAM_DATA, Data(0.0f, true))
+            stack.set(AstralDataComponents.SLAM_DATA, SlamData(0.0f, true))
             player.setVelocity(0.0, -5.0, 0.0)
             player.velocityModified = true
         }
@@ -56,7 +55,7 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 //                entity.setVelocity(0.0, -5.0, 0.0)
 //                entity.velocityModified = true
 //            }
-            if(world.isClient){
+            if (world.isClient) {
                 entity.setVelocity(0.0, -5.0, 0.0)
             }
         }
@@ -81,22 +80,6 @@ class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 //        }
 
         //stack.set(AstralItemComponents.SLAM_DATA, Data(currentFallDistance, slamming))
-    }
-
-    class Data(
-        val lastFallDistance: Float,
-        val slamming: Boolean
-    ) {
-        companion object {
-            val CODEC: Codec<Data> = RecordCodecBuilder.create { builder ->
-                val group = builder.group(
-                    Codec.FLOAT.fieldOf("lastFallDistance").forGetter { it.lastFallDistance },
-                    Codec.BOOL.fieldOf("slamming").forGetter { it.slamming }
-                )
-
-                group.apply(builder, SlamKosmogliph::Data)
-            }
-        }
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
