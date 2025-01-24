@@ -1,14 +1,14 @@
 package org.teamvoided.astralarsenal.init
 
-import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
-import net.minecraft.component.DataComponent
+import com.mojang.serialization.Codec
 import net.minecraft.component.DataComponentMap
 import net.minecraft.component.DataComponentType
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import org.teamvoided.astralarsenal.AstralArsenal
+import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.components.*
 import org.teamvoided.astralarsenal.item.CometLauncherItem
 import org.teamvoided.astralarsenal.item.NailCannonItem
 import org.teamvoided.astralarsenal.item.RailgunItem
@@ -24,142 +24,135 @@ import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogli
 import java.util.*
 
 object AstralItemComponents {
+
     private val mods = mutableSetOf<DataComponentTypeModificationContext<*>>()
 
     @JvmField
-    val KOSMOGLIPHS: DataComponentType<KosmogliphsComponent> =
-        register(
-            "kosmogliphs",
-            { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem || it is ShieldItem || it is NailCannonItem || it is MaceItem || it is SupportTotemItem},
-            { KosmogliphsComponent() }) { builder ->
-            builder.codec(KosmogliphsComponent.CODEC).build()
-        }
+    val KOSMOGLIPHS = register(
+        "kosmogliphs",
+        { it is ToolItem || it is ArmorItem || it is RangedWeaponItem || it is RailgunItem || it is ElytraItem || it is TridentItem || it is ShieldItem || it is NailCannonItem || it is MaceItem || it is SupportTotemItem },
+        { KosmogliphsComponent() }) { builder ->
+        builder.codec(KosmogliphsComponent.CODEC).build()
+    }
 
-    val JUMP_DATA: DataComponentType<JumpKosmogliph.Data> =
+    val JUMP_DATA =
         register("jump_data", { it is ArmorItem || it is ToolItem }, { JumpKosmogliph.Data(0, 0, 0, 0) }) { builder ->
             builder.codec(JumpKosmogliph.Data.CODEC).build()
         }
 
-    val DASH_DATA: DataComponentType<DashKosmogliph.Data> =
+    val DASH_DATA =
         register("dash_data", { it is ArmorItem || it is ToolItem }, { DashKosmogliph.Data(0, 0) }) { builder ->
             builder.codec(DashKosmogliph.Data.CODEC).build()
         }
 
-    val DODGE_DATA: DataComponentType<DodgeKosmogliph.Data> =
+    val DODGE_DATA =
         register("dodge_data", { it is ArmorItem || it is ToolItem }, { DodgeKosmogliph.Data(0, 0) }) { builder ->
             builder.codec(DodgeKosmogliph.Data.CODEC).build()
         }
 
-    val SLAM_DATA: DataComponentType<SlamKosmogliph.Data> =
-        register("slam_data", { it is ArmorItem }, { SlamKosmogliph.Data(0f, false) }) { builder ->
-            builder.codec(SlamKosmogliph.Data.CODEC).build()
-        }
+    val SLAM_DATA = register("slam_data", { it is ArmorItem }, { SlamKosmogliph.Data(0f, false) }) { builder ->
+        builder.codec(SlamKosmogliph.Data.CODEC).build()
+    }
 
-    val ASTRAL_STRIKE_DATA: DataComponentType<AstralStrikeKosmogliph.Data> =
-        register(
-            "astral_strike_data",
-            { it is ArmorItem || it is ToolItem },
-            { AstralStrikeKosmogliph.Data(0) }) { builder ->
-            builder.codec(AstralStrikeKosmogliph.Data.CODEC).build()
-        }
-    val MINIGUN_DATA: DataComponentType<MinigunKosmogliph.Data> =
-        register("minigun_data", { it is RailgunItem }, { MinigunKosmogliph.Data(0, 0) }) { builder ->
-            builder.codec(MinigunKosmogliph.Data.CODEC).build()
-        }
+    val ASTRAL_STRIKE_DATA = register(
+        "astral_strike_data",
+        { it is ArmorItem || it is ToolItem },
+        { AstralStrikeKosmogliph.Data(0) }) { builder ->
+        builder.codec(AstralStrikeKosmogliph.Data.CODEC).build()
+    }
+    val MINIGUN_DATA = register("minigun_data", { it is RailgunItem }, { MinigunKosmogliph.Data(0, 0) }) { builder ->
+        builder.codec(MinigunKosmogliph.Data.CODEC).build()
+    }
 
-    val NAILGUN_DATA: DataComponentType<NailCannonItem.Data> =
-        register("nailgun_data", { it is NailCannonItem }, { NailCannonItem.Data(0, 0) }) { builder ->
-            builder.codec(NailCannonItem.Data.CODEC).build()
-        }
+    val NAILGUN_DATA = register("nailgun_data", { it is NailCannonItem }, { NailCannonItem.Data(0, 0) }) { builder ->
+        builder.codec(NailCannonItem.Data.CODEC).build()
+    }
 
-    val NAILGUN_COOLDOWN_DATA: DataComponentType<NailCannonItem.CooldownData> =
+    val NAILGUN_COOLDOWN_DATA =
         register("nailgun_cooldown_data", { it is NailCannonItem }, { NailCannonItem.CooldownData(0, 0) }) { builder ->
             builder.codec(NailCannonItem.CooldownData.CODEC).build()
         }
 
-    val COMET_LAUNCHER_DATA: DataComponentType<CometLauncherItem.Data> =
+    val COMET_LAUNCHER_DATA =
         register("comet_launcher_data", { it is CometLauncherItem }, { CometLauncherItem.Data(0, 0) }) { builder ->
             builder.codec(CometLauncherItem.Data.CODEC).build()
         }
 
-    val GRAPPLE_DATA: DataComponentType<GrappleKosmogliph.Data> =
-        register(
-            "grapple_data",
-            { it is ArmorItem || it is ToolItem },
-            { GrappleKosmogliph.Data(0, 0, false) }) { builder ->
-            builder.codec(GrappleKosmogliph.Data.CODEC).build()
-        }
+    val GRAPPLE_DATA = register(
+        "grapple_data",
+        { it is ArmorItem || it is ToolItem },
+        { GrappleKosmogliph.Data(0, 0, false) }) { builder ->
+        builder.codec(GrappleKosmogliph.Data.CODEC).build()
+    }
 
-    val ALCHEMIST_DATA: DataComponentType<AlchemistKosmogliph.Data> =
+    val ALCHEMIST_DATA =
         register("alchemist_data", { it is BowItem }, { AlchemistKosmogliph.Data(Optional.empty(), 0) }) { builder ->
             builder.codec(AlchemistKosmogliph.Data.CODEC).build()
         }
 
     @JvmField
-    val PULVERISER_DATA: DataComponentType<PulveriserKosmogliph.Data> =
+    val PULVERISER_DATA =
         register("pulveriser_data", { it is MaceItem }, { PulveriserKosmogliph.Data(0, false) }) { builder ->
             builder.codec(PulveriserKosmogliph.Data.CODEC).build()
         }
 
     @JvmField
-    val ASTRAL_RAIN_DATA: DataComponentType<AstralRainKosmogliph.Data> =
+    val ASTRAL_RAIN_DATA =
         register("astral_rain_data", { it is TridentItem }, { AstralRainKosmogliph.Data(0) }) { builder ->
             builder.codec(AstralRainKosmogliph.Data.CODEC).build()
         }
 
-    val SNIPE_DATA_V1: DataComponentType<SnipeKosmogliph.Data> =
+    val SNIPE_DATA_V1 =
         register("snipe_data_v1", { it is RailgunItem }, { SnipeKosmogliph.Data(0, false) }) { builder ->
             builder.codec(SnipeKosmogliph.Data.CODEC).build()
         }
 
-    val CAPACITANCE_DATA_V1: DataComponentType<CapacitanceKosmogliph.Data> =
+    val CAPACITANCE_DATA_V1 =
         register("capacitance_data_v1", { it is ArmorItem }, { CapacitanceKosmogliph.Data(0f) }) { builder ->
             builder.codec(CapacitanceKosmogliph.Data.CODEC).build()
         }
 
-    val CAPACITANCE_DATA_V2: DataComponentType<CapacitanceKosmogliph.Data_2> =
+    val CAPACITANCE_DATA_V2 =
         register("capacitance_data_v2", { it is ArmorItem }, { CapacitanceKosmogliph.Data_2(0, 0) }) { builder ->
             builder.codec(CapacitanceKosmogliph.Data_2.CODEC).build()
         }
 
-    val TOTEM_DATA: DataComponentType<SupportTotemItem.TotemData> =
-        register("totem_data", {false}, { SupportTotemItem.TotemData(null)}) { builder ->
-            builder.codec(SupportTotemItem.TotemData.CODEC).build()
-        }
+    val TOTEM_DATA = registerSimple("totem_data", TotemData.CODEC)
+
+    /*  fun <T> register(
+          name: String,
+          predicate: (Item) -> Boolean,
+          valueProvider: (Item) -> T,
+          build: (DataComponentType.Builder<T>) -> DataComponentType<T>
+      ): DataComponentType<T> {
+          val type = Registry.register(Registries.DATA_COMPONENT_TYPE, id(name), build(DataComponentType.builder()))
+          mods.add(DataComponentTypeModificationContext(type, predicate, valueProvider))
+          return type
+      }*/
+
+    fun <T : SimpleStorageComponents> registerSimple(name: String, codec: Codec<T>): DataComponentType<T> =
+        Registry.register(Registries.DATA_COMPONENT_TYPE, id(name), DataComponentType.builder<T>().codec(codec).build())
 
     fun <T> register(
         name: String,
-        predicate: (Item) -> Boolean,
-        valueProvider: (Item) -> T,
         build: (DataComponentType.Builder<T>) -> DataComponentType<T>
-    ): DataComponentType<T> {
-        val type = Registry.register(
-            Registries.DATA_COMPONENT_TYPE,
-            AstralArsenal.id(name),
-            build(DataComponentType.builder())
-        )
+    ): DataComponentType<T> =
+        Registry.register(Registries.DATA_COMPONENT_TYPE, id(name), build(DataComponentType.builder()))
 
-        mods.add(DataComponentTypeModificationContext(type, predicate, valueProvider))
+    fun init() {
+        /* DefaultItemComponentEvents.MODIFY.register { ctx ->
+             mods.forEach { modCtx ->
+                 ctx.modify(modCtx.predicate) { builder, item ->
+                     modCtx.addToBuilder(builder, item)
+                 }
+             }
 
-        return type
-    }
-
-    init {
-        DefaultItemComponentEvents.MODIFY.register { ctx ->
-            mods.forEach { modCtx ->
-                ctx.modify(modCtx.predicate) { builder, item ->
-                    modCtx.addToBuilder(builder, item)
-                }
-            }
-
-            mods.clear()
-        }
+             mods.clear()
+         }*/
     }
 
     data class DataComponentTypeModificationContext<T>(
-        val type: DataComponentType<T>,
-        val predicate: (Item) -> Boolean,
-        val valueProvider: (Item) -> T,
+        val type: DataComponentType<T>, val predicate: (Item) -> Boolean, val valueProvider: (Item) -> T,
     ) {
         fun addToBuilder(builder: DataComponentMap.Builder, item: Item) {
             builder.put(type, valueProvider(item))
