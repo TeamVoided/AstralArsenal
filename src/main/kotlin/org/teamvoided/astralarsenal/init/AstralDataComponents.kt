@@ -11,7 +11,6 @@ import org.teamvoided.astralarsenal.kosmogliph.armor.DodgeKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.armor.JumpKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.armor.SlamKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.melee.AstralStrikeKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.MinigunKosmogliph
 
 object AstralDataComponents {
     // KosmogliphsComponent()
@@ -35,8 +34,7 @@ object AstralDataComponents {
     val ASTRAL_STRIKE_DATA =
         register("astral_strike_data") { builder -> builder.codec(AstralStrikeKosmogliph.Data.CODEC).build() }
 
-    //MinigunKosmogliph.Data(0, 0)
-    val MINIGUN_DATA = register("minigun_data") { builder -> builder.codec(MinigunKosmogliph.Data.CODEC).build() }
+    val MINIGUN_DATA = registerSimple("minigun_data", MinigunData.CODEC)
 
     val NAILGUN_DATA = registerSimple("nailgun_data", NailCannonDataV1.CODEC)
     val NAILGUN_COOLDOWN_DATA = registerSimple("nailgun_cooldown_data", NailCannonCooldownData.CODEC)

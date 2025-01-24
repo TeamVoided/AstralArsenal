@@ -1,20 +1,16 @@
 package org.teamvoided.astralarsenal.kosmogliph.ranged.beams
 
 import net.minecraft.entity.Entity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
-import net.minecraft.util.TypedActionResult
-import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.components.MinigunData
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.item.RailgunItem
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
 //This needs to be moved to a crossbow kosmogliph
-class MinigunKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.item is RailgunItem }) {
+class MinigunKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is RailgunItem }) {
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         val data = stack.get(AstralDataComponents.MINIGUN_DATA)
             ?: throw IllegalStateException("Erm, how the fuck did you manage this")
@@ -29,25 +25,9 @@ class MinigunKosmogliph(id: Identifier) :
 
         stack.set(
             AstralDataComponents.MINIGUN_DATA,
-            Data(uses, cooldown)
+            MinigunData(uses, cooldown)
         )
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 
-    override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
-        return super.onUse(world, player, hand)
-    }
-
-    data class Data(
-        val uses: Int,
-        val cooldown: Int
-    ) {
-        companion object {
-            val CODEC = Codecs.NONNEGATIVE_INT.listOf()
-                .xmap(
-                    { list -> Data(list[0], list[1]) },
-                    { data -> listOf(data.uses, data.cooldown) }
-                )
-        }
-    }
 }
