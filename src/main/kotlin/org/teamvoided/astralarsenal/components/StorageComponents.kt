@@ -14,6 +14,16 @@ import java.util.*
 
  */
 
+data class AstralStrikeData(val hitTimes: Int) : SimpleStorageComponent {
+    companion object {
+        fun default(): AstralStrikeData = AstralStrikeData(0)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> AstralStrikeData(list[0]) },
+            { data -> listOf(data.hitTimes) }
+        )
+    }
+}
+
 data class MinigunData(val uses: Int, val cooldown: Int) : SimpleStorageComponent {
     companion object {
         fun default(): MinigunData = MinigunData(0, 0)

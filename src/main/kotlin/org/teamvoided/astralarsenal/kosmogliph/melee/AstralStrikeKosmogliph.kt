@@ -6,7 +6,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
-import net.minecraft.util.dynamic.Codecs
+import org.teamvoided.astralarsenal.components.AstralStrikeData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.init.AstralDataComponents
@@ -16,7 +16,7 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 class AstralStrikeKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ASTRAL_STRIKE) }) {
 
-        val STRIKES_TO_TRIGGER = 8
+    val STRIKES_TO_TRIGGER = 8
 
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         val data = stack.get(AstralDataComponents.ASTRAL_STRIKE_DATA)
@@ -38,20 +38,8 @@ class AstralStrikeKosmogliph(id: Identifier) :
             attacker.world.spawnEntity(beam)
             hitTimes = 0
         }
-        stack.set(AstralDataComponents.ASTRAL_STRIKE_DATA, Data(hitTimes))
+        stack.set(AstralDataComponents.ASTRAL_STRIKE_DATA, AstralStrikeData(hitTimes))
         return super.postHit(stack, target, attacker)
-    }
-
-    data class Data(
-        val hitTimes: Int,
-    ) {
-        companion object {
-            val CODEC = Codecs.NONNEGATIVE_INT.listOf()
-                .xmap(
-                    { list -> Data(list[0]) },
-                    { data -> listOf(data.hitTimes) }
-                )
-        }
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
