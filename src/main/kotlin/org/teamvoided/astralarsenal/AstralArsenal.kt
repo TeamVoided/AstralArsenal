@@ -44,8 +44,8 @@ object AstralArsenal {
         }
 
         CommandRegistrationCallback.EVENT.register { dispatcher, ctx, env ->
-            val root = dispatcher.register(literal("astral"))
-            KosmogliphCommand.apply(root, ctx, env)
+            @Suppress("UNUSED_VARIABLE") val root = dispatcher.register(literal("astral"))
+            KosmogliphCommand.register(dispatcher)
         }
     }
 

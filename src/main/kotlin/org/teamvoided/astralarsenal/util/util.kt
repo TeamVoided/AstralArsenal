@@ -16,11 +16,13 @@ import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
+import net.minecraft.text.Text
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
@@ -79,6 +81,16 @@ fun World.playSound(pos: Vec3d, soundEvent: SoundEvent, category: SoundCategory,
 fun World.playSound(pos: Vec3d, soundEvent: Holder<SoundEvent>, category: SoundCategory, volume: Float, pitch: Float) {
     this.method_60511(null, pos.x, pos.y, pos.z, soundEvent, category, volume, pitch)
 }
+
+fun ServerCommandSource.message(string: String): Int {
+    this.sendSystemMessage(Text.literal(string))
+    return 0
+}
+fun ServerCommandSource.error(text: String): Int {
+    this.sendError(Text.literal(text))
+    return -1
+}
+
 
 val PARRY_DAMAGE_MULT = 1.25
 
