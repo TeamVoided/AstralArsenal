@@ -32,7 +32,7 @@ object AstralItems {
         "astral_greathammer",
         AstralGreathammerItem(
             (Item.Settings()).fireproof().rarity(Rarity.EPIC)
-                .attributeModifiersComponent(SwordItem.createAttributes(ToolMaterials.NETHERITE, 5, -3.0F))
+                .attributeModifiersComponent(AstralGreathammerItem.createAttributes(ToolMaterials.NETHERITE, 4, -2.4F))
         )
     )
     val NAILCANNON = register(

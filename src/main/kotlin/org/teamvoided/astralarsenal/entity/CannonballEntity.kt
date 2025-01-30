@@ -45,7 +45,7 @@ class CannonballEntity : ThrownItemEntity {
             entity.customDamage(AstralDamageTypes.CANNONBALL, getDmg().toFloat(), this, owner)
         } else {
             val type = if (entity == owner) AstralDamageTypes.BALLNT else AstralDamageTypes.CANNONBALL
-            entity.customDamage(type, getDmg() - 5f, this, owner)
+            entity.customDamage(type, getDmg().toFloat(), this, owner)
         }
         if (this.getDmg() in 20..39) {
             this.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
@@ -60,7 +60,7 @@ class CannonballEntity : ThrownItemEntity {
             i = 40
         }
         this.setDmg(i)
-        if ((entity.isAlive || this.getDmg() < 20)) {
+        if ((this.getDmg() < 20)) {
             this.setVelocity(this.velocity.multiply(-0.05, 0.0, -0.05))
             this.addVelocity(0.0, 0.2, 0.0)
         }

@@ -72,9 +72,9 @@ class AstralItemTagProvider(
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ASTRAL_STRIKE).forceAddTag(ItemTags.SWORDS)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_FREEZE)
-            .forceAddTag(ItemTags.SWORDS).forceAddTag(ItemTags.AXES)
+            .forceAddTag(ItemTags.SWORDS).forceAddTag(ItemTags.AXES).add(AstralItems.ASTRAL_GREATHAMMER)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_FLAME_BURST)
-            .forceAddTag(ItemTags.SWORDS).forceAddTag(ItemTags.AXES)
+            .forceAddTag(ItemTags.SWORDS).forceAddTag(ItemTags.AXES).add(AstralItems.ASTRAL_GREATHAMMER)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ASTRAL_SLASH).forceAddTag(ItemTags.SWORDS)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_DEEP_WOUNDS)
             .forceAddTag(ItemTags.SWORDS).forceAddTag(ItemTags.AXES)

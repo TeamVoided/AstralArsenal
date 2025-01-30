@@ -19,7 +19,7 @@ class GrappleKosmogliph(id: Identifier) : SimpleKosmogliph(id, {
     val item = it.item
     item is ArmorItem && item.armorSlot == ArmorItem.ArmorSlot.HELMET
 }) {
-    //im removing this shit - astra
+    //This is officially to be removed
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         if(world is ServerWorld) println("1")
         if (slot == 3) {
