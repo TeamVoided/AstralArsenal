@@ -23,6 +23,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.util.lastDamageTaken
 import kotlin.math.max
 
 class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DASH) }),

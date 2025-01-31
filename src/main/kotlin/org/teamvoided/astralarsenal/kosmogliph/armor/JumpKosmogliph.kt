@@ -24,6 +24,7 @@ import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.util.hasKosmogliph
+import org.teamvoided.astralarsenal.util.lastDamageTaken
 import kotlin.math.max
 
 class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_JUMP) }),
