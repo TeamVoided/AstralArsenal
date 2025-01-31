@@ -125,58 +125,7 @@ class CosmicTableScreen(
         Vector2i(x + 60, y)
     )
 
-    private fun determineWidgetPositions(count: Int, offset: Vector2i, gap: Int): List<Vector2i> {
-        if (count <= 0) return emptyList()
-
-        val xSpan = 160
-        val ySpan = 28
-        var count = count
-        var underCount = 0
-
-        fun perWidgetX() = xSpan / count
-
-        while (perWidgetX() <= (22 + (gap * 2))) {
-            count--
-            underCount++
-        }
-
-        val perWidgetX = perWidgetX()
-
-        if (underCount > 4) throw IllegalStateException("Are more than 10 kosmogliphs are applicable to this item?")
-
-        val positions = mutableListOf<Vector2i>()
-        for (i in 0..<count) {
-            positions.add(offset.add(perWidgetX * i + gap, gap, Vector2i()))
-        }
-
-        if (underCount <= 0) return positions
-
-        fun ucPos1() = positions.add(offset.add(perWidgetX + gap * 2, ySpan + gap * 2, Vector2i()))
-
-        fun ucPos2() {
-            ucPos1()
-            positions.add(offset.add(perWidgetX * 2 + 48 + gap * 4, ySpan + gap * 2, Vector2i()))
-        }
-
-        fun ucPos3() {
-            ucPos2()
-            positions.add(offset.add(gap, ySpan + gap * 2, Vector2i()))
-        }
-
-        fun ucPos4() {
-            ucPos3()
-            positions.add(offset.add(perWidgetX * 3 + 48 + gap * 5, ySpan + gap * 2, Vector2i()))
-        }
-
-        val ucPositions = listOf(::ucPos1, ::ucPos2, ::ucPos3, ::ucPos4)
-        ucPositions[underCount - 1]()
-
-        return positions
-    }
-
-    override fun drawBackground(
-        graphics: GuiGraphics, delta: Float, mouseX: Int, mouseY: Int
-    ) {
+    override fun drawBackground(graphics: GuiGraphics, delta: Float, mouseX: Int, mouseY: Int) {
         val x = (this.width - this.backgroundWidth) / 2
         val y = (this.height - this.backgroundHeight) / 2
         graphics.fillRenderLayer(RenderLayer.getEndPortal(), x + 5, y + 5, x + (WIDTH - 5), y + (HEIGHT / 2), 0)
