@@ -10,11 +10,11 @@ import org.teamvoided.astralarsenal.components.AstralStrikeData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.init.AstralDataComponents
-import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 
 // I will fix this - Astra
 class AstralStrikeKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ASTRAL_STRIKE) }) {
+    KosmogliphWithData(id, AstralDataComponents.ASTRAL_STRIKE_DATA, AstralItemTags.SUPPORTS_ASTRAL_STRIKE) {
 
     val STRIKES_TO_TRIGGER = 8
 
@@ -43,9 +43,5 @@ class AstralStrikeKosmogliph(id: Identifier) :
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.FIRE_ASPECT)
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
     }
 }

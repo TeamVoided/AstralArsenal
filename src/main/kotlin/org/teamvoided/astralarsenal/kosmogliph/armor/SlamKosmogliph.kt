@@ -10,9 +10,10 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.SlamData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
-import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 
-class SlamKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_SLAM) }) {
+class SlamKosmogliph(id: Identifier) :
+    KosmogliphWithData(id, AstralDataComponents.SLAM_DATA, AstralItemTags.SUPPORTS_SLAM) {
     fun handleSlam(stack: ItemStack, player: PlayerEntity) {
         val data = stack.getOrDefault(AstralDataComponents.SLAM_DATA, SlamData.DEFAULT)
         if (!player.isOnGround && !data.slamming) {

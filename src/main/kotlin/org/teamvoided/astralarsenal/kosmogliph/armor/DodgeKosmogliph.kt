@@ -23,14 +23,14 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
-import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 import org.teamvoided.astralarsenal.util.hasKosmogliph
 import org.teamvoided.astralarsenal.util.lastDamageTaken
 import kotlin.math.max
 import kotlin.math.sqrt
 
-class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DODGE) }),
-    AirSpeedKosmogliph {
+class DodgeKosmogliph(id: Identifier) :
+    KosmogliphWithData(id, AstralDataComponents.DODGE_DATA, AstralItemTags.SUPPORTS_DODGE), AirSpeedKosmogliph {
     val JUMP_FORWARD_BOOST = 5.0
     val SPEED_CAP = 1.0
     val SPEED_MULT = sqrt(2 * SPEED_CAP * SPEED_CAP)
@@ -66,7 +66,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
 
                 if (data.uses > 0 && !player.isFallFlying) {
                     println(vector)
-                    player.setVelocity(vector)
+                    player.velocity = vector
                     player.velocityModified = true
                     world.playSound(
                         null,
@@ -159,7 +159,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
         equipmentSlot: EquipmentSlot,
         stage: DamageModificationStage
     ): Float {
-        if (stage != DamageModificationStage.POST_EFFECT) return super<SimpleKosmogliph>.modifyDamage(
+        if (stage != DamageModificationStage.POST_EFFECT) return super<KosmogliphWithData>.modifyDamage(
             stack,
             entity,
             damage,
@@ -182,7 +182,7 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
             }
         }
         stack.set(AstralDataComponents.DODGE_DATA, DodgeData(uses, cooldown))
-        return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+        return super<KosmogliphWithData>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
     }
 
 }

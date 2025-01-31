@@ -12,9 +12,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralEffects
 
 class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, AstralItemTags.SUPPORTS_TRIDENT_BLEED) {
-    val over = listOf(
-        AstralEffects.BLEED
-    )
+    val over = listOf(AstralEffects.BLEED)
 
     override fun onHit(attacker: Entity?, victim: LivingEntity) {
         var bleed_levels = 0
@@ -53,15 +51,8 @@ class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, Astra
         super.postHit(stack, target, attacker)
     }
 
-    override fun translationText(tooltip: Boolean) =
-        "Bleed"
-
-
+    override fun translationText(tooltip: Boolean) = "Bleed"
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.RIPTIDE)
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
     }
 }

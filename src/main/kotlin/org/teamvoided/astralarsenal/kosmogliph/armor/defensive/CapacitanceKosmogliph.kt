@@ -26,12 +26,13 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
-import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_CAPACITANCE) }) {
+class CapacitanceKosmogliph(id: Identifier) :
+    KosmogliphWithData(id, AstralDataComponents.CAPACITANCE_DATA_V1, AstralItemTags.SUPPORTS_CAPACITANCE) {
     val CHARGE_DRAIN_PER_SECOND = 0.05f
     val MAX_PLAYER_DAMAGE = 15f
     val DISCHARGE_PERCENT_PER_HIT = 1.0f
@@ -191,7 +192,6 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
         }
         super.inventoryTick(stack, world, entity, slot, selected)
     }
-
 
 
     fun shockNearbyEntities(cause: Entity, base: Entity, damage: Float) {

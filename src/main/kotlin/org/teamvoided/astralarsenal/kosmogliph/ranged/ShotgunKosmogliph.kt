@@ -18,9 +18,8 @@ import org.teamvoided.astralarsenal.kosmogliph.logic.getProjectileEntity
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.util.hasMultiShot
 
-class ShotgunKosmogliph(
-    id: Identifier,
-) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_SHOTGUN) }), RangedWeaponKosmogliph {
+class ShotgunKosmogliph(id: Identifier) :
+    SimpleKosmogliph(id, AstralItemTags.SUPPORTS_SHOTGUN), RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
         if (world.isClient) return
 
@@ -46,9 +45,5 @@ class ShotgunKosmogliph(
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.PIERCING)
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
     }
 }

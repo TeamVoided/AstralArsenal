@@ -11,20 +11,14 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.PulveriserData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
-import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 import org.teamvoided.astralarsenal.util.playSound
 
 class PulveriserKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_PULVERISER) }) {
-
-    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int {
-        return 72000
-    }
-
+    KosmogliphWithData(id, AstralDataComponents.PULVERISER_DATA, AstralItemTags.SUPPORTS_PULVERISER) {
+    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = 72000
     override fun getUseAction(stack: ItemStack): UseAction = UseAction.SPEAR
-
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
-        player.setCurrentHand(hand)
         return TypedActionResult(ActionResult.CONSUME_PARTIAL, player.getStackInHand(hand))
     }
 

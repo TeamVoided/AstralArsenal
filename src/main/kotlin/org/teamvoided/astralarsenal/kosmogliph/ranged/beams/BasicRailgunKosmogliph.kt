@@ -21,7 +21,6 @@ import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
-import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
@@ -30,7 +29,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class BasicRailgunKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_BASIC_RAILGUN) }) {
+    SimpleKosmogliph(id, AstralItemTags.SUPPORTS_BASIC_RAILGUN) {
 
     val unhealable = listOf(
         AstralEffects.UNHEALABLE_DAMAGE
@@ -86,8 +85,8 @@ class BasicRailgunKosmogliph(id: Identifier) :
         )
         if(world is ServerWorld){
             val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab)
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())

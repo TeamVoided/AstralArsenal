@@ -20,9 +20,8 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.util.hasMultiShot
 import org.teamvoided.astralarsenal.util.setVelocity
 
-class CannonballLauncherKosmogliph(
-    id: Identifier,
-) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_CANNONBALL_LAUNCHER) }), RangedWeaponKosmogliph {
+class CannonballLauncherKosmogliph(id: Identifier) :
+    SimpleKosmogliph(id, AstralItemTags.SUPPORTS_CANNONBALL_LAUNCHER), RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
         if (world.isClient) return
 
@@ -70,9 +69,5 @@ class CannonballLauncherKosmogliph(
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
         return listOf(Enchantments.PIERCING, Enchantments.MULTISHOT)
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
     }
 }

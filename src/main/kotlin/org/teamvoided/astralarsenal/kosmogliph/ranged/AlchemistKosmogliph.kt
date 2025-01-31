@@ -26,12 +26,13 @@ import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.components.AlchemistData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
-import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 import java.util.*
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
-class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ALCHEMIST) }),
+class AlchemistKosmogliph(id: Identifier) :
+    KosmogliphWithData(id, AstralDataComponents.ALCHEMIST_DATA, AstralItemTags.SUPPORTS_ALCHEMIST),
     BowKosmogliph {
     override fun onStackClicked(
         stack: ItemStack,

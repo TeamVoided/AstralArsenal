@@ -19,8 +19,6 @@ import org.teamvoided.astralarsenal.kosmogliph.melee.*
 import org.teamvoided.astralarsenal.kosmogliph.melee.mace.*
 import org.teamvoided.astralarsenal.kosmogliph.ranged.*
 import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.*
-import org.teamvoided.astralarsenal.kosmogliph.ranged.cometlauncher.*
-import org.teamvoided.astralarsenal.kosmogliph.ranged.nailgun.*
 import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.*
 import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.*
 import org.teamvoided.astralarsenal.kosmogliph.shield.*
@@ -49,7 +47,7 @@ object AstralKosmogliphs {
     val ANKLE_GUARD = register("ankle_guard", ::AnkleGuardKosmogliph)
 
     val PARRY = register("parry", ::ParryKosmogliph)
-    val FROST_THORNS = register("frost_thorns", ::FrostThornsKosmogliph)
+    val FROST_THORNS = registerSimple("frost_thorns", AstralItemTags.SUPPORTS_FROST_THORNS)
 
     val ALCHEMIST = register("alchemist", ::AlchemistKosmogliph)
 
@@ -101,18 +99,18 @@ object AstralKosmogliphs {
     @JvmField
     val ASTRAL_RAIN = register("astral_rain", ::AstralRainKosmogliph)
 
-    val CAPACITY = register("capacity", ::CapacityKosmogliph)
-    val OVER_HEAT = register("over_heat", ::OverHeatKosmogliph)
-    val STATIC_RELEASE = register("static_release", ::StaticReleaseKosmogliph)
-    val TEAR = register("tear", ::TearKosmogliph)
+    val CAPACITY = registerSimple("capacity", AstralItemTags.SUPPORTS_CAPACITY)
+    val OVER_HEAT = registerSimple("over_heat",AstralItemTags.SUPPORTS_OVER_HEAT)
+    val STATIC_RELEASE = registerSimple("static_release", AstralItemTags.SUPPORTS_STATIC_RELEASE)
+    val TEAR = registerSimple("tear", AstralItemTags.SUPPORTS_TEAR)
 
     @JvmField
     val PULVERISER = register("pulveriser", ::PulveriserKosmogliph)
     val WIND_ERUPTION = register("wind_eruption", ::WindEruptionKosmogliph)
 
-    val GENERATOR = register("generator", ::GeneratorKosmogliph)
-    val QUICKSHOT = register("quickshot", ::QuickshotKosmogliph)
-    val TARGET = register("target", ::TargetKosmogliph)
+    val GENERATOR = registerSimple("generator", AstralItemTags.SUPPORTS_GENERATOR)
+    val QUICKSHOT = registerSimple("quickshot", AstralItemTags.SUPPORTS_QUICKSHOT)
+    val TARGET = registerSimple("target", AstralItemTags.SUPPORTS_TARGET)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))

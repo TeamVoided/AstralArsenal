@@ -283,7 +283,8 @@ class AstralEnTranslationProvider(
             gen.add(id.toTranslationKey("key"), name.titleCase())
         }
 
-        gen.add("kosmogliph.alchemist.charges", "Charges: %s")
+        gen.add("kosmogliph.alchemist.charges", "Charges: %s/4")
+        gen.add("kosmogliph.astral_rain.charges", "Charges: %s/3")
         gen.add("cosmic_table.enchantments.missing", "Missing: ")
         gen.add("cosmic_table.enchantments.incompatible", "Incompatible: ")
         gen.add("comic_table.message.missing", "Your %s is missing enchantments!")

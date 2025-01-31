@@ -24,14 +24,14 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralSounds
-import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class SnipeKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_SNIPE) }) {
+    KosmogliphWithData(id, AstralDataComponents.SNIPE_DATA_V1, AstralItemTags.SUPPORTS_SNIPE) {
     val unhealable = listOf(
         AstralEffects.UNHEALABLE_DAMAGE
     )

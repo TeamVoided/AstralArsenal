@@ -22,12 +22,12 @@ import org.teamvoided.astralarsenal.data.tags.AstralEntityTags.MOUNTS_WITH_DASH
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
-import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 import org.teamvoided.astralarsenal.util.lastDamageTaken
 import kotlin.math.max
 
-class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DASH) }),
-    AirSpeedKosmogliph {
+class DashKosmogliph(id: Identifier) :
+    KosmogliphWithData(id, AstralDataComponents.DASH_DATA, AstralItemTags.SUPPORTS_DASH), AirSpeedKosmogliph {
     // change this to change how much boost they get :3
     val JUMP_FORWARD_BOOST = 1.0
 
@@ -144,7 +144,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         equipmentSlot: EquipmentSlot,
         stage: DamageModificationStage
     ): Float {
-        if (stage != DamageModificationStage.POST_EFFECT) return super<SimpleKosmogliph>.modifyDamage(
+        if (stage != DamageModificationStage.POST_EFFECT) return super<KosmogliphWithData>.modifyDamage(
             stack,
             entity,
             damage,
@@ -168,6 +168,6 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                 }
             }
         stack.set(AstralDataComponents.DASH_DATA, DashData(uses, cooldown))
-        return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+        return super<KosmogliphWithData>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
     }
 }

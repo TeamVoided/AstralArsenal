@@ -22,13 +22,13 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
-import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 import org.teamvoided.astralarsenal.util.hasKosmogliph
 import org.teamvoided.astralarsenal.util.lastDamageTaken
 import kotlin.math.max
 
-class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_JUMP) }),
-    AirSpeedKosmogliph {
+class JumpKosmogliph(id: Identifier) :
+    KosmogliphWithData(id, AstralDataComponents.JUMP_DATA, AstralItemTags.SUPPORTS_JUMP), AirSpeedKosmogliph {
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
         if (!stack.hasKosmogliph(AstralKosmogliphs.JUMP)) return
@@ -156,7 +156,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         equipmentSlot: EquipmentSlot,
         stage: DamageModificationStage
     ): Float {
-        if (stage != DamageModificationStage.POST_EFFECT) return super<SimpleKosmogliph>.modifyDamage(
+        if (stage != DamageModificationStage.POST_EFFECT) return super<KosmogliphWithData>.modifyDamage(
             stack,
             entity,
             damage,
@@ -182,6 +182,6 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
             }
         }
         stack.set(AstralDataComponents.JUMP_DATA, JumpData(uses, cooldown, 0, maxUses))
-        return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+        return super<KosmogliphWithData>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
     }
 }

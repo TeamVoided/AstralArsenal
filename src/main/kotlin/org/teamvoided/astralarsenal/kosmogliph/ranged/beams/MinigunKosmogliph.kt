@@ -7,10 +7,10 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.MinigunData
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.item.RailgunItem
-import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 
 //This needs to be moved to a crossbow kosmogliph
-class MinigunKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.item is RailgunItem }) {
+class MinigunKosmogliph(id: Identifier) : KosmogliphWithData(id, AstralDataComponents.MINIGUN_DATA, { it.item is RailgunItem }) {
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         val data = stack.getOrDefault(AstralDataComponents.MINIGUN_DATA, MinigunData.DEFAULT)
         var uses = data.uses
