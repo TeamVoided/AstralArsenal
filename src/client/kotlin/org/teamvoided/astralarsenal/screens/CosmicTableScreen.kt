@@ -19,6 +19,7 @@ class CosmicTableScreen(
 ) : HandledScreen<CosmicTableMenu>(handler, inventory, title) {
     private val currentWidgets = mutableListOf<KosmogliphWidget>()
     private var lastTickStack = handler.getSlot(0).stack
+    private var errorText = false
 
 
     init {
@@ -56,7 +57,7 @@ class CosmicTableScreen(
             .filter { it.canBeAppliedTo(handler.getSlot(0).stack) }
 
         val positions = getPositions(applicableKosmogliphs.size)
-        //determineWidgetPositions(applicableKosmogliphs.size, Vector2i(x + 8, y + 14), 2)
+        errorText = positions.isEmpty() && applicableKosmogliphs.isNotEmpty()
 
         val widgets = positions.mapIndexed { index, position ->
             KosmogliphWidget(
@@ -77,7 +78,7 @@ class CosmicTableScreen(
     }
 
     private fun getPositions(count: Int): List<Vector2i> {
-
+        if (count <= 0) return emptyList()
         val halfSize = SIZE / 2
         val y = y + 14 + GAP
         val x = (this.width / 2) - halfSize
@@ -85,15 +86,12 @@ class CosmicTableScreen(
         val y2 = y + GAP + SIZE
 
         return when (count) {
-            0 -> emptyList()
             1 -> listOf(Vector2i(x, y))
             2 -> listOf(Vector2i(x - 30, y), Vector2i(x + 30, y))
             3 -> listOf(Vector2i(x - 30, y), Vector2i(x, y), Vector2i(x + 30, y))
             4 -> listOf(
-                Vector2i(x - 60, y),
-                Vector2i(x - 20, y),
-                Vector2i(x + 20, y),
-                Vector2i(x + 60, y)
+                Vector2i(x - 60, y), Vector2i(x - 20, y),
+                Vector2i(x + 20, y), Vector2i(x + 60, y)
             )
 
             5 -> makeTopRow(x, y)
@@ -103,13 +101,11 @@ class CosmicTableScreen(
                 Vector2i(x - 20, y),
                 Vector2i(x + 20, y),
                 Vector2i(x + 60, y)
-            ).plus(Vector2i(x - 40, y2)).plus(Vector2i(x + 40, y2))
+            )
+                .plus(Vector2i(x - 40, y2))
+                .plus(Vector2i(x + 40, y2))
 
             7 -> makeTopRow(x, y)
-                .plus(Vector2i(x - 50, y2))
-                .plus(Vector2i(x + 50, y2))
-
-            8 -> makeTopRow(x, y)
                 .plus(Vector2i(x - 50, y2))
                 .plus(Vector2i(x + 50, y2))
 
@@ -130,6 +126,17 @@ class CosmicTableScreen(
         val y = (this.height - this.backgroundHeight) / 2
         graphics.fillRenderLayer(RenderLayer.getEndPortal(), x + 5, y + 5, x + (WIDTH - 5), y + (HEIGHT / 2), 0)
         graphics.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight)
+    }
+
+    override fun drawForeground(graphics: GuiGraphics, mouseX: Int, mouseY: Int) {
+        super.drawForeground(graphics, mouseX, mouseY)
+        if (errorText) graphics.drawCenteredShadowedText(
+            this.textRenderer,
+            Text.translatable("kosmogliph.cosmic_table.too_many_applicable"),
+            this.backgroundWidth / 2,
+            this.titleY + 23,
+            0xFF0000
+        )
     }
 
     override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {

@@ -287,6 +287,7 @@ class AstralEnTranslationProvider(
         gen.add("kosmogliph.astral_rain.charges", "Charges: %s/3")
         gen.add("cosmic_table.enchantments.missing", "Missing: ")
         gen.add("cosmic_table.enchantments.incompatible", "Incompatible: ")
+        gen.add("kosmogliph.cosmic_table.too_many_applicable", "Too many kosmogliphs applicable!")
         gen.add("comic_table.message.missing", "Your %s is missing enchantments!")
         gen.add("comic_table.message.incompatible", "Your %s has incompatible enchantments!")
 

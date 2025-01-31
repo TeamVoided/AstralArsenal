@@ -26,7 +26,7 @@ import org.teamvoided.astralarsenal.kosmogliph.tools.*
 
 @Suppress("unused")
 object AstralKosmogliphs {
-    //    val STUPID_FUCKING_GLIPH = registerSimple("stupid_fucking_gliph") { true }
+//    val STUPID_FUCKING_GLIPH = registerSimple("stupid_fucking_gliph") { true }
     val EMPTY = registerSimple("empty") { false }
 
     @JvmField
