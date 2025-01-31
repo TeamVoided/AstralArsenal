@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.kosmogliph
 
+import com.mojang.serialization.Codec
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.minecraft.block.BlockState
@@ -17,23 +18,16 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.context.LootContextParameterSet
-import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.screen.slot.Slot
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
-import net.minecraft.util.ClickType
-import net.minecraft.util.Hand
-import net.minecraft.util.TypedActionResult
-import net.minecraft.util.UseAction
+import net.minecraft.util.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.AstralArsenal
-import org.teamvoided.astralarsenal.components.KosmogliphsComponent.Companion.toComponent
-import org.teamvoided.astralarsenal.init.AstralDataComponents
-import org.teamvoided.astralarsenal.util.getKosmogliphs
+import org.teamvoided.astralarsenal.AstralArsenal.id
 import java.util.function.Consumer
 
 interface Kosmogliph {
@@ -98,22 +92,10 @@ interface Kosmogliph {
     fun disallowedEnchantment(): List<RegistryKey<Enchantment>> = listOf()
     fun modifyAirStrafeSpeed(entity: LivingEntity, speed: Float) = speed
 
-    data class Failure(val reason: Text)
     companion object {
-        val REGISTRY_KEY: RegistryKey<Registry<Kosmogliph>> = RegistryKey.ofRegistry(AstralArsenal.id("kosmogliphs"))
-        val REGISTRY: Registry<Kosmogliph> = FabricRegistryBuilder.createSimple(REGISTRY_KEY).buildAndRegister()
-
-        val CODEC = REGISTRY.codec
-        val PACKET_CODEC = PacketCodecs.fromCodec(REGISTRY.codec)
-
-        fun addToComponent(stack: ItemStack, kosmogliph: Kosmogliph): ItemStack {
-            val kosmogliphs = stack.getKosmogliphs()
-            val mutableClone = kosmogliphs.toMutableSet()
-            mutableClone.add(kosmogliph)
-            stack.set(AstralDataComponents.KOSMOGLIPHS, mutableClone.toComponent())
-            kosmogliph.onApply(stack)
-
-            return stack
-        }
+        val REGISTRY_KEY: RegistryKey<Registry<Kosmogliph>> = RegistryKey.ofRegistry(id("kosmogliphs"))
+        val REGISTRY: Registry<Kosmogliph> = FabricRegistryBuilder.createDefaulted(REGISTRY_KEY, id("empty")).buildAndRegister()
+        val CODEC: Codec<Kosmogliph> = REGISTRY.codec
+//        val PACKET_CODEC = PacketCodecs.fromCodec(REGISTRY.codec)
     }
 }

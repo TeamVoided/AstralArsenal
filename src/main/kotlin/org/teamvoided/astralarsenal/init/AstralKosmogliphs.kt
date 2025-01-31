@@ -3,8 +3,10 @@ package org.teamvoided.astralarsenal.init
 import arrow.core.Predicate
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registry
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
@@ -26,9 +28,12 @@ import org.teamvoided.astralarsenal.kosmogliph.tools.*
 
 @Suppress("unused")
 object AstralKosmogliphs {
-    val VEIN_MINER = register("vein_miner", ::VeinmineKosmogliph)
+    //    val STUPID_FUCKING_GLIPH = registerSimple("stupid_fucking_gliph") { true }
+    val EMPTY = registerSimple("empty") { false }
+
     @JvmField
-    val HAMMER = register("hammer", ::HammerKosmogliph)
+    val HAMMER = registerSimple("hammer", AstralItemTags.SUPPORTS_HAMMER)
+    val VEIN_MINER = register("vein_miner", ::VeinmineKosmogliph)
     val SMELTER = register("smelter", ::SmelterKosmogliph)
     val REAPER = register("reaper", ::ReaperKosmogliph)
 
@@ -112,6 +117,7 @@ object AstralKosmogliphs {
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))
 
+    fun registerSimple(name: String, tag: TagKey<Item>): SimpleKosmogliph = register(name) { SimpleKosmogliph(it, tag) }
     fun registerSimple(name: String, applicationPredicate: Predicate<ItemStack>): SimpleKosmogliph =
         register(name) { SimpleKosmogliph(it, applicationPredicate) }
 }
