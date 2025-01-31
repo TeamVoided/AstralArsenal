@@ -4,7 +4,6 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screen.ingame.HandledScreen
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 import org.joml.Vector2i
 import org.teamvoided.astralarsenal.AstralArsenal
@@ -19,7 +18,7 @@ class CosmicTableScreen(
     handler: CosmicTableMenu, inventory: PlayerInventory, title: Text
 ) : HandledScreen<CosmicTableMenu>(handler, inventory, title) {
     private val currentWidgets = mutableListOf<KosmogliphWidget>()
-    private var lastTickStack = ItemStack.EMPTY
+    private var lastTickStack = handler.getSlot(0).stack
 
 
     init {
@@ -43,12 +42,13 @@ class CosmicTableScreen(
         if (!(applicationSlot.hasStack() && (gemSlot.hasStack() || applicationSlot.stack.hasKosmogliphs() || handler.playerInventory.player.isCreative) && (lastTickStack == applicationSlot.stack))) {
             currentWidgets.forEach(::remove)
             currentWidgets.clear()
-        } else if (currentWidgets.isEmpty()) {
+        }
+        if (currentWidgets.isEmpty()) {
             createWidgets()
             currentWidgets.forEach { addDrawableSelectableElement(it) }
         }
 
-        lastTickStack = handler.getSlot(0).stack
+        lastTickStack = applicationSlot.stack
     }
 
     private fun createWidgets() {
@@ -106,6 +106,10 @@ class CosmicTableScreen(
             ).plus(Vector2i(x - 40, y2)).plus(Vector2i(x + 40, y2))
 
             7 -> makeTopRow(x, y)
+                .plus(Vector2i(x - 50, y2))
+                .plus(Vector2i(x + 50, y2))
+
+            8 -> makeTopRow(x, y)
                 .plus(Vector2i(x - 50, y2))
                 .plus(Vector2i(x + 50, y2))
 
