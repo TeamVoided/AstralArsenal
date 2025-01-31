@@ -16,45 +16,45 @@ import org.teamvoided.astralarsenal.init.AstralHudRendering;
 
 @Mixin(MinecraftClient.class)
 public class CrimsonTimeMixin {
-  @Shadow
-  public ClientPlayerInteractionManager interactionManager;
-  @Shadow
-  public ClientPlayerEntity player;
+    @Shadow
+    public ClientPlayerInteractionManager interactionManager;
+    @Shadow
+    public ClientPlayerEntity player;
 
-  // Change this to change the number of ticks players have crimson time for
-  @Unique
-  private static int CRIMSON_TIME_TICKS = 5;
-  @Unique
-  private static int ticks = 0;
-  @Unique
-  private static Entity target = null;
+    // Change this to change the number of ticks players have crimson time for
+    @Unique
+    private static final int CRIMSON_TIME_TICKS = 5;
+    @Unique
+    private static int ticks = 0;
+    @Unique
+    private static Entity target = null;
 
-  @Inject(method = "tick", at = @At("HEAD"))
-  private void astral$crimsonTick(CallbackInfo info) {
-    var instance = MinecraftClient.getInstance();
-    AstralHudRendering.INSTANCE.setCrimsonCrosshair(false);
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void astral$crimsonTick(CallbackInfo info) {
+        var instance = MinecraftClient.getInstance();
+        AstralHudRendering.crimsonCrosshair = false;
 
-    if(instance.targetedEntity != null) {
-      target = instance.targetedEntity;
-      ticks = CRIMSON_TIME_TICKS;
+        if (instance.targetedEntity != null) {
+            target = instance.targetedEntity;
+            ticks = CRIMSON_TIME_TICKS;
+        }
+
+        if (ticks > 0) {
+            ticks--;
+
+            if (instance.targetedEntity == null && !target.isInvisible())
+                AstralHudRendering.crimsonCrosshair = true;
+        } else {
+            target = null;
+        }
     }
 
-    if(ticks > 0) {
-      ticks--;
-
-      if(instance.targetedEntity == null && !target.isInvisible())
-        AstralHudRendering.INSTANCE.setCrimsonCrosshair(true);
-    } else {
-      target = null;
+    @Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
+    private void astral$crimsonAttack(CallbackInfoReturnable<Boolean> info) {
+        if (target != null) {
+            interactionManager.attackEntity(player, target);
+            player.swingHand(Hand.MAIN_HAND);
+            info.setReturnValue(true);
+        }
     }
-  }
-
-  @Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
-  private void astral$crimsonAttack(CallbackInfoReturnable<Boolean> info) {
-    if (target != null) {
-      interactionManager.attackEntity(player, target);
-      player.swingHand(Hand.MAIN_HAND);
-      info.setReturnValue(true);
-    }
-  }
 }

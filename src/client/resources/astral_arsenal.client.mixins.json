@@ -4,9 +4,10 @@
   "package": "org.teamvoided.astralarsenal.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "CrimsonTimeMixin",
+    "CrimsonTimeRendererMixin",
     "EnchantmentScreenMixin",
-    "WorldRendererMixin",
-    "CrimsonTimeMixin"
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

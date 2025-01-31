@@ -5,38 +5,37 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.network.ClientPlayerEntity
+import net.minecraft.client.render.DeltaTracker
 import net.minecraft.item.ItemStack
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.util.getKosmogliphs
 import org.teamvoided.astralarsenal.util.hasKosmogliph
 
 object AstralHudRendering {
-    var rightIconTicks = 0
-    var leftIconTicks = 0
+    private var rightIconTicks = 0
+    private var leftIconTicks = 0
+
+    @JvmField
     var crimsonCrosshair = false
 
-    fun init() {
-        HudRenderCallback.EVENT.register noRender@{ graphics, deltaTracker ->
-            val client = MinecraftClient.getInstance() ?: return@noRender
-            val player = client.player ?: return@noRender
-            if (client.options.hudHidden) return@noRender
+    fun init() = HudRenderCallback.EVENT.register(::hudRenderer)
+    fun hudRenderer(graphics: GuiGraphics, @Suppress("UNUSED_PARAMETER") deltaTracker: DeltaTracker) {
+        val client = MinecraftClient.getInstance() ?: return
+        val player = client.player ?: return
+        if (client.options.hudHidden) return
+        if (!client.options.perspective.isFirstPerson) return
 
-            // (ender) in game debugger
-//            player.sendMessage(Text.literal("Delay: $renderDashTicks"), true)
+        if (rightIconTicks > 0) rightIconTicks--
+        if (leftIconTicks > 0) leftIconTicks--
 
-            if (rightIconTicks > 0) rightIconTicks--
-            if (leftIconTicks > 0) leftIconTicks--
+        graphics.matrices.push()
+        RenderSystem.enableBlend()
 
-            graphics.matrices.push()
-            RenderSystem.enableBlend()
+        graphics.renderRightIcon(player)
+        graphics.renderLeftIcon(player)
 
-            graphics.renderRightIcon(player)
-            graphics.renderLeftIcon(player)
-            graphics.renderCrimsonCrosshair()
-
-            RenderSystem.disableBlend()
-            graphics.matrices.pop()
-        }
+        RenderSystem.disableBlend()
+        graphics.matrices.pop()
     }
 
     private fun GuiGraphics.renderRightIcon(player: ClientPlayerEntity) {
@@ -101,16 +100,5 @@ object AstralHudRendering {
                 9
             )
         }
-    }
-
-    private fun GuiGraphics.renderCrimsonCrosshair() {
-        if (crimsonCrosshair)
-            this.drawGuiTexture(
-                id("hud/crimson_crosshair"),
-                (this.scaledWindowWidth - 15) / 2,
-                (this.scaledWindowHeight - 15) / 2,
-                15,
-                15
-            )
     }
 }
