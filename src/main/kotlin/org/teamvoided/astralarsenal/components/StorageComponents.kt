@@ -25,7 +25,7 @@ data class JumpData(val uses: Int, val cooldown: Int, val lastJump: Int, val max
     }
 }
 
-data class DashData(val uses: Int, val cooldown: Int): SimpleStorageComponent {
+data class DashData(val uses: Int, val cooldown: Int) : SimpleStorageComponent {
     companion object {
         val DEFAULT: DashData = DashData(0, 0)
         val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
@@ -78,6 +78,10 @@ data class MinigunData(val uses: Int, val cooldown: Int) : SimpleStorageComponen
 }
 
 data class NailCannonDataV1(val uses: Int, val beingUsed: Int) : SimpleStorageComponent {
+    override fun equals(other: Any?): Boolean {
+        return if (other == null || other !is NailCannonDataV1) return super.equals(other)
+        else true
+    }
     companion object {
         val DEFAULT: NailCannonDataV1 = NailCannonDataV1(0, 0)
         val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
@@ -88,6 +92,10 @@ data class NailCannonDataV1(val uses: Int, val beingUsed: Int) : SimpleStorageCo
 }
 
 data class NailCannonCooldownData(val cooldown: Int, val fireCooldown: Int) : SimpleStorageComponent {
+    override fun equals(other: Any?): Boolean {
+        return if (other == null || other !is NailCannonCooldownData) return super.equals(other)
+        else true
+    }
     companion object {
         val DEFAULT: NailCannonCooldownData = NailCannonCooldownData(0, 0)
         val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
