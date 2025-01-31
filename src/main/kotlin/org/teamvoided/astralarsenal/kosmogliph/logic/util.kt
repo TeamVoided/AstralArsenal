@@ -146,24 +146,21 @@ fun queryMineableHammerPositions(
         )
     )
 
-    val aoe = areaOfAffect(pos, raycast.side)
-
-    aoe.allInside().forEach {
+    areaOfAffect(pos, raycast.side).allInside().forEach {
         val state = world.getBlockState(it)
-        if (stack.canSafelyBreak(world, state, it)) {
-            val player = miner as PlayerEntity
-            val base = mainState.calcBlockBreakingDelta(player, world, pos)
-            val side = state.calcBlockBreakingDelta(player, world, it)
+        if (stack.canSafelyBreak(world, state, it) && miner is PlayerEntity) {
+            val base = mainState.calcBlockBreakingDelta(miner, world, pos)
+            val side = state.calcBlockBreakingDelta(miner, world, it)
             if (side > 1.0 || base <= side) {
-                mineablePositions.add(it)
+                if (PlayerBlockBreakEvents.BEFORE.invoker()
+                        .beforeBlockBreak(world, miner, it, state, world.getBlockEntity(it))
+                ) mineablePositions.add(it)
             }
         }
     }
 
     val durability = stack.maxDamage - stack.damage
-    if (durability < mineablePositions.size) {
-        return mineablePositions.toList().subList(0, durability - 1).toSet()
-    }
+    if (durability < mineablePositions.size) mineablePositions.toList().subList(0, durability - 1).toSet()
 
     return mineablePositions
 }
@@ -198,37 +195,16 @@ fun Set<BlockPos>.breakAndDropStacksAt(
         val stacks =
             Block.getDroppedStacks(state, world as ServerWorld, otherPos, world.getBlockEntity(otherPos), miner, stack)
 
-        state.onStacksDropped(world, otherPos, stack, true)
-        world.breakBlock(otherPos, false, miner)
-        if (miner is PlayerEntity && !miner.isCreative) miner.incrementStat(Stats.MINED.getOrCreateStat(state.block))
+        if (miner is PlayerEntity) {
+            state.onStacksDropped(world, otherPos, stack, !miner.isCreative)
+            world.breakBlock(otherPos, false, miner)
+            if (!miner.isCreative) miner.incrementStat(Stats.MINED.getOrCreateStat(state.block))
+        }
         stacks
-    }.flatten() //.combined()
+    }.flatten()
 
     if (miner is ServerPlayerEntity && miner.isCreative) return
     combined.forEach { droppedStack -> Block.dropStack(world, pos, droppedStack) }
-}
-
-// causes item dupe
-@Suppress("unused")
-fun List<ItemStack>.combined(): List<ItemStack> {
-    val combined = mutableListOf<ItemStack>()
-    map { it.copy() }.forEach { stack ->
-        val expandable = combined.filter { it.count < it.maxCount }
-        if (expandable.isEmpty()) {
-            combined.add(stack.copy())
-            return@forEach
-        }
-
-        expandable.forEach expand@{ other ->
-            if (stack.isEmpty) return@expand
-            val addable = (other.maxCount - other.count).coerceAtMost(stack.count)
-            other.count += addable
-            stack.count -= addable
-        }
-
-        if (!stack.isEmpty) combined.add(stack.copy())
-    }
-    return combined
 }
 
 fun ItemStack.canSafelyBreak(world: World, state: BlockState, pos: BlockPos): Boolean {
