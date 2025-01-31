@@ -38,7 +38,7 @@ class AstralRainKosmogliph(id: Identifier) :
         tooltipConsumer.accept(CommonTexts.EMPTY)
 
         tooltipConsumer.accept(
-            Text.translatable("kosmogliph.astral_rain.charges %s/3", data.charges.toString())
+            Text.translatable("kosmogliph.astral_rain.charges", data.charges.toString())
                 .formatted(Formatting.DARK_PURPLE)
         )
     }
