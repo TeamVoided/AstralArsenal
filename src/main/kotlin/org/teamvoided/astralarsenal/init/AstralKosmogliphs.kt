@@ -27,6 +27,7 @@ import org.teamvoided.astralarsenal.kosmogliph.tools.*
 @Suppress("unused")
 object AstralKosmogliphs {
     val VEIN_MINER = register("vein_miner", ::VeinmineKosmogliph)
+    @JvmField
     val HAMMER = register("hammer", ::HammerKosmogliph)
     val SMELTER = register("smelter", ::SmelterKosmogliph)
     val REAPER = register("reaper", ::ReaperKosmogliph)

@@ -1,7 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph
 
-import arrow.core.Either
-import arrow.core.right
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.minecraft.block.BlockState
@@ -33,9 +31,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.AstralArsenal
-import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent.Companion.toComponent
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
+import org.teamvoided.astralarsenal.util.getKosmogliphs
 import java.util.function.Consumer
 
 interface Kosmogliph {
@@ -108,24 +106,14 @@ interface Kosmogliph {
         val CODEC = REGISTRY.codec
         val PACKET_CODEC = PacketCodecs.fromCodec(REGISTRY.codec)
 
-        fun addToComponent(stack: ItemStack, kosmogliph: Kosmogliph): Either<Failure, ItemStack> {
-            val kosmogliphs = stack.getOrDefault(AstralItemComponents.KOSMOGLIPHS, KosmogliphsComponent())
+        fun addToComponent(stack: ItemStack, kosmogliph: Kosmogliph): ItemStack {
+            val kosmogliphs = stack.getKosmogliphs()
             val mutableClone = kosmogliphs.toMutableSet()
             mutableClone.add(kosmogliph)
-            stack.set(AstralItemComponents.KOSMOGLIPHS, mutableClone.toComponent())
+            stack.set(AstralDataComponents.KOSMOGLIPHS, mutableClone.toComponent())
             kosmogliph.onApply(stack)
 
-            return stack.right()
-        }
-
-        fun removeFromComponent(stack: ItemStack, kosmogliph: Kosmogliph): Either<Failure, ItemStack> {
-            val kosmogliphs = stack.getOrDefault(AstralItemComponents.KOSMOGLIPHS, KosmogliphsComponent())
-            val mutableClone = kosmogliphs.toMutableSet()
-            mutableClone.remove(kosmogliph)
-            stack.set(AstralItemComponents.KOSMOGLIPHS, mutableClone.toComponent())
-            kosmogliph.onUnapply(stack)
-
-            return stack.right()
+            return stack
         }
     }
 }

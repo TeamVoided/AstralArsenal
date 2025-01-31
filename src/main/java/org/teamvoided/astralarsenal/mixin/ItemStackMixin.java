@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.teamvoided.astralarsenal.init.AstralItemComponents;
+import org.teamvoided.astralarsenal.init.AstralDataComponents;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.teamvoided.astralarsenal.util.UtilKt.getKosmogliphsOnStack;
+import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
@@ -29,9 +29,9 @@ public abstract class ItemStackMixin {
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendTooltip(Lnet/minecraft/component/DataComponentType;Lnet/minecraft/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/client/item/TooltipConfig;)V", ordinal = 4))
     void modifyTooltip(Item.TooltipContext context, PlayerEntity player, TooltipConfig config, CallbackInfoReturnable<List<Text>> cir,
                        @Local Consumer<Text> consumer) {
-        this.appendTooltip(AstralItemComponents.KOSMOGLIPHS, context, consumer, config);
+        this.appendTooltip(AstralDataComponents.KOSMOGLIPHS, context, consumer, config);
 
-        var glyph = getKosmogliphsOnStack((ItemStack) (Object) this);
+        var glyph = getKosmogliphs((ItemStack) (Object) this);
         if (!glyph.isEmpty())
             glyph.forEach(it -> it.modifyItemTooltip((ItemStack) (Object) this, context, consumer, config));
 

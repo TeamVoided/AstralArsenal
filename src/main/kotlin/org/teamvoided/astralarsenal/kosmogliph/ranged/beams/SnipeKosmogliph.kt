@@ -1,7 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph.ranged.beams
 
-import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
@@ -17,19 +15,16 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Math.lerp
-import org.teamvoided.astralarsenal.coroutine.mcCoroutineTask
-import org.teamvoided.astralarsenal.coroutine.ticks
+import org.teamvoided.astralarsenal.components.SnipeDataV1
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralEffects
-import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.init.AstralItemComponents.PULVERISER_DATA
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -43,8 +38,7 @@ class SnipeKosmogliph(id: Identifier) :
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
         val stack = player.getStackInHand(hand)
-        val data = stack.get(AstralItemComponents.SNIPE_DATA_V1)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.SNIPE_DATA_V1, SnipeDataV1.DEFAULT)
         var loaded = data.loaded
         var ticks = data.ticks
         if (!data.loaded) {
@@ -63,41 +57,24 @@ class SnipeKosmogliph(id: Identifier) :
                 player.itemCooldownManager.set(stack.item, 300)
             }
         }
-        stack.set(AstralItemComponents.SNIPE_DATA_V1, Data(ticks, loaded))
+        stack.set(AstralDataComponents.SNIPE_DATA_V1, SnipeDataV1(ticks, loaded))
         return null
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        val data = stack.get(AstralItemComponents.SNIPE_DATA_V1)
-            ?: throw IllegalStateException("how the fuck?")
+        val data = stack.getOrDefault(AstralDataComponents.SNIPE_DATA_V1, SnipeDataV1.DEFAULT)
         var ticks = data.ticks
         var loaded = data.loaded
         if (ticks > 0) ticks--
-        else if(loaded){
+        else if (loaded) {
             ticks = 0
             loaded = false
-            if(entity is PlayerEntity && !entity.isCreative){
+            if (entity is PlayerEntity && !entity.isCreative) {
                 entity.itemCooldownManager.set(stack.item, 300)
             }
         }
-        stack.set(AstralItemComponents.SNIPE_DATA_V1, Data(ticks, loaded))
+        stack.set(AstralDataComponents.SNIPE_DATA_V1, SnipeDataV1(ticks, loaded))
         super.inventoryTick(stack, world, entity, slot, selected)
-    }
-
-    class Data(
-        val ticks: Int,
-        val loaded: Boolean
-    ) {
-        companion object {
-            val CODEC: Codec<Data> = RecordCodecBuilder.create { builder ->
-                val group = builder.group(
-                    Codec.INT.fieldOf("ticks").forGetter { it.ticks },
-                    Codec.BOOL.fieldOf("slamming").forGetter { it.loaded }
-                )
-
-                group.apply(builder, SnipeKosmogliph::Data)
-            }
-        }
     }
 
     fun selfDamage(world: World, player: PlayerEntity) {
@@ -134,7 +111,7 @@ class SnipeKosmogliph(id: Identifier) :
                 2
             )
         )
-        if(world is ServerWorld){
+        if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
@@ -144,7 +121,7 @@ class SnipeKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
-            beamRenderer.setPosition(player.x,player.y +1, player.z)
+            beamRenderer.setPosition(player.x, player.y + 1, player.z)
             world.spawnEntity(beamRenderer)
         }
         val entities = mutableListOf<Entity>()
@@ -225,7 +202,7 @@ class SnipeKosmogliph(id: Identifier) :
                             ), 7.5f
                         )
                     }
-                } else if(entity is LivingEntity) {
+                } else if (entity is LivingEntity) {
                     entity.addStatusEffect(StatusEffectInstance(AstralEffects.CONDUCTIVE, 20, 19))
                     entity.damage(
                         DamageSource(

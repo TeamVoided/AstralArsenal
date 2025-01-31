@@ -9,12 +9,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.astralarsenal.util.UtilKt;
 
+import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
+
 @Mixin(BowItem.class)
 public class BowMixin {
     @WrapOperation(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getArrowType(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;"))
     public ItemStack modifyArrowType(PlayerEntity instance, ItemStack stack, Operation<ItemStack> original) {
         var originalStack = original.call(instance, stack);
-        var kosmogliphs = UtilKt.getKosmogliphsOnStack(stack);
+        var kosmogliphs = getKosmogliphs(stack);
         if (kosmogliphs.isEmpty()) return originalStack;
         var kosmogliph = UtilKt.findFirstBow(kosmogliphs);
         if (kosmogliph == null) return originalStack;

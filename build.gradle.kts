@@ -49,7 +49,7 @@ dependencies {
     modLocalRuntime(libs.emi)
 
     if (org.gradle.internal.os.OperatingSystem.current().isLinux) {
-        modRuntimeOnly(libs.waygl)
+//        modRuntimeOnly(libs.waygl)
     }
 }
 

@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph.armor
 
-import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -11,31 +10,28 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.s2c.play.SoundPlayS2CPacket
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
-import net.minecraft.registry.RegistryKey
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
-import net.minecraft.stat.Stat
 import net.minecraft.util.Identifier
-import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.components.JumpData
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.util.getKosmogliphsOnStack
+import org.teamvoided.astralarsenal.util.hasKosmogliph
 import kotlin.math.max
 
 class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_JUMP) }),
     AirSpeedKosmogliph {
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
-        if (!getKosmogliphsOnStack(stack).contains(AstralKosmogliphs.JUMP)) {
-            return
-        }
+        if (!stack.hasKosmogliph(AstralKosmogliphs.JUMP)) return
+
 //        if (getKosmogliphsOnStack(player.getEquippedStack(EquipmentSlot.HEAD)).contains(AstralKosmogliphs.GRAPPLE) && player.getEquippedStack(
 //                EquipmentSlot.HEAD
 //            ).get(AstralItemComponents.GRAPPLE_DATA) != null && player.getEquippedStack(
@@ -44,8 +40,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 //        ){
 //            return
 //        }
-        val data = stack.get(AstralItemComponents.JUMP_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.JUMP_DATA, JumpData.DEFAULT)
         val world = player.world
 
         if (player.vehicle != null) return
@@ -88,7 +83,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                     )
                 }
             }
-            stack.set(AstralItemComponents.JUMP_DATA, Data(data.uses - 1, data.cooldown, 0, data.maxUses - 1))
+            stack.set(AstralDataComponents.JUMP_DATA, JumpData(data.uses - 1, data.cooldown, 0, data.maxUses - 1))
         }
     }
 
@@ -96,8 +91,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
         if (entity !is LivingEntity) return
         if (slot == 0) {
-            val data = stack.get(AstralItemComponents.JUMP_DATA)
-                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+            val data = stack.getOrDefault(AstralDataComponents.JUMP_DATA, JumpData.DEFAULT)
             var uses = data.uses
             var lastJump = data.lastJump
             var maxUses = data.maxUses
@@ -149,7 +143,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 
             if (lastJump < 20) lastJump++
 
-            stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, lastJump, maxUses))
+            stack.set(AstralDataComponents.JUMP_DATA, JumpData(uses, cooldown, lastJump, maxUses))
         }
     }
 
@@ -170,8 +164,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
             stage
         )
 
-        val data = stack.get(AstralItemComponents.JUMP_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.JUMP_DATA, JumpData.DEFAULT)
         var uses = data.uses
         var cooldown = data.cooldown
         var maxUses = data.maxUses
@@ -187,30 +180,7 @@ class JumpKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                 cooldown += 15
             }
         }
-        stack.set(AstralItemComponents.JUMP_DATA, Data(uses, cooldown, 0, maxUses))
+        stack.set(AstralDataComponents.JUMP_DATA, JumpData(uses, cooldown, 0, maxUses))
         return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
-    }
-
-    data class Data(
-        val uses: Int,
-        val cooldown: Int,
-        val lastJump: Int,
-        val maxUses: Int
-    ) {
-        companion object {
-            val CODEC = Codecs.NONNEGATIVE_INT.listOf()
-                .xmap(
-                    { list -> Data(list[0], list[1], list.getOrNull(2) ?: 0, list[3]) },
-                    { data -> listOf(data.uses, data.cooldown, data.lastJump, data.maxUses) }
-                )
-        }
-    }
-
-    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf()
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
     }
 }

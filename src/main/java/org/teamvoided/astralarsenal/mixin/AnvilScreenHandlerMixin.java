@@ -14,10 +14,11 @@ import net.minecraft.screen.ScreenHandlerType;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.teamvoided.astralarsenal.init.AstralItemComponents;
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent;
 
 import java.util.Optional;
+
+import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
 @Mixin(AnvilScreenHandler.class)
 public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
@@ -28,13 +29,12 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 
     @ModifyExpressionValue(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z"))
     private boolean supportsEnchantments(boolean original) {
-        ItemStack inputStack1 = ingredientInventory.getStack(0);
-        ItemStack inputStack2 = ingredientInventory.getStack(1);
-        KosmogliphsComponent kosmogliphs = inputStack1.get(AstralItemComponents.KOSMOGLIPHS);
+        ItemStack stack1 = ingredientInventory.getStack(0);
+        ItemStack stack2 = ingredientInventory.getStack(1);
+        KosmogliphsComponent kosmogliphs = getKosmogliphs(stack1);
         boolean[] hasDisallowedEnchantments = {false};
-
-        if (kosmogliphs != null && !kosmogliphs.isEmpty()) {
-            ItemEnchantmentsComponent enchantmentsComponent = EnchantmentHelper.getEnchantments(inputStack2);
+        if (!kosmogliphs.isEmpty()) {
+            ItemEnchantmentsComponent enchantmentsComponent = EnchantmentHelper.getEnchantments(stack2);
             enchantmentsComponent.getEnchantments().forEach(enchantmentHolder -> {
                 Optional<RegistryKey<Enchantment>> key = enchantmentHolder.getKey();
                 key.ifPresent(enchantmentRegistryKey -> kosmogliphs.forEach(kosmogliph -> {

@@ -1,7 +1,6 @@
 package org.teamvoided.astralarsenal.util
 
 import arrow.core.Predicate
-import net.minecraft.block.BlockState
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
@@ -12,39 +11,39 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
+import net.minecraft.text.Text
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import org.joml.Math.lerp
 import org.joml.Vector3f
-import org.teamvoided.astralarsenal.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.components.PulveriserData
+import org.teamvoided.astralarsenal.components.SlamData
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
-import org.teamvoided.astralarsenal.entity.ShockwaveEntity
-import org.teamvoided.astralarsenal.init.*
-import org.teamvoided.astralarsenal.init.AstralItemComponents.KOSMOGLIPHS
-import org.teamvoided.astralarsenal.init.AstralItemComponents.PULVERISER_DATA
-import org.teamvoided.astralarsenal.init.AstralItemComponents.SLAM_DATA
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralDataComponents.PULVERISER_DATA
+import org.teamvoided.astralarsenal.init.AstralDataComponents.SLAM_DATA
+import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.init.AstralKosmogliphs
+import org.teamvoided.astralarsenal.init.AstralParticles
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
-import org.teamvoided.astralarsenal.kosmogliph.armor.SlamKosmogliph.Data
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
-import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
-import org.teamvoided.astralarsenal.world.explosion.maceExplosions.*
-import java.util.*
+import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MacePulverise
+import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceStrongPulverise
+import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceWeakPulverise
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -54,12 +53,6 @@ fun <T> Registry<T>.registerHolder(id: Identifier, entry: T): Holder.Reference<T
     Registry.registerHolder(this, id, entry)
 
 fun <T> Registry<T>.register(id: Identifier, entry: T): T = Registry.register(this, id, entry)
-
-fun getKosmogliphsOnStack(stack: ItemStack): KosmogliphsComponent {
-    val component = stack.components.get(KOSMOGLIPHS)
-        ?: return KosmogliphsComponent()
-    return component
-}
 
 fun interface BPredicate<T> : Predicate<T>, java.util.function.Predicate<T> {
     override fun test(t: T): Boolean = this(t)
@@ -89,6 +82,16 @@ fun World.playSound(pos: Vec3d, soundEvent: Holder<SoundEvent>, category: SoundC
     this.method_60511(null, pos.x, pos.y, pos.z, soundEvent, category, volume, pitch)
 }
 
+fun ServerCommandSource.message(string: String): Int {
+    this.sendSystemMessage(Text.literal(string))
+    return 0
+}
+fun ServerCommandSource.error(text: String): Int {
+    this.sendError(Text.literal(text))
+    return -1
+}
+
+
 val PARRY_DAMAGE_MULT = 1.25
 
 // damage is the amount of damage the player would take if the shield didn't block it
@@ -97,7 +100,7 @@ val PARRY_DAMAGE_MULT = 1.25
 fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?, damage: Float, source: DamageSource) {
     if (target is LivingEntity) {
         val shield = target.activeItem
-        if (getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.PARRY)) {
+        if (shield.hasKosmogliph(AstralKosmogliphs.PARRY)) {
             if (target.itemUseTime < 6) {
                 target.world.playSound(
                     null,
@@ -129,7 +132,7 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
                     )
                 }
             }
-        } else if (getKosmogliphsOnStack(shield).contains(AstralKosmogliphs.FROST_THORNS)) {
+        } else if (shield.hasKosmogliph(AstralKosmogliphs.FROST_THORNS)) {
             val num = (damage / 2).roundToInt() + 1
             repeat(num) {
                 val freezeBallEntity = FreezeShotEntity(target.world, target)
@@ -144,19 +147,18 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
 fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPos: BlockPos) {
     val faller = entity as PlayerEntity
     val serverFaller = if (faller is ServerPlayerEntity) {
-        faller as ServerPlayerEntity
+        faller
     } else null
     if (faller.isOnGround) {
-        var stack: ItemStack? = null
-        if (getKosmogliphsOnStack(faller.getStackInHand(Hand.MAIN_HAND)).contains(AstralKosmogliphs.PULVERISER)) {
-            stack = faller.getStackInHand(Hand.MAIN_HAND)
-        } else if (getKosmogliphsOnStack(faller.getStackInHand(Hand.OFF_HAND)).contains(AstralKosmogliphs.PULVERISER)) {
-            stack = faller.getStackInHand(Hand.OFF_HAND)
-        }
+        val stack: ItemStack? = if (faller.getStackInHand(Hand.MAIN_HAND).hasKosmogliph(AstralKosmogliphs.PULVERISER)) {
+            faller.getStackInHand(Hand.MAIN_HAND)
+        } else if (faller.getStackInHand(Hand.OFF_HAND).hasKosmogliph(AstralKosmogliphs.PULVERISER)) {
+            faller.getStackInHand(Hand.OFF_HAND)
+        } else null
         if (stack != null) {
-            val isSlamming = stack.get(PULVERISER_DATA)?.slamming ?: false
-            val ticks = stack.get(PULVERISER_DATA)?.ticks ?: 0
-            if (isSlamming) {
+            val pulveriserData = stack.getOrDefault(PULVERISER_DATA, PulveriserData.DEFAULT)
+            val ticks = pulveriserData.ticks
+            if (pulveriserData.slamming) {
                 val explosionBehavior = (
                         if (ticks >= 100) MaceStrongPulverise(faller)
                         else if (ticks >= 50) MacePulverise(faller)
@@ -186,7 +188,7 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
                     SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST
                 )
                 faller.playSound(sound)
-                stack.set(PULVERISER_DATA, PulveriserKosmogliph.Data(0, false))
+                stack.set(PULVERISER_DATA, PulveriserData(0, false))
                 if (!faller.isCreative) {
                     faller.itemCooldownManager.set(stack.item, 200)
                 }
@@ -195,12 +197,12 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
         }
     }
     var stack: ItemStack? = null
-    if (getKosmogliphsOnStack(faller.getEquippedStack(EquipmentSlot.HEAD)).contains(AstralKosmogliphs.SLAM)) {
+    if (faller.getEquippedStack(EquipmentSlot.HEAD).hasKosmogliph(AstralKosmogliphs.SLAM)) {
         stack = faller.getEquippedStack(EquipmentSlot.HEAD)
     }
     if (stack != null) {
         if (faller.isOnGround) {
-            val isSlamming = stack.get(SLAM_DATA)?.slamming ?: false
+            val isSlamming = stack.getOrDefault(SLAM_DATA, SlamData.DEFAULT).slamming
             if (isSlamming) {
                 if (faller.isOnGround) {
                     faller.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
@@ -215,7 +217,7 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
                             true
                         )
                     )
-                    stack.set(SLAM_DATA, Data(0.0f, false))
+                    stack.set(SLAM_DATA, SlamData(0.0f, false))
 //                    if(entity.world is ServerWorld){
 //                        val serverWorld = entity.world as ServerWorld
 //                        val slamEntity = ShockwaveEntity(entity.world, entity)
@@ -248,12 +250,12 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
 }
 
 fun tickMovement(freezer: LivingEntity) {
-    if(freezer.world is ServerWorld && freezer.age % 4 == 0 && freezer.canFreeze() && freezer.frozenTicks > 0){
+    if (freezer.world is ServerWorld && freezer.age % 4 == 0 && freezer.canFreeze() && freezer.frozenTicks > 0) {
         val serverWorld = freezer.world as ServerWorld
         serverWorld.spawnParticles(
             AstralParticles.SNOWFLAKE,
             freezer.x,
-            freezer.y + (freezer.height)/2,
+            freezer.y + (freezer.height) / 2,
             freezer.z,
             1,
             (freezer.width / 2).toDouble(),
@@ -262,12 +264,12 @@ fun tickMovement(freezer: LivingEntity) {
             0.0
         )
     }
-    if(freezer.world is ServerWorld && freezer.age % 40 == 0 && freezer.canFreeze() && freezer.isFrozen){
+    if (freezer.world is ServerWorld && freezer.age % 40 == 0 && freezer.canFreeze() && freezer.isFrozen) {
         val serverWorld = freezer.world as ServerWorld
         serverWorld.spawnParticles(
             AstralParticles.SNOWFLAKE,
             freezer.x,
-            freezer.y + (freezer.height)/2,
+            freezer.y + (freezer.height) / 2,
             freezer.z,
             5,
             (freezer.width / 2).toDouble(),

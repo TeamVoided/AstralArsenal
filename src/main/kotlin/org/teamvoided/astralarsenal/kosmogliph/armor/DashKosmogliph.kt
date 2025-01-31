@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph.armor
 
-import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -11,22 +10,20 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.s2c.play.SoundPlayS2CPacket
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
-import net.minecraft.registry.RegistryKey
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
-import net.minecraft.util.dynamic.Codecs
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.components.DashData
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags.MOUNTS_WITH_DASH
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import kotlin.math.max
-import kotlin.math.pow
 
 class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DASH) }),
     AirSpeedKosmogliph {
@@ -35,8 +32,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
 
     fun handleJump(stack: ItemStack, player: PlayerEntity) {
 
-        val data = stack.get(AstralItemComponents.DASH_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.DASH_DATA, DashData.DEFAULT)
         val world = player.world
         var dashingEntity: LivingEntity = player
 
@@ -79,15 +75,14 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                     )
                 }
             }
-            stack.set(AstralItemComponents.DASH_DATA, Data(data.uses - 1, data.cooldown))
+            stack.set(AstralDataComponents.DASH_DATA, DashData(data.uses - 1, data.cooldown))
         }
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
-        if (slot == 1 && (entity !is LivingEntity || !entity.isFallFlying )) {
-            val data = stack.get(AstralItemComponents.DASH_DATA)
-                ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        if (slot == 1 && (entity !is LivingEntity || !entity.isFallFlying)) {
+            val data = stack.getOrDefault(AstralDataComponents.DASH_DATA, DashData.DEFAULT)
             var uses = data.uses
             if (uses >= 3) return
             var cooldown = data.cooldown
@@ -136,7 +131,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                 }
             }
 
-            stack.set(AstralItemComponents.DASH_DATA, Data(uses, cooldown))
+            stack.set(AstralDataComponents.DASH_DATA, DashData(uses, cooldown))
         }
     }
 
@@ -157,8 +152,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
             stage
         )
 
-        val data = stack.get(AstralItemComponents.DASH_DATA)
-            ?: throw IllegalStateException("Erm, how the fuck did you manage this")
+        val data = stack.getOrDefault(AstralDataComponents.DASH_DATA, DashData.DEFAULT)
         var uses = data.uses
         var cooldown = data.cooldown
         if (!entity.world.isClient)
@@ -172,28 +166,7 @@ class DashKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItem
                     cooldown += 15
                 }
             }
-        stack.set(AstralItemComponents.DASH_DATA, Data(uses, cooldown))
+        stack.set(AstralDataComponents.DASH_DATA, DashData(uses, cooldown))
         return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
-    }
-
-    data class Data(
-        val uses: Int,
-        val cooldown: Int
-    ) {
-        companion object {
-            val CODEC = Codecs.NONNEGATIVE_INT.listOf()
-                .xmap(
-                    { list -> Data(list[0], list[1]) },
-                    { data -> listOf(data.uses, data.cooldown) }
-                )
-        }
-    }
-
-    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf()
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
     }
 }

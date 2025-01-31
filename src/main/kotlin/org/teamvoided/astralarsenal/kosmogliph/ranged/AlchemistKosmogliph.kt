@@ -1,8 +1,6 @@
 package org.teamvoided.astralarsenal.kosmogliph.ranged
 
 import arrow.core.collectionSizeOrDefault
-import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.client.item.TooltipConfig
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.PotionContentsComponent
@@ -25,8 +23,9 @@ import net.minecraft.util.ClickType
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import org.teamvoided.astralarsenal.components.AlchemistData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.init.AstralItemComponents
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import java.util.*
 import java.util.function.Consumer
@@ -42,7 +41,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         player: PlayerEntity,
         reference: StackReference
     ): Boolean {
-        val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return false
+        val data = stack.getOrDefault(AstralDataComponents.ALCHEMIST_DATA, AlchemistData.DEFAULT)
         if (other.item !is PotionItem) return false
         val potionContent = other.get(DataComponentTypes.POTION_CONTENTS) ?: return false
         var thisPotion = data.contents
@@ -57,7 +56,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         charges += 4
 
         reference.set(other.copyWithCount(other.count - 1))
-        stack.set(AstralItemComponents.ALCHEMIST_DATA, Data(thisPotion, charges))
+        stack.set(AstralDataComponents.ALCHEMIST_DATA, AlchemistData(thisPotion, charges))
 
         return true
     }
@@ -75,14 +74,14 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
     ): Boolean {
         if (user.isInCreativeMode) return false
 
-        val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return false
+        val data = stack.getOrDefault(AstralDataComponents.ALCHEMIST_DATA, AlchemistData.DEFAULT)
         var potion = data.contents
         var charges = data.charges
         if (--charges <= 0) {
             potion = Optional.empty()
         }
 
-        stack.set(AstralItemComponents.ALCHEMIST_DATA, Data(potion, charges.coerceAtLeast(0)))
+        stack.set(AstralDataComponents.ALCHEMIST_DATA, AlchemistData(potion, charges.coerceAtLeast(0)))
 
         return false
     }
@@ -91,7 +90,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         if (original.isEmpty) return null
         original.decrement(1)
 
-        val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return null
+        val data = stack.getOrDefault(AstralDataComponents.ALCHEMIST_DATA, AlchemistData.DEFAULT)
         if (data.charges <= 0 || data.contents.isEmpty) return null
         val potion = data.contents.getOrNull() ?: return null
         val tippedArrow = ItemStack(Items.TIPPED_ARROW)
@@ -108,7 +107,7 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
     ) {
         super.modifyItemTooltip(stack, ctx, tooltipConsumer, config)
 
-        val data = stack.get(AstralItemComponents.ALCHEMIST_DATA) ?: return
+        val data = stack.getOrDefault(AstralDataComponents.ALCHEMIST_DATA, AlchemistData.DEFAULT)
         tooltipConsumer.accept(CommonTexts.EMPTY)
         if (data.charges <= 0 || data.contents.isEmpty) {
             tooltipConsumer.accept(Text.translatable("effect.none").formatted(Formatting.DARK_PURPLE))
@@ -138,22 +137,6 @@ class AlchemistKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         tooltipConsumer.accept(
             Text.translatable("kosmogliph.alchemist.charges", data.charges.toString()).formatted(Formatting.DARK_PURPLE)
         )
-    }
-
-    class Data(
-        val contents: Optional<PotionContentsComponent>,
-        val charges: Int
-    ) {
-        companion object {
-            val CODEC: Codec<Data> = RecordCodecBuilder.create { builder ->
-                val group = builder.group(
-                    Codec.optionalField("contents", PotionContentsComponent.CODEC, true).forGetter(Data::contents),
-                    Codec.INT.fieldOf("charges").orElse(0).forGetter(Data::charges)
-                )
-
-                group.apply(builder, AlchemistKosmogliph::Data)
-            }
-        }
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {

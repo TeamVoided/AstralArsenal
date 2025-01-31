@@ -1,7 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph.armor.defensive
 
-import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -15,24 +13,23 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
-import net.minecraft.util.dynamic.Codecs
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Math.lerp
+import org.teamvoided.astralarsenal.components.CapacitanceDataV1
+import org.teamvoided.astralarsenal.components.CapacitanceDataV2
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
-import org.teamvoided.astralarsenal.init.AstralItemComponents
-import org.teamvoided.astralarsenal.item.NailCannonItem.CooldownData
+import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import java.lang.IllegalStateException
-import kotlin.math.roundToInt
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_CAPACITANCE) }) {
     val CHARGE_DRAIN_PER_SECOND = 0.05f
@@ -58,10 +55,8 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
             equipmentSlot,
             stage
         )
-        val data = stack.get(AstralItemComponents.CAPACITANCE_DATA_V1)
-            ?: throw IllegalStateException("how the fuck?")
-        val dataTwo = stack.get(AstralItemComponents.CAPACITANCE_DATA_V2)
-            ?: throw IllegalStateException("wuh?")
+        val data = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1.DEFAULT)
+        val dataTwo = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2.DEFAULT)
         var dmg = data.damage
         var dischargeTime = dataTwo.dischargeTime
         var countdownTime = dataTwo.countdownTime
@@ -140,17 +135,15 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                 }
             }
         }
-        stack.set(AstralItemComponents.CAPACITANCE_DATA_V1, Data(dmg))
-        stack.set(AstralItemComponents.CAPACITANCE_DATA_V2, Data_2(dischargeTime, countdownTime))
+        stack.set(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1(dmg))
+        stack.set(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2(dischargeTime, countdownTime))
         return outputDamage
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         if (entity is LivingEntity && entity.getEquippedStack(EquipmentSlot.CHEST) == stack) {
-            val data = stack.get(AstralItemComponents.CAPACITANCE_DATA_V1)
-                ?: throw IllegalStateException("how the fuck?")
-            val data2 = stack.get(AstralItemComponents.CAPACITANCE_DATA_V2)
-                ?: throw IllegalStateException("why?")
+            val data = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1.DEFAULT)
+            val data2 = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2.DEFAULT)
             var damage = data.damage
             var dischargeTime = data2.dischargeTime
             var countdownTime = data2.countdownTime
@@ -193,37 +186,13 @@ class CapacitanceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Ast
                     damage = 0.0f
                 }
             }
-            stack.set(AstralItemComponents.CAPACITANCE_DATA_V1, Data(damage))
-            stack.set(AstralItemComponents.CAPACITANCE_DATA_V2, Data_2(dischargeTime, countdownTime))
+            stack.set(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1(damage))
+            stack.set(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2(dischargeTime, countdownTime))
         }
         super.inventoryTick(stack, world, entity, slot, selected)
     }
 
-    class Data(
-        val damage: Float,
-    ) {
-        companion object {
-            val CODEC: Codec<Data> = RecordCodecBuilder.create { builder ->
-                val group = builder.group(
-                    Codec.FLOAT.fieldOf("ticks").forGetter { it.damage },
-                )
-                group.apply(builder, CapacitanceKosmogliph::Data)
-            }
-        }
-    }
 
-    data class Data_2(
-        //dischargeTime is the time during witch discharge is possible, countdown time is time until the discharge starts
-        val dischargeTime: Int,
-        val countdownTime: Int,
-    ) {
-        companion object {
-            val CODEC: Codec<Data_2> = Codecs.NONNEGATIVE_INT.listOf().xmap(
-                { list -> Data_2(list[0], list[1]) },
-                { data -> listOf(data.dischargeTime, data.countdownTime) }
-            )
-        }
-    }
 
     fun shockNearbyEntities(cause: Entity, base: Entity, damage: Float) {
         val entities = mutableListOf<Entity>()

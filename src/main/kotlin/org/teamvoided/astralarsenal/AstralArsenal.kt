@@ -26,7 +26,7 @@ object AstralArsenal {
         //Referencing object will initialize them
         AstralBlocks.init()
         AstralItems
-        AstralItemComponents
+        AstralDataComponents.init()
         AstralScreenHandlers
         AstralMenus.init()
         AstralTabs
@@ -44,8 +44,8 @@ object AstralArsenal {
         }
 
         CommandRegistrationCallback.EVENT.register { dispatcher, ctx, env ->
-            val root = dispatcher.register(literal("astral"))
-            KosmogliphCommand.apply(root, ctx, env)
+            @Suppress("UNUSED_VARIABLE") val root = dispatcher.register(literal("astral"))
+            KosmogliphCommand.register(dispatcher)
         }
     }
 

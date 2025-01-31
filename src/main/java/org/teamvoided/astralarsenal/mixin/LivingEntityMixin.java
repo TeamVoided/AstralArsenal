@@ -2,7 +2,6 @@ package org.teamvoided.astralarsenal.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.BlockState;
-import net.minecraft.component.DataComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -11,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameterSet;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -25,13 +23,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.teamvoided.astralarsenal.init.AstralKosmogliphs;
 import org.teamvoided.astralarsenal.util.UtilKt;
-import org.teamvoided.astralarsenal.init.AstralItemComponents;
 
-import java.util.Objects;
-
-import static org.teamvoided.astralarsenal.util.UtilKt.getKosmogliphsOnStack;
+import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
 @Debug(export = true)
 @Mixin(LivingEntity.class)
@@ -65,7 +59,7 @@ public abstract class LivingEntityMixin extends Entity {
         var world = parameterSet.getWorld();
         if (this.attacker == null) return;
         var tool = this.attacker.getWeaponStack();
-        var kosmogliphs = getKosmogliphsOnStack(this.attacker.getWeaponStack());
+        var kosmogliphs = getKosmogliphs(this.attacker.getWeaponStack());
         if (kosmogliphs.isEmpty()) return;
         var fistGlyph = kosmogliphs.stream().toList().getFirst();
         lootTable.generateRawLoot(parameterSet, this.getLootTableSeed(), (stack) ->
@@ -88,7 +82,7 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "tickMovement", at = @At(value = "HEAD"))
-    public void tickMovement(CallbackInfo ci){
+    public void tickMovement(CallbackInfo ci) {
         LivingEntity freezer = (LivingEntity) (Object) this;
         UtilKt.tickMovement(freezer);
     }
