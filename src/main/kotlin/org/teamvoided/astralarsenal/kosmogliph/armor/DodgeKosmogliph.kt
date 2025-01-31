@@ -45,57 +45,58 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
         if (stack.hasKosmogliph(AstralKosmogliphs.DODGE)) {
             val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
             val world = player.world
-            if (world is ServerWorld) return
-            var LRbias = 0 // 1 is right, -1 is left, 0 is neither
-            var BFbias = 0 // 1 for forward, -1 for back, 0 for neither
-            if (left xor right) {
-                LRbias = if (left) 1 else -1
-            }
-            if (forward xor backward) {
-                BFbias = if (backward) -1 else 1
-            }
-            if (!(backward || forward || left || right)) {
-                BFbias = 1
-            }
-
-            val vector = Vec3d(LRbias.toDouble(), 0.0, BFbias.toDouble())
-            vector.multiply(player.rotationVector.multiply(1.0, 0.0, 1.0).normalize())
-
-            if (player.vehicle != null || player.isClimbing) return
-
-            if (data.uses > 0 && !player.isFallFlying) {
-                println(vector)
-                player.velocity = vector
-                player.velocityModified = true
-                world.playSound(
-                    null,
-                    player.x,
-                    player.y,
-                    player.z,
-                    SoundEvents.ENTITY_BREEZE_LAND,
-                    SoundCategory.PLAYERS,
-                    1.0F,
-                    1.0F
-                )
-                if (world is ServerWorld) {
-                    repeat(20) {
-                        world.spawnParticles(
-                            ParticleTypes.CLOUD,
-                            player.x + (world.random.nextDouble() - 0.5) * 1.7,
-                            player.y + 1 + (world.random.nextDouble() - 0.5) * 1.7,
-                            player.z + (world.random.nextDouble() - 0.5) * 1.7,
-                            0,
-                            player.velocity.x,
-                            player.velocity.y,
-                            player.velocity.z,
-                            -0.2,
-                        )
-                    }
+            if (world !is ServerWorld) {
+                var LRbias = 0 // 1 is right, -1 is left, 0 is neither
+                var BFbias = 0 // 1 for forward, -1 for back, 0 for neither
+                if (left xor right) {
+                    LRbias = if (left) 1 else -1
                 }
-                stack.set(AstralDataComponents.DODGE_DATA, DodgeData(data.uses - 1, data.cooldown))
+                if (forward xor backward) {
+                    BFbias = if (backward) -1 else 1
+                }
+                if (!(backward || forward || left || right)) {
+                    BFbias = 1
+                }
+
+                var vector = Vec3d(BFbias.toDouble(), 0.0, LRbias.toDouble())
+                vector = vector.rotateY(player.yaw)
+
+                if (player.vehicle != null || player.isClimbing) return
+
+                if (data.uses > 0 && !player.isFallFlying) {
+                    println(vector)
+                    player.setVelocity(vector)
+                    player.velocityModified = true
+                    world.playSound(
+                        null,
+                        player.x,
+                        player.y,
+                        player.z,
+                        SoundEvents.ENTITY_BREEZE_LAND,
+                        SoundCategory.PLAYERS,
+                        1.0F,
+                        1.0F
+                    )
+                }
             }
-        }
+            if (world is ServerWorld) {
+                repeat(20) {
+                    world.spawnParticles(
+                        ParticleTypes.CLOUD,
+                        player.x + (world.random.nextDouble() - 0.5) * 1.7,
+                        player.y + 1 + (world.random.nextDouble() - 0.5) * 1.7,
+                        player.z + (world.random.nextDouble() - 0.5) * 1.7,
+                        0,
+                        player.velocity.x,
+                        player.velocity.y,
+                        player.velocity.z,
+                        -0.2,
+                    )
+                }
+            }
+            stack.set(AstralItemComponents.DODGE_DATA, Data(data.uses - 1, data.cooldown))
     }
+}
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
@@ -108,79 +109,79 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
                 cooldown--
             }
 
-            if (cooldown <= 0) {
-                uses++
-                val x: Float = (uses * 2.0).toFloat()
-                var time = 20
+        if (cooldown <= 0) {
+            uses++
+            val x: Float = (uses * 2.0).toFloat()
+            var time = 20
 
-                val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
-                if (y.isNotEmpty()) {
-                    for (t in y) {
-                        time += (t.amplifier * 20)
-                    }
-                }
-                val a = entity.statusEffects.filter { it.effectType == StatusEffects.SPEED }
-                if (a.isNotEmpty()) {
-                    for (t in a) {
-                        time = max((time * (1.0 / (t.amplifier + 1.0))).toInt(), 1)
-                    }
-                }
-                val z: Int = (entity.frozenTicks / 20)
-                time += z
-
-                cooldown = time
-                if (entity is ServerPlayerEntity) {
-                    entity.networkHandler.send(
-                        SoundPlayS2CPacket(
-                            Holder.createDirect(SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE),
-                            SoundCategory.PLAYERS,
-                            entity.x,
-                            entity.y,
-                            entity.z,
-                            1.6F,
-                            x,
-                            world.getRandom().nextLong()
-                        )
-                    )
+            val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
+            if (y.isNotEmpty()) {
+                for (t in y) {
+                    time += (t.amplifier * 20)
                 }
             }
+            val a = entity.statusEffects.filter { it.effectType == StatusEffects.SPEED }
+            if (a.isNotEmpty()) {
+                for (t in a) {
+                    time = max((time * (1.0 / (t.amplifier + 1.0))).toInt(), 1)
+                }
+            }
+            val z: Int = (entity.frozenTicks / 20)
+            time += z
+
+            cooldown = time
+            if (entity is ServerPlayerEntity) {
+                entity.networkHandler.send(
+                    SoundPlayS2CPacket(
+                        Holder.createDirect(SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE),
+                        SoundCategory.PLAYERS,
+                        entity.x,
+                        entity.y,
+                        entity.z,
+                        1.6F,
+                        x,
+                        world.getRandom().nextLong()
+                    )
+                )
+            }
+        }
 
             stack.set(AstralDataComponents.DODGE_DATA, DodgeData(uses, cooldown))
         }
     }
 
-    override fun modifyDamage(
-        stack: ItemStack,
-        entity: LivingEntity,
-        damage: Float,
-        source: DamageSource,
-        equipmentSlot: EquipmentSlot,
-        stage: DamageModificationStage
-    ): Float {
-        if (stage != DamageModificationStage.POST_EFFECT) return super<SimpleKosmogliph>.modifyDamage(
-            stack,
-            entity,
-            damage,
-            source,
-            equipmentSlot,
-            stage
-        )
+override fun modifyDamage(
+    stack: ItemStack,
+    entity: LivingEntity,
+    damage: Float,
+    source: DamageSource,
+    equipmentSlot: EquipmentSlot,
+    stage: DamageModificationStage
+): Float {
+    if (stage != DamageModificationStage.POST_EFFECT) return super<SimpleKosmogliph>.modifyDamage(
+        stack,
+        entity,
+        damage,
+        source,
+        equipmentSlot,
+        stage
+    )
 
-        val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
-        var uses = data.uses
-        var cooldown = data.cooldown
-        if (damage >= 5 && !source.isTypeIn(AstralDamageTypeTags.KEEPS_MOVEMENT) && entity.lastDamageTaken < damage) {
-            if (uses >= 3) {
-                uses += -1
-                cooldown += 20
-            } else if (cooldown >= 100 && uses != 0) {
-                uses += -1
-            } else if (cooldown <= 100) {
-                cooldown += 15
-            }
+    val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
+    var uses = data.uses
+    var cooldown = data.cooldown
+    if (damage >= 5 && !source.isTypeIn(AstralDamageTypeTags.KEEPS_MOVEMENT) && entity.lastDamageTaken < damage) {
+        if (uses >= 3) {
+            uses += -1
+            cooldown += 20
+        } else if (cooldown >= 100 && uses != 0) {
+            uses += -1
+        } else if (cooldown <= 100) {
+            cooldown += 15
         }
-        stack.set(AstralDataComponents.DODGE_DATA, DodgeData(uses, cooldown))
-        return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
     }
+    stack.set(AstralDataComponents.DODGE_DATA, DodgeData(uses, cooldown))
+    return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
+}
 
 }

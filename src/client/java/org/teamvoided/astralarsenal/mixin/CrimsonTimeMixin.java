@@ -23,7 +23,7 @@ public class CrimsonTimeMixin {
 
   // Change this to change the number of ticks players have crimson time for
   @Unique
-  private static int CRIMSON_TIME_TICKS = 3;
+  private static int CRIMSON_TIME_TICKS = 5;
   @Unique
   private static int ticks = 0;
   @Unique

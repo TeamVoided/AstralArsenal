@@ -289,12 +289,12 @@ class AstralEnTranslationProvider(
         gen.add("comic_table.message.missing", "Your %s is missing enchantments!")
         gen.add("comic_table.message.incompatible", "Your %s has incompatible enchantments!")
 
-        gen.add(AstralEffects.UNHEALABLE_DAMAGE.value().translationKey, "Hard Damage")
+        gen.add(AstralEffects.UNHEALABLE_DAMAGE.value().translationKey, "Diminished Life")
         gen.add(AstralEffects.SLAM_JUMP.value().translationKey, "Slam Jump")
         gen.add(AstralEffects.REDUCE.value().translationKey, "Reduce")
         gen.add(AstralEffects.BLEED.value().translationKey, "Bleed")
         gen.add(AstralEffects.OVERHEAL.value().translationKey, "Overheal")
-        gen.add(AstralEffects.HARD_DAMAGE.value().translationKey, "Weak Hard Damage")
+        gen.add(AstralEffects.HARD_DAMAGE.value().translationKey, "Weak Diminished Life")
         gen.add(AstralEffects.CONDUCTIVE.value().translationKey, "Conductive")
 
         gen.add("container.cosmic_table", "Cosmic Table")
