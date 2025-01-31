@@ -32,25 +32,26 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
         )
 
         var outputDamage = damage
-        if (source.isTypeIn(AstralDamageTypeTags.IS_ICE)) {
-            outputDamage = (outputDamage * 0.2).toFloat()
+        if (source.isTypeIn(AstralDamageTypeTags.IS_ICE) || source.isTypeIn(AstralDamageTypeTags.IS_FIRE)) {
+            outputDamage = (outputDamage * 0.3).toFloat()
         }
         return outputDamage
     }
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         if (slot == 2) {
-            if (entity is LivingEntity) {
-                if (!entity.world.isClient) {
-                    val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
-                    if (y.isNotEmpty()) {
-                        for (t in y) {
-                            entity.statusEffects.remove(t)
-                        }
-                    }
-                }
+            if (entity.frozenTicks > 9){
+                entity.frozenTicks -= 9
             }
-            entity.frozenTicks = 0
+            else if(entity.frozenTicks > 0){
+                entity.frozenTicks = 0
+            }
+            if (entity.fireTicks > 9){
+                entity.fireTicks -= 9
+            }
+            else if(entity.fireTicks > 0){
+                entity.fireTicks = 0
+            }
         }
         super.inventoryTick(stack, world, entity, slot, selected)
     }

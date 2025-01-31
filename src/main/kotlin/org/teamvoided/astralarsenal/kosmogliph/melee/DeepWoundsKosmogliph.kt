@@ -14,45 +14,11 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.DeepWoundEntity
 import org.teamvoided.astralarsenal.entity.SlashEntity
 import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.util.playSound
 
-class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DEEP_WOUNDS) }) {
-//    override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
-//        if (!world.isClient) {
-//            var w = -20
-//            repeat(40) {
-//                val snowballEntity = DeepWoundEntity(world, player)
-//                setPropertiesTwo(snowballEntity, player.pitch, player.yaw + w, 0.0f, 1.0f, 0.0f)
-//                world.spawnEntity(snowballEntity)
-//                w++
-//            }
-//            world.playSound(
-//                null,
-//                player.x,
-//                player.y,
-//                player.z,
-//                SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP,
-//                SoundCategory.PLAYERS,
-//                1.0F,
-//                0.1f
-//            )
-//            world.playSound(
-//                null,
-//                player.x,
-//                player.y,
-//                player.z,
-//                SoundEvents.BLOCK_GRINDSTONE_USE,
-//                SoundCategory.PLAYERS,
-//                1.0F,
-//                0.1f
-//            )
-//            if (!player.isCreative) {
-//                player.itemCooldownManager.set(player.getStackInHand(hand).item, 1800)
-//            }
-//        }
-//        return null
-//    }
+class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DEEP_WOUNDS) && it.item !is AstralGreathammerItem }) {
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         player.setCurrentHand(hand)

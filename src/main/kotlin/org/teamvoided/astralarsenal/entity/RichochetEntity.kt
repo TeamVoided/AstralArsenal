@@ -11,6 +11,7 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
+import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Direction
 import net.minecraft.world.RaycastContext
@@ -170,7 +171,7 @@ class RichochetEntity : Entity {
                 }
             }
         }
-        if (result.side != null) {
+        if (result.side != null && result.type != HitResult.Type.MISS) {
             val richochet = RichochetEntity(world, cause)
             richochet.pitch = caster.pitch
             richochet.yaw = caster.yaw

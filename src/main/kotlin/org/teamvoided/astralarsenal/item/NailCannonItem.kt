@@ -157,7 +157,7 @@ class NailCannonItem(settings: Settings) : Item(settings) {
         return data != null && data.uses < stack.maxUses()
     }
 
-    override fun getUseAction(stack: ItemStack): UseAction = UseAction.BOW
+    override fun getUseAction(stack: ItemStack): UseAction = UseAction.BLOCK
 
     companion object {
         const val USE_TICKS = 72000

@@ -72,10 +72,6 @@ class AstralEnTranslationProvider(
         // example gen.add("kosmogliph.tooltip.astral_arsenal..desc","")
         // chestplate
         gen.add(
-            "kosmogliph.tooltip.astral_arsenal.scorch-proof.desc",
-            "Reduces damage from fire by 80% and stops fire from sticking to you"
-        )
-        gen.add(
             "kosmogliph.tooltip.astral_arsenal.antidote.desc",
             "Reduces damage from magic by 80%, half the time negitive effects last on you, and doubles the time positive effects last on you"
         )
@@ -89,7 +85,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.thermal.desc",
-            "Reduces damage from ice and frost by 80% and prevents slowness and frost from effecting you"
+            "Reduces damage from fire and ice by 70% and reduces how long you are effected by frost and fire by 90%"
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.heavy.desc",
@@ -135,11 +131,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.cannonball.desc",
-            "Right clicking summons a cannonball that can be struck. The cannonball deals 5 damage and bounces off of targets, increasing in damage every bounce. 5 second cooldown"
-        )
-        gen.add(
-            "kosmogliph.tooltip.astral_arsenal.mortar.desc",
-            "Right clicking summons a mortar that can be struck. When hitting an entity, the mortar explodes. 5 second cooldown"
+            "Right clicking summons a cannonball that can be struck. The cannonball deals 10 damage and bounces off 1 target. every time it hits something, it increases in damage. 5 second cooldown"
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.alchemist.desc",
@@ -147,7 +139,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.cannonball_launcher.desc",
-            "Replaces ammo with cannonballs when fired. Cannonballs deal 5 damage and bounce off of entities, increasing in damage every bounce "
+            "Replaces ammo with cannonballs when fired. Cannonballs deal 10 damage and bounce off of entities, increasing in damage every bounce "
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.shotgun.desc",
@@ -236,10 +228,6 @@ class AstralEnTranslationProvider(
             "Fires a ray of frost, dealing 7.5 ice damage and freezing entities. 30 second cooldown"
         )
         gen.add(
-            "kosmogliph.tooltip.astral_arsenal.flame_thrower.desc",
-            "Fires a constant stream of fire, dealing 0.25 damage per hit and setting entities on fire"
-        )
-        gen.add(
             "kosmogliph.tooltip.astral_arsenal.rancid_brew.desc",
             "Fire an enchanted beam that deals 8 damage, giving entities a set of negative effects for 15 seconds, and you a set of negitive effects for 5 seconds. 20 second cooldown"
         )
@@ -283,7 +271,7 @@ class AstralEnTranslationProvider(
             gen.add(id.toTranslationKey("key"), name.titleCase())
         }
 
-        gen.add("kosmogliph.alchemist.charges", "Charges: %s/4")
+        gen.add("kosmogliph.alchemist.charges", "Charges: %s/64")
         gen.add("kosmogliph.astral_rain.charges", "Charges: %s/3")
         gen.add("cosmic_table.enchantments.missing", "Missing: ")
         gen.add("cosmic_table.enchantments.incompatible", "Incompatible: ")
