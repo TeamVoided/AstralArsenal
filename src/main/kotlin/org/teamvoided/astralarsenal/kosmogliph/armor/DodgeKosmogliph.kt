@@ -94,9 +94,9 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
                     )
                 }
             }
-            stack.set(AstralItemComponents.DODGE_DATA, Data(data.uses - 1, data.cooldown))
+            stack.set(AstralDataComponents.DODGE_DATA, DodgeData(data.uses - 1, data.cooldown))
+        }
     }
-}
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         super<AirSpeedKosmogliph>.inventoryTick(stack, world, entity, slot, selected)
@@ -109,79 +109,79 @@ class DodgeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralIte
                 cooldown--
             }
 
-        if (cooldown <= 0) {
-            uses++
-            val x: Float = (uses * 2.0).toFloat()
-            var time = 20
+            if (cooldown <= 0) {
+                uses++
+                val x: Float = (uses * 2.0).toFloat()
+                var time = 20
 
-            val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
-            if (y.isNotEmpty()) {
-                for (t in y) {
-                    time += (t.amplifier * 20)
+                val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
+                if (y.isNotEmpty()) {
+                    for (t in y) {
+                        time += (t.amplifier * 20)
+                    }
                 }
-            }
-            val a = entity.statusEffects.filter { it.effectType == StatusEffects.SPEED }
-            if (a.isNotEmpty()) {
-                for (t in a) {
-                    time = max((time * (1.0 / (t.amplifier + 1.0))).toInt(), 1)
+                val a = entity.statusEffects.filter { it.effectType == StatusEffects.SPEED }
+                if (a.isNotEmpty()) {
+                    for (t in a) {
+                        time = max((time * (1.0 / (t.amplifier + 1.0))).toInt(), 1)
+                    }
                 }
-            }
-            val z: Int = (entity.frozenTicks / 20)
-            time += z
+                val z: Int = (entity.frozenTicks / 20)
+                time += z
 
-            cooldown = time
-            if (entity is ServerPlayerEntity) {
-                entity.networkHandler.send(
-                    SoundPlayS2CPacket(
-                        Holder.createDirect(SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE),
-                        SoundCategory.PLAYERS,
-                        entity.x,
-                        entity.y,
-                        entity.z,
-                        1.6F,
-                        x,
-                        world.getRandom().nextLong()
+                cooldown = time
+                if (entity is ServerPlayerEntity) {
+                    entity.networkHandler.send(
+                        SoundPlayS2CPacket(
+                            Holder.createDirect(SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE),
+                            SoundCategory.PLAYERS,
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                            1.6F,
+                            x,
+                            world.getRandom().nextLong()
+                        )
                     )
-                )
+                }
             }
-        }
 
             stack.set(AstralDataComponents.DODGE_DATA, DodgeData(uses, cooldown))
         }
     }
 
-override fun modifyDamage(
-    stack: ItemStack,
-    entity: LivingEntity,
-    damage: Float,
-    source: DamageSource,
-    equipmentSlot: EquipmentSlot,
-    stage: DamageModificationStage
-): Float {
-    if (stage != DamageModificationStage.POST_EFFECT) return super<SimpleKosmogliph>.modifyDamage(
-        stack,
-        entity,
-        damage,
-        source,
-        equipmentSlot,
-        stage
-    )
+    override fun modifyDamage(
+        stack: ItemStack,
+        entity: LivingEntity,
+        damage: Float,
+        source: DamageSource,
+        equipmentSlot: EquipmentSlot,
+        stage: DamageModificationStage
+    ): Float {
+        if (stage != DamageModificationStage.POST_EFFECT) return super<SimpleKosmogliph>.modifyDamage(
+            stack,
+            entity,
+            damage,
+            source,
+            equipmentSlot,
+            stage
+        )
 
-    val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
-    var uses = data.uses
-    var cooldown = data.cooldown
-    if (damage >= 5 && !source.isTypeIn(AstralDamageTypeTags.KEEPS_MOVEMENT) && entity.lastDamageTaken < damage) {
-        if (uses >= 3) {
-            uses += -1
-            cooldown += 20
-        } else if (cooldown >= 100 && uses != 0) {
-            uses += -1
-        } else if (cooldown <= 100) {
-            cooldown += 15
+        val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
+        var uses = data.uses
+        var cooldown = data.cooldown
+        if (damage >= 5 && !source.isTypeIn(AstralDamageTypeTags.KEEPS_MOVEMENT) && entity.lastDamageTaken < damage) {
+            if (uses >= 3) {
+                uses += -1
+                cooldown += 20
+            } else if (cooldown >= 100 && uses != 0) {
+                uses += -1
+            } else if (cooldown <= 100) {
+                cooldown += 15
+            }
         }
+        stack.set(AstralDataComponents.DODGE_DATA, DodgeData(uses, cooldown))
+        return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
     }
-    stack.set(AstralDataComponents.DODGE_DATA, DodgeData(uses, cooldown))
-    return super<SimpleKosmogliph>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
-}
 
 }
