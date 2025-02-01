@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static org.teamvoided.astralarsenal.Utils_HelperKt.getShapeAndPos;
+import static org.teamvoided.astralarsenal.utils.HelperKt.getShapeAndPos;
 
 @Mixin(WorldRenderer.class)
 public abstract class WorldRendererMixin {
