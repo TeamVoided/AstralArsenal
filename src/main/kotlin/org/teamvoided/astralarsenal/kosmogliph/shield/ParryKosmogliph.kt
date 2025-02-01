@@ -21,7 +21,6 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.FlameShotEntity
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
-import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.mixin.PersistentProjectileEntityAccessor
 import org.teamvoided.astralarsenal.world.explosion.parryExplosions.*
@@ -72,7 +71,7 @@ class ParryKosmogliph(id: Identifier) :
                                     )
                                     break
                                 }
-                            } else if (entity is CannonballEntity || entity is MortarEntity || entity is FireworkRocketEntity) {
+                            } else if (entity is CannonballEntity || entity is FireworkRocketEntity) {
                                 entity.discard()
                                 blowTheFuckUp(
                                     ParryStrongExplosionBehavior(entity),
@@ -210,7 +209,7 @@ class ParryKosmogliph(id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            if (entity is CannonballEntity || entity is MortarEntity) {
+            if (entity is CannonballEntity) {
                 world.createExplosion(
                     entity,
                     entity.damageSources.explosion(entity, player),

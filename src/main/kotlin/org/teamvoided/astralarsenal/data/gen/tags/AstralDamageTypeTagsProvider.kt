@@ -77,6 +77,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.NAILED)
 
         getOrCreateTagBuilder(DamageTypeTags.IS_PROJECTILE) //for endermen to avoid
+            .forceAddTag(AstralDamageTypeTags.IS_PROJECTILE)
 
         getOrCreateTagBuilder(DamageTypeTags.BYPASSES_EFFECTS)
             .add(AstralDamageTypes.DRAIN)

@@ -7,6 +7,7 @@ import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.entity.effect.StatusEffectInstance
+import net.minecraft.entity.mob.EndermanEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
@@ -42,6 +43,7 @@ open class NailEntity : PersistentProjectileEntity {
         if (entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity as LivingEntity
             hit.customDamage(AstralDamageTypes.NAILED, if(nailType == NailType.FIRE) 0.25f else if(nailType == NailType.CHARGED) 0.0f else 0.5f, owner, owner)
+            if (hit is EndermanEntity) return
             if (nailType != NailType.CHARGED && nailType != NailType.IMPALE) {
                 var effectLevel = 0
                 val currentEffect = hit.statusEffects.find { it.effectType == AstralEffects.CONDUCTIVE }
@@ -81,9 +83,9 @@ open class NailEntity : PersistentProjectileEntity {
                     hit.customDamage(AstralDamageTypes.RICHOCHET, 0.5f, owner, owner)
                 NailType.IMPALE -> Unit
             }
+            this.world.playSound(this.pos, SoundEvents.ITEM_TRIDENT_HIT, SoundCategory.PLAYERS, 1.0F, 1.0f)
+            this.discard()
         }
-        this.world.playSound(this.pos, SoundEvents.ITEM_TRIDENT_HIT, SoundCategory.PLAYERS, 1.0F, 1.0f)
-        this.discard()
     }
 
     override fun initDataTracker(builder: DataTracker.Builder) {

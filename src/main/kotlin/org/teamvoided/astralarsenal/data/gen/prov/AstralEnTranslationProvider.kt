@@ -85,7 +85,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.thermal.desc",
-            "Reduces damage from fire and ice by 70% and reduces how long you are effected by frost and fire by 90%"
+            "Reduces damage from fire and ice by 70% and makes it so frost and fire cant stick to you."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.heavy.desc",
@@ -288,8 +288,8 @@ class AstralEnTranslationProvider(
         gen.add(AstralEffects.CONDUCTIVE.value().translationKey, "Conductive")
 
         gen.add("container.cosmic_table", "Cosmic Table")
-
         gen.add("entities.astral_arsenal.beam_of_light", "Cod")
+        gen.add("entities.astral_arsenal.cannonball", "cannonball")
 
         ALL_TAGS.forEach { gen.add(it.translationKey, genLang(it.id).titleCase("/")) }
     }

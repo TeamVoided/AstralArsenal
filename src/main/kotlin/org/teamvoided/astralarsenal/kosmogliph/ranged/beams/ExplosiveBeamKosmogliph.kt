@@ -19,7 +19,7 @@ import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
-import org.teamvoided.astralarsenal.entity.MortarEntity
+
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.PenopticonExplosionBehavior
@@ -51,7 +51,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
                         (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
-                ).filter { it is LivingEntity || it is CannonballEntity || it is MortarEntity }
+                ).filter { it is LivingEntity || it is CannonballEntity}
             )
             if (entities.isNotEmpty()) {
                 finalPosition = Vec3d((lerp(player.eyePos.x, result.pos.x, i / interval)),
@@ -86,7 +86,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            if (entity is CannonballEntity || entity is MortarEntity) {
+            if (entity is CannonballEntity) {
                 world.createExplosion(
                     entity,
                     entity.damageSources.explosion(entity, player),

@@ -36,7 +36,6 @@ object AstralKosmogliphs {
     val REAPER = register("reaper", ::ReaperKosmogliph)
 
     val CANNONBALL = register("cannonball", ::CannonballKosmogliph)
-    //val MORTAR = register("mortar", ::MortarKosmogliph)
 
     val JUMP = register("jump", ::JumpKosmogliph)
     val DASH = register("dash", ::DashKosmogliph)
@@ -70,7 +69,6 @@ object AstralKosmogliphs {
         )
     }
 
-    //val SCORCH_PROOF = register("scorch-proof", ::ScorchProofKosmogliph)
     val ANTIDOTE = register("antidote", ::AntidoteKosmogliph)
     val ENDURANCE = register("endurance", ::EnduranceKosmogliph)
     val CAPACITANCE = register("capacitance", ::CapacitanceKosmogliph)
@@ -81,7 +79,6 @@ object AstralKosmogliphs {
     val BASIC_RAILGUN = register("basic_railgun", ::BasicRailgunKosmogliph)
     val EXPLOSIVE_BEAM = register("explosive_beam", ::ExplosiveBeamKosmogliph)
     val RAY_OF_FROST = register("ray_of_frost", ::RayofFrostKosmogliph)
-    //val FLAME_THROWER = register("flame_thrower", ::FlameThrowerKosmogliph)
     val RANCID_BREW = register("rancid_brew", ::RancidBrewKosmogliph)
     val SNIPE = register("snipe", ::SnipeKosmogliph)
     val RICOCHET = register("ricochet", ::RicochetKosmogliph)

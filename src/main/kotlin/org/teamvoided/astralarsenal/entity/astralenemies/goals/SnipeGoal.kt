@@ -21,7 +21,6 @@ import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
-import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
@@ -176,7 +175,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
             1.0f
         )
         for (victim in entities) {
-            if (victim is CannonballEntity || victim is MortarEntity) {
+            if (victim is CannonballEntity) {
                 val explosion = when (entity.snipeType) {
                     AstralSniperEntity.SnipeType.SINGLE -> StrongExplosionBehavior(entity)
                     AstralSniperEntity.SnipeType.DOUBLE -> WeakExplosionBehavior(entity)
@@ -342,7 +341,7 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
             1.0f
         )
         for (victim in entities) {
-            if (victim is CannonballEntity || victim is MortarEntity) {
+            if (victim is CannonballEntity) {
                 world.createExplosion(
                     victim,
                     victim.damageSources.explosion(victim, entity),

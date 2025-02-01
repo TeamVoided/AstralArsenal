@@ -27,7 +27,6 @@ object AstralItems {
     val AMETHYST = register("amethyst", Item(Item.Settings().rarity(Rarity.UNCOMMON)))
     val KOSMIC_GEM = register("kosmic_gem", Item(Item.Settings().rarity(Rarity.RARE)))
     val CANNONBALL = register("cannonball", CannonballItem(Item.Settings()))
-    val MORTER = register("morter", MorterItem(Item.Settings()))
     val ASTRAL_GREATHAMMER = register(
         "astral_greathammer",
         AstralGreathammerItem(
@@ -67,7 +66,6 @@ object AstralItems {
         AMETHYST,
         KOSMIC_GEM,
         CANNONBALL,
-        MORTER,
     )
 
     fun items(): Set<Item> {

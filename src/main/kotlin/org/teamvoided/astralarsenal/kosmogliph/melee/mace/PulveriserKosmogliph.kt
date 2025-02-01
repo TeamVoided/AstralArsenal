@@ -19,6 +19,7 @@ class PulveriserKosmogliph(id: Identifier) :
     override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = 72000
     override fun getUseAction(stack: ItemStack): UseAction = UseAction.SPEAR
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
+        player.setCurrentHand(hand)
         return TypedActionResult(ActionResult.CONSUME_PARTIAL, player.getStackInHand(hand))
     }
 

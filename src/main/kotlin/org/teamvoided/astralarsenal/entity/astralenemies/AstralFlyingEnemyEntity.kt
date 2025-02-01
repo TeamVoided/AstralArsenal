@@ -5,7 +5,6 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.mob.FlyingEntity
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
-import org.teamvoided.astralarsenal.entity.astralenemies.movecontrol.AstralFlyingEntityMoveControl
 
 open class AstralFlyingEnemyEntity(entityType: EntityType<out AstralFlyingEnemyEntity>, world: World) : FlyingEntity(entityType, world) {
     override fun getBaseXpDropped(): Int {

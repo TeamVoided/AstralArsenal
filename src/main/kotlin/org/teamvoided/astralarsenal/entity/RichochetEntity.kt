@@ -138,7 +138,7 @@ class RichochetEntity : Entity {
             }
         }
         for (entity in entities) {
-            if (entity is CannonballEntity || entity is MortarEntity) {
+            if (entity is CannonballEntity) {
                 world.createExplosion(
                     entity,
                     entity.damageSources.explosion(entity, cause),

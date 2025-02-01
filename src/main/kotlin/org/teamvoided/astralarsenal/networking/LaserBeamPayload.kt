@@ -6,6 +6,8 @@ import net.minecraft.network.packet.payload.CustomPayload
 import net.minecraft.util.math.Vec3d
 import org.teamvoided.astralarsenal.AstralArsenal
 
+//someone please delete
+
 data class LaserBeamPayload(
     val start: Vec3d,
     val end: Vec3d

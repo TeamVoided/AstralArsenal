@@ -7,6 +7,7 @@ import net.minecraft.entity.ProjectileDeflector
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
+import net.minecraft.entity.mob.EndermanEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
@@ -40,9 +41,10 @@ class CannonballEntity : ThrownItemEntity {
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         val entity = entityHitResult.entity
-        if (entity.type == AstralEntities.CANNONBALL_ENTITY) return
+        if (entity is CannonballEntity) return
         if (entity !is PlayerEntity) {
             entity.customDamage(AstralDamageTypes.CANNONBALL, getDmg().toFloat(), this, owner)
+            if(entity is EndermanEntity) return
         } else {
             val type = if (entity == owner) AstralDamageTypes.BALLNT else AstralDamageTypes.CANNONBALL
             entity.customDamage(type, getDmg().toFloat(), this, owner)

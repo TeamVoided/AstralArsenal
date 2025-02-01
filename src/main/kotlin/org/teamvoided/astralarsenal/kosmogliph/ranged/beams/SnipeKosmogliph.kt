@@ -19,7 +19,6 @@ import org.teamvoided.astralarsenal.components.SnipeDataV1
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
-import org.teamvoided.astralarsenal.entity.MortarEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralEffects
@@ -166,8 +165,8 @@ class SnipeKosmogliph(id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            if (entity is LivingEntity || entity is CannonballEntity || entity is MortarEntity) {
-                if (entity is CannonballEntity || entity is MortarEntity) {
+            if (entity is LivingEntity || entity is CannonballEntity) {
+                if (entity is CannonballEntity) {
                     world.createExplosion(
                         entity,
                         entity.damageSources.explosion(entity, player),

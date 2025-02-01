@@ -19,7 +19,6 @@ import net.minecraft.world.Difficulty
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.entity.astralenemies.goals.*
-import org.teamvoided.astralarsenal.entity.astralenemies.movecontrol.AstralFlyingEntityMoveControl
 
 class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: World) : AstralEnemyEntity(entityType, world), Monster {
 

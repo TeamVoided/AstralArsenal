@@ -18,9 +18,7 @@ import net.minecraft.world.Difficulty
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.entity.astralenemies.goals.CustomLookAtTargetGoal
-import org.teamvoided.astralarsenal.entity.astralenemies.goals.HoverRandomlyGoal
 import org.teamvoided.astralarsenal.entity.astralenemies.goals.StrikeGoal
-import org.teamvoided.astralarsenal.entity.astralenemies.movecontrol.AstralFlyingEntityMoveControl
 
 class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
                           world: World
@@ -33,10 +31,6 @@ class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
 
     override fun cannotDespawn(): Boolean {
         return true
-    }
-
-    init {
-        this.moveControl = AstralFlyingEntityMoveControl(this, 10.0)
     }
 
     fun getStrikesBeforeEnrage(world: World): Int{

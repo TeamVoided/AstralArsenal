@@ -40,16 +40,10 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         if (slot == 2) {
-            if (entity.frozenTicks > 9){
-                entity.frozenTicks -= 9
-            }
-            else if(entity.frozenTicks > 0){
+            if(entity.frozenTicks > 0){
                 entity.frozenTicks = 0
             }
-            if (entity.fireTicks > 9){
-                entity.fireTicks -= 9
-            }
-            else if(entity.fireTicks > 0){
+            if(entity.fireTicks > 0){
                 entity.fireTicks = 0
             }
         }
