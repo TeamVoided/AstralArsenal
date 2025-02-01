@@ -10,6 +10,6 @@ import java.util.function.Predicate
 
 abstract class TillingActions : HoeItem(ToolMaterials.WOOD, Settings()) {
     companion object {
-        val get get():MutableMap<Block, Pair<Predicate<ItemUsageContext>, Consumer<ItemUsageContext>>> = TILLING_ACTIONS
+        val get get() : MutableMap<Block, Pair<Predicate<ItemUsageContext>, Consumer<ItemUsageContext>>> = TILLING_ACTIONS
     }
 }
