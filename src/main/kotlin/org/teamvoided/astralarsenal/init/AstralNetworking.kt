@@ -8,8 +8,6 @@ import org.teamvoided.astralarsenal.util.hasKosmogliph
 
 object AstralNetworking {
     fun init() {
-        PayloadTypeRegistry.playS2C().register(LaserBeamPayload.ID, LaserBeamPayload.CODEC)
-
         PayloadTypeRegistry.playC2S().register(JumpKosmogliphPayload.ID, JumpKosmogliphPayload.CODEC)
         ServerPlayNetworking.registerGlobalReceiver(JumpKosmogliphPayload.ID) { _, ctx ->
             val player = ctx.player()
