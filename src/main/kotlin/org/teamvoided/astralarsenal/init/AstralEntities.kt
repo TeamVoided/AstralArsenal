@@ -12,6 +12,11 @@ import org.teamvoided.astralarsenal.entity.nails.NailEntity
 object AstralEntities {
 
     fun init() {
+//        FabricDefaultAttributeRegistry.register(ASTRAL_STRIKER, AstralStrikerEntity.createMobAttributes())
+//        FabricDefaultAttributeRegistry.register(ASTRAL_SNIPER, AstralSniperEntity.createMobAttributes())
+//        FabricDefaultAttributeRegistry.register(ASTRAL_SLASHER, AstralSlasherEntity.createMobAttributes())
+//        FabricDefaultAttributeRegistry.register(ASTRAL_IDOL, AstralIdol.createMobAttributes())
+//        FabricDefaultAttributeRegistry.register(ASTRAL_DRIFTER, AstralDrifterEntity.createMobAttributes())
     }
 
     val CANNONBALL_ENTITY = register(
