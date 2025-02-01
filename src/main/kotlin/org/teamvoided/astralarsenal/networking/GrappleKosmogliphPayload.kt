@@ -5,6 +5,8 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.packet.payload.CustomPayload
 import org.teamvoided.astralarsenal.AstralArsenal
 
+//delete pls
+
 object GrappleKosmogliphPayload : CustomPayload {
     override fun getId() = ID
 
