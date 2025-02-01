@@ -4,7 +4,7 @@
     "sounds": [
       {
         "name": "astral_arsenal:entities/beam_of_light/strike",
-        "stream": true,
+        "stream": false,
         "volume": 1
       }
     ]
@@ -14,7 +14,7 @@
     "sounds": [
       {
         "name": "astral_arsenal:entities/beam_of_light/vibrate",
-        "stream": true,
+        "stream": false,
         "volume": 1
       }
     ]
@@ -24,7 +24,7 @@
     "sounds": [
       {
         "name": "astral_arsenal:entities/beam_of_light/wind",
-        "stream": true,
+        "stream": false,
         "volume": 500
       }
     ]
@@ -34,7 +34,7 @@
     "sounds": [
       {
         "name": "astral_arsenal:entities/beam_of_light/charge",
-        "stream": true,
+        "stream": false,
         "volume": 0.1
       }
     ]
@@ -44,17 +44,17 @@
     "sounds": [
       {
         "name": "astral_arsenal:entities/kosmogliph/dodge",
-        "stream": true,
+        "stream": false,
         "volume": 0.5
       },
       {
         "name": "astral_arsenal:entities/kosmogliph/dodge2",
-        "stream": true,
+        "stream": false,
         "volume": 0.5
       },
       {
         "name": "astral_arsenal:entities/kosmogliph/dodge3",
-        "stream": true,
+        "stream": false,
         "volume": 0.5
       }
     ]
@@ -64,12 +64,12 @@
     "sounds": [
       {
         "name": "astral_arsenal:entities/railgun/railcannon1",
-        "stream": true,
+        "stream": false,
         "volume": 0.5
       },
       {
         "name": "astral_arsenal:entities/railgun/railcannon2",
-        "stream": true,
+        "stream": false,
         "volume": 0.5
       }
     ]
