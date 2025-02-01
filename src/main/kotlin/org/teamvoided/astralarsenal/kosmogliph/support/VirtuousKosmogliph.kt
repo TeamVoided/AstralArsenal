@@ -8,7 +8,6 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
 class VirtuousKosmogliph (id: Identifier) :

@@ -23,7 +23,10 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.screen.slot.Slot
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
-import net.minecraft.util.*
+import net.minecraft.util.ClickType
+import net.minecraft.util.Hand
+import net.minecraft.util.TypedActionResult
+import net.minecraft.util.UseAction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World

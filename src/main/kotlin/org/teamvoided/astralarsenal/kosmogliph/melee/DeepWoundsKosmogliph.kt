@@ -12,7 +12,6 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.DeepWoundEntity
-import org.teamvoided.astralarsenal.entity.SlashEntity
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph

@@ -9,9 +9,7 @@ import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.projectile.ProjectileEntity
-import net.minecraft.particle.DefaultParticleType
 import net.minecraft.particle.ParticleEffect
-import net.minecraft.particle.ParticleType
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory

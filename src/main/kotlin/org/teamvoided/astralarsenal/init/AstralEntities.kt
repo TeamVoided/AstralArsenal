@@ -1,7 +1,5 @@
 package org.teamvoided.astralarsenal.init
 
-import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
@@ -9,7 +7,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.entity.*
-import org.teamvoided.astralarsenal.entity.astralenemies.*
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
 
 object AstralEntities {

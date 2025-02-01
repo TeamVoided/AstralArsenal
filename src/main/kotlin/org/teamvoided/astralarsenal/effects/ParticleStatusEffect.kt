@@ -1,14 +1,9 @@
 package org.teamvoided.astralarsenal.effects
 
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectType
 import net.minecraft.particle.ParticleEffect
-import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
-import org.joml.Math.lerp
-import org.teamvoided.astralarsenal.init.AstralDamageTypes
-import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 
 class ParticleStatusEffect(type: StatusEffectType, color: Int, particle: ParticleEffect) :
     AstralStatusEffect(type, color) {

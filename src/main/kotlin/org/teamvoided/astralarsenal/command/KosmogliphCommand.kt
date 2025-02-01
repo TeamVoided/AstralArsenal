@@ -9,9 +9,9 @@ import net.minecraft.server.command.CommandManager.argument
 import net.minecraft.server.command.CommandManager.literal
 import net.minecraft.server.command.ServerCommandSource
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
-import org.teamvoided.astralarsenal.util.setKosmogliphs
-import org.teamvoided.astralarsenal.util.message
 import org.teamvoided.astralarsenal.util.error
+import org.teamvoided.astralarsenal.util.message
+import org.teamvoided.astralarsenal.util.setKosmogliphs
 
 object KosmogliphCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {

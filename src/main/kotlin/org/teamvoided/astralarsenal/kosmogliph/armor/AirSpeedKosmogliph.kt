@@ -5,7 +5,6 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
-import kotlin.math.min
 
 interface AirSpeedKosmogliph : Kosmogliph {
     companion object {

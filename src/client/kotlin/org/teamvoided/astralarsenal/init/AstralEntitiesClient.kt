@@ -1,8 +1,10 @@
 package org.teamvoided.astralarsenal.init
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
-import net.minecraft.client.render.entity.*
-import org.teamvoided.astralarsenal.entity.*
+import net.minecraft.client.render.entity.EmptyEntityRenderer
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer
+import org.teamvoided.astralarsenal.entity.BeamRenderer
+import org.teamvoided.astralarsenal.entity.NailEntityRenderer
 
 
 object AstralEntitiesClient {

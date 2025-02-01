@@ -1,7 +1,6 @@
 package org.teamvoided.astralarsenal.init
 
 import net.minecraft.item.Item
-import net.minecraft.item.SwordItem
 import net.minecraft.item.ToolMaterials
 import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderLookup.RegistryLookup

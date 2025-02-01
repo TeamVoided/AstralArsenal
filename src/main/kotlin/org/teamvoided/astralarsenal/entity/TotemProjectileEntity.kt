@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.entity
 
-import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.ArrowEntity

@@ -1,7 +1,6 @@
 package org.teamvoided.astralarsenal.entity.astralenemies.goals
 
 import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.ai.goal.Goal
 import net.minecraft.util.math.Box
 import org.teamvoided.astralarsenal.entity.BeamOfLightEntity

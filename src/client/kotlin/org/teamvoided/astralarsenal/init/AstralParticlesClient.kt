@@ -2,10 +2,9 @@ package org.teamvoided.astralarsenal.init
 
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry.PendingParticleFactory
-import net.minecraft.client.particle.FlameParticle
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.particle.ParticleType
-import org.teamvoided.astralarsenal.particles.*
+import org.teamvoided.astralarsenal.particles.DusksSnowFlakeParticle
 
 object AstralParticlesClient {
     fun init(){

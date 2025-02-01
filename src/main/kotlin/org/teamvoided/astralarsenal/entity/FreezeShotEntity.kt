@@ -7,7 +7,6 @@ import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
-import net.minecraft.particle.ParticleTypes
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World

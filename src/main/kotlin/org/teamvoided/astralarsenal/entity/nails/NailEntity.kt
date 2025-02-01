@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.entity.nails
 
-import com.ibm.icu.text.MessagePattern.Part
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.data.DataTracker

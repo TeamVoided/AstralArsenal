@@ -19,7 +19,6 @@ import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEntities
-import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt

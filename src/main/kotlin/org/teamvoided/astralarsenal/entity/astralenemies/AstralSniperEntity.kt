@@ -8,8 +8,6 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
-import net.minecraft.entity.mob.FlyingEntity
-import net.minecraft.entity.mob.HostileEntity
 import net.minecraft.entity.mob.MobEntity
 import net.minecraft.entity.mob.Monster
 import net.minecraft.entity.player.PlayerEntity
@@ -18,7 +16,8 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.world.Difficulty
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
-import org.teamvoided.astralarsenal.entity.astralenemies.goals.*
+import org.teamvoided.astralarsenal.entity.astralenemies.goals.LookAtPointGoal
+import org.teamvoided.astralarsenal.entity.astralenemies.goals.SnipeGoal
 
 class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: World) : AstralEnemyEntity(entityType, world), Monster {
 

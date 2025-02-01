@@ -1,10 +1,8 @@
 package org.teamvoided.astralarsenal.kosmogliph.ranged.beams
 
-import net.fabricmc.loader.impl.lib.sat4j.core.Vec
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
@@ -19,7 +17,6 @@ import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
-
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.world.explosion.PenopticonExplosionBehavior

@@ -7,14 +7,9 @@ import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Vector3f
-import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity
-import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity.Companion.SNIPE_TYPE
 import org.teamvoided.astralarsenal.init.AstralEntities
-import org.w3c.dom.css.RGBColor
-import javax.sound.midi.Track
 
 class BeamRenderEntity : Entity {
 
