@@ -17,7 +17,8 @@ import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.util.playSound
 
-class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DEEP_WOUNDS) && it.item !is AstralGreathammerItem }) {
+class DeepWoundsKosmogliph(id: Identifier) :
+    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DEEP_WOUNDS) && it.item !is AstralGreathammerItem }) {
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         player.setCurrentHand(hand)
@@ -30,7 +31,7 @@ class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
 
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
         val ticks = getUseTicks(stack, user) - remainingUseTicks
-        if (ticks == 0){
+        if (ticks == 0) {
             world.playSound(
                 user.pos, SoundEvents.BLOCK_TRIAL_SPAWNER_ABOUT_TO_SPAWN_ITEM, SoundCategory.PLAYERS, 1.0F, 1.0f
             )
@@ -71,8 +72,7 @@ class DeepWoundsKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
             if (user is PlayerEntity && !user.isCreative) {
                 user.itemCooldownManager.set(stack.item, 1200)
             }
-        }
-        else{
+        } else {
             if (user is PlayerEntity && !user.isCreative) {
                 user.itemCooldownManager.set(stack.item, 20)
             }

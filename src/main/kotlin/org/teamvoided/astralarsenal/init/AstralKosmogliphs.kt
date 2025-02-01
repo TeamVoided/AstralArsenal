@@ -26,7 +26,7 @@ import org.teamvoided.astralarsenal.kosmogliph.tools.*
 
 @Suppress("unused")
 object AstralKosmogliphs {
-//    val STUPID_FUCKING_GLIPH = registerSimple("stupid_fucking_gliph") { true }
+    //    val STUPID_FUCKING_GLIPH = registerSimple("stupid_fucking_gliph") { true }
     val EMPTY = registerSimple("empty") { false }
 
     @JvmField
@@ -93,11 +93,12 @@ object AstralKosmogliphs {
 
     val TRIDENT_REDUCE = register("trident_reduce", ::TridentReduceKosmogliph)
     val TRIDENT_BLEED = register("trident_bleed", ::TridentBleedKosmogliph)
+
     @JvmField
     val ASTRAL_RAIN = register("astral_rain", ::AstralRainKosmogliph)
 
     val CAPACITY = registerSimple("capacity", AstralItemTags.SUPPORTS_CAPACITY)
-    val OVER_HEAT = registerSimple("over_heat",AstralItemTags.SUPPORTS_OVER_HEAT)
+    val OVER_HEAT = registerSimple("over_heat", AstralItemTags.SUPPORTS_OVER_HEAT)
     val STATIC_RELEASE = registerSimple("static_release", AstralItemTags.SUPPORTS_STATIC_RELEASE)
     val TEAR = registerSimple("tear", AstralItemTags.SUPPORTS_TEAR)
 

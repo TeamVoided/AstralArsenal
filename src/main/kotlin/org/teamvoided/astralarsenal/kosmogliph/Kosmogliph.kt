@@ -53,6 +53,7 @@ interface Kosmogliph {
     fun shouldNegateDamage(
         stack: ItemStack, entity: LivingEntity, source: DamageSource, equipmentSlot: EquipmentSlot
     ): Boolean = false
+
     fun getUseAction(stack: ItemStack): UseAction? = null
     fun onStoppedUsing(stack: ItemStack, world: World, user: LivingEntity, remainingUseTicks: Int) {}
 
@@ -97,7 +98,8 @@ interface Kosmogliph {
 
     companion object {
         val REGISTRY_KEY: RegistryKey<Registry<Kosmogliph>> = RegistryKey.ofRegistry(id("kosmogliphs"))
-        val REGISTRY: Registry<Kosmogliph> = FabricRegistryBuilder.createDefaulted(REGISTRY_KEY, id("empty")).buildAndRegister()
+        val REGISTRY: Registry<Kosmogliph> =
+            FabricRegistryBuilder.createDefaulted(REGISTRY_KEY, id("empty")).buildAndRegister()
         val CODEC: Codec<Kosmogliph> = REGISTRY.codec
 //        val PACKET_CODEC = PacketCodecs.fromCodec(REGISTRY.codec)
     }

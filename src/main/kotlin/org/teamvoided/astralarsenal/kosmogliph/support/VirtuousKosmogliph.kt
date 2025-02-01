@@ -10,12 +10,12 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
-class VirtuousKosmogliph (id: Identifier) :
+class VirtuousKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_TOTEM) }) {
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
-        if(world is ServerWorld){
-            repeat(3){
+        if (world is ServerWorld) {
+            repeat(3) {
 //                val projectile = AstralEntities.
             }
         }

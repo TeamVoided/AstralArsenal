@@ -41,7 +41,12 @@ open class NailEntity : PersistentProjectileEntity {
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         if (entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity as LivingEntity
-            hit.customDamage(AstralDamageTypes.NAILED, if(nailType == NailType.FIRE) 0.25f else if(nailType == NailType.CHARGED) 0.0f else 0.5f, owner, owner)
+            hit.customDamage(
+                AstralDamageTypes.NAILED,
+                if (nailType == NailType.FIRE) 0.25f else if (nailType == NailType.CHARGED) 0.0f else 0.5f,
+                owner,
+                owner
+            )
             if (hit is EndermanEntity) return
             if (nailType != NailType.CHARGED && nailType != NailType.IMPALE) {
                 var effectLevel = 0
@@ -56,8 +61,7 @@ open class NailEntity : PersistentProjectileEntity {
                         false, false, true
                     )
                 )
-            }
-            else if(nailType == NailType.IMPALE){
+            } else if (nailType == NailType.IMPALE) {
                 var effectLevel = 0
                 val currentEffect = hit.statusEffects.find { it.effectType == AstralEffects.IMPALED }
                 currentEffect?.let { effectLevel = it.amplifier + 1 }
@@ -78,8 +82,10 @@ open class NailEntity : PersistentProjectileEntity {
                     hit.customDamage(AstralDamageTypes.BURN, 0.25f, owner, owner)
                     hit.setOnFireFor(200)
                 }
+
                 NailType.CHARGED ->
                     hit.customDamage(AstralDamageTypes.RICHOCHET, 0.5f, owner, owner)
+
                 NailType.IMPALE -> Unit
             }
             this.world.playSound(this.pos, SoundEvents.ITEM_TRIDENT_HIT, SoundCategory.PLAYERS, 1.0F, 1.0f)

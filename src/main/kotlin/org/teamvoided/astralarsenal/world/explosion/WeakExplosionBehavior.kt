@@ -11,7 +11,7 @@ import net.minecraft.world.explosion.ExplosionBehavior
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 
 class WeakExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
-val causingEntity = causingEntity
+    val causingEntity = causingEntity
     override fun canDestroyBlock(
         explosion: Explosion,
         world: BlockView,

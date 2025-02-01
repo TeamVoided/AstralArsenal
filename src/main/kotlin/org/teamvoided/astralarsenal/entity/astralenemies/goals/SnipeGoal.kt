@@ -79,7 +79,11 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
                 entity.targetPoint = entity.target!!.pos.add(0.0, 1.0, 0.0)
                 if (entity.enraged) {
                     entity.targetPoint = entity.target!!.pos.add(0.0, 1.0, 0.0)
-                        .add(entity.target!!.movement.x * (entity.shotBufferTime.toDouble().times(2.0)),0.0,entity.target!!.movement.z * (entity.shotBufferTime.toDouble().times(2.0)))
+                        .add(
+                            entity.target!!.movement.x * (entity.shotBufferTime.toDouble().times(2.0)),
+                            0.0,
+                            entity.target!!.movement.z * (entity.shotBufferTime.toDouble().times(2.0))
+                        )
                 }
                 entity.world.playSoundFromEntity(
                     null,
@@ -452,29 +456,25 @@ class SnipeGoal(val entity: AstralSniperEntity) : Goal() {
         }
     }
 
-    fun findTargetSpot(entity: AstralSniperEntity){
-        if(entity.target != null && shouldMove(entity, 50f, 10f)){
+    fun findTargetSpot(entity: AstralSniperEntity) {
+        if (entity.target != null && shouldMove(entity, 50f, 10f)) {
             var r = 0f
             val distance = entity.distanceTo(entity.target)
-            if(distance > 50f){
+            if (distance > 50f) {
                 r = distance - 45
-            }
-            else if(distance < 10f){
+            } else if (distance < 10f) {
                 r = distance + 15
             }
             val targX = entity.target!!.x
             val targZ = entity.target!!.z
             val posX = entity.x
             val posZ = entity.z
-            val theta = atan2((targZ - posZ),(targX - posX))
+            val theta = atan2((targZ - posZ), (targX - posX))
 
         }
     }
 
     fun shouldMove(entity: AstralSniperEntity, maxDistance: Float, minDistance: Float): Boolean {
-        if(entity.target != null && entity.distanceTo(entity.target) > minDistance && entity.distanceTo(entity.target) < maxDistance){
-            return false
-        }
-        else{return true}
+        return !(entity.target != null && entity.distanceTo(entity.target) > minDistance && entity.distanceTo(entity.target) < maxDistance)
     }
 }

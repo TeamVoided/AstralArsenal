@@ -29,15 +29,15 @@ class ParryFireExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
 
     override fun calculateDamage(explosion: Explosion, entity: Entity): Float {
         entity.setOnFireFor(200)
-            if (entity is LivingEntity && entity != causingEntity) {
-                entity.damage(
-                    DamageSource(
-                        AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.PARRY),
-                        causingEntity,
-                        causingEntity
-                    ), 10f
-                )
-            }
+        if (entity is LivingEntity && entity != causingEntity) {
+            entity.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.PARRY),
+                    causingEntity,
+                    causingEntity
+                ), 10f
+            )
+        }
         return 0f
     }
 }

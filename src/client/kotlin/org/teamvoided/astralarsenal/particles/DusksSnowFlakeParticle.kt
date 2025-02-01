@@ -7,7 +7,7 @@ import net.minecraft.util.math.MathHelper.lerp
 import java.util.*
 import kotlin.math.max
 
-class DusksSnowFlakeParticle (
+class DusksSnowFlakeParticle(
     world: ClientWorld, x: Double, y: Double, z: Double, velX: Double, velY: Double, velZ: Double
 ) : SpriteBillboardParticle(world, x, y, z, velX, velY, velZ) {
 

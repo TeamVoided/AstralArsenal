@@ -35,8 +35,7 @@ class RichochetEntity : Entity {
             super(entityType as EntityType<out Entity?>?, world)
 
     constructor(world: World?, owner: LivingEntity?) :
-            super(AstralEntities.RICHOCHET as EntityType<out Entity?>, world) {
-    }
+            super(AstralEntities.RICHOCHET as EntityType<out Entity?>, world)
 
     constructor(world: World?, x: Double, y: Double, z: Double) :
             super(AstralEntities.RICHOCHET as EntityType<out Entity?>, world)
@@ -92,7 +91,7 @@ class RichochetEntity : Entity {
                 2
             )
         )
-        if(world is ServerWorld){
+        if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, caster.x, caster.y + 1, caster.z)
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
@@ -102,7 +101,7 @@ class RichochetEntity : Entity {
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
-            beamRenderer.setPosition(caster.eyePos.x,caster.eyePos.y, caster.eyePos.z)
+            beamRenderer.setPosition(caster.eyePos.x, caster.eyePos.y, caster.eyePos.z)
             world.spawnEntity(beamRenderer)
         }
         val entities = mutableListOf<Entity>()
@@ -151,7 +150,10 @@ class RichochetEntity : Entity {
                 )
                 entity.discard()
             }
-            if (entity is LivingEntity && !entitiesHit.contains(entity) && (entity !is PlayerEntity || !hitThrice.contains(entity))) {
+            if (entity is LivingEntity && !entitiesHit.contains(entity) && (entity !is PlayerEntity || !hitThrice.contains(
+                    entity
+                ))
+            ) {
                 entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RICHOCHET),
@@ -160,11 +162,17 @@ class RichochetEntity : Entity {
                     ), dmg.toFloat()
                 )
                 entitiesHit.add(entity)
-                if(entity is PlayerEntity){
-                    when{
+                if (entity is PlayerEntity) {
+                    when {
                         hitThrice.contains(entity) -> {}
-                        hitTwice.contains(entity) -> {hitThrice.add(entity); hitTwice.remove(entity)}
-                        hitOnce.contains(entity) -> {hitTwice.add(entity); hitOnce.remove(entity)}
+                        hitTwice.contains(entity) -> {
+                            hitThrice.add(entity); hitTwice.remove(entity)
+                        }
+
+                        hitOnce.contains(entity) -> {
+                            hitTwice.add(entity); hitOnce.remove(entity)
+                        }
+
                         else -> hitOnce.add(entity)
                     }
                 }

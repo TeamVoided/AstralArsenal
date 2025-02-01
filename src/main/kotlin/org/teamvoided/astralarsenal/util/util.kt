@@ -86,6 +86,7 @@ fun ServerCommandSource.message(string: String): Int {
     this.sendSystemMessage(Text.literal(string))
     return 0
 }
+
 fun ServerCommandSource.error(text: String): Int {
     this.sendError(Text.literal(text))
     return -1

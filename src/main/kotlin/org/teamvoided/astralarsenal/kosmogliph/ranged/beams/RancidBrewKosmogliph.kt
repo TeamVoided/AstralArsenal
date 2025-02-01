@@ -39,7 +39,7 @@ class RancidBrewKosmogliph(id: Identifier) :
                 2
             )
         )
-        if(world is ServerWorld){
+        if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x0055008a.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x004f0101.toInt())
@@ -49,7 +49,7 @@ class RancidBrewKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
-            beamRenderer.setPosition(player.x,player.y +1, player.z)
+            beamRenderer.setPosition(player.x, player.y + 1, player.z)
             world.spawnEntity(beamRenderer)
         }
         val entities = mutableListOf<Entity>()
@@ -70,7 +70,12 @@ class RancidBrewKosmogliph(id: Identifier) :
             if (!player.world.isClient) {
                 val serverWorld = player.world as ServerWorld
                 serverWorld.spawnParticles(
-                    create(ParticleTypes.ENTITY_EFFECT, world.random.nextFloat(),world.random.nextFloat(),world.random.nextFloat()),
+                    create(
+                        ParticleTypes.ENTITY_EFFECT,
+                        world.random.nextFloat(),
+                        world.random.nextFloat(),
+                        world.random.nextFloat()
+                    ),
                     (lerp(player.eyePos.x, result.pos.x, i / interval)),
                     (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (lerp(player.eyePos.z, result.pos.z, i / interval)),

@@ -19,9 +19,10 @@ class TotemProjectileEntity : ArrowEntity {
     constructor(world: World?, x: Double, y: Double, z: Double) :
             super(AstralEntities.BEAM_OF_LIGHT_ARROW as EntityType<out ArrowEntity?>, world)
 
-    var entity : Int = 0
+    var entity: Int = 0
+
     //1 for strikers, 2 for snipers, 3 for idols.
-    var target : UUID? = null
+    var target: UUID? = null
 //    var owner : Entity? = null
 
     override fun onEntityHit(entityHitResult: EntityHitResult?) {
@@ -29,7 +30,7 @@ class TotemProjectileEntity : ArrowEntity {
     }
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
-        when(entity){
+        when (entity) {
             1 -> {}
             2 -> {}
             3 -> {}

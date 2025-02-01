@@ -32,7 +32,7 @@ class BeamOfLightArrowEntity : ArrowEntity {
     var enraged = false
 
     override fun tick() {
-        var particles = if(enraged) ParticleTypes.GLOW else ParticleTypes.END_ROD
+        var particles = if (enraged) ParticleTypes.GLOW else ParticleTypes.END_ROD
         if (!world.isClient) {
             val serverWorld = world as ServerWorld
             serverWorld.spawnParticles(

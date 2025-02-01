@@ -72,6 +72,7 @@ data class NailCannonDataV1(val uses: Int, val beingUsed: Int) : SimpleStorageCo
         return if (other == null || other !is NailCannonDataV1) return super.equals(other)
         else true
     }
+
     companion object {
         val DEFAULT: NailCannonDataV1 = NailCannonDataV1(0, 0)
         val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
@@ -86,6 +87,7 @@ data class NailCannonCooldownData(val cooldown: Int, val fireCooldown: Int) : Si
         return if (other == null || other !is NailCannonCooldownData) return super.equals(other)
         else true
     }
+
     companion object {
         val DEFAULT: NailCannonCooldownData = NailCannonCooldownData(0, 0)
         val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(

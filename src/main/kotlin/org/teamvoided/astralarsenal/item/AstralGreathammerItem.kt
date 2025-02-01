@@ -25,7 +25,7 @@ class AstralGreathammerItem(settings: Settings) : ToolItem(ToolMaterials.NETHERI
 
     override fun postHit(stack: ItemStack?, target: LivingEntity?, attacker: LivingEntity): Boolean {
         val world = attacker.world
-        if (world is ServerWorld){
+        if (world is ServerWorld) {
             world.playSound(
                 null as PlayerEntity?,
                 attacker.x,

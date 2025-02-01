@@ -19,7 +19,8 @@ import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.entity.astralenemies.goals.LookAtPointGoal
 import org.teamvoided.astralarsenal.entity.astralenemies.goals.SnipeGoal
 
-class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: World) : AstralEnemyEntity(entityType, world), Monster {
+class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: World) :
+    AstralEnemyEntity(entityType, world), Monster {
 
 
     var snipeType
@@ -31,7 +32,7 @@ class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: 
     var shotBufferTime = 20
     var enraged = false
     var takenSecondShot = false
-    var targetPoint : Vec3d? = null
+    var targetPoint: Vec3d? = null
     var isShooting = false
 
     override fun cannotDespawn(): Boolean {
@@ -62,9 +63,11 @@ class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: 
         builder.add(SNIPE_TYPE, 0)
         super.initDataTracker(builder)
     }
+
     companion object {
         val SNIPE_TYPE: TrackedData<Int> =
             DataTracker.registerData(AstralSniperEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
+
         fun createMobAttributes(): DefaultAttributeContainer.Builder {
             return MobEntity.createAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 50.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 100.0)
@@ -83,9 +86,9 @@ class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: 
         super.readCustomDataFromNbt(nbt)
     }
 
-    override fun tick(){
-        if(this.snipeType == SnipeType.UNASSIGNED){
-            val random = this.world.random.rangeInclusive(1,5)
+    override fun tick() {
+        if (this.snipeType == SnipeType.UNASSIGNED) {
+            val random = this.world.random.rangeInclusive(1, 5)
             this.snipeType = SnipeType.getById(random)
         }
         if (this.target == null) {
@@ -99,18 +102,19 @@ class AstralSniperEntity(entityType: EntityType<out AstralSniperEntity>, world: 
         super.tick()
     }
 
-    fun getShotsBeforeEnrage(world: World) : Int{
-        return if(world.difficulty == Difficulty.HARD) 1 else if(world.difficulty == Difficulty.NORMAL) 2 else 8
+    fun getShotsBeforeEnrage(world: World): Int {
+        return if (world.difficulty == Difficulty.HARD) 1 else if (world.difficulty == Difficulty.NORMAL) 2 else 8
     }
 
     override fun applyEnchantmentsToDamage(source: DamageSource, amount: Float): Float {
         var outputDamage = amount
-        if(source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) outputDamage *= 0f
-        if(source.isTypeIn(AstralDamageTypeTags.IS_MELEE)) outputDamage *= 1.5f
+        if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) outputDamage *= 0f
+        if (source.isTypeIn(AstralDamageTypeTags.IS_MELEE)) outputDamage *= 1.5f
         return outputDamage
     }
+
     override fun isInvulnerableTo(source: DamageSource): Boolean {
-        if(source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) return true
+        if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) return true
         return super.isInvulnerableTo(source)
     }
 }

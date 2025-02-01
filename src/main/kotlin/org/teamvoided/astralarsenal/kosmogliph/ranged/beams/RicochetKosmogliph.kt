@@ -52,7 +52,7 @@ class RicochetKosmogliph(id: Identifier) :
                 2
             )
         )
-        if(world is ServerWorld){
+        if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
@@ -62,7 +62,7 @@ class RicochetKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
-            beamRenderer.setPosition(player.x,player.y +1, player.z)
+            beamRenderer.setPosition(player.x, player.y + 1, player.z)
             world.spawnEntity(beamRenderer)
         }
         val entities = mutableListOf<Entity>()
@@ -134,10 +134,16 @@ class RicochetKosmogliph(id: Identifier) :
                         ), DAMAGE.toFloat()
                     )
                 entitiesHit.add(entity)
-                if(entity is PlayerEntity){
-                    when{
-                        hitOnce.contains(entity) -> {hitTwice.add(entity); hitOnce.remove(entity)}
-                        hitTwice.contains(entity) -> {hitThrice.add(entity); hitTwice.remove(entity)}
+                if (entity is PlayerEntity) {
+                    when {
+                        hitOnce.contains(entity) -> {
+                            hitTwice.add(entity); hitOnce.remove(entity)
+                        }
+
+                        hitTwice.contains(entity) -> {
+                            hitThrice.add(entity); hitTwice.remove(entity)
+                        }
+
                         hitThrice.contains(entity) -> {}
                         else -> hitOnce.add(entity)
                     }
@@ -168,6 +174,7 @@ class RicochetKosmogliph(id: Identifier) :
                     )
                     else richochet.setPosition(result.pos.x, result.pos.y - 0.1, result.pos.z)
                 }
+
                 Direction.SOUTH -> {
                     if (richochet.yaw >= 0) richochet.yaw = ((180) - y)
                     else richochet.yaw = ((-180) - y)
@@ -179,6 +186,7 @@ class RicochetKosmogliph(id: Identifier) :
                     else richochet.yaw = ((-180) - y)
                     richochet.setPosition(result.pos.x, result.pos.y, result.pos.z - 0.1)
                 }
+
                 Direction.WEST -> {
                     richochet.yaw = y * -1
                     richochet.setPosition(result.pos.x - 0.1, result.pos.y, result.pos.z)
@@ -188,6 +196,7 @@ class RicochetKosmogliph(id: Identifier) :
                     richochet.yaw = y * -1
                     richochet.setPosition(result.pos.x + 0.1, result.pos.y, result.pos.z)
                 }
+
                 null -> println("fucking die")
             }
             world.spawnEntity(richochet)

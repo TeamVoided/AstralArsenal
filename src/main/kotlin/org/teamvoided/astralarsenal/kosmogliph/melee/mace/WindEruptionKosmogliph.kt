@@ -15,7 +15,7 @@ import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceExplosion
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceStrongExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceWeakExplosionBehavior
 
-class WindEruptionKosmogliph (id: Identifier) :
+class WindEruptionKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_PULVERISER) }) {
 
     override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int {
@@ -41,16 +41,16 @@ class WindEruptionKosmogliph (id: Identifier) :
     override fun onStoppedUsing(stack: ItemStack, world: World, user: LivingEntity, remainingUseTicks: Int) {
         val usedTicks = getUseTicks(stack, user) - remainingUseTicks
         val explosionBehavior = (
-                if(usedTicks >= 100) MaceStrongExplosionBehavior(user)
-                else if(usedTicks >= 50) MaceExplosionBehavior(user)
+                if (usedTicks >= 100) MaceStrongExplosionBehavior(user)
+                else if (usedTicks >= 50) MaceExplosionBehavior(user)
                 else MaceWeakExplosionBehavior(user)
                 )
-        val jumpPower =(
-                if(usedTicks >= 70) 2.5
-                else if(usedTicks >= 40) 1.5
+        val jumpPower = (
+                if (usedTicks >= 70) 2.5
+                else if (usedTicks >= 40) 1.5
                 else 1.0
                 )
-        if(usedTicks >= 10){
+        if (usedTicks >= 10) {
             world.createExplosion(
                 user, user.damageSources.explosion(null, user),
                 explosionBehavior,
@@ -62,12 +62,14 @@ class WindEruptionKosmogliph (id: Identifier) :
                 World.ExplosionSourceType.MOB,
                 ParticleTypes.SMALL_GUST,
                 ParticleTypes.GUST_EMITTER_LARGE,
-                SoundEvents.ENTITY_BREEZE_WIND_BURST)
-            user.addVelocity(0.0, jumpPower,0.0)
+                SoundEvents.ENTITY_BREEZE_WIND_BURST
+            )
+            user.addVelocity(0.0, jumpPower, 0.0)
             user.velocityDirty
-            if(user is PlayerEntity){
+            if (user is PlayerEntity) {
                 if (!user.isCreative) {
-                    user.itemCooldownManager.set(stack.item, 100)}
+                    user.itemCooldownManager.set(stack.item, 100)
+                }
             }
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)

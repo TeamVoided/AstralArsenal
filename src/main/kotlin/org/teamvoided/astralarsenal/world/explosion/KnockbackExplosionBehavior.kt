@@ -30,14 +30,15 @@ class KnockbackExplosionBehavior(causingEntity: Entity?) : ExplosionBehavior() {
     }
 
     override fun calculateDamage(explosion: Explosion, entity: Entity): Float {
-        if (cause == entity){
-        entity.damage(
-            DamageSource(
-                AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
-                cause,
-                cause
-            ), 5f
-        )}
+        if (cause == entity) {
+            entity.damage(
+                DamageSource(
+                    AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),
+                    cause,
+                    cause
+                ), 5f
+            )
+        }
         return 0f
     }
 }

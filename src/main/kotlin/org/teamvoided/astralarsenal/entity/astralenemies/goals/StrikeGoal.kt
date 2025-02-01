@@ -30,7 +30,7 @@ class StrikeGoal(val entity: AstralStrikerEntity) : Goal() {
                 3 -> largeStrike(entity, entity.strikesOnTarget)
             }
             entity.strikesOnTarget++
-            if (entity.strikesOnTarget >= entity.getStrikesBeforeEnrage(entity.world) && getNearbyStrikers(entity) <2) {
+            if (entity.strikesOnTarget >= entity.getStrikesBeforeEnrage(entity.world) && getNearbyStrikers(entity) < 2) {
                 entity.enraged = true
             }
             entity.cooldown = if (entity.enraged) 75 else 150
@@ -55,7 +55,8 @@ class StrikeGoal(val entity: AstralStrikerEntity) : Goal() {
             beam.DMG = 5
             beam.trackTime = 50
             beam.hard_damage = 0
-            beam.enraged = ((strikes > entity.getStrikesBeforeEnrage(world) && getNearbyStrikers(entity) <2) || entity.enraged)
+            beam.enraged =
+                ((strikes > entity.getStrikesBeforeEnrage(world) && getNearbyStrikers(entity) < 2) || entity.enraged)
             entity.world.spawnEntity(beam)
         }
     }
@@ -76,7 +77,8 @@ class StrikeGoal(val entity: AstralStrikerEntity) : Goal() {
                 beam.DMG = 3
                 beam.trackTime = (i * 10) + 10
                 beam.hard_damage = 0
-                beam.enraged = ((strikes > entity.getStrikesBeforeEnrage(world) && getNearbyStrikers(entity) <2) || entity.enraged)
+                beam.enraged =
+                    ((strikes > entity.getStrikesBeforeEnrage(world) && getNearbyStrikers(entity) < 2) || entity.enraged)
                 entity.world.spawnEntity(beam)
             }
         }
@@ -97,7 +99,8 @@ class StrikeGoal(val entity: AstralStrikerEntity) : Goal() {
             beam.DMG = 15
             beam.trackTime = 75
             beam.hard_damage = 0
-            beam.enraged = ((strikes > entity.getStrikesBeforeEnrage(world) && getNearbyStrikers(entity) <2) || entity.enraged)
+            beam.enraged =
+                ((strikes > entity.getStrikesBeforeEnrage(world) && getNearbyStrikers(entity) < 2) || entity.enraged)
             entity.world.spawnEntity(beam)
         }
     }
@@ -117,7 +120,7 @@ class StrikeGoal(val entity: AstralStrikerEntity) : Goal() {
                 )
             ).filter { it is AstralStrikerEntity }
         )
-        for (x in list){
+        for (x in list) {
             strikers++
         }
 

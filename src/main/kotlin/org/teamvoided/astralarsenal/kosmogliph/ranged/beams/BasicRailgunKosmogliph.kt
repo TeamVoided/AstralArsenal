@@ -82,7 +82,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
             1.0F,
             1.0f
         )
-        if(world is ServerWorld){
+        if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab)
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab)
@@ -92,7 +92,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
-            beamRenderer.setPosition(player.x,player.y +1, player.z)
+            beamRenderer.setPosition(player.x, player.y + 1, player.z)
             world.spawnEntity(beamRenderer)
         }
         for (entity in entities) {

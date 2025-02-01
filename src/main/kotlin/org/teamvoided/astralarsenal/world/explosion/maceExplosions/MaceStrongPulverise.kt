@@ -10,7 +10,7 @@ import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.ExplosionBehavior
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 
-class MaceStrongPulverise (causingEntity: Entity) : ExplosionBehavior() {
+class MaceStrongPulverise(causingEntity: Entity) : ExplosionBehavior() {
     val cause = causingEntity
     override fun canDestroyBlock(
         explosion: Explosion,

@@ -38,10 +38,6 @@ class FlameShotEntity : ThrownItemEntity {
         }
     }
 
-
-    companion object {
-    }
-
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
     }

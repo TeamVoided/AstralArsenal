@@ -67,7 +67,14 @@ object KeyHandlers {
             val backward = client.options.backKey.isPressed
             val left = client.options.leftKey.isPressed
             val right = client.options.rightKey.isPressed
-            AstralKosmogliphs.DODGE.handleJump(client.player!!.getEquippedStack(EquipmentSlot.LEGS), client.player!!, forward, backward, left, right)
+            AstralKosmogliphs.DODGE.handleJump(
+                client.player!!.getEquippedStack(EquipmentSlot.LEGS),
+                client.player!!,
+                forward,
+                backward,
+                left,
+                right
+            )
             holdingSprint.value = true
         }
 //        else if (key.isPressed) {

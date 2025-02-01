@@ -8,9 +8,10 @@ import org.teamvoided.astralarsenal.AstralArsenal.id
 
 object AstralParticles {
     val SNOWFLAKE = simple()
-    fun init(){
+    fun init() {
         register("snowflake", SNOWFLAKE)
     }
+
     fun register(id: String, particleType: ParticleType<*>) =
         Registry.register(Registries.PARTICLE_TYPE, id(id), particleType)
 }

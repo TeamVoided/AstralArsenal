@@ -36,8 +36,7 @@ class StrongExplosionBehavior(val causingEntity: Entity) : ExplosionBehavior() {
                         causingEntity
                     ), 15f
                 )
-            }
-            else if(entity is LivingEntity){
+            } else if (entity is LivingEntity) {
                 entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.BOOM),

@@ -29,7 +29,8 @@ import kotlin.math.round
 class NailCannonItem(settings: Settings) : Item(settings) {
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         val data = stack.getOrDefault(AstralDataComponents.NAILGUN_DATA, NailCannonDataV1.DEFAULT)
-        val cooldownData = stack.getOrDefault(AstralDataComponents.NAILGUN_COOLDOWN_DATA, NailCannonCooldownData.DEFAULT)
+        val cooldownData =
+            stack.getOrDefault(AstralDataComponents.NAILGUN_COOLDOWN_DATA, NailCannonCooldownData.DEFAULT)
         var uses = data.uses
         var cooldown = cooldownData.cooldown
         var fireCooldown = cooldownData.fireCooldown
@@ -77,7 +78,8 @@ class NailCannonItem(settings: Settings) : Item(settings) {
 
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
         val data = stack.getOrDefault(AstralDataComponents.NAILGUN_DATA, NailCannonDataV1.DEFAULT)
-        val cooldownData = stack.getOrDefault(AstralDataComponents.NAILGUN_COOLDOWN_DATA, NailCannonCooldownData.DEFAULT)
+        val cooldownData =
+            stack.getOrDefault(AstralDataComponents.NAILGUN_COOLDOWN_DATA, NailCannonCooldownData.DEFAULT)
         var cooldown = cooldownData.fireCooldown
         if ((data.uses > 0 && cooldown <= 0) || (data.uses > 0 && ((USE_TICKS - remainingUseTicks) % 20) == 0
                     && USE_TICKS - remainingUseTicks > 10 && stack.hasKosmogliph(AstralKosmogliphs.STATIC_RELEASE)

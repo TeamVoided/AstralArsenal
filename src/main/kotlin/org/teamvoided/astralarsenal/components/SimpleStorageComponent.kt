@@ -34,7 +34,8 @@ data class LIST_VALUES(val VALUE: Int, val VALU2: Int) : SimpleStorageComponent 
 // For Multi Value Components you can always add more values to the end,
 // just look at commented out boolean for how to do it.
 // Be careful to not miss the commas!
-data class MULTI_VALUE(val INT_VALUE: Int, val STRING_VALUE: String/*, val BOOL_VALUE: Boolean*/) : SimpleStorageComponent {
+data class MULTI_VALUE(val INT_VALUE: Int, val STRING_VALUE: String/*, val BOOL_VALUE: Boolean*/) :
+    SimpleStorageComponent {
     companion object {
         val DEFAULT: MULTI_VALUE = MULTI_VALUE(0, ""/*, false*/)
         val CODEC = RecordCodecBuilder.create<MULTI_VALUE> { builder ->

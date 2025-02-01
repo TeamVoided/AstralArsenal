@@ -55,7 +55,7 @@ class AstralIdol(
     }
 
     override fun tick() {
-        if(this.target != null){
+        if (this.target != null) {
             this.target!!.addStatusEffect(StatusEffectInstance(AstralEffects.IMMORTAL, 2, 0, false, true))
             this.target!!.addStatusEffect(StatusEffectInstance(StatusEffects.GLOWING, 2, 0, false, true))
             showTarget(this, ParticleTypes.END_ROD)
@@ -72,9 +72,10 @@ class AstralIdol(
                 .add(EntityAttributes.GENERIC_EXPLOSION_KNOCKBACK_RESISTANCE, 500.0)
         }
     }
+
     override fun applyEnchantmentsToDamage(source: DamageSource, amount: Float): Float {
         var outputDamage = amount
-        outputDamage = if(source.isTypeIn(AstralDamageTypeTags.IS_MELEE)){
+        outputDamage = if (source.isTypeIn(AstralDamageTypeTags.IS_MELEE)) {
             Float.POSITIVE_INFINITY
         } else 0f
         return outputDamage

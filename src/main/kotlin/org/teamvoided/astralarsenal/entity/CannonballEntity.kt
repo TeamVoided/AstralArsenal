@@ -44,7 +44,7 @@ class CannonballEntity : ThrownItemEntity {
         if (entity is CannonballEntity) return
         if (entity !is PlayerEntity) {
             entity.customDamage(AstralDamageTypes.CANNONBALL, getDmg().toFloat(), this, owner)
-            if(entity is EndermanEntity) return
+            if (entity is EndermanEntity) return
         } else {
             val type = if (entity == owner) AstralDamageTypes.BALLNT else AstralDamageTypes.CANNONBALL
             entity.customDamage(type, getDmg().toFloat(), this, owner)

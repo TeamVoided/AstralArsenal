@@ -7,7 +7,7 @@ import net.minecraft.particle.ParticleType
 import org.teamvoided.astralarsenal.particles.DusksSnowFlakeParticle
 
 object AstralParticlesClient {
-    fun init(){
+    fun init() {
         register(AstralParticles.SNOWFLAKE, DusksSnowFlakeParticle::Factory)
     }
 

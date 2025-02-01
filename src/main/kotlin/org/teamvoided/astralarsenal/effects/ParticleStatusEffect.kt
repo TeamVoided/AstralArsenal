@@ -22,12 +22,12 @@ class ParticleStatusEffect(type: StatusEffectType, color: Int, particle: Particl
             world.spawnParticles(
                 particleEffect,
                 entity.x,
-                entity.y + (height/2),
+                entity.y + (height / 2),
                 entity.z,
                 1,
-                width/2.5,
-                height/2.5,
-                width/2.5,
+                width / 2.5,
+                height / 2.5,
+                width / 2.5,
                 0.0
             )
         }

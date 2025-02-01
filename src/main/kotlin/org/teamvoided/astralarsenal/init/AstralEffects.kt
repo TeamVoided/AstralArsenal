@@ -106,11 +106,10 @@ object AstralEffects {
                 val levels = w + 1
                 val mult = levels * REDUCE_MULT
                 output = (output * (1 + mult)).toFloat()
-                if(source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)){
-                    if(entity is PlayerEntity && output > 15f && (damage < 15f)){
+                if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) {
+                    if (entity is PlayerEntity && output > 15f && (damage < 15f)) {
                         output = 15f
-                    }
-                    else if(damage > 15f && entity is PlayerEntity && output > 15f){
+                    } else if (damage > 15f && entity is PlayerEntity && output > 15f) {
                         output = damage
                     }
                 }
@@ -187,8 +186,8 @@ object AstralEffects {
 
         //Impaled starts here
         val effects_impaled = entity.statusEffects.filter { impaled.contains(it.effectType) }
-        if(effects_impaled.isNotEmpty() && source.isTypeIn(AstralDamageTypeTags.IS_MELEE)){
-            for(e in effects_impaled){
+        if (effects_impaled.isNotEmpty() && source.isTypeIn(AstralDamageTypeTags.IS_MELEE)) {
+            for (e in effects_impaled) {
                 output += min((0.5f * (e.amplifier + 1)), 15f)
                 entity.world.playSound(
                     null,
@@ -257,7 +256,14 @@ object AstralEffects {
     fun cancelDamage(entity: LivingEntity, damage: Float, source: DamageSource): Boolean {
         val effects_immortal = entity.statusEffects.filter { immortality.contains(it.effectType) }
         if (effects_immortal.isNotEmpty()) {
-            entity.world.playSoundFromEntity(null,entity,SoundEvents.BLOCK_AMETHYST_BLOCK_FALL,SoundCategory.NEUTRAL,1.0f,0.8f)
+            entity.world.playSoundFromEntity(
+                null,
+                entity,
+                SoundEvents.BLOCK_AMETHYST_BLOCK_FALL,
+                SoundCategory.NEUTRAL,
+                1.0f,
+                0.8f
+            )
             return true
         }
         return false

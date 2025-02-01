@@ -65,7 +65,7 @@ class AstralSlashKosmogliph(id: Identifier) :
 
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
         val ticks = getUseTicks(stack, user) - remainingUseTicks
-        if (ticks == 20){
+        if (ticks == 20) {
             world.playSound(
                 user.pos, SoundEvents.BLOCK_TRIAL_SPAWNER_EJECT_ITEM, SoundCategory.PLAYERS, 1.0F, 1.0f
             )
@@ -104,9 +104,10 @@ class AstralSlashKosmogliph(id: Identifier) :
                 1.0F,
                 1.0f
             )
-            if(user is PlayerEntity){
+            if (user is PlayerEntity) {
                 if (!user.isCreative) {
-                    user.itemCooldownManager.set(stack.item, 200)}
+                    user.itemCooldownManager.set(stack.item, 200)
+                }
             }
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)

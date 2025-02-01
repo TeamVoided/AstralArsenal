@@ -35,7 +35,7 @@ class RayofFrostKosmogliph(id: Identifier) :
                 2
             )
         )
-        if(world is ServerWorld){
+        if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x0042ecff.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ffffff.toInt())
@@ -45,7 +45,7 @@ class RayofFrostKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
-            beamRenderer.setPosition(player.x,player.y +1, player.z)
+            beamRenderer.setPosition(player.x, player.y + 1, player.z)
             world.spawnEntity(beamRenderer)
         }
         val entities = mutableListOf<Entity>()

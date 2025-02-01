@@ -14,8 +14,9 @@ import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.entity.astralenemies.goals.CustomLookAtTargetGoal
 import org.teamvoided.astralarsenal.entity.astralenemies.goals.StrikeGoal
 
-class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
-                          world: World
+class AstralStrikerEntity(
+    entityType: EntityType<out AstralStrikerEntity>,
+    world: World
 ) : AstralFlyingEnemyEntity(entityType, world), Monster {
     var enraged = false
     var cooldown = 0
@@ -27,22 +28,23 @@ class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
         return true
     }
 
-    fun getStrikesBeforeEnrage(world: World): Int{
+    fun getStrikesBeforeEnrage(world: World): Int {
         return 5
     }
-    fun getTimeStrikeLasts(world: World): Int{
+
+    fun getTimeStrikeLasts(world: World): Int {
         return 40
     }
 
     override fun applyEnchantmentsToDamage(source: DamageSource, amount: Float): Float {
         var outputDamage = amount
-        if(source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) outputDamage *= 0f
-        if(source.isTypeIn(AstralDamageTypeTags.IS_MELEE)) outputDamage *= 1.5f
+        if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) outputDamage *= 0f
+        if (source.isTypeIn(AstralDamageTypeTags.IS_MELEE)) outputDamage *= 1.5f
         return outputDamage
     }
 
     override fun isInvulnerableTo(source: DamageSource): Boolean {
-        if(source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) return true
+        if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) return true
         return super.isInvulnerableTo(source)
     }
 
@@ -53,7 +55,7 @@ class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
             1, TargetGoal(
                 this, PlayerEntity::
                 class.java, 1, false, false
-            ) { ((it.distanceTo(this)) <= 100) && (owner == null || it != owner)}
+            ) { ((it.distanceTo(this)) <= 100) && (owner == null || it != owner) }
         )
         targetSelector.add(
             1, TargetGoal(
@@ -64,7 +66,7 @@ class AstralStrikerEntity(entityType: EntityType<out AstralStrikerEntity>,
     }
 
     override fun tick() {
-        if(this.passedTarget != null && this.passedTarget!!.distanceTo(this) < 100){
+        if (this.passedTarget != null && this.passedTarget!!.distanceTo(this) < 100) {
             this.target = passedTarget
         }
         if (this.target == null) {
