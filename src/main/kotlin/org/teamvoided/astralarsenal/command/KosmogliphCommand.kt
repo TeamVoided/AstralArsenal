@@ -17,16 +17,13 @@ object KosmogliphCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         val kosmogliphNode = literal("kosmogliph").requires { it.hasPermission(2) }.build()
 
-        val applyNode = literal("apply").build()
-        kosmogliphNode.addChild(applyNode)
-
-        val kosmogliphArg = argument("kosmogliph", identifier()).suggests { _, builder ->
+        val arg = argument("kosmogliph", identifier()).suggests { _, builder ->
             Kosmogliph.REGISTRY.keys.map { it.value.toString() }
                 .filter { it.lowercase().contains(builder.remainingLowerCase) }
                 .forEach(builder::suggest)
             builder.buildFuture()
         }.executes(::cmd).build()
-        applyNode.addChild(kosmogliphArg)
+        kosmogliphNode.addChild(arg)
 
         dispatcher.root.addChild(kosmogliphNode)
     }
