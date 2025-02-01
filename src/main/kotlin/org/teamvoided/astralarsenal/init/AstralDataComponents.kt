@@ -20,14 +20,8 @@ object AstralDataComponents {
 
     val ASTRAL_STRIKE_DATA = registerSimple("astral_strike_data", AstralStrikeData.CODEC)
 
-    val MINIGUN_DATA = registerSimple("minigun_data", MinigunData.CODEC)
-
     val NAILGUN_DATA = registerSimple("nailgun_data", NailCannonDataV1.CODEC)
     val NAILGUN_COOLDOWN_DATA = registerSimple("nailgun_cooldown_data", NailCannonCooldownData.CODEC)
-
-    val COMET_LAUNCHER_DATA = registerSimple("comet_launcher_data", CometLauncherData.CODEC)
-
-    val GRAPPLE_DATA = registerSimple("grapple_data", GrappleData.CODEC)
 
     val ALCHEMIST_DATA = registerSimple("alchemist_data", AlchemistData.CODEC)
 
@@ -51,14 +45,5 @@ object AstralDataComponents {
     ): DataComponentType<T> =
         Registry.register(Registries.DATA_COMPONENT_TYPE, id(name), build(DataComponentType.builder()))
 
-    fun init() {
-        /* DefaultItemComponentEvents.MODIFY.register { ctx ->
-             mods.forEach { modCtx ->
-                 ctx.modify(modCtx.predicate) { builder, item ->
-                     modCtx.addToBuilder(builder, item)
-                 }
-             }
-             mods.clear()
-         }*/
-    }
+    fun init() {}
 }

@@ -67,16 +67,6 @@ data class AstralStrikeData(val hitTimes: Int) : SimpleStorageComponent {
     }
 }
 
-data class MinigunData(val uses: Int, val cooldown: Int) : SimpleStorageComponent {
-    companion object {
-        val DEFAULT: MinigunData = MinigunData(0, 0)
-        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
-            { list -> MinigunData(list[0], list[1]) },
-            { data -> listOf(data.uses, data.cooldown) }
-        )
-    }
-}
-
 data class NailCannonDataV1(val uses: Int, val beingUsed: Int) : SimpleStorageComponent {
     override fun equals(other: Any?): Boolean {
         return if (other == null || other !is NailCannonDataV1) return super.equals(other)
@@ -102,29 +92,6 @@ data class NailCannonCooldownData(val cooldown: Int, val fireCooldown: Int) : Si
             { list -> NailCannonCooldownData(list[0], list[1]) },
             { data -> listOf(data.cooldown, data.fireCooldown) }
         )
-    }
-}
-
-data class CometLauncherData(val uses: Int, val cooldown: Int) : SimpleStorageComponent {
-    companion object {
-        val DEFAULT: CometLauncherData = CometLauncherData(0, 0)
-        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
-            { list -> CometLauncherData(list[0], list[1]) },
-            { data -> listOf(data.uses, data.cooldown) }
-        )
-    }
-}
-
-data class GrappleData(val jumps: Int, val timer: Int, val negateFallDamage: Boolean) : SimpleStorageComponent {
-    companion object {
-        val DEFAULT: GrappleData = GrappleData(0, 0, false)
-        val CODEC = RecordCodecBuilder.create<GrappleData> { builder ->
-            builder.group(
-                Codec.INT.fieldOf("jumps").forGetter { it.jumps },
-                Codec.INT.fieldOf("timer").forGetter { it.timer },
-                Codec.BOOL.fieldOf("negateFallDamage").forGetter { it.negateFallDamage },
-            ).apply(builder, ::GrappleData)
-        }
     }
 }
 
