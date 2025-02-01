@@ -1,9 +1,10 @@
-package org.teamvoided.astralarsenal
+package org.teamvoided.astralarsenal.init
 
 import com.mojang.blaze3d.platform.InputUtil
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBind
 import org.lwjgl.glfw.GLFW
+import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.AstralArsenal.DEFAULT_KEY_CATEGORY
 import org.teamvoided.astralarsenal.data.gen.prov.AstralEnTranslationProvider
 
