@@ -1,18 +1,13 @@
 package org.teamvoided.astralarsenal.init
 
-import net.minecraft.util.math.*
 import net.minecraft.entity.Entity
-import net.minecraft.entity.ExperienceOrbEntity
-import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffect
-import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffectType
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registries
@@ -20,11 +15,9 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.Box
-import net.minecraft.world.World
+import net.minecraft.util.math.Vec3d
 import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.AstralArsenal.id
-import org.teamvoided.astralarsenal.coroutine.mcCoroutineTask
-import org.teamvoided.astralarsenal.coroutine.ticks
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 import org.teamvoided.astralarsenal.effects.BleedStatusEffect
@@ -32,9 +25,6 @@ import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.util.registerHolder
 import kotlin.math.min
-import kotlin.math.pow
-import kotlin.math.roundToInt
-import kotlin.math.sqrt
 
 object AstralEffects {
     fun init() = Unit
