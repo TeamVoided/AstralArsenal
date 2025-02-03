@@ -13,7 +13,8 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
 class FlameBurstKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_FLAME_BURST) }) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
-        target.setOnFireFor(200)
+
+        if(target.fireTicks + 50 < 400)target.fireTicks += 50
         if (target !is PlayerEntity) {
             val bursts: Int
             if (!target.isAlive) {

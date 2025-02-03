@@ -21,6 +21,10 @@ object AstralDamageTypes : RegistryBootstrapper<DamageType>(RegistryKeys.DAMAGE_
     val RICHOCHET = register("richochet") { DamageType("richochet", DamageScalingType.NEVER, 0f) }
     val NAILED = register("nailed") { DamageType("nailed", DamageScalingType.NEVER, 0f) }
     val PULVERISED = register("pulverised") { DamageType("pulverised", DamageScalingType.NEVER, 0f) }
+    //Starsludge
+    val SLUDGED = register("sludged") {DamageType("sludged", DamageScalingType.NEVER, 0f)}
+    val ELECTROSTATICED = register("electrostaticed") {DamageType("electrostaticed", DamageScalingType.NEVER, 0f)}
+    val NAPALMED = register("napalmed") {DamageType("napalmed", DamageScalingType.NEVER, 0f)}
 
     fun Entity.customDamage(
         type: RegistryKey<DamageType>,

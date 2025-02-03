@@ -44,6 +44,8 @@ object AstralItems {
 
     val RAILGUN = register("railgun", RailgunItem(Item.Settings().fireproof().maxCount(1).rarity(Rarity.EPIC)))
 
+    val STARSLUDGE_GENERATOR = register("starsludge_generator", StarSludgeItem(Item.Settings().fireproof().maxCount(1).rarity(Rarity.EPIC)))
+
     @Deprecated(
         "Replaced with automatic fetching",
         ReplaceWith("AstralItems.items()"),

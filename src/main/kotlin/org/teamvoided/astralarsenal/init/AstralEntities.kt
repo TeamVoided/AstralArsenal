@@ -7,6 +7,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.entity.*
+import org.teamvoided.astralarsenal.entity.starsludge.*
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
 
 object AstralEntities {
@@ -14,9 +15,7 @@ object AstralEntities {
     fun init() {
 //        FabricDefaultAttributeRegistry.register(ASTRAL_STRIKER, AstralStrikerEntity.createMobAttributes())
 //        FabricDefaultAttributeRegistry.register(ASTRAL_SNIPER, AstralSniperEntity.createMobAttributes())
-//        FabricDefaultAttributeRegistry.register(ASTRAL_SLASHER, AstralSlasherEntity.createMobAttributes())
 //        FabricDefaultAttributeRegistry.register(ASTRAL_IDOL, AstralIdol.createMobAttributes())
-//        FabricDefaultAttributeRegistry.register(ASTRAL_DRIFTER, AstralDrifterEntity.createMobAttributes())
     }
 
     val CANNONBALL_ENTITY = register(
@@ -73,6 +72,17 @@ object AstralEntities {
         "totem_projectile",
         EntityType.Builder.create(EntityType.EntityFactory(::TotemProjectileEntity), SpawnGroup.MISC)
             .setDimensions(0.2f, 0.2f).maxTrackingRange(4).build()
+    )
+
+    val SLUDGE_AOE = register(
+        "sludge_aoe",
+        EntityType.Builder.create(EntityType.EntityFactory(::StarSludgeAOEEntity), SpawnGroup.MISC)
+            .setDimensions(0.0f, 0.0f).maxTrackingRange(4).build()
+    )
+    val SLUDGE_PROJ = register(
+        "sludge_proj",
+        EntityType.Builder.create(EntityType.EntityFactory(::StarSludgeProjectileEntity), SpawnGroup.MISC)
+            .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
 
     private fun <T : Entity> register(path: String, entry: EntityType<T>): EntityType<T> {

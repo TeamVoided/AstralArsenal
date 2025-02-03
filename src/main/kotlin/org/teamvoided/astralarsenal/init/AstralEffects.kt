@@ -71,6 +71,10 @@ object AstralEffects {
     val IMPALED = register(
         "impaled", ParticleStatusEffect(StatusEffectType.HARMFUL, 0x590000, ParticleTypes.CRIMSON_SPORE)
     )
+    val STATICALLY_SLUDGED = register(
+        "statically_sludged",
+        ParticleStatusEffect(StatusEffectType.HARMFUL, 0xb8f4ff, ParticleTypes.ELECTRIC_SPARK)
+    )
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
         Registries.STATUS_EFFECT.registerHolder(id(id), entry)
