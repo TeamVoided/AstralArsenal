@@ -32,8 +32,7 @@ import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class AlchemistKosmogliph(id: Identifier) :
-    KosmogliphWithData(id, AstralDataComponents.ALCHEMIST_DATA, AstralItemTags.SUPPORTS_ALCHEMIST),
-    BowKosmogliph {
+    KosmogliphWithData(id, AstralDataComponents.ALCHEMIST_DATA, AstralItemTags.SUPPORTS_ALCHEMIST), BowKosmogliph {
     override fun onStackClicked(
         stack: ItemStack,
         other: ItemStack,
@@ -88,8 +87,9 @@ class AlchemistKosmogliph(id: Identifier) :
     }
 
     override fun overrideArrowType(player: PlayerEntity, stack: ItemStack, original: ItemStack): ItemStack? {
-        if (original.isEmpty) return null
-        original.decrement(1)
+        if (original.isEmpty) return if (player.isCreative) Items.ARROW.defaultStack else null
+
+        if (!player.isCreative) original.decrement(1)
 
         val data = stack.getOrDefault(AstralDataComponents.ALCHEMIST_DATA, AlchemistData.DEFAULT)
         if (data.charges <= 0 || data.contents.isEmpty) return null
