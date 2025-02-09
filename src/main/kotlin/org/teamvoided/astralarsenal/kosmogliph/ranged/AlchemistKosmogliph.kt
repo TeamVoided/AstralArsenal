@@ -87,7 +87,7 @@ class AlchemistKosmogliph(id: Identifier) :
     }
 
     override fun overrideArrowType(player: PlayerEntity, stack: ItemStack, original: ItemStack): ItemStack? {
-        if (original.isEmpty) return if (player.isCreative) Items.ARROW.defaultStack else null
+        if (!player.isCreative && original.isEmpty) return null
 
         if (!player.isCreative) original.decrement(1)
 
