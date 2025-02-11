@@ -21,16 +21,20 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.MAGIC)
             .add(DamageTypes.WITHER)
             .add(AstralDamageTypes.BLEED)
+            .add(AstralDamageTypes.MAGIC_BOMB)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_FIRE)
             .forceAddTag(DamageTypeTags.IS_FIRE)
             .add(AstralDamageTypes.BURN)
+            .add(AstralDamageTypes.FIREBOMBED)
 
         getOrCreateTagBuilder(DamageTypeTags.IS_FIRE)
             .add(AstralDamageTypes.BURN)
+            .add(AstralDamageTypes.FIREBOMBED)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_ICE)
             .add(DamageTypes.FREEZE)
+            .add(AstralDamageTypes.ICE_SHRAPNEL)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_MELEE)
             .add(DamageTypes.THORNS)
@@ -53,6 +57,8 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.RAILED)
             .add(AstralDamageTypes.NON_RAILED)
             .add(AstralDamageTypes.RICHOCHET)
+            .add(AstralDamageTypes.EMP)
+            .add(AstralDamageTypes.ELECTROSTATICED)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_EXPLOSION)
             .forceAddTag(DamageTypeTags.IS_EXPLOSION)
@@ -63,9 +69,22 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.EXPLOSION)
             .add(DamageTypes.BAD_RESPAWN_POINT)
             .add(AstralDamageTypes.BOOM)
+            .forceAddTag(AstralDamageTypeTags.SLUDGE_EXPLOSIONS)
 
         getOrCreateTagBuilder(DamageTypeTags.IS_EXPLOSION)
             .add(AstralDamageTypes.BOOM)
+            .forceAddTag(AstralDamageTypeTags.SLUDGE_EXPLOSIONS)
+
+        getOrCreateTagBuilder(AstralDamageTypeTags.SLUDGE_EXPLOSIONS)
+            .add(AstralDamageTypes.EMP)
+            .add(AstralDamageTypes.SLUDGE_BOMB)
+            .add(AstralDamageTypes.FIREBOMBED)
+            .add(AstralDamageTypes.ICE_SHRAPNEL)
+            .add(AstralDamageTypes.MAGIC_BOMB)
+
+        getOrCreateTagBuilder(AstralDamageTypeTags.STOPS_MOVEMENT)
+            .add(AstralDamageTypes.EMP)
+            .add(AstralDamageTypes.ELECTROSTATICED)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.IS_PROJECTILE)
             .add(DamageTypes.MOB_PROJECTILE)
@@ -75,6 +94,8 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.CANNONBALL)
             .add(AstralDamageTypes.BALLNT)
             .add(AstralDamageTypes.NAILED)
+            .add(AstralDamageTypes.SLUDGED)
+            .add(AstralDamageTypes.SLUDGE_AOE)
 
         getOrCreateTagBuilder(DamageTypeTags.IS_PROJECTILE) //for endermen to avoid
             .forceAddTag(AstralDamageTypeTags.IS_PROJECTILE)
@@ -106,6 +127,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.BURN)
             .add(AstralDamageTypes.RICHOCHET)
             .add(AstralDamageTypes.NAILED)
+            .forceAddTag(AstralDamageTypeTags.SLUDGE_EXPLOSIONS)
 
         getOrCreateTagBuilder(DamageTypeTags.AVOIDS_GUARDIAN_THORNS)
             .forceAddTag(AstralDamageTypeTags.IS_PLASMA)
@@ -119,5 +141,6 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.PARRY)
             .add(AstralDamageTypes.RICHOCHET)
             .add(AstralDamageTypes.PULVERISED)
+            .add(AstralDamageTypes.SLUDGE_AOE)
     }
 }

@@ -177,3 +177,17 @@ data class TotemData(val target: UUID?) : SimpleStorageComponent {
         )
     }
 }
+
+data class SludgeCooldownData(val cooldown: Int, val uses: Int) :
+    SimpleStorageComponent {
+    companion object {
+        val DEFAULT: SludgeCooldownData = SludgeCooldownData(0, 0)
+        val CODEC = RecordCodecBuilder.create<SludgeCooldownData> { builder ->
+            builder.group(
+                Codec.INT.fieldOf("cooldown").forGetter { it.cooldown },
+                Codec.INT.fieldOf("uses").forGetter { it.uses }
+            ).apply(builder, ::SludgeCooldownData)
+        }
+
+    }
+}

@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -20,7 +21,9 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.DodgeData
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDataComponents
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
@@ -105,6 +108,10 @@ class DodgeKosmogliph(id: Identifier) :
             val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
             var uses = data.uses
             if (uses >= 3) return
+            val w = entity.statusEffects.filter { it.effectType == AstralEffects.STATICALLY_SLUDGED }
+            if(w.isNotEmpty()){
+                return
+            }
             var cooldown = data.cooldown
             if (entity.hungerManager.foodLevel > 6) {
                 cooldown--
@@ -180,6 +187,10 @@ class DodgeKosmogliph(id: Identifier) :
             } else if (cooldown <= 100) {
                 cooldown += 15
             }
+        }
+        if(source.isType(AstralDamageTypes.EMP) || source.isType(AstralDamageTypes.ELECTROSTATICED)){
+            uses = 0
+            cooldown = 20
         }
         stack.set(AstralDataComponents.DODGE_DATA, DodgeData(uses, cooldown))
         return super<KosmogliphWithData>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)

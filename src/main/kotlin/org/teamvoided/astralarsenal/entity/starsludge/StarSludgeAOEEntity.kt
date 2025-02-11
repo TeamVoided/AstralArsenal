@@ -32,106 +32,108 @@ class StarSludgeAOEEntity : Entity {
             super(AstralEntities.SLUDGE_AOE as EntityType<out Entity?>, world)
 
     override fun initDataTracker(builder: DataTracker.Builder) {
-//        builder.add(SLUDGE_FLAVOUR, 0)
-//        builder.add(MAGIC, 0)
+        builder.add(SLUDGE_FLAVOUR, StarSludgeProjectileEntity.SludgeFlavour.UNASSIGNED.id)
+        builder.add(MAGIC, StarSludgeProjectileEntity.MagicEffect.BLEED.id)
+//        super.initDataTracker(builder)
     }
 
-//    var age = 0
-//    var owner: Entity? = null
-//
-//    override fun tick() {
-//        age += 1
-//        if (age > 200) this.discard()
-//        val entities = world.getOtherEntities(
-//            this, Box(
-//                pos.x + 5,
-//                pos.y + 0.1,
-//                pos.z + 5,
-//                pos.x + 5,
-//                pos.y - 0.1,
-//                pos.z + 5
-//            )
-//        ).filter { it is LivingEntity && this.distanceTo(it) < 5 }
-//        val damage = when (sludge) {
-//            StarSludgeProjectileEntity.SludgeFlavour.UNASSIGNED -> 0.1f
-//            StarSludgeProjectileEntity.SludgeFlavour.STRONG -> 0.1f
-//            StarSludgeProjectileEntity.SludgeFlavour.FIRE -> 0.1f
-//            StarSludgeProjectileEntity.SludgeFlavour.ICE -> 0.1f
-//            StarSludgeProjectileEntity.SludgeFlavour.STATIC -> 0.05f
-//            StarSludgeProjectileEntity.SludgeFlavour.MAGIC -> 0.1f
-//        }
-//        val damageType = when (sludge) {
-//            StarSludgeProjectileEntity.SludgeFlavour.UNASSIGNED -> AstralDamageTypes.SLUDGED
-//            StarSludgeProjectileEntity.SludgeFlavour.STRONG -> AstralDamageTypes.SLUDGED
-//            StarSludgeProjectileEntity.SludgeFlavour.FIRE -> DamageTypes.IN_FIRE
-//            StarSludgeProjectileEntity.SludgeFlavour.ICE -> DamageTypes.FREEZE
-//            StarSludgeProjectileEntity.SludgeFlavour.STATIC -> AstralDamageTypes.ELECTROSTATICED
-//            StarSludgeProjectileEntity.SludgeFlavour.MAGIC -> DamageTypes.MAGIC
-//        }
-//        for (entity in entities) {
-//            if (entity is LivingEntity) {
-//                if (age % 20 == 0) {
-//                    entity.customDamage(
-//                        damageType, damage, owner, owner
-//                    )
-//                }
-//                when (sludge) {
-//                    StarSludgeProjectileEntity.SludgeFlavour.FIRE -> entity.setOnFireFor(100)
-//                    StarSludgeProjectileEntity.SludgeFlavour.ICE -> if(entity.frozenTicks < 100) entity.frozenTicks = 100
-//                    StarSludgeProjectileEntity.SludgeFlavour.MAGIC -> {
-//                        val effect = when (magic) {
-//                            StarSludgeProjectileEntity.MagicEffect.BLEED -> AstralEffects.BLEED
-//                            StarSludgeProjectileEntity.MagicEffect.POISON -> StatusEffects.POISON
-//                            StarSludgeProjectileEntity.MagicEffect.WITHER -> StatusEffects.WITHER
-//                        }
-//                        val duration = when (magic) {
-//                            StarSludgeProjectileEntity.MagicEffect.BLEED -> 50
-//                            StarSludgeProjectileEntity.MagicEffect.POISON -> 100
-//                            StarSludgeProjectileEntity.MagicEffect.WITHER -> 50
-//                        }
-//                        entity.addStatusEffect(
-//                            StatusEffectInstance(
-//                                effect,
-//                                duration, 1,
-//                                false, false, true
-//                            )
-//                        )
-//                    }
-//                    else -> {}
-//                }
-//            }
-//        }
-//        if(world is ServerWorld){
-//            (world as ServerWorld).spawnParticles(ParticleTypes.TOTEM_OF_UNDYING, this.x, this.y, this.z,
-//                1,
-//                5.0, 0.1, 5.0,
-//                0.0)
-//        }
-//
-//        super.tick()
-//    }
+    var age = 0
+    var owner: Entity? = null
 
-//    companion object {
-//        val SLUDGE_FLAVOUR: TrackedData<Int> =
-//            DataTracker.registerData(StarSludgeAOEEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
-//        val MAGIC: TrackedData<Int> =
-//            DataTracker.registerData(StarSludgeAOEEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
-//    }
-//
-//    var sludge
-//        get() = StarSludgeProjectileEntity.SludgeFlavour.getById(this.dataTracker.get(SLUDGE_FLAVOUR))
-//        set(value) = dataTracker.set(SLUDGE_FLAVOUR, value.id)
-//
-//    var magic
-//        get() = StarSludgeProjectileEntity.MagicEffect.getById(this.dataTracker.get(MAGIC))
-//        set(value) = dataTracker.set(MAGIC, value.id)
+    override fun tick() {
+        age += 1
+        if (age > 200) this.discard()
+        val entities = world.getOtherEntities(
+            this, Box(
+                this.pos.x + 2.5,
+                this.pos.y + 0.5,
+                this.pos.z + 2.5,
+                this.pos.x - 2.5,
+                this.pos.y - 0.5,
+                this.pos.z - 2.5
+            )
+        ).filterIsInstance<LivingEntity>().filter {this.distanceTo(it) < 2.5}
+
+        val damage = when (sludge) {
+            StarSludgeProjectileEntity.SludgeFlavour.UNASSIGNED -> 1f
+            StarSludgeProjectileEntity.SludgeFlavour.STRONG -> 1f
+            StarSludgeProjectileEntity.SludgeFlavour.FIRE -> 1f
+            StarSludgeProjectileEntity.SludgeFlavour.ICE -> 1f
+            StarSludgeProjectileEntity.SludgeFlavour.STATIC -> 0.5f
+            StarSludgeProjectileEntity.SludgeFlavour.MAGIC -> 1f
+        }
+        val damageType = when (sludge) {
+            StarSludgeProjectileEntity.SludgeFlavour.UNASSIGNED -> AstralDamageTypes.SLUDGE_AOE
+            StarSludgeProjectileEntity.SludgeFlavour.STRONG -> AstralDamageTypes.SLUDGE_AOE
+            StarSludgeProjectileEntity.SludgeFlavour.FIRE -> DamageTypes.IN_FIRE
+            StarSludgeProjectileEntity.SludgeFlavour.ICE -> DamageTypes.FREEZE
+            StarSludgeProjectileEntity.SludgeFlavour.STATIC -> AstralDamageTypes.RICHOCHET
+            StarSludgeProjectileEntity.SludgeFlavour.MAGIC -> DamageTypes.MAGIC
+        }
+        for (entity in entities) {
+
+            if (age % 20 == 0) {
+                entity.customDamage(
+                    damageType, damage, owner, owner
+                )
+            }
+            when (sludge) {
+                StarSludgeProjectileEntity.SludgeFlavour.FIRE -> entity.setOnFireFor(100)
+                StarSludgeProjectileEntity.SludgeFlavour.ICE -> if (entity.frozenTicks < 200) entity.frozenTicks = 200
+                StarSludgeProjectileEntity.SludgeFlavour.MAGIC -> {
+                    val effect = when (magic) {
+                        StarSludgeProjectileEntity.MagicEffect.BLEED -> AstralEffects.BLEED
+                        StarSludgeProjectileEntity.MagicEffect.POISON -> StatusEffects.POISON
+                        StarSludgeProjectileEntity.MagicEffect.WITHER -> StatusEffects.WITHER
+                    }
+                    val duration = when (magic) {
+                        StarSludgeProjectileEntity.MagicEffect.BLEED -> 50
+                        StarSludgeProjectileEntity.MagicEffect.POISON -> 100
+                        StarSludgeProjectileEntity.MagicEffect.WITHER -> 50
+                    }
+                    entity.addStatusEffect(
+                        StatusEffectInstance(
+                            effect,
+                            duration, 1,
+                            false, false, true
+                        )
+                    )
+                }
+
+                else -> {}
+            }
+        }
+        if (world is ServerWorld) {
+            (world as ServerWorld).spawnParticles(
+                ParticleTypes.TOTEM_OF_UNDYING, this.x, this.y, this.z,
+                1,
+                1.0, 0.0, 1.0,
+                0.0
+            )
+        }
+        super.tick()
+    }
 
     override fun readCustomDataFromNbt(nbt: NbtCompound?) {
-        TODO("Not yet implemented")
     }
 
     override fun writeCustomDataToNbt(nbt: NbtCompound?) {
-        TODO("Not yet implemented")
     }
+
+    companion object {
+        val SLUDGE_FLAVOUR: TrackedData<Int> =
+            DataTracker.registerData(StarSludgeAOEEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
+        val MAGIC: TrackedData<Int> =
+            DataTracker.registerData(StarSludgeAOEEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
+    }
+
+    var sludge
+        get() = StarSludgeProjectileEntity.SludgeFlavour.getById(dataTracker.get(SLUDGE_FLAVOUR))
+        set(value) = dataTracker.set(SLUDGE_FLAVOUR, value.id)
+
+    var magic
+        get() = StarSludgeProjectileEntity.MagicEffect.getById(dataTracker.get(MAGIC))
+        set(value) = dataTracker.set(MAGIC, value.id)
+
 
 }

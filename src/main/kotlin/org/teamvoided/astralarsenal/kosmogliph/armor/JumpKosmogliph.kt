@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -19,7 +20,9 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.JumpData
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDataComponents
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
@@ -97,6 +100,10 @@ class JumpKosmogliph(id: Identifier) :
             var lastJump = data.lastJump
             var maxUses = data.maxUses
             if (uses >= 3) return
+            val w = entity.statusEffects.filter { it.effectType == AstralEffects.STATICALLY_SLUDGED }
+            if(w.isNotEmpty()){
+                return
+            }
             var cooldown = data.cooldown
             if (entity.isOnGround || entity.isInFluid || entity.isClimbing) maxUses = 3
             if (entity is PlayerEntity) {
@@ -180,6 +187,10 @@ class JumpKosmogliph(id: Identifier) :
             } else if (cooldown <= 100) {
                 cooldown += 15
             }
+        }
+        if(source.isType(AstralDamageTypes.EMP) || source.isType(AstralDamageTypes.ELECTROSTATICED)){
+            uses = 0
+            cooldown = 20
         }
         stack.set(AstralDataComponents.JUMP_DATA, JumpData(uses, cooldown, 0, maxUses))
         return super<KosmogliphWithData>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)

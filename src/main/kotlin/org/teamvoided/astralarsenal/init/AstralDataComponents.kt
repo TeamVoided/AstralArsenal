@@ -37,6 +37,8 @@ object AstralDataComponents {
 
     val TOTEM_DATA = registerSimple("totem_data", TotemData.CODEC)
 
+    val SLUDGE_DATA = registerSimple("sludge_data", SludgeCooldownData.CODEC)
+
     fun <T : SimpleStorageComponent> registerSimple(name: String, codec: Codec<T>): DataComponentType<T> =
         Registry.register(Registries.DATA_COMPONENT_TYPE, id(name), DataComponentType.builder<T>().codec(codec).build())
 

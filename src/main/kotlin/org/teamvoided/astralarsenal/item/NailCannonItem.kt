@@ -104,7 +104,7 @@ class NailCannonItem(settings: Settings) : Item(settings) {
                     nail.nailType = NailEntity.NailType.CHARGED
                 world.spawnEntity(nail)
                 cooldown = if (shouldBoost(remainingUseTicks, user.isSneaking)) BOOSTED_FIRE_INTERVAL else FIRE_INTERVAL
-                if (USE_TICKS - remainingUseTicks == 60) {
+                if (USE_TICKS - remainingUseTicks == TICKS_BEFORE_BOOST) {
                     world.playSound(
                         user.pos, SoundEvents.ITEM_TRIDENT_RETURN, SoundCategory.PLAYERS, 1.0F, 1.0f
                     )

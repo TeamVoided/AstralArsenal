@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -20,7 +21,9 @@ import org.teamvoided.astralarsenal.components.DashData
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags.MOUNTS_WITH_DASH
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDataComponents
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 import org.teamvoided.astralarsenal.util.lastDamageTaken
@@ -86,6 +89,11 @@ class DashKosmogliph(id: Identifier) :
             val data = stack.getOrDefault(AstralDataComponents.DASH_DATA, DashData.DEFAULT)
             var uses = data.uses
             if (uses >= 3) return
+            if(entity !is PlayerEntity) return
+            val w = entity.statusEffects.filter { it.effectType == AstralEffects.STATICALLY_SLUDGED }
+            if(w.isNotEmpty()){
+                return
+            }
             var cooldown = data.cooldown
             if (entity is PlayerEntity) {
                 if (entity.hungerManager.foodLevel > 6) {
@@ -167,6 +175,10 @@ class DashKosmogliph(id: Identifier) :
                     cooldown += 15
                 }
             }
+        if(source.isType(AstralDamageTypes.EMP) || source.isType(AstralDamageTypes.ELECTROSTATICED)){
+            uses = 0
+            cooldown = 20
+        }
         stack.set(AstralDataComponents.DASH_DATA, DashData(uses, cooldown))
         return super<KosmogliphWithData>.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
     }

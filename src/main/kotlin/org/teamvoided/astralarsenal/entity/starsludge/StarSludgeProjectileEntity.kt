@@ -18,6 +18,8 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.particle.ParticleTypes
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
@@ -32,6 +34,8 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralItems
+import org.teamvoided.astralarsenal.world.explosion.PenopticonExplosionBehavior
+import org.teamvoided.astralarsenal.world.explosion.SludgeExplosions.SludgeExplosionBehavior
 
 class StarSludgeProjectileEntity : ThrownItemEntity {
 
@@ -72,7 +76,7 @@ class StarSludgeProjectileEntity : ThrownItemEntity {
 
         when (sludge) {
             SludgeFlavour.FIRE -> hitEntity.setOnFireFor(200)
-            SludgeFlavour.ICE -> if(hitEntity.frozenTicks < 200) hitEntity.frozenTicks = 200
+            SludgeFlavour.ICE -> if (hitEntity.frozenTicks < 400) hitEntity.frozenTicks = 400
             SludgeFlavour.STATIC -> hitEntity.addStatusEffect(
                 StatusEffectInstance(
                     AstralEffects.STATICALLY_SLUDGED,
@@ -100,29 +104,68 @@ class StarSludgeProjectileEntity : ThrownItemEntity {
                     )
                 )
             }
+
             else -> {}
         }
         super.onEntityHit(entityHitResult)
     }
 
-//    override fun onBlockHit(blockHitResult: BlockHitResult) {
-//        if(!world.isClient && owner is LivingEntity){
-//            val AOE = StarSludgeAOEEntity(world, owner as LivingEntity)
-//            AOE.sludge = this.sludge
-//            AOE.magic = this.magic
-//            AOE.setPosition(this.pos)
-//            world.spawnEntity(AOE)
-//        }
-//        super.onBlockHit(blockHitResult)
-//    }
+    override fun onBlockHit(blockHitResult: BlockHitResult) {
+        if (!world.isClient && owner is LivingEntity) {
+            val AOE = StarSludgeAOEEntity(world, owner as LivingEntity)
+            AOE.sludge = this.sludge
+            AOE.magic = this.magic
+            AOE.setPosition(this.x, this.y, this.z)
+            world.spawnEntity(AOE)
+            world.createExplosion(
+                this,
+                this.damageSources.explosion(this, this.owner),
+                SludgeExplosionBehavior(if (this.owner != null) this.owner!! else this, sludge, magic),
+                this.x,
+                this.y,
+                this.z,
+                3.0f,
+                false,
+                World.ExplosionSourceType.TNT
+            )
+        }
+        if (this.world is ServerWorld){
+            (world as ServerWorld).spawnParticles(
+                ParticleTypes.SPIT,
+                this.x, this.y, this.z,
+                500,
+                0.0, 0.0, 0.0,
+                1.0
+            )
+        }
+        this.discard()
+        super.onBlockHit(blockHitResult)
+    }
+
+    override fun tick() {
+            repeat(20) {
+                world.addParticle(
+                    ParticleTypes.SPIT,
+                    true,
+                    this.x + world.random.nextFloat().minus(0.5),
+                    this.y + world.random.nextFloat().minus(0.5),
+                    this.z + world.random.nextFloat().minus(0.5),
+                    this.velocity.x * 0.9,
+                    this.velocity.y * 0.9,
+                    this.velocity.z * 0.9
+                )
+            }
+        super.tick()
+    }
 
     override fun getDefaultItem(): Item {
-        TODO("Not yet implemented")
+        return Items.COD
     }
 
     override fun initDataTracker(builder: DataTracker.Builder) {
         builder.add(SLUDGE_FLAVOUR, SludgeFlavour.UNASSIGNED.id)
         builder.add(MAGIC, MagicEffect.BLEED.id)
+        super.initDataTracker(builder)
     }
 
     companion object {

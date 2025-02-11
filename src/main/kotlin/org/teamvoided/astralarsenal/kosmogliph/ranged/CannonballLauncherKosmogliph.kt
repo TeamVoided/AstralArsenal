@@ -39,7 +39,6 @@ class CannonballLauncherKosmogliph(id: Identifier) :
                 world.spawnEntity(cannonball)
             }
 
-            if (!player.isCreative) player.itemCooldownManager.set(stack.item, 100)
             world.playSound(
                 null,
                 player.x,

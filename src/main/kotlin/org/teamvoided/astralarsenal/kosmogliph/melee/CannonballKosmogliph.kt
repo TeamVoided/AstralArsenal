@@ -19,7 +19,7 @@ class CannonballKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
             snowballEntity.addVelocity(0.0, 0.1, 0.0)
             world.spawnEntity(snowballEntity)
             if (!player.isCreative) {
-                player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
+                player.itemCooldownManager.set(player.getStackInHand(hand).item, 40)
             }
             val stack = player.getStackInHand(hand)
             if (hand == Hand.MAIN_HAND) {

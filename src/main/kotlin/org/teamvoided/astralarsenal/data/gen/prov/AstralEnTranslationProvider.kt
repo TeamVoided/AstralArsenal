@@ -288,8 +288,8 @@ class AstralEnTranslationProvider(
         gen.add(AstralEffects.CONDUCTIVE.value().translationKey, "Conductive")
 
         gen.add("container.cosmic_table", "Cosmic Table")
-        gen.add("entities.astral_arsenal.beam_of_light", "Cod")
-        gen.add("entities.astral_arsenal.cannonball", "cannonball")
+        gen.add("entity.astral_arsenal.beam_of_light", "Cod")
+        gen.add("entity.astral_arsenal.cannonball", "cannonball")
 
         ALL_TAGS.forEach { gen.add(it.translationKey, genLang(it.id).titleCase("/")) }
     }

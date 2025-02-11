@@ -22,7 +22,6 @@ class AstralItemTagProvider(
     }
 
     private fun vanillaTags() {
-        getOrCreateTagBuilder(ItemTags.SWORDS).add(AstralItems.ASTRAL_GREATHAMMER)
     }
 
     private fun enchantTags() {
@@ -31,7 +30,6 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(ItemTags.WEAPON_ENCHANTABLE).add(AstralItems.ASTRAL_GREATHAMMER)
         getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).add(AstralItems.ASTRAL_GREATHAMMER)
         getOrCreateTagBuilder(ItemTags.VANISHING_ENCHANTABLE).add(AstralItems.ASTRAL_GREATHAMMER)
-        getOrCreateTagBuilder(ItemTags.SWORD_ENCHANTABLE).add(AstralItems.ASTRAL_GREATHAMMER)
     }
 
     private fun kosmogliphTags() {
@@ -117,6 +115,12 @@ class AstralItemTagProvider(
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TOTEM).add(AstralItems.ASTRAL_TOTEM)
 
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_HEAVY_CORE).add(AstralItems.STARSLUDGE_GENERATOR)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_FROZEN_CORE).add(AstralItems.STARSLUDGE_GENERATOR)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_FLAMING_CORE).add(AstralItems.STARSLUDGE_GENERATOR)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_STATIC_CORE).add(AstralItems.STARSLUDGE_GENERATOR)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ENCHANTED_CORE).add(AstralItems.STARSLUDGE_GENERATOR)
+
 //        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_GENERATOR).add(AstralItems.COMET_LAUNCHER)
 //        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_QUICKSHOT).add(AstralItems.COMET_LAUNCHER)
 //        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TARGET).add(AstralItems.COMET_LAUNCHER)
@@ -172,6 +176,11 @@ class AstralItemTagProvider(
 //            .forceAddTag(AstralItemTags.SUPPORTS_QUICKSHOT)
 //            .forceAddTag(AstralItemTags.SUPPORTS_TARGET)
             .forceAddTag(AstralItemTags.SUPPORTS_TEAR)
+            .forceAddTag(AstralItemTags.SUPPORTS_FROZEN_CORE)
+            .forceAddTag(AstralItemTags.SUPPORTS_STATIC_CORE)
+            .forceAddTag(AstralItemTags.SUPPORTS_FLAMING_CORE)
+            .forceAddTag(AstralItemTags.SUPPORTS_ENCHANTED_CORE)
+            .forceAddTag(AstralItemTags.SUPPORTS_HEAVY_CORE)
             .add(Items.SHIELD)
     }
 

@@ -77,7 +77,7 @@ object AstralEntities {
     val SLUDGE_AOE = register(
         "sludge_aoe",
         EntityType.Builder.create(EntityType.EntityFactory(::StarSludgeAOEEntity), SpawnGroup.MISC)
-            .setDimensions(0.0f, 0.0f).maxTrackingRange(4).build()
+            .setDimensions(5f, 0.1f).maxTrackingRange(4).build()
     )
     val SLUDGE_PROJ = register(
         "sludge_proj",

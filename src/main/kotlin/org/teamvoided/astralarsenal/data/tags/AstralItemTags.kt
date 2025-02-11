@@ -80,6 +80,13 @@ object AstralItemTags {
 
     val SUPPORTS_TOTEM = supports("totem")
 
+    val SUPPORTS_FLAMING_CORE = supports("flaming_core")
+    val SUPPORTS_FROZEN_CORE = supports("frozen_core")
+    val SUPPORTS_STATIC_CORE = supports("static_core")
+    val SUPPORTS_ENCHANTED_CORE = supports("enchanted_core")
+    val SUPPORTS_HEAVY_CORE = supports("heavy_core")
+
+
     val KOSMIC_TABLE_LEFT_FACING = create("kosmic_table/left_facing")
     val KOSMIC_TABLE_STRAIGHT = create("kosmic_table/straight")
 
