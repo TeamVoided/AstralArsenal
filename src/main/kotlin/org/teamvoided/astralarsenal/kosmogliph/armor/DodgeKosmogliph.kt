@@ -4,7 +4,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -50,26 +49,22 @@ class DodgeKosmogliph(id: Identifier) :
             val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
             val world = player.world
             if (world !is ServerWorld) {
-                var LRbias = 0 // 1 is right, -1 is left, 0 is neither
-                var BFbias = 0 // 1 for forward, -1 for back, 0 for neither
-                if (left xor right) {
-                    LRbias = if (left) 1 else -1
-                }
-                if (forward xor backward) {
-                    BFbias = if (backward) -1 else 1
-                }
-                if (!(backward || forward || left || right)) {
-                    BFbias = 1
-                }
+                val LRbias = if (left) -1 else 0 + if (right) 1 else 0 // 1 is right, -1 is left, 0 is neither
+                var BFbias = if (backward) -1 else 0 + if (forward) 1 else 0 // 1 for forward, -1 for back, 0 for neither
+                if (!(backward || forward || left || right)) BFbias = 1
 
-                var vector = Vec3d(BFbias.toDouble(), 0.0, LRbias.toDouble())
-                vector = vector.rotateY(player.yaw)
+                // Get the angle of our bias vector from origin
+                var theta = Math.atan2(LRbias.toDouble(), BFbias.toDouble())
+                // Add the player's angle about Y
+                theta += Math.toRadians(player.headYaw.toDouble()) + (Math.PI / 2)
+                // Convert to Cartesian
+                val vector = Vec3d(Math.cos(theta), 0.0, Math.sin(theta))
 
                 if (player.vehicle != null || player.isClimbing) return
 
                 if (data.uses > 0 && !player.isFallFlying) {
                     println(vector)
-                    player.velocity = vector
+                    player.velocity = vector.normalize()
                     player.velocityModified = true
                     world.playSound(
                         null,
