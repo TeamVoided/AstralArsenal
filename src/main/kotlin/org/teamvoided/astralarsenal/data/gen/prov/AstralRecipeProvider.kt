@@ -48,13 +48,14 @@ class AstralRecipeProvider(
             .offerTo(this)
 
         shaped(AstralItems.ASTRAL_GREATHAMMER)
-            .pattern("IKI")
+            .pattern("NKN")
             .pattern("KCK")
             .pattern("IGI")
             .ingredient('I', Items.IRON_INGOT)
             .ingredient('K', Items.DIAMOND)
-            .ingredient('C', Items.DIAMOND_AXE)
+            .ingredient('C', Items.NETHERITE_AXE)
             .ingredient('G', AstralItems.KOSMIC_GEM)
+            .ingredient('N', Items.NETHERITE_SCRAP)
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
 
