@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal
+package org.teamvoided.astralarsenal.utils
 
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext

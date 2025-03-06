@@ -4,6 +4,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screen.ingame.HandledScreen
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 import org.joml.Vector2i
 import org.teamvoided.astralarsenal.AstralArsenal
@@ -12,7 +13,6 @@ import org.teamvoided.astralarsenal.menu.CosmicTableMenu
 import org.teamvoided.astralarsenal.screens.widget.KosmogliphWidget
 import org.teamvoided.astralarsenal.screens.widget.KosmogliphWidget.Companion.SIZE
 import org.teamvoided.astralarsenal.util.hasKosmogliphs
-import org.teamvoided.astralarsenal.util.setKosmogliphs
 
 class CosmicTableScreen(
     handler: CosmicTableMenu, inventory: PlayerInventory, title: Text
@@ -40,6 +40,14 @@ class CosmicTableScreen(
         val applicationSlot = handler.getSlot(0)
         val gemSlot = handler.getSlot(1)
 
+        if (ItemStack.itemsAndComponentsMatch(lastTickStack, applicationSlot.stack)) {
+            if (!applicationSlot.hasStack()) {
+                currentWidgets.forEach(::remove)
+                currentWidgets.clear()
+            }
+            return
+        }
+
         if (!(applicationSlot.hasStack() && (gemSlot.hasStack() || applicationSlot.stack.hasKosmogliphs() || handler.playerInventory.player.isCreative) && (lastTickStack == applicationSlot.stack))) {
             currentWidgets.forEach(::remove)
             currentWidgets.clear()
@@ -49,7 +57,7 @@ class CosmicTableScreen(
             currentWidgets.forEach { addDrawableSelectableElement(it) }
         }
 
-        lastTickStack = applicationSlot.stack
+        lastTickStack = handler.getSlot(0).stack
     }
 
     private fun createWidgets() {
@@ -70,7 +78,9 @@ class CosmicTableScreen(
                 handler
             ) { x, y ->
                 client!!.interactionManager!!.clickButton(handler.syncId, index)
-                handler.getSlot(0).stack.setKosmogliphs(kosmogliph)
+//                if (client?.player?.isCreative == true || !handler.getSlot(1).stack.isEmpty) {
+//                    handler.getSlot(0).stack.setKosmogliphs(kosmogliph)
+//                }
             }
         }
 

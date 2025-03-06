@@ -14,7 +14,6 @@ import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
-import org.teamvoided.astralarsenal.entity.astralenemies.AstralSniperEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEffects
@@ -84,12 +83,10 @@ class BeamOfLightEntity : Entity {
                 )
             }
             if (targetEntity != null && this.getTime() < trackTime) {
-                val x =
-                    if (targetEntity!! is AstralSniperEntity) (targetEntity!!.eyePos.y - 0.05) else targetEntity!!.y + 1
+                val x = targetEntity!!.y + 1
                 this.setPosition(targetEntity!!.pos.x, x, targetEntity!!.pos.z)
             } else if (targetEntity != null && this.getTime() == trackTime && enraged) {
-                val x =
-                    if (targetEntity!! is AstralSniperEntity) (targetEntity!!.eyePos.y - 0.05) else targetEntity!!.y + 1
+                val x = targetEntity!!.y + 1
                 val posx = targetEntity!!.x + (targetEntity!!.movement.x * ((WINDUP) - trackTime))
                 val posy = (x)
                 val posz = targetEntity!!.z + (targetEntity!!.movement.z * (WINDUP - trackTime))

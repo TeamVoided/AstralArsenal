@@ -6,6 +6,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import org.teamvoided.astralarsenal.block.entity.KosmicTableBlockEntityRenderer
 import org.teamvoided.astralarsenal.handlers.KeyHandlers
 import org.teamvoided.astralarsenal.init.*
+import org.teamvoided.astralarsenal.init.AstralKeyBindings
 
 @Suppress("unused")
 object AstralArsenalClient {
