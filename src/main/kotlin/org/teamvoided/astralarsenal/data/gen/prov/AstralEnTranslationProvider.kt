@@ -103,11 +103,11 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.freeze.desc",
-            "Entities hit are frozen for a short time. On kill, the entity will release ice shards"
+            "Entities hit are frozen for a short time, stacking with every hit. On kill, the entity will release ice shards"
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.flame_burst.desc",
-            "Entities hit are set alight for a short time. On kill, the entity will release fire balls"
+            "Entities hit are set alight for a short time, stacking with every hit. On kill, the entity will release fire balls"
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.astral_slash.desc",
@@ -131,7 +131,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.cannonball.desc",
-            "Right clicking summons a cannonball that can be struck. The cannonball deals 10 damage and bounces off 1 target. every time it hits something, it increases in damage. 5 second cooldown"
+            "Right clicking summons a cannonball that can be struck. The cannonball deals 10 damage and bounces off 1 target. every time it hits something, it increases in damage. 2 second cooldown"
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.alchemist.desc",
@@ -139,7 +139,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.cannonball_launcher.desc",
-            "Replaces ammo with cannonballs when fired. Cannonballs deal 10 damage and bounce off of entities, increasing in damage every bounce "
+            "Replaces ammo with cannonballs when fired. Cannonballs deal 10 damage and bounce off of 1 entity, increasing in damage every time it hits an entity"
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.shotgun.desc",
@@ -169,15 +169,15 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.ankle_guard.desc",
-            "Prevents fall damage from taking you to less then 1hp"
+            "Prevents fall and kinetic damage from taking you to less then 25% of your max hp"
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.dash.desc",
-            "Pressing a keybind[default R] lets you dash forward. Dashes recharge over a second. You can hold up to 3"
+            "Pressing a keybind[default R] lets you dash forward. Dashes recharge over a second. You can hold up to 3. Dashing gives immunity frames."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.dodge.desc",
-            "Pressing a keybind[default R] lets you dodge in the direction you are moving. Dodges recharge over a second. You can hold up to 3"
+            "Pressing a keybind[default R] lets you dodge in the direction you are moving. Dodges recharge over a second. You can hold up to 3. Dodging gives immunity frames."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.jump.desc",
@@ -189,7 +189,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.parry.desc",
-            "For the first quarter second of holding your shield up, you can parry. Parrying projectiles launches them back, causing them to explode. Parrying melee attacks causes 1.25x the damage to hit the attacker"
+            "Holding up your shield will parry incoming attacks and projectiles, healing you for 2hp. Missing a parry will put the shield on cooldown for 5 seconds. Projectiles parried will launch an explosive in the direction you are facing. Other attacks will deal 1.25x damage onto the attacker."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.frost_thorns.desc",
