@@ -31,10 +31,12 @@ class AnkleGuardKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
         )
 
         var outputDamage = damage
-        if (source.isTypeIn(DamageTypeTags.IS_FALL) || source.isType(DamageTypes.FLY_INTO_WALL)) {
-            if (damage > entity.health && entity.health > 1) {
-                outputDamage = entity.health - 1
-            } else if (damage > entity.health) {
+        if ((source.isTypeIn(DamageTypeTags.IS_FALL) || source.isType(DamageTypes.FLY_INTO_WALL)) && equipmentSlot == EquipmentSlot.HEAD) {
+            outputDamage *= 0.75f
+            val minimum = (entity.maxHealth * 0.25f).coerceAtLeast(1f)
+            if (outputDamage > entity.health && entity.health > minimum) {
+                outputDamage = entity.health - minimum
+            } else if (outputDamage > entity.health) {
                 outputDamage = 0.0f
             }
         }

@@ -133,9 +133,15 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
                     )
                 }
             }
+            if (target is PlayerEntity) {
+                target.itemCooldownManager.set(shield.item, 10)
+                target.stopUsingItem()
+                if (source.attacker != target){
+                    target.heal(2f)
+                }
+            }
         } else if (shield.hasKosmogliph(AstralKosmogliphs.FROST_THORNS)) {
-            val num = (damage / 2).roundToInt() + 1
-            repeat(num) {
+            repeat(5) {
                 val freezeBallEntity = FreezeShotEntity(target.world, target)
                 freezeBallEntity.setPosition(target.pos.x, target.pos.y + 1, target.pos.z)
                 freezeBallEntity.setShootVelocity(target.pitch, target.yaw, 0.0f, 1.0f, 20f)

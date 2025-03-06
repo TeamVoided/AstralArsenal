@@ -19,8 +19,6 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.RICHOCHET, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.NAIL_ENTITY, ::NailEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BEAM_RENDERER, ::BeamRenderer)
-        EntityRendererRegistry.register(AstralEntities.SLUDGE_PROJ, ::EmptyEntityRenderer)
-        EntityRendererRegistry.register(AstralEntities.SLUDGE_AOE, ::EmptyEntityRenderer)
 
 //        EntityRendererRegistry.register(AstralEntities.ASTRAL_STRIKER, ::EmptyEntityRenderer)
 //        EntityRendererRegistry.register(AstralEntities.ASTRAL_SNIPER, ::EmptyEntityRenderer)

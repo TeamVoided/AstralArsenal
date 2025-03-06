@@ -228,7 +228,9 @@ class CapacitanceKosmogliph(id: Identifier) :
                     ), tempDamageValue
                 )
                 if (base.world is ServerWorld) {
-                    sillyLightningTime(base.pos, entiity.pos, ((base.world as ServerWorld)))
+                    repeat(max((tempDamageValue / 4).toInt(),1)) {
+                        sillyLightningTime(base.pos, entiity.pos, ((base.world as ServerWorld)))
+                    }
                 }
             }
             cause.world.playSound(
@@ -274,22 +276,17 @@ class CapacitanceKosmogliph(id: Identifier) :
         val bendPos = mutableListOf<Vec3d>()
         bendPos.add(pos1)
         for (i in 0..<bends) {
-            val distance = pos1.distanceTo(pos2)
-            val maxlerp: Double = 1.0 / bends
-            val xrand = (pos1.x - pos2.x) / (bends / 2)
-            val yrand = (pos1.y - pos2.y) / (bends / 2)
-            val zrand = (pos1.z - pos2.z) / (bends / 2)
-            val xmin = ((pos1.x - pos2.x) / (bends)) * i
+            val maxlerp: Double = (1.0 / bends) * i
+            val xrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0, 1)))).times(5)
+            val yrand = Math.pow(-1.0, i.toDouble()).times(5)
+            val zrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0, 1)))).times(5)
             val ymin = ((pos1.y - pos2.y) / (bends)) * i
-            val zmin = ((pos1.z - pos2.z) / (bends)) * i
             bendPos.add(
                 Vec3d(
-                    lerp(pos1.x, pos2.x, maxlerp) + xmin + world.random.nextDouble()
-                        .minus(0.5).times(xrand),
+                    (lerp(pos1.x, pos2.x, maxlerp) + world.random.nextDouble().minus(0.5).times(xrand)),
                     lerp(pos1.y, pos2.y, maxlerp) + ymin + world.random.nextDouble()
                         .minus(0.5).times(yrand),
-                    lerp(pos1.z, pos2.z, maxlerp) + zmin + world.random.nextDouble()
-                        .minus(0.5).times(zrand)
+                    lerp(pos1.z, pos2.z, maxlerp) + world.random.nextDouble().minus(0.5).times(zrand)
                 )
             )
         }
@@ -303,15 +300,14 @@ class CapacitanceKosmogliph(id: Identifier) :
             val a = bendPos[i]
             val b = bendPos[i + 1]
             val distance = a.distanceTo(b)
-            val interval = (distance * 10)
             val beamRenderer = BeamRenderEntity(world, a.x, a.y + 1, a.z)
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 10)
+            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y + 1, b.z).toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.05f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.05f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.1f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.1f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 1)
             beamRenderer.setPosition(a.x, a.y + 1, a.z)
             world.spawnEntity(beamRenderer)

@@ -21,6 +21,7 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.entity.FlameShotEntity
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.mixin.PersistentProjectileEntityAccessor
 import org.teamvoided.astralarsenal.world.explosion.parryExplosions.*
@@ -46,96 +47,69 @@ class ParryKosmogliph(id: Identifier) :
                         result.pos.z - 0.5
                     )
                 )
+                    .filter {
+                        it is ProjectileEntity && !it.type.isIn(AstralEntityTags.PROTECTED_FROM_DEL)
+                                && (it.owner != user || it.age > 10)
+                                && (it !is ArrowEntity || !(it as PersistentProjectileEntityAccessor).getInGround())
+                    }
             )
             if (user is PlayerEntity) {
                 if (parried.isNotEmpty()) {
                     for (entity in parried) {
-                        if (entity is ProjectileEntity) {
-                            //will have to be changed to use some tags
-                            if (entity is ArrowEntity) {
-                                if (!(entity as PersistentProjectileEntityAccessor).getInGround()) {
-                                    entity.discard()
-                                    if (entity.isCritical) blowTheFuckUp(
-                                        ParryStrongExplosionBehavior(entity),
-                                        ParryBustedExplosionBehavior(entity),
-                                        1f,
-                                        user,
-                                        world
-                                    )
-                                    else blowTheFuckUp(
-                                        ParryWeakExplosionBehavior(entity),
-                                        ParryStrongExplosionBehavior(entity),
-                                        1f,
-                                        user,
-                                        world
-                                    )
-                                    break
-                                }
-                            } else if (entity is CannonballEntity || entity is FireworkRocketEntity) {
-                                entity.discard()
-                                blowTheFuckUp(
-                                    ParryStrongExplosionBehavior(entity),
-                                    ParryBustedExplosionBehavior(entity),
-                                    2f,
-                                    user,
-                                    world
-                                )
-                                break
-                            } else if (entity is SnowballEntity || entity is FreezeShotEntity) {
-                                entity.discard()
-                                blowTheFuckUp(
-                                    ParryIceExplosionBehavior(entity),
-                                    ParryIceExplosionBehavior(entity),
-                                    1f,
-                                    user,
-                                    world
-                                )
-                                break
-                            } else if (entity is FireballEntity || entity is SmallFireballEntity || entity is FlameShotEntity) {
-                                entity.discard()
-                                blowTheFuckUp(
-                                    ParryFireExplosionBehavior(entity),
-                                    ParryFireExplosionBehavior(entity),
-                                    1f,
-                                    user,
-                                    world
-                                )
-                                break
-                            } else if (entity is ShulkerBulletEntity || entity is PotionEntity || entity is WitherSkullEntity || entity is DragonFireballEntity) {
-                                entity.discard()
-                                blowTheFuckUp(
-                                    ParryBrewExplosionBehavior(entity),
-                                    ParryBrewExplosionBehavior(entity),
-                                    1f,
-                                    user,
-                                    world
-                                )
-                                break
-                            } else if (entity is LlamaSpitEntity) {
-                                entity.discard()
-                                blowTheFuckUp(
-                                    ParryBustedExplosionBehavior(entity),
-                                    ParryBustedExplosionBehavior(entity),
-                                    3f,
-                                    user,
-                                    world
-                                )
-                                break
-                            } else if (entity.type.isIn(AstralEntityTags.PROTECTED_FROM_DEL)) {//prevents certain projectiles being destroyed from parrying
-                            } else {
-                                entity.discard()
-                                blowTheFuckUp(
-                                    ParryWeakExplosionBehavior(entity),
-                                    ParryStrongExplosionBehavior(entity),
-                                    1f,
-                                    user,
-                                    world
-                                )
-                                break
-                            }
+                        if (entity is ProjectileEntity && entity.owner != user) {
+                            user.heal(2f)
+                        }
+                        //will have to be changed to use some tags
+                        if (entity.type.isIn(AstralEntityTags.WEAK_PARRYABLES)) {
+                            entity.discard()
+                            blowTheFuckUp(
+                                ParryWeakExplosionBehavior(entity),
+                                ParryStrongExplosionBehavior(entity),
+                                2f,
+                                user,
+                                world
+                            )
+                            break
+                        } else if (entity.type.isIn(AstralEntityTags.STRONG_PARRYABLES)) {
+                            entity.discard()
+                            blowTheFuckUp(
+                                ParryStrongExplosionBehavior(entity),
+                                ParryBustedExplosionBehavior(entity),
+                                2f,
+                                user,
+                                world
+                            )
+                            break
+                        } else if (entity.type.isIn(AstralEntityTags.VERY_STRONG_PARRYABLES)) {
+                            entity.discard()
+                            blowTheFuckUp(
+                                ParryBustedExplosionBehavior(entity),
+                                ParryBustedExplosionBehavior(entity),
+                                2f,
+                                user,
+                                world
+                            )
+                            break
+                        } else {
+                            entity.discard()
+                            blowTheFuckUp(
+                                ParryWeakExplosionBehavior(entity),
+                                ParryStrongExplosionBehavior(entity),
+                                1f,
+                                user,
+                                world
+                            )
+                            break
                         }
                     }
+                    user.itemCooldownManager.set(stack.item, 10)
+                    user.stopUsingItem()
                 }
+            }
+        } else {
+            if (user is PlayerEntity) {
+                user.itemCooldownManager.set(stack.item, 100)
+                user.stopUsingItem()
             }
         }
         super.usageTick(world, user, stack, remainingUseTicks)

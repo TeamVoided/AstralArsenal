@@ -110,12 +110,6 @@ object AstralKosmogliphs {
     val QUICKSHOT = registerSimple("quickshot", AstralItemTags.SUPPORTS_QUICKSHOT)
     val TARGET = registerSimple("target", AstralItemTags.SUPPORTS_TARGET)
 
-    val FLAMING_CORE = registerSimple("flaming_core", AstralItemTags.SUPPORTS_FLAMING_CORE)
-    val FROZEN_CORE = registerSimple("frozen_core", AstralItemTags.SUPPORTS_FROZEN_CORE)
-    val STATIC_CORE = registerSimple("static_core", AstralItemTags.SUPPORTS_STATIC_CORE)
-    val ENCHANTED_CORE = registerSimple("enchanted_core", AstralItemTags.SUPPORTS_ENCHANTED_CORE)
-    val HEAVY_CORE = registerSimple("heavy_core", AstralItemTags.SUPPORTS_HEAVY_CORE)
-
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))
 

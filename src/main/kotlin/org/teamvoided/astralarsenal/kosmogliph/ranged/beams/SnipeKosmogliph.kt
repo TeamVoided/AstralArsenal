@@ -124,6 +124,7 @@ class SnipeKosmogliph(id: Identifier) :
             world.spawnEntity(beamRenderer)
         }
         val entities = mutableListOf<Entity>()
+        val hitEntities = mutableListOf<Entity>()
         val interval = (distance.times(2))
         for (i in 0..interval.roundToInt()) {
             entities.addAll(
@@ -165,52 +166,55 @@ class SnipeKosmogliph(id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            if (entity is LivingEntity || entity is CannonballEntity) {
-                if (entity is CannonballEntity) {
-                    world.createExplosion(
-                        entity,
-                        entity.damageSources.explosion(entity, player),
-                        WeakExplosionBehavior(player),
-                        entity.x,
-                        entity.y,
-                        entity.z,
-                        2.0f,
-                        false,
-                        World.ExplosionSourceType.TNT
-                    )
-                    entity.discard()
-                } else if (entity is PlayerEntity) {
-                    val rand = world.random.rangeInclusive(1, 10)
-                    if (rand == 1) {
+            if (!hitEntities.contains(entity)) {
+                if (entity is LivingEntity || entity is CannonballEntity) {
+                    if (entity is CannonballEntity) {
+                        world.createExplosion(
+                            entity,
+                            entity.damageSources.explosion(entity, player),
+                            WeakExplosionBehavior(player),
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                            2.0f,
+                            false,
+                            World.ExplosionSourceType.TNT
+                        )
+                        entity.discard()
+                    } else if (entity is PlayerEntity) {
+                        val rand = world.random.rangeInclusive(1, 10)
+                        if (rand == 1) {
+                            entity.damage(
+                                DamageSource(
+                                    AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                                    player,
+                                    player
+                                ), 7.5f
+                            )
+                        } else {
+                            entity.damage(
+                                DamageSource(
+                                    AstralDamageTypes.getHolder(
+                                        world.registryManager,
+                                        AstralDamageTypes.NON_RAILED
+                                    ),
+                                    player,
+                                    player
+                                ), 7.5f
+                            )
+                        }
+                    } else if (entity is LivingEntity) {
+                        entity.addStatusEffect(StatusEffectInstance(AstralEffects.CONDUCTIVE, 20, 19))
                         entity.damage(
                             DamageSource(
                                 AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
                                 player,
                                 player
-                            ), 7.5f
-                        )
-                    } else {
-                        entity.damage(
-                            DamageSource(
-                                AstralDamageTypes.getHolder(
-                                    world.registryManager,
-                                    AstralDamageTypes.NON_RAILED
-                                ),
-                                player,
-                                player
-                            ), 7.5f
+                            ), 15f
                         )
                     }
-                } else if (entity is LivingEntity) {
-                    entity.addStatusEffect(StatusEffectInstance(AstralEffects.CONDUCTIVE, 20, 19))
-                    entity.damage(
-                        DamageSource(
-                            AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
-                            player,
-                            player
-                        ), 15f
-                    )
                 }
+                hitEntities.add(entity)
             }
         }
     }

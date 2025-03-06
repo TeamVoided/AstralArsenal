@@ -42,6 +42,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
             )
         )
         val entities = mutableListOf<Entity>()
+        val hitEntities = mutableListOf<Entity>()
         val interval = (distance.times(2))
         for (i in 0..interval.roundToInt()) {
             entities.addAll(
@@ -96,48 +97,51 @@ class BasicRailgunKosmogliph(id: Identifier) :
             world.spawnEntity(beamRenderer)
         }
         for (entity in entities) {
-            if (entity is CannonballEntity) {
-                world.createExplosion(
-                    entity,
-                    entity.damageSources.explosion(entity, player),
-                    StrongExplosionBehavior(player),
-                    entity.x,
-                    entity.y,
-                    entity.z,
-                    2.0f,
-                    false,
-                    World.ExplosionSourceType.TNT
-                )
-                entity.discard()
-            }
-            val rand = world.random.rangeInclusive(1, 10)
-            if (entity is PlayerEntity) {
-                if (rand == 1) {
+            if (!hitEntities.contains(entity)) {
+                if (entity is CannonballEntity) {
+                    world.createExplosion(
+                        entity,
+                        entity.damageSources.explosion(entity, player),
+                        StrongExplosionBehavior(player),
+                        entity.x,
+                        entity.y,
+                        entity.z,
+                        2.0f,
+                        false,
+                        World.ExplosionSourceType.TNT
+                    )
+                    entity.discard()
+                }
+                val rand = world.random.rangeInclusive(1, 10)
+                if (entity is PlayerEntity) {
+                    if (rand == 1) {
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                                player,
+                                player
+                            ), 10f
+                        )
+                    } else {
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                                player,
+                                player
+                            ), 10f
+                        )
+                    }
+                } else if (entity is LivingEntity) {
+                    entity.addStatusEffect(StatusEffectInstance(AstralEffects.CONDUCTIVE, 20, 19))
                     entity.damage(
                         DamageSource(
                             AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
                             player,
                             player
-                        ), 10f
-                    )
-                } else {
-                    entity.damage(
-                        DamageSource(
-                            AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
-                            player,
-                            player
-                        ), 10f
+                        ), 20f
                     )
                 }
-            } else if (entity is LivingEntity) {
-                entity.addStatusEffect(StatusEffectInstance(AstralEffects.CONDUCTIVE, 20, 19))
-                entity.damage(
-                    DamageSource(
-                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
-                        player,
-                        player
-                    ), 20f
-                )
+                hitEntities.add(entity)
             }
         }
         if (!player.isCreative) {

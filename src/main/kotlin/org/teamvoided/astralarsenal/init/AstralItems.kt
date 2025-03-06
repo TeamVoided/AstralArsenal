@@ -37,14 +37,8 @@ object AstralItems {
         "nailcannon",
         NailCannonItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).maxCount(1))
     )
-    val ASTRAL_TOTEM = register(
-        "astral_totem",
-        SupportTotemItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).maxCount(1))
-    )
 
     val RAILGUN = register("railgun", RailgunItem(Item.Settings().fireproof().maxCount(1).rarity(Rarity.EPIC)))
-
-    val STARSLUDGE_GENERATOR = register("starsludge_generator", StarSludgeItem(Item.Settings().fireproof().maxCount(1).rarity(Rarity.EPIC)))
 
     @Deprecated(
         "Replaced with automatic fetching",

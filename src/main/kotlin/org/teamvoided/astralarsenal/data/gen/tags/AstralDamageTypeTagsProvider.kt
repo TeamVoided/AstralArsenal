@@ -142,5 +142,6 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.RICHOCHET)
             .add(AstralDamageTypes.PULVERISED)
             .add(AstralDamageTypes.SLUDGE_AOE)
+
     }
 }

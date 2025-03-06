@@ -47,6 +47,7 @@ class AstralItemTagProvider(
             .forceAddTag(ItemTags.HOES)
             .forceAddTag(ItemTags.SWORDS)
             .forceAddTag(ConventionalItemTags.BOW_TOOLS)
+            .add(AstralItems.ASTRAL_GREATHAMMER)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_REAPER)
             .forceAddTag(ItemTags.HOES)
 
@@ -69,6 +70,7 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ALCHEMIST).forceAddTag(ConventionalItemTags.BOW_TOOLS)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ASTRAL_STRIKE).forceAddTag(ItemTags.SWORDS)
+            .add(AstralItems.ASTRAL_GREATHAMMER)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_FREEZE)
             .forceAddTag(ItemTags.SWORDS).forceAddTag(ItemTags.AXES).add(AstralItems.ASTRAL_GREATHAMMER)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_FLAME_BURST)
@@ -113,17 +115,7 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_PULVERISER).add(Items.MACE)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_WIND_ERUPTION).add(Items.MACE)
 
-        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TOTEM).add(AstralItems.ASTRAL_TOTEM)
-
-        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_HEAVY_CORE).add(AstralItems.STARSLUDGE_GENERATOR)
-        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_FROZEN_CORE).add(AstralItems.STARSLUDGE_GENERATOR)
-        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_FLAMING_CORE).add(AstralItems.STARSLUDGE_GENERATOR)
-        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_STATIC_CORE).add(AstralItems.STARSLUDGE_GENERATOR)
-        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_ENCHANTED_CORE).add(AstralItems.STARSLUDGE_GENERATOR)
-
-//        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_GENERATOR).add(AstralItems.COMET_LAUNCHER)
-//        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_QUICKSHOT).add(AstralItems.COMET_LAUNCHER)
-//        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TARGET).add(AstralItems.COMET_LAUNCHER)
+        //getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TOTEM).add(AstralItems.ASTRAL_TOTEM)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_KOSMOGLIPHS)
             .forceAddTag(AstralItemTags.SUPPORTS_VEIN_MINER)
@@ -172,15 +164,7 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_OVER_HEAT)
             .forceAddTag(AstralItemTags.SUPPORTS_PULVERISER)
             .forceAddTag(AstralItemTags.SUPPORTS_ASTRAL_RAIN)
-//            .forceAddTag(AstralItemTags.SUPPORTS_GENERATOR)
-//            .forceAddTag(AstralItemTags.SUPPORTS_QUICKSHOT)
-//            .forceAddTag(AstralItemTags.SUPPORTS_TARGET)
             .forceAddTag(AstralItemTags.SUPPORTS_TEAR)
-            .forceAddTag(AstralItemTags.SUPPORTS_FROZEN_CORE)
-            .forceAddTag(AstralItemTags.SUPPORTS_STATIC_CORE)
-            .forceAddTag(AstralItemTags.SUPPORTS_FLAMING_CORE)
-            .forceAddTag(AstralItemTags.SUPPORTS_ENCHANTED_CORE)
-            .forceAddTag(AstralItemTags.SUPPORTS_HEAVY_CORE)
             .add(Items.SHIELD)
     }
 

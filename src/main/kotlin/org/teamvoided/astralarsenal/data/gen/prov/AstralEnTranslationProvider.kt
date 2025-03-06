@@ -39,7 +39,7 @@ class AstralEnTranslationProvider(
             }
         gen.add("death.attack.cannonball", "%s was dunked on by %s")
         gen.add("death.attack.ballnt", "%s ain't ballin'")
-        gen.add("death.attack.beam_of_light", "%s was delivered straight to cod by %s")
+        gen.add("death.attack.beam_of_light", "%s was same day shipped to god by %s")
         gen.add("death.attack.railed", "%s was railed by %s")
         gen.add("death.attack.non_railed", "%s was electrocuted by %s")
         gen.add("death.attack.bleed", "%s couldn't recover their blood in time")
@@ -53,9 +53,9 @@ class AstralEnTranslationProvider(
 
         gen.add("death.attack.cannonball.item", "%s was dunked on by %s using %s")
         gen.add("death.attack.ballnt.item", "%s ain't ballin'")
-        gen.add("death.attack.beam_of_light.item", "%s was delivered straight to cod by %s using %s")
+        gen.add("death.attack.beam_of_light.item", "%s was same day shipped to god by %s using %s")
         gen.add("death.attack.railed.item", "%s was railed by %s using %s")
-        gen.add("death.attack.non_railed.item", "%s was railed by %s using %s")
+        gen.add("death.attack.non_railed.item", "%s was electrocuted by %s using %s")
         gen.add("death.attack.drain.item", "%s drained their life")
         gen.add("death.attack.burn.item", "%s was incinerated by %s using %s")
         gen.add("death.attack.boom.item", "%s was blown up by %s using %s")
@@ -266,6 +266,7 @@ class AstralEnTranslationProvider(
             "Hold right click to charge up an explosion. When released, explode and launch yourself upwards. Holding for longer makes it launch you further and deal more damage. 5 second cooldown."
         )
 
+
         gen.add(AstralArsenal.DEFAULT_KEY_CATEGORY, "Astral Arsenal Keys")
         keybinds.forEach { (id, name) ->
             gen.add(id.toTranslationKey("key"), name.titleCase())
@@ -286,6 +287,7 @@ class AstralEnTranslationProvider(
         gen.add(AstralEffects.OVERHEAL.value().translationKey, "Overheal")
         gen.add(AstralEffects.HARD_DAMAGE.value().translationKey, "Weak Diminished Life")
         gen.add(AstralEffects.CONDUCTIVE.value().translationKey, "Conductive")
+        gen.add(AstralEffects.IMPALED.value().translationKey, "Impaled")
 
         gen.add("container.cosmic_table", "Cosmic Table")
         gen.add("entity.astral_arsenal.beam_of_light", "Cod")

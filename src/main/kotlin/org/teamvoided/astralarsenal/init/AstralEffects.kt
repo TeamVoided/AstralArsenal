@@ -16,7 +16,7 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
-import org.joml.Math.lerp
+import org.joml.Math.*
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
@@ -83,7 +83,7 @@ object AstralEffects {
     val reduce = listOf(
         REDUCE
     )
-    val CONDUCTIVE_MULT = 0.01
+    val CONDUCTIVE_MULT = 0.0
     val CONDUCTIVE_MAX_TARGETS = 10.0
 
     // Note that if this is lower than 1 it will act as if it is 1, if it is negative then wtf are you doing?
@@ -148,25 +148,28 @@ object AstralEffects {
                 val targets = min(3 + (CONDUCTIVE_TARGETS_PER_LEVEL * levels), CONDUCTIVE_MAX_TARGETS)
                 if (entities.isNotEmpty()) {
                     var count = 0
+                    var tempDamage = conductiveDamage
                     for (entiity in entities) {
                         if (count >= targets) {
                             break
                         }
-                        if (entiity is PlayerEntity && conductiveDamage >= 10) {
-                            conductiveDamage = 10f
+                        if (entiity is PlayerEntity && tempDamage >= 10) {
+                            tempDamage = 10f
                         }
                         entiity.damage(
                             DamageSource(
                                 AstralDamageTypes.getHolder(
                                     entity.world.registryManager,
-                                    AstralDamageTypes.RICHOCHET
+                                    if (entiity is PlayerEntity) AstralDamageTypes.NON_RAILED else AstralDamageTypes.RICHOCHET
                                 ),
                                 source.attacker,
                                 source.attacker,
-                            ), conductiveDamage
+                            ), tempDamage
                         )
                         if (entity.world is ServerWorld) {
-                            sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)))
+                            repeat(max((tempDamage / 4).toInt(),1)) {
+                                sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)))
+                            }
                         }
                         count++
                     }
@@ -185,7 +188,9 @@ object AstralEffects {
         }
         val effects_immortal = entity.statusEffects.filter { immortality.contains(it.effectType) }
         if (effects_immortal.isNotEmpty()) {
-            output *= 0
+            if (source.attacker != entity) {
+                output *= 0
+            }
         }
 
         //Impaled starts here
@@ -214,22 +219,17 @@ object AstralEffects {
         val bendPos = mutableListOf<Vec3d>()
         bendPos.add(pos1)
         for (i in 0..<bends) {
-            val distance = pos1.distanceTo(pos2)
-            val maxlerp: Double = 1.0 / bends
-            val xrand = (pos1.x - pos2.x) / (bends / 2)
-            val yrand = (pos1.y - pos2.y) / (bends / 2)
-            val zrand = (pos1.z - pos2.z) / (bends / 2)
-            val xmin = ((pos1.x - pos2.x) / (bends)) * i
+            val maxlerp: Double = (1.0 / bends) * i
+            val xrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0,1)))).times(5)
+            val yrand = Math.pow(-1.0, i.toDouble()).times(5)
+            val zrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0,1)))).times(5)
             val ymin = ((pos1.y - pos2.y) / (bends)) * i
-            val zmin = ((pos1.z - pos2.z) / (bends)) * i
             bendPos.add(
                 Vec3d(
-                    lerp(pos1.x, pos2.x, maxlerp) + xmin + world.random.nextDouble()
-                        .minus(0.5).times(xrand),
+                    (lerp(pos1.x, pos2.x, maxlerp) + world.random.nextDouble().minus(0.5).times(xrand)),
                     lerp(pos1.y, pos2.y, maxlerp) + ymin + world.random.nextDouble()
                         .minus(0.5).times(yrand),
-                    lerp(pos1.z, pos2.z, maxlerp) + zmin + world.random.nextDouble()
-                        .minus(0.5).times(zrand)
+                    lerp(pos1.z, pos2.z, maxlerp) + world.random.nextDouble().minus(0.5).times(zrand)
                 )
             )
         }
@@ -249,8 +249,8 @@ object AstralEffects {
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y + 1, b.z).toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.05f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.05f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.1f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.1f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 1)
             beamRenderer.setPosition(a.x, a.y + 1, a.z)
             world.spawnEntity(beamRenderer)
@@ -259,7 +259,7 @@ object AstralEffects {
 
     fun cancelDamage(entity: LivingEntity, damage: Float, source: DamageSource): Boolean {
         val effects_immortal = entity.statusEffects.filter { immortality.contains(it.effectType) }
-        if (effects_immortal.isNotEmpty()) {
+        if (effects_immortal.isNotEmpty() && source.attacker != entity) {
             entity.world.playSoundFromEntity(
                 null,
                 entity,

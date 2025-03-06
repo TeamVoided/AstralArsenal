@@ -65,6 +65,13 @@ class DashKosmogliph(id: Identifier) :
                 1.0F
             )
             if (world is ServerWorld) {
+                player.addStatusEffect(
+                    StatusEffectInstance(
+                        AstralEffects.IMMORTAL,
+                        5, 1,
+                        false, false, false
+                    )
+                )
                 repeat(20) {
                     world.spawnParticles(
                         ParticleTypes.CLOUD,
