@@ -11,6 +11,7 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
@@ -285,4 +286,9 @@ fun tickMovement(freezer: LivingEntity) {
             0.1
         )
     }
+}
+
+// Only available client side
+fun modifyItemUseSpeed(player: PlayerEntity, stack: ItemStack): Float {
+    return 1F // returning 1 will not modify speed
 }
