@@ -83,7 +83,7 @@ object AstralEffects {
     val reduce = listOf(
         REDUCE
     )
-    val CONDUCTIVE_MULT = 0.0
+    val CONDUCTIVE_MULT = 0.05
     val CONDUCTIVE_MAX_TARGETS = 10.0
 
     // Note that if this is lower than 1 it will act as if it is 1, if it is negative then wtf are you doing?
@@ -110,12 +110,8 @@ object AstralEffects {
                 val levels = w + 1
                 val mult = levels * REDUCE_MULT
                 output = (output * (1 + mult)).toFloat()
-                if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) {
-                    if (entity is PlayerEntity && output > 15f && (damage < 15f)) {
-                        output = 15f
-                    } else if (damage > 15f && entity is PlayerEntity && output > 15f) {
-                        output = damage
-                    }
+                if (entity is PlayerEntity && output > 15f) {
+                    output = max(damage, 15f)
                 }
             }
         }
@@ -126,8 +122,10 @@ object AstralEffects {
             effects_conductive.forEach { it ->
                 val w = it.amplifier
                 val levels = w + 1
-                val mult = levels * CONDUCTIVE_MULT
-                output = (output * (1 + mult)).toFloat()
+                if (entity !is PlayerEntity) {
+                    val mult = levels * CONDUCTIVE_MULT
+                    output = (output * (1 + mult)).toFloat()
+                }
                 val shareMult =
                     if (damage > 10) CONDUCTIVE_DAMAGE_SHARE_HARD else if (damage < 5) CONDUCTIVE_DAMAGE_SHARE_SOFT else CONDUCTIVE_DAMAGE_SHARE
                 conductiveDamage = (output * (shareMult)).toFloat()
@@ -167,7 +165,7 @@ object AstralEffects {
                             ), tempDamage
                         )
                         if (entity.world is ServerWorld) {
-                            repeat(max((tempDamage / 4).toInt(),1)) {
+                            repeat(max((tempDamage / 4).toInt(), 1)) {
                                 sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)))
                             }
                         }
@@ -220,9 +218,9 @@ object AstralEffects {
         bendPos.add(pos1)
         for (i in 0..<bends) {
             val maxlerp: Double = (1.0 / bends) * i
-            val xrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0,1)))).times(5)
+            val xrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0, 1)))).times(5)
             val yrand = Math.pow(-1.0, i.toDouble()).times(5)
-            val zrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0,1)))).times(5)
+            val zrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0, 1)))).times(5)
             val ymin = ((pos1.y - pos2.y) / (bends)) * i
             bendPos.add(
                 Vec3d(
