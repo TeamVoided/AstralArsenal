@@ -2,7 +2,6 @@ package org.teamvoided.astralarsenal.data.gen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
-import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.registry.HolderLookup
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags

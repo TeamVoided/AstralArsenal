@@ -114,13 +114,7 @@ class BeamOfLightEntity : Entity {
                 beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, this.side.div(2).toFloat())
                 beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, this.side)
                 beamRenderer.dataTracker.set(BeamRenderEntity.Opacity, if (!enraged) 0.1f else 0.3f)
-                beamRenderer.setPosition(
-                    this.x, if (this.y - 50 < -64) {
-                        -64.0
-                    } else {
-                        this.y - 50
-                    }, this.z
-                )
+                beamRenderer.setPosition(this.x, this.y - 10, this.z)
                 world.spawnEntity(beamRenderer)
             }
         } else if (this.getTime() in WINDUP..(TIMEACTIVE + WINDUP)) {

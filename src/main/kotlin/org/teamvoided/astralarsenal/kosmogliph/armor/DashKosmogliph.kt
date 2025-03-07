@@ -96,17 +96,13 @@ class DashKosmogliph(id: Identifier) :
             val data = stack.getOrDefault(AstralDataComponents.DASH_DATA, DashData.DEFAULT)
             var uses = data.uses
             if (uses >= 3) return
-            if(entity !is PlayerEntity) return
+            if (entity !is PlayerEntity) return
             val w = entity.statusEffects.filter { it.effectType == AstralEffects.STATICALLY_SLUDGED }
-            if(w.isNotEmpty()){
+            if (w.isNotEmpty()) {
                 return
             }
             var cooldown = data.cooldown
-            if (entity is PlayerEntity) {
-                if (entity.hungerManager.foodLevel > 6) {
-                    cooldown--
-                }
-            } else {
+            if (entity.hungerManager.foodLevel > 6) {
                 cooldown--
             }
 
@@ -114,22 +110,21 @@ class DashKosmogliph(id: Identifier) :
                 uses++
                 val x: Float = (uses * 2.0).toFloat()
                 var time = 20
-                if (entity is LivingEntity) {
-                    val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
-                    if (y.isNotEmpty()) {
-                        for (t in y) {
-                            time += (t.amplifier * 20)
-                        }
+                val y = entity.statusEffects.filter { it.effectType == StatusEffects.SLOWNESS }
+                if (y.isNotEmpty()) {
+                    for (t in y) {
+                        time += (t.amplifier * 20)
                     }
-                    val a = entity.statusEffects.filter { it.effectType == StatusEffects.SPEED }
-                    if (a.isNotEmpty()) {
-                        for (t in a) {
-                            time = max((time * (1.0 / (t.amplifier + 1.0))).toInt(), 1)
-                        }
-                    }
-                    val z: Int = (entity.frozenTicks / 20)
-                    time += z
                 }
+                val a = entity.statusEffects.filter { it.effectType == StatusEffects.SPEED }
+                if (a.isNotEmpty()) {
+                    for (t in a) {
+                        time = max((time * (1.0 / (t.amplifier + 1.0))).toInt(), 1)
+                    }
+                }
+                val z: Int = (entity.frozenTicks / 20)
+                time += z
+
                 cooldown = time
                 if (entity is ServerPlayerEntity) {
                     entity.networkHandler.send(
@@ -182,7 +177,7 @@ class DashKosmogliph(id: Identifier) :
                     cooldown += 15
                 }
             }
-        if(source.isType(AstralDamageTypes.EMP) || source.isType(AstralDamageTypes.ELECTROSTATICED)){
+        if (source.isType(AstralDamageTypes.EMP) || source.isType(AstralDamageTypes.ELECTROSTATICED)) {
             uses = 0
             cooldown = 20
         }
