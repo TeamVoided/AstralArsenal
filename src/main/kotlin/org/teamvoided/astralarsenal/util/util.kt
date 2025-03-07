@@ -1,6 +1,10 @@
 package org.teamvoided.astralarsenal.util
 
 import arrow.core.Predicate
+import net.minecraft.component.DataComponent
+import net.minecraft.component.DataComponentType
+import net.minecraft.component.DataComponentTypes
+import net.minecraft.data.server.tag.ItemTagsProvider
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
@@ -10,12 +14,21 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
+import net.minecraft.item.AxeItem
+import net.minecraft.item.BowItem
+import net.minecraft.item.CrossbowItem
+import net.minecraft.item.FoodComponent
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.item.MaceItem
+import net.minecraft.item.PotionItem
+import net.minecraft.item.ShieldItem
+import net.minecraft.item.SwordItem
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.server.network.ServerPlayerEntity
@@ -39,6 +52,7 @@ import org.teamvoided.astralarsenal.init.AstralDataComponents.SLAM_DATA
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.init.AstralParticles
+import org.teamvoided.astralarsenal.item.NailCannonItem
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
@@ -137,7 +151,7 @@ fun shieldDamage(target: Entity, attackingEntity: Entity?, sourceEntity: Entity?
             if (target is PlayerEntity) {
                 target.itemCooldownManager.set(shield.item, 10)
                 target.stopUsingItem()
-                if (source.attacker != target){
+                if (source.attacker != target) {
                     target.heal(2f)
                 }
             }
@@ -289,6 +303,26 @@ fun tickMovement(freezer: LivingEntity) {
 }
 
 // Only available client side
+// 0.2 is regular speed while using an item, 1 is regular player speed
+// This should be changed to use item tags.
 fun modifyItemUseSpeed(player: PlayerEntity, stack: ItemStack): Float {
-    return 1F // returning 1 will not modify speed
+    if (stack.item is BowItem) {
+        return 0.5f
+    } else if (stack.item is ShieldItem) {
+        return if (stack.hasKosmogliph(AstralKosmogliphs.PARRY)) 1f else 0.3f
+    } else if (stack.item is SwordItem || stack.item is AxeItem) {
+        return if (stack.hasKosmogliph(AstralKosmogliphs.DEEP_WOUNDS)) 0.4f else 1f
+    } else if (stack.item is CrossbowItem) {
+        return 0.5f
+    } else if (stack.item is NailCannonItem) {
+        return 0.8f
+    } else if (stack.item is MaceItem) {
+        return 0.7f
+    } else if (stack.item is PotionItem) {
+        return 0.4f
+    } else if (stack.item.components.contains(DataComponentTypes.FOOD)){
+        return 0.4f
+    }
+
+    return 0.5f
 }
