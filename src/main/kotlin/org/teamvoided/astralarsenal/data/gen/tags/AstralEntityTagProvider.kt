@@ -8,7 +8,6 @@ import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.init.AstralEntities
 import java.util.concurrent.CompletableFuture
 
-
 class AstralEntityTagProvider(
     output: FabricDataOutput,
     registriesFuture: CompletableFuture<HolderLookup.Provider>
