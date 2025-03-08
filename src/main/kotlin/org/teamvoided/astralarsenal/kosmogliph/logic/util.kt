@@ -38,20 +38,15 @@ fun hammerTryBeakBlocks(world: World, player: PlayerEntity, pos: BlockPos): Bool
     if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, pos, state, world.getBlockEntity(pos)))
         return false
 
+    val mineablePositions = queryMineableHammerPositions(stack, world, pos, state, player)
+    if (mineablePositions.isEmpty() || mineablePositions.size < 2) return false
 
     val interactionManager = (player as ServerPlayerEntity).interactionManager as PlayerInteractionManagerExtension
     interactionManager.kosmogliph_setMining(true)
-
-
-    val mineablePositions = queryMineableHammerPositions(stack, world, pos, state, player)
-
     mineablePositions.breakAndDropStacksAt(world, pos, player, stack)
-    val hadPositions = if (mineablePositions.isEmpty()) false else {
-        stack.damageEquipment(mineablePositions.size, player, EquipmentSlot.MAINHAND)
-        true
-    }
+    if (!player.isCreative) stack.damageEquipment(mineablePositions.size, player, EquipmentSlot.MAINHAND)
     interactionManager.kosmogliph_setMining(false)
-    return hadPositions
+    return true
 }
 
 fun queryMineableVeinPositions(
@@ -74,7 +69,7 @@ fun queryMineableVeinPositions(
                 val itState = world.getBlockState(it)
                 itState.isOf(block) &&
                         itState.isIn(AstralBlockTags.VEIN_MINEABLE) &&
-                        stack.canSafelyBreak(world, itState, it) &&
+                        stack.canToolBreak(world, it) &&
                         it.isWithinDistance(pos, maximumDistance) &&
                         !set.contains(it)
             }
@@ -133,7 +128,7 @@ fun queryReaperMineablePositions(tool: ItemStack, world: World, pos: BlockPos, m
 fun queryMineableHammerPositions(
     stack: ItemStack, world: World, pos: BlockPos, mainState: BlockState, miner: LivingEntity
 ): Set<BlockPos> {
-    if (stack.get(DataComponentTypes.TOOL)?.isCorrectForDrops(world.getBlockState(pos)) != true) return setOf()
+    if (!stack.canToolBreak(world, pos)) return setOf()
 
     val mineablePositions = mutableSetOf(pos)
     val reach = if (miner.isInCreativeMode) 5.0 else 4.5
@@ -145,10 +140,9 @@ fun queryMineableHammerPositions(
             miner.eyePos, combined, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, miner
         )
     )
-
     areaOfAffect(pos, raycast.side).allInside().forEach {
         val state = world.getBlockState(it)
-        if (stack.canSafelyBreak(world, state, it) && miner is PlayerEntity) {
+        if (stack.canToolBreak(world, it) && miner is PlayerEntity) {
             val base = mainState.calcBlockBreakingDelta(miner, world, pos)
             val side = state.calcBlockBreakingDelta(miner, world, it)
             if (side > 1.0 || base <= side) {
@@ -187,9 +181,7 @@ fun areaOfAffect(pos: BlockPos, direction: Direction): BlockBox {
     }
 }
 
-fun Set<BlockPos>.breakAndDropStacksAt(
-    world: World, pos: BlockPos, miner: LivingEntity, stack: ItemStack
-) {
+fun Set<BlockPos>.breakAndDropStacksAt(world: World, pos: BlockPos, miner: LivingEntity, stack: ItemStack) {
     val combined = map { otherPos ->
         val state = world.getBlockState(otherPos)
         val stacks =
@@ -198,6 +190,8 @@ fun Set<BlockPos>.breakAndDropStacksAt(
         if (miner is PlayerEntity) {
             state.onStacksDropped(world, otherPos, stack, !miner.isCreative)
             world.breakBlock(otherPos, false, miner)
+            PlayerBlockBreakEvents.AFTER.invoker()
+                .afterBlockBreak(world, miner, otherPos, state, world.getBlockEntity(otherPos))
             if (!miner.isCreative) miner.incrementStat(Stats.MINED.getOrCreateStat(state.block))
         }
         stacks
@@ -207,14 +201,14 @@ fun Set<BlockPos>.breakAndDropStacksAt(
     combined.forEach { droppedStack -> Block.dropStack(world, pos, droppedStack) }
 }
 
-fun ItemStack.canSafelyBreak(world: World, state: BlockState, pos: BlockPos): Boolean {
-    val toolComponent = this.get(DataComponentTypes.TOOL) ?: return false
-    return pos.isInWorld(world) && toolComponent.isCorrectForDrops(state) && world.getBlockEntity(pos) == null
+fun ItemStack.canToolBreak(world: World, pos: BlockPos): Boolean {
+    val state = world.getBlockState(pos)
+    val tool = this.get(DataComponentTypes.TOOL) ?: return false
+    return pos.isInWorld(world) && (tool.isCorrectForDrops(state) || tool.getSpeed(state) > tool.defaultMiningSpeed)
 }
 
-fun BlockPos.isInWorld(world: World): Boolean = world.worldBorder.contains(this)
+fun BlockPos.isInWorld(world: World): Boolean = world.worldBorder?.contains(this) == true
 fun BlockState.isMature(): Boolean? = if (this.block is CropBlock) (this.block as CropBlock).isMature(this) else null
-
 
 // Ranged Weapon
 fun World.getProjectileEntity(
