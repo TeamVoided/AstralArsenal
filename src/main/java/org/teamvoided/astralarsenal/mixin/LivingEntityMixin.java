@@ -27,7 +27,6 @@ import org.teamvoided.astralarsenal.util.UtilKt;
 
 import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
-@Debug(export = true)
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
 
