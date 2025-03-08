@@ -165,9 +165,7 @@ object AstralEffects {
                             ), tempDamage
                         )
                         if (entity.world is ServerWorld) {
-                            repeat(max((tempDamage / 4).toInt(), 1)) {
-                                sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)))
-                            }
+                            sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)), tempDamage)
                         }
                         count++
                     }
@@ -212,7 +210,8 @@ object AstralEffects {
         return output
     }
 
-    fun sillyLightningTime(pos1: Vec3d, pos2: Vec3d, world: ServerWorld) {
+    fun sillyLightningTime(pos1: Vec3d, pos2: Vec3d, world: ServerWorld, dmg: Float) {
+        val size = clamp(0.1f,0.2f, dmg / 50)
         val bends = world.random.rangeInclusive(3, 5)
         val bendPos = mutableListOf<Vec3d>()
         bendPos.add(pos1)
@@ -247,8 +246,8 @@ object AstralEffects {
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y + 1, b.z).toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.1f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.1f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, size)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, size)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 1)
             beamRenderer.setPosition(a.x, a.y + 1, a.z)
             world.spawnEntity(beamRenderer)

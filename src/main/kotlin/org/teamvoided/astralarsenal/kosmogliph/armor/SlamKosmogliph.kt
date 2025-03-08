@@ -16,7 +16,7 @@ class SlamKosmogliph(id: Identifier) :
     KosmogliphWithData(id, AstralDataComponents.SLAM_DATA, AstralItemTags.SUPPORTS_SLAM) {
     fun handleSlam(stack: ItemStack, player: PlayerEntity) {
         val data = stack.getOrDefault(AstralDataComponents.SLAM_DATA, SlamData.DEFAULT)
-        if (!player.isOnGround && !data.slamming) {
+        if (!player.isOnGround && !data.slamming && !player.isSwimming) {
             stack.set(AstralDataComponents.SLAM_DATA, SlamData(0.0f, true))
             player.setVelocity(0.0, -5.0, 0.0)
             player.velocityModified = true

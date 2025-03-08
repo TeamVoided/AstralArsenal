@@ -49,7 +49,7 @@ class JumpKosmogliph(id: Identifier) :
 
         if (player.vehicle != null) return
 
-        if (data.uses > 0 && !player.isOnGround) {
+        if (data.uses > 0 && !player.isOnGround && !player.isSwimming && !player.isClimbing) {
             val mult =
                 if (player.hasStatusEffect(StatusEffects.JUMP_BOOST)) ((player.getStatusEffect(StatusEffects.JUMP_BOOST)!!.amplifier)) else 0
             if (world.isClient) {

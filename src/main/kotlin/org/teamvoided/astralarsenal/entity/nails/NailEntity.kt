@@ -7,6 +7,7 @@ import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.mob.EndermanEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
@@ -41,9 +42,10 @@ open class NailEntity : PersistentProjectileEntity {
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         if (entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity as LivingEntity
+            val mult = if (hit is PlayerEntity) 1f else 4f
             hit.customDamage(
                 AstralDamageTypes.NAILED,
-                if (nailType == NailType.FIRE) 0.25f else if (nailType == NailType.CHARGED) 0.0f else 0.5f,
+                if (nailType == NailType.FIRE) (0.25f * mult) else if (nailType == NailType.CHARGED) 0.0f else (0.5f * mult),
                 owner,
                 owner
             )
@@ -79,8 +81,8 @@ open class NailEntity : PersistentProjectileEntity {
             when (nailType) {
                 NailType.BASE -> Unit
                 NailType.FIRE -> {
-                    hit.customDamage(AstralDamageTypes.BURN, 0.25f, owner, owner)
-                    hit.setOnFireFor(200)
+                    hit.customDamage(AstralDamageTypes.BURN, 0.25f * mult, owner, owner)
+                    hit.setOnFireFor(50)
                 }
 
                 NailType.CHARGED ->

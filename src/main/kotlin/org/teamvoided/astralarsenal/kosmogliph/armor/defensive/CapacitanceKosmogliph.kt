@@ -228,9 +228,7 @@ class CapacitanceKosmogliph(id: Identifier) :
                     ), tempDamageValue
                 )
                 if (base.world is ServerWorld) {
-                    repeat(max((tempDamageValue / 4).toInt(),1)) {
-                        sillyLightningTime(base.pos, entiity.pos, ((base.world as ServerWorld)))
-                    }
+                    sillyLightningTime(base.pos, entiity.pos, ((base.world as ServerWorld)))
                 }
             }
             cause.world.playSound(
