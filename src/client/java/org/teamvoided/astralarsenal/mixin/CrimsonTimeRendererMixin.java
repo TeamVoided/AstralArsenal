@@ -33,7 +33,7 @@ public class CrimsonTimeRendererMixin {
         isFull.set(isFull.get() || (AstralHudRendering.crimsonCrosshair && !(cooldownProgress < 1.0f)));
     }
 
-    @Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;defaultBlendFunc()V"/*, remap = false*/))
+    @Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;defaultBlendFunc()V", remap = false))
     void disableCrimsonTimeModifications(GuiGraphics graphics, DeltaTracker tracker, CallbackInfo ci) {
         if (AstralHudRendering.crimsonCrosshair) RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
