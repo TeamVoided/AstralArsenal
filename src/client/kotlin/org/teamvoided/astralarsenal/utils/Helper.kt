@@ -51,13 +51,10 @@ fun getShapeAndPos(client: MinecraftClient): Pair<VoxelShape, BlockPos>? {
             for (position in positions) {
                 val diffPos = position.subtract(pos)
                 val offsetBlock = world.getBlockState(position)
-
-                if (!offsetBlock.isAir) {
-                    outlineShape = VoxelShapes.union(
-                        outlineShape, offsetBlock.getOutlineShape(world, diffPos, ShapeContext.of(player))
-                            .offset(diffPos.x.toDouble(), diffPos.y.toDouble(), diffPos.z.toDouble())
-                    )
-                }
+                if (!offsetBlock.isAir) outlineShape = VoxelShapes.union(
+                    outlineShape, offsetBlock.getOutlineShape(world, position, ShapeContext.of(player))
+                        .offset(diffPos.x.toDouble(), diffPos.y.toDouble(), diffPos.z.toDouble())
+                )
             }
             return outlineShape to pos
         }
