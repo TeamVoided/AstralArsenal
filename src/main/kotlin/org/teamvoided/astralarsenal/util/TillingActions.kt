@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.item
+package org.teamvoided.astralarsenal.util
 
 import com.mojang.datafixers.util.Pair
 import net.minecraft.block.Block
@@ -10,6 +10,6 @@ import java.util.function.Predicate
 
 abstract class TillingActions : HoeItem(ToolMaterials.WOOD, Settings()) {
     companion object {
-        val get get() : MutableMap<Block, Pair<Predicate<ItemUsageContext>, Consumer<ItemUsageContext>>> = TILLING_ACTIONS
+        val map get() : MutableMap<Block, Pair<Predicate<ItemUsageContext>, Consumer<ItemUsageContext>>> = TILLING_ACTIONS
     }
 }

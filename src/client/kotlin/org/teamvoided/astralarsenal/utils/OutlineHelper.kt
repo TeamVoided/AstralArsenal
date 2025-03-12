@@ -18,10 +18,12 @@ import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HAMMER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.REAPER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.VEIN_MINER
-import org.teamvoided.astralarsenal.item.TillingActions
+import org.teamvoided.astralarsenal.util.TillingActions
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.logic.*
+import org.teamvoided.astralarsenal.util.VEINMINE_RANGE
+import org.teamvoided.astralarsenal.util.VEINMINE_VOLUME
 import org.teamvoided.astralarsenal.util.getKosmogliphs
 import java.util.*
 import kotlin.math.min
@@ -102,7 +104,7 @@ fun Kosmogliph.getBlocks(
         HAMMER -> queryMineableHammerPositions(stack, world, pos, state, player)
         REAPER -> queryReaperOutline(stack, world, pos, state, player)
         VEIN_MINER -> queryMineableVeinPositions(
-            stack, world, state, pos, 30.0, min(64, stack.maxDamage - stack.damage)
+            stack, world, state, pos, VEINMINE_RANGE, min(VEINMINE_VOLUME, stack.maxDamage - stack.damage)
         )
 
         else -> emptySet()
@@ -113,8 +115,10 @@ fun queryReaperOutline(
     stack: ItemStack, world: World, pos: BlockPos, state: BlockState, player: PlayerEntity
 ): Set<BlockPos> {
     val mineable = queryReaperMineablePositions(stack, world, pos, state)
-    if (mineable.isNotEmpty()) return mineable
-    return queryReaperTillable(pos, world, player)
+    if (mineable.size > 1) return mineable
+    val tillable = queryReaperTillable(pos, world, player)
+    if (mineable.isEmpty() && tillable.size > 1) return tillable
+    return setOf()
 }
 
 fun queryReaperTillable(pos: BlockPos, world: World, miner: PlayerEntity): Set<BlockPos> {
@@ -126,9 +130,9 @@ fun queryReaperTillable(pos: BlockPos, world: World, miner: PlayerEntity): Set<B
     )
 
     return areaOfAffect(pos, raycast.side).allInside().filter {
-            if (!it.isInWorld(world)) return@filter false
-            val predicate = TillingActions.get[world.getBlockState(it).block] ?: return@filter false
-            predicate.first.test(ItemUsageContext(miner, miner.activeHand, raycast))
-        }.toSet()
+        if (!it.isInWorld(world)) return@filter false
+        val predicate = TillingActions.map[world.getBlockState(it).block] ?: return@filter false
+        predicate.first.test(ItemUsageContext(miner, miner.activeHand, raycast))
+    }.toSet()
 
 }

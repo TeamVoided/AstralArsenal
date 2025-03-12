@@ -13,7 +13,7 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.item.TillingActions
+import org.teamvoided.astralarsenal.util.TillingActions
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.logic.*
 
@@ -37,7 +37,7 @@ class ReaperKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUP
         if (playerEntity?.isSneaking == true) return
         for (blockPos in areaOfAffect(pos, ctx.side).allInside().filter { it != pos }) {
             if (!blockPos.isInWorld(world)) continue
-            val predicateConsumer = TillingActions.get[world.getBlockState(blockPos).block] ?: continue
+            val predicateConsumer = TillingActions.map[world.getBlockState(blockPos).block] ?: continue
             val customContext =
                 ItemUsageContext(ctx.player, ctx.hand, BlockHitResult(ctx.hitPos, ctx.side, blockPos, false))
             if (predicateConsumer.first.test(customContext)) {
