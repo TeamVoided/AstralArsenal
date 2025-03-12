@@ -21,7 +21,7 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralParticles
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.world.explosion.FrostExplosionBehavior
+import org.teamvoided.astralarsenal.world.explosion.AstralExplosions
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -95,7 +95,7 @@ class RayofFrostKosmogliph(id: Identifier) :
                     world.createExplosion(
                         entity,
                         entity.damageSources.explosion(entity, player),
-                        FrostExplosionBehavior(),
+                        AstralExplosions.FROST,
                         entity.x,
                         entity.y,
                         entity.z,

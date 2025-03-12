@@ -25,7 +25,7 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.world.explosion.RancidExplosionBehavior
+import org.teamvoided.astralarsenal.world.explosion.AstralExplosions
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -111,7 +111,7 @@ class RancidBrewKosmogliph(id: Identifier) :
                     world.createExplosion(
                         entity,
                         entity.damageSources.explosion(entity, player),
-                        RancidExplosionBehavior(),
+                        AstralExplosions.RANCID,
                         entity.x,
                         entity.y,
                         entity.z,
