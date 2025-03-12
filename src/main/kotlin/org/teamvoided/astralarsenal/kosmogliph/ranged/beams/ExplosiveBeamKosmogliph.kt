@@ -17,10 +17,12 @@ import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralDamageTypes.createSelfDamage
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.world.explosion.PenopticonExplosionBehavior
-import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
+import org.teamvoided.astralarsenal.util.explode
+import org.teamvoided.astralarsenal.world.explosion.*
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -129,17 +131,7 @@ class ExplosiveBeamKosmogliph(id: Identifier) :
             }
         }
         if (entities.isEmpty()) {
-            world.createExplosion(
-                null,
-                player.damageSources.explosion(null, player),
-                StrongExplosionBehavior(player),
-                result.pos.x,
-                result.pos.y,
-                result.pos.z,
-                2.0f,
-                false,
-                World.ExplosionSourceType.TNT
-            )
+            world.explode(player.createSelfDamage(AstralDamageTypes.BOOM), result.pos, 2.0f)
             finalPosition = result.pos
             if (!player.world.isClient) {
                 val serverWorld = player.world as ServerWorld

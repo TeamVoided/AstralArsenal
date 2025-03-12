@@ -1,10 +1,6 @@
 package org.teamvoided.astralarsenal.util
 
-import arrow.core.Predicate
-import net.minecraft.component.DataComponent
-import net.minecraft.component.DataComponentType
 import net.minecraft.component.DataComponentTypes
-import net.minecraft.data.server.tag.ItemTagsProvider
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
@@ -14,21 +10,11 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
-import net.minecraft.item.AxeItem
-import net.minecraft.item.BowItem
-import net.minecraft.item.CrossbowItem
-import net.minecraft.item.FoodComponent
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.item.MaceItem
-import net.minecraft.item.PotionItem
-import net.minecraft.item.ShieldItem
-import net.minecraft.item.SwordItem
+import net.minecraft.item.*
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.server.network.ServerPlayerEntity
@@ -42,6 +28,8 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import net.minecraft.world.World.ExplosionSourceType.TNT
+import net.minecraft.world.explosion.ExplosionBehavior
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.components.PulveriserData
 import org.teamvoided.astralarsenal.components.SlamData
@@ -56,58 +44,60 @@ import org.teamvoided.astralarsenal.item.NailCannonItem
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
+import org.teamvoided.astralarsenal.world.explosion.CustomExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MacePulverise
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceStrongPulverise
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceWeakPulverise
 import kotlin.math.min
-import kotlin.math.roundToInt
 
+// Registry Utils
 fun <T, R : Registry<T>> RegistryKey<R>.tag(id: Identifier) = TagKey.of(this, id)
-
+fun <T> Registry<T>.register(id: Identifier, entry: T): T = Registry.register(this, id, entry)
 fun <T> Registry<T>.registerHolder(id: Identifier, entry: T): Holder.Reference<T> =
     Registry.registerHolder(this, id, entry)
 
-fun <T> Registry<T>.register(id: Identifier, entry: T): T = Registry.register(this, id, entry)
-
-fun interface BPredicate<T> : Predicate<T>, java.util.function.Predicate<T> {
-    override fun test(t: T): Boolean = this(t)
-}
-
-fun Iterable<Kosmogliph>.findFirstBow(): BowKosmogliph? {
-    return this.firstOrNull { it is BowKosmogliph } as BowKosmogliph?
-}
-
-
+// Enchantment Utils
 fun ItemStack.hasMultiShot(): Boolean = this.hasEnchantment(Enchantments.MULTISHOT)
 fun ItemStack.hasEnchantment(enchantment: RegistryKey<Enchantment>): Boolean =
     this.enchantments.enchantments.any { it.isRegistryKey(enchantment) }
 
-fun Vector3f.toVec3d(): Vec3d = Vec3d(x.toDouble(), y.toDouble(), z.toDouble())
+// Velocity Utils
 fun ProjectileEntity.setVelocity(vec3f: Vector3f, speed: Float, divergence: Float) =
     this.setVelocity(vec3f.toVec3d(), speed, divergence)
 
 fun ProjectileEntity.setVelocity(vec3d: Vec3d, speed: Float, divergence: Float) =
     this.setVelocity(vec3d.x, vec3d.y, vec3d.z, speed, divergence)
 
-fun World.playSound(pos: Vec3d, soundEvent: SoundEvent, category: SoundCategory, volume: Float, pitch: Float) {
+// World Utils
+fun World.playSound(pos: Vec3d, soundEvent: SoundEvent, category: SoundCategory, volume: Float, pitch: Float) =
     this.playSound(null, pos.x, pos.y, pos.z, soundEvent, category, volume, pitch)
-}
 
-fun World.playSound(pos: Vec3d, soundEvent: Holder<SoundEvent>, category: SoundCategory, volume: Float, pitch: Float) {
+fun World.playSound(pos: Vec3d, soundEvent: Holder<SoundEvent>, category: SoundCategory, volume: Float, pitch: Float) =
     this.method_60511(null, pos.x, pos.y, pos.z, soundEvent, category, volume, pitch)
-}
 
-fun ServerCommandSource.message(string: String): Int {
-    this.sendSystemMessage(Text.literal(string))
-    return 0
-}
+fun World.explode(source: DamageSource, pos: BlockPos, behavior: ExplosionBehavior, power: Float) =
+    this.explode(source, pos.ofCenter(), behavior, power)
+fun World.explode(source: DamageSource, pos: Vec3d, behavior: ExplosionBehavior, power: Float) =
+    this.createExplosion(null, source, behavior, pos.x, pos.y, pos.z, power, false, TNT)
 
+fun World.explode(source: DamageSource, pos: BlockPos, power: Float) = this.explode(source, pos.ofCenter(), power)
+fun World.explode(source: DamageSource, pos: Vec3d, power: Float) =
+    this.createExplosion(null, source, CustomExplosionBehavior(), pos.x, pos.y, pos.z, power, false, TNT)
+
+
+// Command Utils
+fun ServerCommandSource.message(string: String) = this.sendSystemMessage(Text.literal(string))
 fun ServerCommandSource.error(text: String): Int {
     this.sendError(Text.literal(text))
     return -1
 }
 
+// Misc Utils
+fun Iterable<Kosmogliph>.findFirstBow(): BowKosmogliph? = this.firstOrNull { it is BowKosmogliph } as BowKosmogliph?
+fun Vector3f.toVec3d(): Vec3d = Vec3d(x.toDouble(), y.toDouble(), z.toDouble())
 
+
+// MOVE ALL OF THIS NONSENSE
 val PARRY_DAMAGE_MULT = 1.25
 
 // damage is the amount of damage the player would take if the shield didn't block it
@@ -320,7 +310,7 @@ fun modifyItemUseSpeed(player: PlayerEntity, stack: ItemStack): Float {
         return 0.7f
     } else if (stack.item is PotionItem) {
         return 0.4f
-    } else if (stack.item.components.contains(DataComponentTypes.FOOD)){
+    } else if (stack.item.components.contains(DataComponentTypes.FOOD)) {
         return 0.4f
     }
 

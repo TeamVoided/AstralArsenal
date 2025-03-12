@@ -22,7 +22,7 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralItems
-import org.teamvoided.astralarsenal.world.explosion.KnockbackExplosionBehavior
+import org.teamvoided.astralarsenal.util.explode
 
 class CannonballEntity : ThrownItemEntity {
 
@@ -174,16 +174,11 @@ class CannonballEntity : ThrownItemEntity {
         if (this.getDmg() < 20) {
             this.setDmg(20)
         }
-        world.createExplosion(
-            null,
+        world.explode(
             damageSources.explosion(null, this.owner),
-            KnockbackExplosionBehavior(this.owner),
-            this.x,
-            this.y,
-            this.z,
+//            AstralExplosions.boomExplosion_DELETE_THIS(this.owner),
+            this.pos,
             2.0f,
-            false,
-            World.ExplosionSourceType.TNT
         )
         this.discard()
         super.onBlockHit(blockHitResult)

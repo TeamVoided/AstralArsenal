@@ -22,35 +22,35 @@ abstract class BlockSafeExplosionBehavior : ExplosionBehavior() {
     override fun canDestroyBlock(e: Explosion, w: BlockView, p: BlockPos, s: BlockState, pow: Float): Boolean = false
 }
 
-class CustomExplosionBehavior(
-    val shouldDamage: ShouldDamage, val knockbackMultiplier: KnockbackMultiplier, val postDamage: PostDamage
+open class CustomExplosionBehavior(
+    val dealDamage: ShouldDamage, val knockbackMultiplier: KnockbackMultiplier,
 ) : BlockSafeExplosionBehavior() {
+    constructor(knockbackMultiplier: Float = DEFAULT_KNOCKBACK) : this(::livingPredicate, { knockbackMultiplier })
+
     override fun getKnockbackMultiplier(target: Entity?): Float =
-        if (target != null) knockbackMultiplier(target) else super.getKnockbackMultiplier(target)
+        if (target != null) knockbackMultiplier(target) else super.getKnockbackMultiplier(null)
 
     override fun shouldDamage(explosion: Explosion?, entity: Entity?): Boolean =
-        if (explosion != null && entity != null) shouldDamage.invoke(explosion, entity) else super.shouldDamage(
-            explosion,
-            entity
-        )
-
-    override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {
-        if (explosion != null && entity != null) postDamage(explosion, entity)
-        return 0f
-    }
+        if (explosion != null && entity != null) dealDamage(explosion, entity)
+        else super.shouldDamage(explosion, entity)
 }
 
-fun noDamageExplosion(
-    knockback: Float = DEFAULT_KNOCKBACK, postDamage: (explosion: Explosion, entity: LivingEntity) -> Unit
-) = CustomExplosionBehavior(
-    AstralExplosions::livingPredicate, { knockback },
-    { exp, entity -> if (livingPredicate(exp, entity)) postDamage(exp, entity as LivingEntity) }
-)
+class PostDamageExplosionBehavior(
+    shouldDamage: ShouldDamage, knockbackMultiplier: KnockbackMultiplier, val postDamage: PostDamage
+) : CustomExplosionBehavior(shouldDamage, knockbackMultiplier) {
+    constructor(knockbackMultiplier: Float = DEFAULT_KNOCKBACK, postDamage: PostDamage) :
+            this(::livingPredicate, { knockbackMultiplier }, postDamage)
+
+    override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {
+        if (explosion != null && entity != null && shouldDamage(explosion, entity)) postDamage(explosion, entity)
+        return super.calculateDamage(explosion, entity)
+    }
+}
 
 internal fun LivingEntity.addEffect(type: Holder<StatusEffect>, duration: Int = 600, amplifier: Int = 0) =
     this.addStatusEffect(
         StatusEffectInstance(type, duration, amplifier, false, true, true)
     )
 
-
+// delete this when done
 abstract class OwnedExplosionBehavior(val owner: Entity) : BlockSafeExplosionBehavior()

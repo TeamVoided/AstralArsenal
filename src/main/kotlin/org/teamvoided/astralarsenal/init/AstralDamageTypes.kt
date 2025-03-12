@@ -36,5 +36,9 @@ object AstralDamageTypes : RegistryBootstrapper<DamageType>(RegistryKeys.DAMAGE_
 
     fun Entity.customDamage(
         type: RegistryKey<DamageType>, amount: Float, source: Entity? = null, attacker: Entity? = null
-    ): Boolean = this.damage(this.damageSources.create(type, source, attacker), amount)
+    ): Boolean = this.damage(this.createDamage(type, source, attacker), amount)
+
+    fun Entity.createDamage(type: RegistryKey<DamageType>, source: Entity? = null, attacker: Entity? = null) =
+        this.damageSources.create(type, source, attacker)
+    fun Entity.createSelfDamage(type: RegistryKey<DamageType>) = this.damageSources.create(type, this, this)
 }
