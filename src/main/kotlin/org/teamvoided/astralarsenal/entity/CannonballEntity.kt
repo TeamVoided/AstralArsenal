@@ -177,7 +177,7 @@ class CannonballEntity : ThrownItemEntity {
         world.createExplosion(
             null,
             damageSources.explosion(null, this.owner),
-            KnockbackExplosionBehavior(this.owner),
+            KnockbackExplosionBehavior(this.owner!!),
             this.x,
             this.y,
             this.z,
