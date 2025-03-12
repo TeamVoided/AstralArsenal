@@ -1,43 +1,17 @@
 package org.teamvoided.astralarsenal.world.explosion.parryExplosions
 
-import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.damage.DamageSource
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.BlockView
 import net.minecraft.world.explosion.Explosion
-import net.minecraft.world.explosion.ExplosionBehavior
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
+import org.teamvoided.astralarsenal.world.explosion.OwnedExplosionBehavior
 
-class ParryWeakExplosionBehavior(causingEntity: Entity) : ExplosionBehavior() {
-    val causingEntity = causingEntity
-    override fun canDestroyBlock(
-        explosion: Explosion,
-        world: BlockView,
-        pos: BlockPos,
-        state: BlockState,
-        power: Float
-    ): Boolean {
-        return false
-    }
-
-    override fun getKnockbackMultiplier(target: Entity): Float {
-        return 0.5f
-    }
-
+class ParryWeakExplosionBehavior(owner: Entity) : OwnedExplosionBehavior(owner) {
+    override fun getKnockbackMultiplier(target: Entity): Float = 0.5f
     override fun calculateDamage(explosion: Explosion?, entity: Entity?): Float {
-        if (explosion != null) {
-            if (entity is LivingEntity && entity != causingEntity) {
-                entity.damage(
-                    DamageSource(
-                        AstralDamageTypes.getHolder(entity.world.registryManager, AstralDamageTypes.PARRY),
-                        causingEntity,
-                        causingEntity
-                    ), 7.5f
-                )
-            }
-        }
+        if (entity is LivingEntity && entity != owner)
+            entity.customDamage(AstralDamageTypes.PARRY, 7.5f, owner, owner)
         return 0f
     }
 }
