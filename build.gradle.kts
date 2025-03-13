@@ -48,9 +48,9 @@ dependencies {
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
 
-    if (org.gradle.internal.os.OperatingSystem.current().isLinux) {
-//        modRuntimeOnly(libs.waygl)
-    }
+    /*if (org.gradle.internal.os.OperatingSystem.current().isLinux) {
+        modRuntimeOnly(libs.waygl)
+    }*/
 }
 
 loom {
@@ -105,21 +105,25 @@ tasks {
     }
 }
 
-publishScript {
+/*publishScript {
     releaseRepository("TeamVoided", "https://maven.teamvoided.org/releases")
     publication(modSettings.modId(), false)
     publishSources(true)
-}
+}*/
 
 uploadConfig {
 //    debugMode = true
     modrinthId = modrinth_id
     curseId = curse_id
 
+    changeLog = File("changelog.md").readText()
+
     // FabricApi
-    modrinthDependency("P7dR8mSH", uploadConfig.REQUIRED)
-    curseDependency("fabric-api", uploadConfig.REQUIRED)
+    modrinthDependency("P7dR8mSH", REQUIRED)
+    curseDependency("fabric-api", REQUIRED)
     // Fabric Language Kotlin
-    modrinthDependency("Ha28R6CL", uploadConfig.REQUIRED)
-    curseDependency("fabric-language-kotlin", uploadConfig.REQUIRED)
+    modrinthDependency("Ha28R6CL", REQUIRED)
+    curseDependency("fabric-language-kotlin", REQUIRED)
+    //Farrow
+    modrinthDependency("uH6SVTfs", EMBEDDED)
 }
