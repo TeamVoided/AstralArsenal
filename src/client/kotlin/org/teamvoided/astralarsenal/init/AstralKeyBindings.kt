@@ -5,10 +5,11 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBind
 import org.lwjgl.glfw.GLFW
 import org.teamvoided.astralarsenal.AstralArsenal
-import org.teamvoided.astralarsenal.AstralArsenal.DEFAULT_KEY_CATEGORY
 import org.teamvoided.astralarsenal.data.gen.prov.AstralEnTranslationProvider
+import org.teamvoided.astralarsenal.util.DEFAULT_KEY_CATEGORY
 
 object AstralKeyBindings {
+    fun init() = Unit
     val dashAbility = key("dash", keycode = GLFW.GLFW_KEY_R)
 
     fun key(

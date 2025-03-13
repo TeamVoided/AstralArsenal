@@ -7,10 +7,13 @@ import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectType
+import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registries
+import net.minecraft.registry.tag.DamageTypeTags
+import net.minecraft.registry.tag.DamageTypeTags.BYPASSES_INVULNERABILITY
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -93,9 +96,6 @@ object AstralEffects {
     val CONDUCTIVE_DAMAGE_SHARE_SOFT = 2.0
     val conductive = listOf(
         CONDUCTIVE
-    )
-    val immortality = listOf(
-        IMMORTAL
     )
     val impaled = listOf(
         IMPALED
@@ -182,27 +182,20 @@ object AstralEffects {
                 }
             }
         }
-        val effects_immortal = entity.statusEffects.filter { immortality.contains(it.effectType) }
-        if (effects_immortal.isNotEmpty()) {
-            if (source.attacker != entity) {
-                output *= 0
-            }
-        }
+
+        // Immortal Extra Check
+        if (entity.hasStatusEffect(IMMORTAL) && !source.isTypeIn(BYPASSES_INVULNERABILITY) && source.attacker != entity)
+            output = 0f
 
         //Impaled starts here
         val effects_impaled = entity.statusEffects.filter { impaled.contains(it.effectType) }
         if (effects_impaled.isNotEmpty() && source.isTypeIn(AstralDamageTypeTags.IS_MELEE)) {
             for (e in effects_impaled) {
                 output += min((0.5f * (e.amplifier + 1)), 15f)
-                entity.world.playSound(
-                    null,
-                    entity.x,
-                    entity.y,
-                    entity.z,
-                    SoundEvents.ENTITY_WITHER_BREAK_BLOCK,
-                    SoundCategory.PLAYERS,
-                    1.0F,
-                    1.6f
+                entity.world.playSoundFromEntity(
+                    null, entity,
+                    SoundEvents.ENTITY_WITHER_BREAK_BLOCK, SoundCategory.PLAYERS,
+                    1.0F, 1.6f
                 )
                 entity.removeStatusEffect(e.effectType)
             }
@@ -211,7 +204,7 @@ object AstralEffects {
     }
 
     fun sillyLightningTime(pos1: Vec3d, pos2: Vec3d, world: ServerWorld, dmg: Float) {
-        val size = clamp(0.1f,0.2f, dmg / 50)
+        val size = clamp(0.1f, 0.2f, dmg / 50)
         val bends = world.random.rangeInclusive(3, 5)
         val bendPos = mutableListOf<Vec3d>()
         bendPos.add(pos1)
@@ -241,8 +234,8 @@ object AstralEffects {
             val b = bendPos[i + 1]
             val distance = a.distanceTo(b)
             val beamRenderer = BeamRenderEntity(world, a.x, a.y + 1, a.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab)
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y + 1, b.z).toVector3f())
@@ -255,16 +248,12 @@ object AstralEffects {
     }
 
     fun cancelDamage(entity: LivingEntity, damage: Float, source: DamageSource): Boolean {
-        val effects_immortal = entity.statusEffects.filter { immortality.contains(it.effectType) }
-        if (effects_immortal.isNotEmpty() && source.attacker != entity) {
-            entity.world.playSoundFromEntity(
-                null,
-                entity,
-                SoundEvents.BLOCK_AMETHYST_BLOCK_FALL,
-                SoundCategory.NEUTRAL,
-                1.0f,
-                0.8f
-            )
+        if (entity.hasStatusEffect(IMMORTAL) && !source.isTypeIn(BYPASSES_INVULNERABILITY) && source.attacker != entity) {
+            if (!(source.isTypeIn(DamageTypeTags.IS_FIRE) && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))
+                entity.world.playSoundFromEntity(
+                    null, entity, SoundEvents.BLOCK_AMETHYST_BLOCK_FALL, SoundCategory.NEUTRAL,
+                    1.0f, 0.8f
+                )
             return true
         }
         return false

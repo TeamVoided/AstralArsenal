@@ -7,16 +7,17 @@ import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.block.Block
 import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.item.Item
+import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
-import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags.ALL_TAGS
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralTabs
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
+import org.teamvoided.astralarsenal.util.DEFAULT_KEY_CATEGORY
 import java.util.concurrent.CompletableFuture
 
 @Suppress("unused")
@@ -267,10 +268,8 @@ class AstralEnTranslationProvider(
         )
 
 
-        gen.add(AstralArsenal.DEFAULT_KEY_CATEGORY, "Astral Arsenal Keys")
-        keybinds.forEach { (id, name) ->
-            gen.add(id.toTranslationKey("key"), name.titleCase())
-        }
+        gen.add(DEFAULT_KEY_CATEGORY, "Astral Arsenal Keys")
+        keybinds.forEach { (id, name) -> gen.add(id.toTranslationKey("key"), name.titleCase()) }
 
         gen.add("kosmogliph.alchemist.charges", "Charges: %s/64")
         gen.add("kosmogliph.astral_rain.charges", "Charges: %s/3")
@@ -280,14 +279,15 @@ class AstralEnTranslationProvider(
         gen.add("comic_table.message.missing", "Your %s is missing enchantments!")
         gen.add("comic_table.message.incompatible", "Your %s has incompatible enchantments!")
 
-        gen.add(AstralEffects.UNHEALABLE_DAMAGE.value().translationKey, "Diminished Life")
-        gen.add(AstralEffects.SLAM_JUMP.value().translationKey, "Slam Jump")
-        gen.add(AstralEffects.REDUCE.value().translationKey, "Reduce")
-        gen.add(AstralEffects.BLEED.value().translationKey, "Bleed")
-        gen.add(AstralEffects.OVERHEAL.value().translationKey, "Overheal")
-        gen.add(AstralEffects.HARD_DAMAGE.value().translationKey, "Weak Diminished Life")
-        gen.add(AstralEffects.CONDUCTIVE.value().translationKey, "Conductive")
-        gen.add(AstralEffects.IMPALED.value().translationKey, "Impaled")
+        gen.effect(AstralEffects.UNHEALABLE_DAMAGE, "Diminished Life")
+        gen.effect(AstralEffects.SLAM_JUMP, "Slam Jump")
+        gen.effect(AstralEffects.REDUCE, "Reduce")
+        gen.effect(AstralEffects.BLEED, "Bleed")
+        gen.effect(AstralEffects.OVERHEAL, "Overheal")
+        gen.effect(AstralEffects.HARD_DAMAGE, "Weak Diminished Life")
+        gen.effect(AstralEffects.CONDUCTIVE, "Conductive")
+        gen.effect(AstralEffects.IMPALED, "Impaled")
+        gen.effect(AstralEffects.IMMORTAL, "Immortal")
 
         gen.add("container.cosmic_table", "Cosmic Table")
         gen.add("entity.astral_arsenal.beam_of_light", "Cod")
@@ -312,5 +312,10 @@ class AstralEnTranslationProvider(
         fun registerKeybindForDataGen(id: Identifier, name: String) {
             if (FabricLoader.getInstance().isDevelopmentEnvironment) keybinds.putIfAbsent(id, name)
         }
+
+
+        // helpers
+        fun TranslationBuilder.effect(effect: Holder<StatusEffect>, name: String) =
+            this.add(effect.value().translationKey, name)
     }
 }
