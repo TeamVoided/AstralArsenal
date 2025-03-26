@@ -17,6 +17,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 import org.joml.Math.lerp
+import org.joml.Vector3f
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
@@ -98,6 +99,7 @@ class RichochetEntity : Entity {
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(caster.x.toFloat(), (caster.eyePos.y).toFloat(), caster.z.toFloat()))
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
@@ -221,6 +223,7 @@ class RichochetEntity : Entity {
                     richochet.yaw = y * -1
                     richochet.setPosition(result.pos.x + 0.1, result.pos.y, result.pos.z)
                 }
+                else -> {}
             }
             world.spawnEntity(richochet)
         }

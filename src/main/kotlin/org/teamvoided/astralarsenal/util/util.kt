@@ -1,10 +1,7 @@
 package org.teamvoided.astralarsenal.util
 
 import arrow.core.Predicate
-import net.minecraft.component.DataComponent
-import net.minecraft.component.DataComponentType
 import net.minecraft.component.DataComponentTypes
-import net.minecraft.data.server.tag.ItemTagsProvider
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
@@ -14,21 +11,11 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
-import net.minecraft.item.AxeItem
-import net.minecraft.item.BowItem
-import net.minecraft.item.CrossbowItem
-import net.minecraft.item.FoodComponent
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.item.MaceItem
-import net.minecraft.item.PotionItem
-import net.minecraft.item.ShieldItem
-import net.minecraft.item.SwordItem
+import net.minecraft.item.*
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.server.network.ServerPlayerEntity
@@ -60,7 +47,6 @@ import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MacePulverise
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceStrongPulverise
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceWeakPulverise
 import kotlin.math.min
-import kotlin.math.roundToInt
 
 fun <T, R : Registry<T>> RegistryKey<R>.tag(id: Identifier) = TagKey.of(this, id)
 

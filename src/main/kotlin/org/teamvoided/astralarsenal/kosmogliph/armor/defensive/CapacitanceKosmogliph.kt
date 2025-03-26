@@ -17,6 +17,7 @@ import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Math.lerp
+import org.joml.Vector3f
 import org.teamvoided.astralarsenal.components.CapacitanceDataV1
 import org.teamvoided.astralarsenal.components.CapacitanceDataV2
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
@@ -304,6 +305,7 @@ class CapacitanceKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y + 1, b.z).toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(a.x.toFloat(), (a.y + 1).toFloat(), a.z.toFloat()))
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.1f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.1f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 1)

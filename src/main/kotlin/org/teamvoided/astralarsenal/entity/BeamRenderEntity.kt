@@ -63,6 +63,7 @@ class BeamRenderEntity : Entity {
         builder.add(LiveTime, 0)
         builder.add(InnerCubes, 0)
         builder.add(Opacity, 0.3f)
+        builder.add(OriginPos, Vector3f(0f, 0f, 0f))
     }
 
     companion object {
@@ -84,6 +85,8 @@ class BeamRenderEntity : Entity {
             DataTracker.registerData(BeamRenderEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
         val Opacity: TrackedData<Float> =
             DataTracker.registerData(BeamRenderEntity::class.java, TrackedDataHandlerRegistry.FLOAT)
+        val OriginPos: TrackedData<Vector3f> =
+            DataTracker.registerData(BeamRenderEntity::class.java, TrackedDataHandlerRegistry.VECTOR3F)
     }
 
 

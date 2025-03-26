@@ -3,9 +3,8 @@ package org.teamvoided.astralarsenal.kosmogliph.shield
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.projectile.*
-import net.minecraft.entity.projectile.thrown.PotionEntity
-import net.minecraft.entity.projectile.thrown.SnowballEntity
+import net.minecraft.entity.projectile.ArrowEntity
+import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
@@ -19,12 +18,11 @@ import org.joml.Math.lerp
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.CannonballEntity
-import org.teamvoided.astralarsenal.entity.FlameShotEntity
-import org.teamvoided.astralarsenal.entity.FreezeShotEntity
-import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.mixin.PersistentProjectileEntityAccessor
-import org.teamvoided.astralarsenal.world.explosion.parryExplosions.*
+import org.teamvoided.astralarsenal.world.explosion.parryExplosions.ParryBustedExplosionBehavior
+import org.teamvoided.astralarsenal.world.explosion.parryExplosions.ParryStrongExplosionBehavior
+import org.teamvoided.astralarsenal.world.explosion.parryExplosions.ParryWeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt

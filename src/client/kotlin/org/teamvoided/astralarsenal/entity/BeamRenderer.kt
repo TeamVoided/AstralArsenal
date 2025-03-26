@@ -65,7 +65,7 @@ class BeamRenderer(context: EntityRendererFactory.Context?) :
     ) {
         matrices.push()
         RenderSystem.disableCull()
-        val pos = entity.pos
+        val pos = entity.dataTracker.get(BeamRenderEntity.OriginPos).toVec3d()
         val targetPos = entity.dataTracker.get(BeamRenderEntity.TargetPos).toVec3d()
         val distance = pos.distanceTo(targetPos)
         matrices.translate(-(thickness * 0.5), 0.0, -(thickness * 0.5))
@@ -94,10 +94,13 @@ class BeamRenderer(context: EntityRendererFactory.Context?) :
         val modifiedDistance =
             distance.toFloat() + (if (entity.dataTracker.get(BeamRenderEntity.MaxOuterThickness) > 1f) 1f else 0f)
 
-        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, 0f, 0f)).color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, 0f, 0f)).color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, 0f, thickness)).color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, 0f, thickness)).color(red, green, blue, opacity)
+        val a = thickness/2
+        val b = (pos.y - entity.y).toFloat()
+
+        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, b, 0f)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, b, 0f)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, b, thickness)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, b, thickness)).color(red, green, blue, opacity)
 
         vertexConsumer.xyz(matrices.peek(), Vector3f(0f, modifiedDistance, 0f)).color(red, green, blue, opacity)
         vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, modifiedDistance, 0f)).color(red, green, blue, opacity)
@@ -106,24 +109,24 @@ class BeamRenderer(context: EntityRendererFactory.Context?) :
         vertexConsumer.xyz(matrices.peek(), Vector3f(0f, modifiedDistance, thickness)).color(red, green, blue, opacity)
 
         vertexConsumer.xyz(matrices.peek(), Vector3f(0f, modifiedDistance, 0f)).color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, 0f, 0f)).color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, 0f, thickness)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, b, 0f)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, b, thickness)).color(red, green, blue, opacity)
         vertexConsumer.xyz(matrices.peek(), Vector3f(0f, modifiedDistance, thickness)).color(red, green, blue, opacity)
 
         vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, modifiedDistance, 0f)).color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, 0f, 0f)).color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, 0f, 0f)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, b, 0f)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, b, 0f)).color(red, green, blue, opacity)
         vertexConsumer.xyz(matrices.peek(), Vector3f(0f, modifiedDistance, 0f)).color(red, green, blue, opacity)
 
         vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, modifiedDistance, thickness))
             .color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, 0f, thickness)).color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, 0f, 0f)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, b, thickness)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, b, 0f)).color(red, green, blue, opacity)
         vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, modifiedDistance, 0f)).color(red, green, blue, opacity)
 
         vertexConsumer.xyz(matrices.peek(), Vector3f(0f, modifiedDistance, thickness)).color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, 0f, thickness)).color(red, green, blue, opacity)
-        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, 0f, thickness)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(0f, b, thickness)).color(red, green, blue, opacity)
+        vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, b, thickness)).color(red, green, blue, opacity)
         vertexConsumer.xyz(matrices.peek(), Vector3f(thickness, modifiedDistance, thickness))
             .color(red, green, blue, opacity)
 

@@ -7,11 +7,13 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 
 class BleedStatusEffect(color: Int) : AstralStatusEffect(StatusEffectType.HARMFUL, color) {
     override fun shouldApplyUpdateEffect(tick: Int, amplifier: Int): Boolean {
-        return tick % 20 == 0
+        return true
     }
 
     override fun applyUpdateEffect(entity: LivingEntity?, amplifier: Int): Boolean {
-        entity?.customDamage(AstralDamageTypes.BLEED, (0.4 * (amplifier + 1)).toFloat())
+        if (entity != null && entity.world != null && (entity.world.time % 20 == 0L)) {
+            entity.customDamage(AstralDamageTypes.BLEED, (0.4 * (amplifier + 1)).toFloat())
+        }
         return true
     }
 }

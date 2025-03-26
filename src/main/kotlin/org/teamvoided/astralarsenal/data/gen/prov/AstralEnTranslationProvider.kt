@@ -288,6 +288,7 @@ class AstralEnTranslationProvider(
         gen.effect(AstralEffects.CONDUCTIVE, "Conductive")
         gen.effect(AstralEffects.IMPALED, "Impaled")
         gen.effect(AstralEffects.IMMORTAL, "Immortal")
+        gen.effect(AstralEffects.STATICALLY_SLUDGED, "Charge Leak")
 
         gen.add("container.cosmic_table", "Cosmic Table")
         gen.add("entity.astral_arsenal.beam_of_light", "Cod")

@@ -20,7 +20,9 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import org.joml.Math.*
+import org.joml.Vector3f
 import org.teamvoided.astralarsenal.AstralArsenal.id
+import org.teamvoided.astralarsenal.coroutine.mcCoroutineTask
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 import org.teamvoided.astralarsenal.effects.BleedStatusEffect
@@ -28,6 +30,7 @@ import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.util.registerHolder
 import kotlin.math.min
+import kotlin.time.Duration.Companion.seconds
 
 object AstralEffects {
     fun init() = Unit
@@ -64,6 +67,10 @@ object AstralEffects {
     )
     val IMMORTAL = register(
         "immortal", AstralStatusEffect(StatusEffectType.BENEFICIAL, 0xffffff)
+            .addAttributeModifier(EntityAttributes.GENERIC_EXPLOSION_KNOCKBACK_RESISTANCE, id("effect.immortal"),
+                1.0, EntityAttributeModifier.Operation.ADD_VALUE)
+            .addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, id("effect.immortal"),
+                1.0, EntityAttributeModifier.Operation.ADD_VALUE)
     )
     val BLEED = register(
         "bleed", BleedStatusEffect(0x660000)
@@ -120,6 +127,7 @@ object AstralEffects {
         if (effects_conductive.isNotEmpty() && source.isTypeIn(AstralDamageTypeTags.IS_PLASMA)) {
             var conductiveDamage = 0f
             effects_conductive.forEach { it ->
+
                 val w = it.amplifier
                 val levels = w + 1
                 if (entity !is PlayerEntity) {
@@ -145,46 +153,51 @@ object AstralEffects {
                 )
                 val targets = min(3 + (CONDUCTIVE_TARGETS_PER_LEVEL * levels), CONDUCTIVE_MAX_TARGETS)
                 if (entities.isNotEmpty()) {
+                    repeat((entities.size - targets).toInt()) {
+                        entities.removeAt(entity.world.random.rangeInclusive(0, entities.size - 1))
+                    }
                     var count = 0
                     var tempDamage = conductiveDamage
-                    for (entiity in entities) {
-                        if (count >= targets) {
-                            break
+                    mcCoroutineTask(delay = (0.2).seconds) {
+                        for (entiity in entities) {
+                            if (count >= targets) {
+                                break
+                            }
+                            if (entiity is PlayerEntity && tempDamage >= 2.5) {
+                                tempDamage = 2.5f
+                            }
+                            entiity.damage(
+                                DamageSource(
+                                    AstralDamageTypes.getHolder(
+                                        entity.world.registryManager,
+                                        if (entiity is PlayerEntity) AstralDamageTypes.NON_RAILED else AstralDamageTypes.RICHOCHET
+                                    ),
+                                    source.attacker,
+                                    source.attacker,
+                                ), tempDamage
+                            )
+                            if (entity.world is ServerWorld) {
+                                sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)), tempDamage)
+                            }
+                            count++
                         }
-                        if (entiity is PlayerEntity && tempDamage >= 10) {
-                            tempDamage = 10f
-                        }
-                        entiity.damage(
-                            DamageSource(
-                                AstralDamageTypes.getHolder(
-                                    entity.world.registryManager,
-                                    if (entiity is PlayerEntity) AstralDamageTypes.NON_RAILED else AstralDamageTypes.RICHOCHET
-                                ),
-                                source.attacker,
-                                source.attacker,
-                            ), tempDamage
+                        entity.world.playSound(
+                            null,
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                            SoundEvents.ITEM_TRIDENT_THUNDER.value(),
+                            SoundCategory.PLAYERS,
+                            1.0F,
+                            1.6f
                         )
-                        if (entity.world is ServerWorld) {
-                            sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)), tempDamage)
-                        }
-                        count++
                     }
-                    entity.world.playSound(
-                        null,
-                        entity.x,
-                        entity.y,
-                        entity.z,
-                        SoundEvents.ITEM_TRIDENT_THUNDER.value(),
-                        SoundCategory.PLAYERS,
-                        1.0F,
-                        1.6f
-                    )
                 }
             }
         }
 
         // Immortal Extra Check
-        if (entity.hasStatusEffect(IMMORTAL) && !source.isTypeIn(BYPASSES_INVULNERABILITY) && source.attacker != entity)
+        if (entity.hasStatusEffect(IMMORTAL) && !source.isTypeIn(BYPASSES_INVULNERABILITY))
             output = 0f
 
         //Impaled starts here
@@ -239,6 +252,7 @@ object AstralEffects {
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y + 1, b.z).toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(a.x.toFloat(), (a.y + 1).toFloat(), a.z.toFloat()))
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, size)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, size)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 1)
@@ -248,7 +262,7 @@ object AstralEffects {
     }
 
     fun cancelDamage(entity: LivingEntity, damage: Float, source: DamageSource): Boolean {
-        if (entity.hasStatusEffect(IMMORTAL) && !source.isTypeIn(BYPASSES_INVULNERABILITY) && source.attacker != entity) {
+        if (entity.hasStatusEffect(IMMORTAL) && !source.isTypeIn(BYPASSES_INVULNERABILITY)) {
             if (!(source.isTypeIn(DamageTypeTags.IS_FIRE) && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))
                 entity.world.playSoundFromEntity(
                     null, entity, SoundEvents.BLOCK_AMETHYST_BLOCK_FALL, SoundCategory.NEUTRAL,

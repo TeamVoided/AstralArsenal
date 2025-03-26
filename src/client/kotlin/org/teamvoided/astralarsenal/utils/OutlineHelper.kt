@@ -18,10 +18,10 @@ import org.teamvoided.astralarsenal.components.KosmogliphsComponent
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HAMMER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.REAPER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.VEIN_MINER
-import org.teamvoided.astralarsenal.util.TillingActions
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.logic.*
+import org.teamvoided.astralarsenal.util.TillingActions
 import org.teamvoided.astralarsenal.util.VEINMINE_RANGE
 import org.teamvoided.astralarsenal.util.VEINMINE_VOLUME
 import org.teamvoided.astralarsenal.util.getKosmogliphs

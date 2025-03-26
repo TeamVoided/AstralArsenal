@@ -13,9 +13,9 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.util.TillingActions
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.logic.*
+import org.teamvoided.astralarsenal.util.TillingActions
 
 class ReaperKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUPPORTS_REAPER) {
     override fun postMine(stack: ItemStack, world: World, state: BlockState, pos: BlockPos, miner: LivingEntity) {

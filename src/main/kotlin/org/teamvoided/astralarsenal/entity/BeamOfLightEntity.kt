@@ -55,7 +55,10 @@ class BeamOfLightEntity : Entity {
     var hard_damage = 0
     var enraged = false
     val weak = listOf(
-        AstralEffects.HARD_DAMAGE
+        AstralEffects.BLEED
+    )
+    val nomove = listOf(
+        AstralEffects.STATICALLY_SLUDGED
     )
 
     override fun tick() {
@@ -108,13 +111,17 @@ class BeamOfLightEntity : Entity {
                 beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, (20))
                 beamRenderer.dataTracker.set(
                     BeamRenderEntity.TargetPos,
-                    Vector3f(this.x.toFloat(), this.y.toFloat() + 100f, this.z.toFloat())
+                    Vector3f(this.x.toFloat(), this.y.toFloat() + 1000f, this.z.toFloat())
+                )
+                beamRenderer.dataTracker.set(
+                    BeamRenderEntity.OriginPos,
+                    Vector3f(this.x.toFloat(), -64f, this.z.toFloat())
                 )
                 beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, this.side.div(2).toFloat())
                 beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, this.side.div(2).toFloat())
                 beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, this.side)
                 beamRenderer.dataTracker.set(BeamRenderEntity.Opacity, if (!enraged) 0.1f else 0.3f)
-                beamRenderer.setPosition(this.x, this.y - 10, this.z)
+                beamRenderer.setPosition(this.x, this.y, this.z)
                 world.spawnEntity(beamRenderer)
             }
         } else if (this.getTime() in WINDUP..(TIMEACTIVE + WINDUP)) {
@@ -123,7 +130,6 @@ class BeamOfLightEntity : Entity {
                     if (this.getTime() % 5 == 0) {
                         this.playSound(AstralSounds.BEAM_VIBRATE, 2.0f, 1.0f)
                     }
-                    val serverWorld = world as ServerWorld
                     val entities = world.getOtherEntities(
                         null, Box(
                             pos.x + side.times(0.5),
@@ -141,21 +147,6 @@ class BeamOfLightEntity : Entity {
                         ) {
                             entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
                             entity.addVelocity(0.0, THRUST, 0.0)
-//                            var hard_levels = this.hard_damage
-//                            val effects = entity.statusEffects.filter { unhealable.contains(it.effectType) }
-//                            if (effects.isNotEmpty()) {
-//                                effects.forEach {
-//                                    val w = it.amplifier
-//                                    hard_levels += w
-//                                }
-//                            }
-//                            entity.addStatusEffect(
-//                                StatusEffectInstance(
-//                                    AstralEffects.UNHEALABLE_DAMAGE,
-//                                    400, hard_levels,
-//                                    false, true, true
-//                                )
-//                            )
                             entitiesHit.add(entity)
                         }
                     }
@@ -164,20 +155,6 @@ class BeamOfLightEntity : Entity {
                 if (!world.isClient) {
                     if (this.getTime() % 5 == 0) {
                         this.playSound(AstralSounds.BEAM_VIBRATE, 2.0f, 1.0f)
-                    }
-                    val serverWorld = world as ServerWorld
-                    for (i in 0..100) {
-                        serverWorld.spawnParticles(
-                            ParticleTypes.END_ROD,
-                            this.x,
-                            (this.y + (i * 0.5)) - 5,
-                            this.z,
-                            1,
-                            random.nextDouble().minus(0.5).times(side).times(0.5),
-                            random.nextDouble().minus(0.5).times(1),
-                            random.nextDouble().minus(0.5).times(side).times(0.5),
-                            0.0
-                        )
                     }
                     val entities = world.getOtherEntities(
                         null, Box(
@@ -191,20 +168,38 @@ class BeamOfLightEntity : Entity {
                     )
                     for (entity in entities) {
                         if (entity is LivingEntity) {
-                            entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, 0.0f, this, owner)
-                            var hard_levels = this.hard_damage
+                            var hard_levels = 5
+                            var duration = 2
                             val effects = entity.statusEffects.filter { weak.contains(it.effectType) }
                             if (effects.isNotEmpty()) {
                                 effects.forEach {
                                     val w = it.amplifier
-                                    hard_levels += w
+                                    hard_levels = w
+                                    val u = kotlin.math.min(it.duration, 100)
+                                    duration += u
                                 }
                             }
                             entity.addStatusEffect(
                                 StatusEffectInstance(
-                                    AstralEffects.HARD_DAMAGE,
-                                    100, hard_levels,
+                                    AstralEffects.BLEED,
+                                    duration, hard_levels,
                                     false, true, true
+                                )
+                            )
+                            hard_levels = 0
+                            duration = 2
+                            val effects2 = entity.statusEffects.filter { nomove.contains(it.effectType) }
+                            if (effects2.isNotEmpty()) {
+                                effects2.forEach {
+                                    val u = it.duration
+                                    duration += u
+                                }
+                            }
+                            entity.addStatusEffect(
+                                StatusEffectInstance(
+                                    AstralEffects.STATICALLY_SLUDGED,
+                                    duration, hard_levels,
+                                    false, false, true
                                 )
                             )
                         }

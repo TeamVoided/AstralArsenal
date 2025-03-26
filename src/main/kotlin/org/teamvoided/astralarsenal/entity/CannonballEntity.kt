@@ -63,7 +63,7 @@ class CannonballEntity : ThrownItemEntity {
         }
         this.setDmg(i)
         if ((this.getDmg() < 20)) {
-            this.setVelocity(this.velocity.multiply(-0.1, 0.0, -0.1))
+            this.setVelocity(this.velocity.multiply(-0.05, 0.0, -0.05))
             this.addVelocity(0.0, 0.2, 0.0)
         }
     }

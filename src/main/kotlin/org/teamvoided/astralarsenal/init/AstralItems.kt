@@ -9,7 +9,10 @@ import net.minecraft.registry.Registry
 import net.minecraft.util.Rarity
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.AstralArsenal.id
-import org.teamvoided.astralarsenal.item.*
+import org.teamvoided.astralarsenal.item.AstralGreathammerItem
+import org.teamvoided.astralarsenal.item.CannonballItem
+import org.teamvoided.astralarsenal.item.NailCannonItem
+import org.teamvoided.astralarsenal.item.RailgunItem
 import java.util.stream.Stream
 
 @Suppress("unused")

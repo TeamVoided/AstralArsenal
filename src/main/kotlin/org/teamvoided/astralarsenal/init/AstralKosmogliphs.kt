@@ -16,13 +16,23 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.armor.*
 import org.teamvoided.astralarsenal.kosmogliph.armor.defensive.*
 import org.teamvoided.astralarsenal.kosmogliph.melee.*
-import org.teamvoided.astralarsenal.kosmogliph.melee.mace.*
-import org.teamvoided.astralarsenal.kosmogliph.ranged.*
+import org.teamvoided.astralarsenal.kosmogliph.melee.mace.PulveriserKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.melee.mace.WindEruptionKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.AlchemistKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.CannonballLauncherKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.ShotgunKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.beams.*
-import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.*
-import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.*
-import org.teamvoided.astralarsenal.kosmogliph.shield.*
-import org.teamvoided.astralarsenal.kosmogliph.tools.*
+import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.DevastateKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.LockOffKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.OrbitalKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.TimeBombKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.TridentBleedKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.TridentReduceKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.shield.ParryKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.tools.ReaperKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.tools.SmelterKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.tools.VeinmineKosmogliph
 
 @Suppress("unused")
 object AstralKosmogliphs {
