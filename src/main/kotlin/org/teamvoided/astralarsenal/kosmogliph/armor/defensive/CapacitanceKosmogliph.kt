@@ -34,7 +34,6 @@ import kotlin.math.roundToInt
 
 class CapacitanceKosmogliph(id: Identifier) :
     KosmogliphWithData(id, AstralDataComponents.CAPACITANCE_DATA_V1, AstralItemTags.SUPPORTS_CAPACITANCE) {
-    val CHARGE_DRAIN_PER_SECOND = 0.05f
     val MAX_PLAYER_DAMAGE = 15f
     val DISCHARGE_PERCENT_PER_HIT = 1.0f
     val DAMAGE_TO_CHARGE = 0.75

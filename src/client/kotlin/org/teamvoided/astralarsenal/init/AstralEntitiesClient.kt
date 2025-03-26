@@ -17,6 +17,7 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.FLAME_SHOT_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.FREEZE_SHOT_ENTITY, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.RICHOCHET, ::EmptyEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.CONDUCTIVITY_ENGINE, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.NAIL_ENTITY, ::NailEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BEAM_RENDERER, ::BeamRenderer)
     }

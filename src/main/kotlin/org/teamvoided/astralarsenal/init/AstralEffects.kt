@@ -22,12 +22,13 @@ import net.minecraft.util.math.Vec3d
 import org.joml.Math.*
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.AstralArsenal.id
-import org.teamvoided.astralarsenal.coroutine.mcCoroutineTask
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 import org.teamvoided.astralarsenal.effects.BleedStatusEffect
 import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
+import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
+import org.teamvoided.astralarsenal.entity.ConductiveEntity
 import org.teamvoided.astralarsenal.util.registerHolder
 import kotlin.math.min
 import kotlin.time.Duration.Companion.seconds
@@ -138,61 +139,15 @@ object AstralEffects {
                     if (damage > 10) CONDUCTIVE_DAMAGE_SHARE_HARD else if (damage < 5) CONDUCTIVE_DAMAGE_SHARE_SOFT else CONDUCTIVE_DAMAGE_SHARE
                 conductiveDamage = (output * (shareMult)).toFloat()
                 entity.removeStatusEffect(CONDUCTIVE)
-                val entities = mutableListOf<Entity>()
-                entities.addAll(
-                    entity.world.getOtherEntities(
-                        entity, Box(
-                            entity.x + 10,
-                            entity.y + 10,
-                            entity.z + 10,
-                            entity.x - 10,
-                            entity.y - 10,
-                            entity.z - 10
-                        )
-                    ).filter { it is LivingEntity && it != source.attacker && it != entity }
-                )
                 val targets = min(3 + (CONDUCTIVE_TARGETS_PER_LEVEL * levels), CONDUCTIVE_MAX_TARGETS)
-                if (entities.isNotEmpty()) {
-                    repeat((entities.size - targets).toInt()) {
-                        entities.removeAt(entity.world.random.rangeInclusive(0, entities.size - 1))
-                    }
-                    var count = 0
-                    var tempDamage = conductiveDamage
-                    mcCoroutineTask(delay = (0.2).seconds) {
-                        for (entiity in entities) {
-                            if (count >= targets) {
-                                break
-                            }
-                            if (entiity is PlayerEntity && tempDamage >= 2.5) {
-                                tempDamage = 2.5f
-                            }
-                            entiity.damage(
-                                DamageSource(
-                                    AstralDamageTypes.getHolder(
-                                        entity.world.registryManager,
-                                        if (entiity is PlayerEntity) AstralDamageTypes.NON_RAILED else AstralDamageTypes.RICHOCHET
-                                    ),
-                                    source.attacker,
-                                    source.attacker,
-                                ), tempDamage
-                            )
-                            if (entity.world is ServerWorld) {
-                                sillyLightningTime(entity.pos, entiity.pos, ((entity.world as ServerWorld)), tempDamage)
-                            }
-                            count++
-                        }
-                        entity.world.playSound(
-                            null,
-                            entity.x,
-                            entity.y,
-                            entity.z,
-                            SoundEvents.ITEM_TRIDENT_THUNDER.value(),
-                            SoundCategory.PLAYERS,
-                            1.0F,
-                            1.6f
-                        )
-                    }
-                }
+                val conductivityEngine = ConductiveEntity(entity.world, entity.x, entity.eyeY, entity.z)
+                conductivityEngine.setPosition(entity.x, entity.eyeY, entity.z)
+                conductivityEngine.maxTargets = targets
+                conductivityEngine.origin = entity
+                conductivityEngine.owner = source.attacker
+                conductivityEngine.dmg = conductiveDamage
+                conductivityEngine.cooldown = 6
+                entity.world.spawnEntity(conductivityEngine)
             }
         }
 

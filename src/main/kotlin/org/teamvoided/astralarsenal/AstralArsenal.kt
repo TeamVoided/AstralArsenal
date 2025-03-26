@@ -10,8 +10,6 @@ import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.astralarsenal.command.KosmogliphCommand
-import org.teamvoided.astralarsenal.coroutine.mcCoroutineDispatcher
-import org.teamvoided.astralarsenal.coroutine.mcCoroutineScope
 import org.teamvoided.astralarsenal.init.*
 
 @Suppress("unused")
@@ -36,11 +34,6 @@ object AstralArsenal {
         AstralEntities.init()
         AstralNetworking.init()
         AstralParticles.init()
-
-        ServerLifecycleEvents.SERVER_STARTING.register { server ->
-            mcCoroutineDispatcher = server.asCoroutineDispatcher()
-            mcCoroutineScope = CoroutineScope(SupervisorJob() + mcCoroutineDispatcher)
-        }
 
 
         CommandRegistrationCallback.EVENT.register { dispatcher, ctx, env ->
