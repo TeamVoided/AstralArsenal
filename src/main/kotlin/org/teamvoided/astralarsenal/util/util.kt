@@ -1,7 +1,6 @@
 package org.teamvoided.astralarsenal.util
 
 import arrow.core.Predicate
-import net.minecraft.component.DataComponentTypes
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
@@ -39,7 +38,6 @@ import org.teamvoided.astralarsenal.init.AstralDataComponents.SLAM_DATA
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.init.AstralParticles
-import org.teamvoided.astralarsenal.item.NailCannonItem
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity
 import org.teamvoided.astralarsenal.kosmogliph.ranged.BowKosmogliph
@@ -286,29 +284,4 @@ fun tickMovement(freezer: LivingEntity) {
             0.1
         )
     }
-}
-
-// Only available client side
-// 0.2 is regular speed while using an item, 1 is regular player speed
-// This should be changed to use item tags.
-fun modifyItemUseSpeed(player: PlayerEntity, stack: ItemStack): Float {
-    if (stack.item is BowItem) {
-        return 0.5f
-    } else if (stack.item is ShieldItem) {
-        return if (stack.hasKosmogliph(AstralKosmogliphs.PARRY)) 1f else 0.3f
-    } else if (stack.item is SwordItem || stack.item is AxeItem) {
-        return if (stack.hasKosmogliph(AstralKosmogliphs.DEEP_WOUNDS)) 0.4f else 1f
-    } else if (stack.item is CrossbowItem) {
-        return 0.5f
-    } else if (stack.item is NailCannonItem) {
-        return 0.8f
-    } else if (stack.item is MaceItem) {
-        return 0.7f
-    } else if (stack.item is PotionItem) {
-        return 0.4f
-    } else if (stack.item.components.contains(DataComponentTypes.FOOD)){
-        return 0.4f
-    }
-
-    return 0.5f
 }

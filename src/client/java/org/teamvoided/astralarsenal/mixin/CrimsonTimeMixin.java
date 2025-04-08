@@ -14,45 +14,47 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.astralarsenal.init.AstralHudRendering;
 
+import static org.teamvoided.astralarsenal.util.ConstantsKt.CRIMSON_TIME_TICKS;
+
 @Mixin(MinecraftClient.class)
-public class CrimsonTimeMixin {
+public abstract class CrimsonTimeMixin {
     @Shadow
     public ClientPlayerInteractionManager interactionManager;
     @Shadow
     public ClientPlayerEntity player;
 
-    // Change this to change the number of ticks players have crimson time for
+    @Shadow
+    public static MinecraftClient getInstance() {
+        throw new AssertionError("Mixin Failed");
+    }
+
     @Unique
-    private static final int CRIMSON_TIME_TICKS = 5;
+    private static int astral_arsenal$ticks = 0;
     @Unique
-    private static int ticks = 0;
-    @Unique
-    private static Entity target = null;
+    private static Entity astral_arsenal$target = null;
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void astral$crimsonTick(CallbackInfo info) {
-        var instance = MinecraftClient.getInstance();
         AstralHudRendering.crimsonCrosshair = false;
 
-        if (instance.targetedEntity != null) {
-            target = instance.targetedEntity;
-            ticks = CRIMSON_TIME_TICKS;
+        if (getInstance().targetedEntity != null) {
+            astral_arsenal$target = getInstance().targetedEntity;
+            astral_arsenal$ticks = CRIMSON_TIME_TICKS;
         }
 
-        if (ticks > 0) {
-            ticks--;
+        if (astral_arsenal$ticks > 0) {
+            astral_arsenal$ticks--;
 
-            if (instance.targetedEntity == null && !target.isInvisible())
+            if (getInstance().targetedEntity == null && !astral_arsenal$target.isInvisible())
                 AstralHudRendering.crimsonCrosshair = true;
-        } else {
-            target = null;
-        }
+        } else astral_arsenal$target = null;
     }
 
+    // (ender) I tired changing this to ModifyReturnValue but that made it do a lot less damage somehow, someone look in to this please
     @Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
     private void astral$crimsonAttack(CallbackInfoReturnable<Boolean> info) {
-        if (target != null) {
-            interactionManager.attackEntity(player, target);
+        if (astral_arsenal$target != null) {
+            interactionManager.attackEntity(player, astral_arsenal$target);
             player.swingHand(Hand.MAIN_HAND);
             info.setReturnValue(true);
         }
