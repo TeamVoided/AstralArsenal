@@ -3,7 +3,6 @@ package org.teamvoided.astralarsenal.mixin;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,7 +13,6 @@ import org.teamvoided.astralarsenal.init.AstralEffects;
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage;
 import org.teamvoided.astralarsenal.pseudomixin.DamageReductionKt;
 
-@Debug(export = true)
 @Mixin(LivingEntity.class)
 public class DamageReductionMixin {
 

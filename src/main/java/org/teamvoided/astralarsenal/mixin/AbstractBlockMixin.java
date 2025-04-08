@@ -17,17 +17,18 @@ import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmo
 public class AbstractBlockMixin {
     @WrapOperation(method = "getDroppedStacks", at = @At(value = "INVOKE", target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;"))
     private ObjectArrayList<ItemStack> modifyLoot(LootTable instance, LootContextParameterSet parameterSet, Operation<ObjectArrayList<ItemStack>> original) {
+        var originalItems = original.call(instance, parameterSet);
         var world = parameterSet.getWorld();
         var stack = parameterSet.getParameterOrNull(LootContextParameters.TOOL);
-        if (stack == null) return original.call(instance, parameterSet);
-        var kosmogliphs = getKosmogliphs(stack);
-        if (kosmogliphs.isEmpty()) return original.call(instance, parameterSet);
-        var priority = kosmogliphs.stream().toList().getFirst();
-        var modifiedLoot = priority.modifyBlockBreakLoot(instance, parameterSet, world, stack, original.call(instance, parameterSet));
-        if (modifiedLoot instanceof ObjectArrayList<ItemStack> oal) return oal;
-        var mlArray = modifiedLoot.toArray(new ItemStack[0]);
-        return ObjectArrayList.wrap(mlArray);
-    }
+        if (stack == null) return originalItems;
 
+        var kosmogliphs = getKosmogliphs(stack);
+        if (kosmogliphs.isEmpty()) return originalItems;
+
+        var priority = kosmogliphs.stream().toList().getFirst();
+        var modifiedLoot = priority.modifyBlockBreakLoot(instance, parameterSet, world, stack, originalItems);
+        if (modifiedLoot instanceof ObjectArrayList<ItemStack> list) return list;
+        return ObjectArrayList.wrap(modifiedLoot.toArray(new ItemStack[0]));
+    }
 }
 
