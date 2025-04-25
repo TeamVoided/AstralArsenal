@@ -299,7 +299,7 @@ class CapacitanceKosmogliph(id: Identifier) :
             val b = bendPos[i + 1]
             val distance = a.distanceTo(b)
             val beamRenderer = BeamRenderEntity(world, a.x, a.y + 1, a.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x007df9ff.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
@@ -307,7 +307,7 @@ class CapacitanceKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(a.x.toFloat(), (a.y + 1).toFloat(), a.z.toFloat()))
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.1f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.1f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 1)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 2)
             beamRenderer.setPosition(a.x, a.y + 1, a.z)
             world.spawnEntity(beamRenderer)
         }

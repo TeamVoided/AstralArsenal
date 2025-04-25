@@ -30,8 +30,6 @@ class BeamOfLightEntity : Entity {
         this.owner = owner
     }
 
-    constructor(world: World?, x: Double, y: Double, z: Double) :
-            super(AstralEntities.BEAM_OF_LIGHT as EntityType<out Entity?>, world)
 
     override fun initDataTracker(builder: DataTracker.Builder) {
         builder.add(TIME, 0)
@@ -54,6 +52,8 @@ class BeamOfLightEntity : Entity {
     var owner: Entity? = null
     var hard_damage = 0
     var enraged = false
+    var outerColour = 0x00ffffff
+    var innerColour = 0x00ffffff
     val weak = listOf(
         AstralEffects.BLEED
     )
@@ -99,14 +99,8 @@ class BeamOfLightEntity : Entity {
             this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)
             if (world is ServerWorld) {
                 val beamRenderer = BeamRenderEntity(world, this.x, this.y + 1, this.z)
-                beamRenderer.dataTracker.set(
-                    BeamRenderEntity.OuterColour,
-                    if (!enraged) 0x00ffffff.toInt() else 0x00000000
-                )
-                beamRenderer.dataTracker.set(
-                    BeamRenderEntity.InterColour,
-                    if (!enraged) 0x00ffffff.toInt() else 0x00730000
-                )
+                beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, outerColour)
+                beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, innerColour)
                 beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, (this.TIMEACTIVE + 20))
                 beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, (20))
                 beamRenderer.dataTracker.set(
@@ -119,8 +113,8 @@ class BeamOfLightEntity : Entity {
                 )
                 beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, this.side.div(2).toFloat())
                 beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, this.side.div(2).toFloat())
-                beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, this.side)
-                beamRenderer.dataTracker.set(BeamRenderEntity.Opacity, if (!enraged) 0.1f else 0.3f)
+                beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, this.side.div(2).plus(1))
+                beamRenderer.dataTracker.set(BeamRenderEntity.Opacity, 0.3f)
                 beamRenderer.setPosition(this.x, this.y, this.z)
                 world.spawnEntity(beamRenderer)
             }
@@ -133,10 +127,10 @@ class BeamOfLightEntity : Entity {
                     val entities = world.getOtherEntities(
                         null, Box(
                             pos.x + side.times(0.5),
-                            pos.y + 50.0,
+                            pos.y + 500.0,
                             pos.z + side.times(0.5),
                             pos.x + side.times(-0.5),
-                            pos.y - 50,
+                            pos.y - 500,
                             pos.z + side.times(-0.5)
                         )
                     )
@@ -159,10 +153,10 @@ class BeamOfLightEntity : Entity {
                     val entities = world.getOtherEntities(
                         null, Box(
                             pos.x + side.times(0.5),
-                            pos.y + 10.0,
+                            pos.y + 500.0,
                             pos.z + side.times(0.5),
                             pos.x + side.times(-0.5),
-                            pos.y - 10,
+                            pos.y - 500,
                             pos.z + side.times(-0.5)
                         )
                     )
@@ -205,6 +199,20 @@ class BeamOfLightEntity : Entity {
                         }
                     }
                 }
+            }
+            if (!world.isClient) {
+                val serverWorld = world as ServerWorld
+                serverWorld.spawnParticles(
+                    ParticleTypes.END_ROD,
+                    this.x,
+                    this.y,
+                    this.z,
+                    10,
+                    random.nextDouble().minus(0.5).times(side),
+                    random.nextDouble().minus(0.5).times(200),
+                    random.nextDouble().minus(0.5).times(side),
+                    0.02
+                )
             }
         } else if (this.getTime() > (TIMEACTIVE + WINDUP)) {
             this.playSound(AstralSounds.BEAM_WIND, 3.0f, 1.0f)

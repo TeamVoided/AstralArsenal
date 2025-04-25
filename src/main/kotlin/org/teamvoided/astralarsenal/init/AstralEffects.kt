@@ -172,7 +172,7 @@ object AstralEffects {
     }
 
     fun sillyLightningTime(pos1: Vec3d, pos2: Vec3d, world: ServerWorld, dmg: Float) {
-        val size = clamp(0.1f, 0.2f, dmg / 50)
+        val size = clamp(0.05f, 0.1f, dmg / 100)
         val bends = world.random.rangeInclusive(3, 5)
         val bendPos = mutableListOf<Vec3d>()
         bendPos.add(pos1)
@@ -201,17 +201,17 @@ object AstralEffects {
             val a = bendPos[i]
             val b = bendPos[i + 1]
             val distance = a.distanceTo(b)
-            val beamRenderer = BeamRenderEntity(world, a.x, a.y + 1, a.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab)
-            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab)
+            val beamRenderer = BeamRenderEntity(world, a.x, a.y, a.z)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x007df9ff)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ffffff)
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
-            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y + 1, b.z).toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(a.x.toFloat(), (a.y + 1).toFloat(), a.z.toFloat()))
+            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y, b.z).toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(a.x.toFloat(), (a.y).toFloat(), a.z.toFloat()))
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, size)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, size)
-            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 1)
-            beamRenderer.setPosition(a.x, a.y + 1, a.z)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 2)
+            beamRenderer.setPosition(a.x, a.y, a.z)
             world.spawnEntity(beamRenderer)
         }
     }

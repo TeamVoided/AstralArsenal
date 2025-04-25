@@ -44,6 +44,7 @@ class DevastateKosmogliph(
             snowballEntity.trackTime = 30
             snowballEntity.balls = player
             snowballEntity.enraged = angee
+            snowballEntity.outerColour = 0x0000ffff
             world.spawnEntity(snowballEntity)
             if (player.getStackInHand(hand).hasMultiShot()) {
                 val one: Int
@@ -67,6 +68,7 @@ class DevastateKosmogliph(
                 snowballEntity2.trackTime = (snowballEntity.trackTime * 0.5).toInt()
                 snowballEntity2.balls = player
                 snowballEntity2.hard_damage = snowballEntity.hard_damage
+                snowballEntity2.outerColour = 0x0000ffff
                 world.spawnEntity(snowballEntity2)
                 val snowballEntity3 = BeamOfLightArrowEntity(world, player)
                 setPropertiesTwo(snowballEntity3, player.pitch, player.yaw + two, 0.0f, 2.5f, 0.0f)
@@ -80,6 +82,7 @@ class DevastateKosmogliph(
                 snowballEntity3.trackTime = (snowballEntity.trackTime * 1.5).toInt()
                 snowballEntity3.balls = player
                 snowballEntity3.hard_damage = snowballEntity.hard_damage
+                snowballEntity3.outerColour = 0x0000ffff
                 world.spawnEntity(snowballEntity3)
             }
             world.playSound(

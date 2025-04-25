@@ -94,8 +94,8 @@ class RichochetEntity : Entity {
         )
         if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, caster.x, caster.y + 1, caster.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00757575.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ffd700.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
@@ -201,7 +201,6 @@ class RichochetEntity : Entity {
                     )
                     else richochet.setPosition(result.pos.x, result.pos.y - 0.1, result.pos.z)
                 }
-                // North and sound send it back 180 degrees instead of doing what they should be doing.
                 Direction.SOUTH -> {
                     if (richochet.yaw >= 0) richochet.yaw = ((180) - y)
                     else richochet.yaw = ((-180) - y)
@@ -213,7 +212,6 @@ class RichochetEntity : Entity {
                     else richochet.yaw = ((-180) - y)
                     richochet.setPosition(result.pos.x, result.pos.y, result.pos.z - 0.1)
                 }
-                //East and west send it further into the block instead of having it richochet.
                 Direction.WEST -> {
                     richochet.yaw = y * -1
                     richochet.setPosition(result.pos.x - 0.1, result.pos.y, result.pos.z)

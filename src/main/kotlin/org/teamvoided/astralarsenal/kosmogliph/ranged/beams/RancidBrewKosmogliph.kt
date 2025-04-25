@@ -42,8 +42,8 @@ class RancidBrewKosmogliph(id: Identifier) :
         )
         if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x0055008a.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x004f0101.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x004b0082.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00860111.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())

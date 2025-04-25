@@ -86,7 +86,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
         )
         if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00ababab)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x007df9ff)
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab)
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)

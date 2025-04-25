@@ -62,12 +62,12 @@ object AstralEntities {
     val BEAM_RENDERER = register(
         "beam_renderer",
         EntityType.Builder.create(EntityType.EntityFactory(::BeamRenderEntity), SpawnGroup.MISC)
-            .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
+            .setDimensions(0.0f, 0.0f).maxTrackingRange(4).build()
     )
     val CONDUCTIVITY_ENGINE = register(
         "conductivity_engine",
         EntityType.Builder.create(EntityType.EntityFactory(::BeamRenderEntity), SpawnGroup.MISC)
-            .setDimensions(0f, 0f).maxTrackingRange(4).build()
+            .setDimensions(0.0f, 0.0f).maxTrackingRange(4).build()
     )
     val TOTEM_PROJECTILE = register(
         "totem_projectile",

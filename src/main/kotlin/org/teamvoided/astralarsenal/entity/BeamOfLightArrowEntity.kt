@@ -30,6 +30,8 @@ class BeamOfLightArrowEntity : ArrowEntity {
     var balls: LivingEntity? = null
     var hard_damage = 0
     var enraged = false
+    var outerColour = 0x00ffffff
+    var innerColour = 0x00ffffff
 
     override fun tick() {
         var particles = if (enraged) ParticleTypes.GLOW else ParticleTypes.END_ROD
@@ -55,38 +57,42 @@ class BeamOfLightArrowEntity : ArrowEntity {
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
         if (!world.isClient) {
-            val snowballEntity = BeamOfLightEntity(world, balls)
-            snowballEntity.setPosition(this.x, this.y, this.z)
-            snowballEntity.DOT = DOT
-            snowballEntity.side = side
-            snowballEntity.THRUST = THRUST
-            snowballEntity.TIMEACTIVE = TIMEACTIVE
-            snowballEntity.WINDUP = WINDUP / 4
-            snowballEntity.DMG = DMG
-            snowballEntity.trackTime = trackTime / 4
-            snowballEntity.owner = balls
-            snowballEntity.hard_damage = hard_damage
-            snowballEntity.enraged = enraged
-            world.spawnEntity(snowballEntity)
+            val beamOfLightEntity = BeamOfLightEntity(world, balls)
+            beamOfLightEntity.setPosition(this.x, this.y, this.z)
+            beamOfLightEntity.DOT = DOT
+            beamOfLightEntity.side = side
+            beamOfLightEntity.THRUST = THRUST
+            beamOfLightEntity.TIMEACTIVE = TIMEACTIVE
+            beamOfLightEntity.WINDUP = WINDUP / 4
+            beamOfLightEntity.DMG = DMG
+            beamOfLightEntity.trackTime = trackTime / 4
+            beamOfLightEntity.owner = balls
+            beamOfLightEntity.hard_damage = hard_damage
+            beamOfLightEntity.enraged = enraged
+            beamOfLightEntity.outerColour = outerColour
+            beamOfLightEntity.innerColour = innerColour
+            world.spawnEntity(beamOfLightEntity)
             this.discard()
         }
     }
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         if (!world.isClient && (entityHitResult.entity != this.balls || this.age > 5)) {
-            val snowballEntity = BeamOfLightEntity(world, balls)
-            snowballEntity.setPosition(this.x, this.y, this.z)
-            snowballEntity.DOT = DOT
-            snowballEntity.side = side
-            snowballEntity.THRUST = THRUST
-            snowballEntity.TIMEACTIVE = TIMEACTIVE
-            snowballEntity.WINDUP = WINDUP
-            snowballEntity.DMG = DMG
-            snowballEntity.targetEntity = entityHitResult.entity
-            snowballEntity.trackTime = trackTime
-            snowballEntity.owner = balls
-            snowballEntity.enraged = enraged
-            world.spawnEntity(snowballEntity)
+            val beamOfLightEntity = BeamOfLightEntity(world, balls)
+            beamOfLightEntity.setPosition(this.x, this.y, this.z)
+            beamOfLightEntity.DOT = DOT
+            beamOfLightEntity.side = side
+            beamOfLightEntity.THRUST = THRUST
+            beamOfLightEntity.TIMEACTIVE = TIMEACTIVE
+            beamOfLightEntity.WINDUP = WINDUP
+            beamOfLightEntity.DMG = DMG
+            beamOfLightEntity.targetEntity = entityHitResult.entity
+            beamOfLightEntity.trackTime = trackTime
+            beamOfLightEntity.owner = balls
+            beamOfLightEntity.enraged = enraged
+            beamOfLightEntity.outerColour = outerColour
+            beamOfLightEntity.innerColour = innerColour
+            world.spawnEntity(beamOfLightEntity)
             this.discard()
         }
     }
