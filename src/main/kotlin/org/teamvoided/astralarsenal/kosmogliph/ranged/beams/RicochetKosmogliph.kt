@@ -45,7 +45,7 @@ class RicochetKosmogliph(id: Identifier) :
         val combined = player.eyePos.add(player.rotationVector.multiply(100.0))
         val result = world.raycast(
             RaycastContext(
-                player.eyePos, combined, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, player
+                player.eyePos, combined, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, player
             )
         )
         val distance = sqrt(
