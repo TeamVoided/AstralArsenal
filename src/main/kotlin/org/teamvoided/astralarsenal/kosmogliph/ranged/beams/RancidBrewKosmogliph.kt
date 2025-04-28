@@ -16,6 +16,10 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.Box
+import net.minecraft.util.math.Vec3d
+import net.minecraft.world.RaycastContext
+import net.minecraft.world.RaycastContext.FluidHandling
+import net.minecraft.world.RaycastContext.ShapeType
 import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.joml.Vector3f
@@ -34,7 +38,10 @@ import kotlin.math.sqrt
 class RancidBrewKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_RANCID_BREW) }) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
-        val result = player.raycast(100.0, 1f, false)
+        val vec3d: Vec3d = player.getLerpedEyePos(1f)
+        val vec3d2: Vec3d = player.getRotationVec(1f)
+        val vec3d3 = vec3d.add(vec3d2.x * 100.0, vec3d2.y * 100.0, vec3d2.z * 100.0)
+        val result = player.getWorld().raycast(RaycastContext(vec3d, vec3d3, ShapeType.COLLIDER, FluidHandling.NONE, player))
         val distance = sqrt(
             sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y - 0.5) - result.pos.y).pow(
                 2

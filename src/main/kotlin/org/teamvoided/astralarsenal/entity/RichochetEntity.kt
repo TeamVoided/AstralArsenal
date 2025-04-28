@@ -1,5 +1,7 @@
 package org.teamvoided.astralarsenal.entity
 
+import net.minecraft.block.ShapeContext
+import net.minecraft.command.argument.EntityAnchorArgumentType
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
@@ -14,6 +16,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 import org.joml.Math.lerp
@@ -47,6 +50,25 @@ class RichochetEntity : Entity {
             if (this.cooldown > 0) this.cooldown--
             else {
                 if (this.owner != null) {
+                    val entities = mutableListOf<Entity>()
+                    entities.addAll(
+                        world.getOtherEntities(
+                            this,
+                            Box(
+                                Vec3d(this.x + 10, this.y + 10, this.z + 10),
+                                Vec3d(this.x - 10, this.y - 10, this.z - 10)
+                            )
+                        )
+                            .filter { !hitTwice.contains(it) && !hitThrice.contains(it) && it != owner && ((it is LivingEntity && !it.isDead)|| it is CannonballEntity) }
+                    )
+                    if (entities.isNotEmpty()) {
+                        repeat((entities.size - 1)) {
+                            entities.removeAt(this.world.random.rangeInclusive(0, entities.size - 1))
+                        }
+                        if (blockedByBlocks(this.pos, entities.first().pos)) {
+                            this.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, entities.first().eyePos)
+                        }
+                    }
                     rail(world, this.owner!!, this)
                 }
                 world.playSound(
@@ -63,6 +85,22 @@ class RichochetEntity : Entity {
             }
         }
         super.tick()
+    }
+
+    fun blockedByBlocks(pos1: Vec3d, pos2: Vec3d): (Boolean) {
+        val distance1 = pos1.distanceTo(pos2)
+        val distance2 = pos1.distanceTo(
+            world.raycast(
+                RaycastContext(
+                    pos1,
+                    pos2,
+                    RaycastContext.ShapeType.COLLIDER,
+                    RaycastContext.FluidHandling.NONE,
+                    ShapeContext.absent()
+                )
+            ).pos
+        )
+        return (distance1 == distance2)
     }
 
     override fun initDataTracker(builder: DataTracker.Builder?) {
@@ -84,7 +122,7 @@ class RichochetEntity : Entity {
         val combined = caster.eyePos.add(caster.rotationVector.multiply(100.0))
         val result = world.raycast(
             RaycastContext(
-                caster.eyePos, combined, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, caster
+                caster.eyePos, combined, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, caster
             )
         )
         val distance = sqrt(
@@ -99,7 +137,10 @@ class RichochetEntity : Entity {
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(caster.x.toFloat(), (caster.eyePos.y).toFloat(), caster.z.toFloat()))
+            beamRenderer.dataTracker.set(
+                BeamRenderEntity.OriginPos,
+                Vector3f(caster.x.toFloat(), (caster.eyePos.y).toFloat(), caster.z.toFloat())
+            )
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
@@ -164,7 +205,7 @@ class RichochetEntity : Entity {
                     ), dmg.toFloat()
                 )
                 entitiesHit.add(entity)
-                if (entity is PlayerEntity) {
+                if (entity is LivingEntity/*PlayerEntity*/) {
                     when {
                         hitThrice.contains(entity) -> {}
                         hitTwice.contains(entity) -> {
@@ -201,6 +242,7 @@ class RichochetEntity : Entity {
                     )
                     else richochet.setPosition(result.pos.x, result.pos.y - 0.1, result.pos.z)
                 }
+
                 Direction.SOUTH -> {
                     if (richochet.yaw >= 0) richochet.yaw = ((180) - y)
                     else richochet.yaw = ((-180) - y)
@@ -212,6 +254,7 @@ class RichochetEntity : Entity {
                     else richochet.yaw = ((-180) - y)
                     richochet.setPosition(result.pos.x, result.pos.y, result.pos.z - 0.1)
                 }
+
                 Direction.WEST -> {
                     richochet.yaw = y * -1
                     richochet.setPosition(result.pos.x - 0.1, result.pos.y, result.pos.z)
@@ -221,6 +264,7 @@ class RichochetEntity : Entity {
                     richochet.yaw = y * -1
                     richochet.setPosition(result.pos.x + 0.1, result.pos.y, result.pos.z)
                 }
+
                 else -> {}
             }
             world.spawnEntity(richochet)
