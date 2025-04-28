@@ -1,11 +1,11 @@
 package org.teamvoided.astralarsenal.init
 
-import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffect
+import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffectType
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
@@ -17,7 +17,6 @@ import net.minecraft.registry.tag.DamageTypeTags.BYPASSES_INVULNERABILITY
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
-import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import org.joml.Math.*
 import org.joml.Vector3f
@@ -26,12 +25,12 @@ import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 import org.teamvoided.astralarsenal.effects.BleedStatusEffect
 import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
-import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
+import org.teamvoided.astralarsenal.effects.hexes.buffs.BreachingStatusEffect
+import org.teamvoided.astralarsenal.effects.hexes.debuffs.BreachedStatusEffect
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.ConductiveEntity
 import org.teamvoided.astralarsenal.util.registerHolder
 import kotlin.math.min
-import kotlin.time.Duration.Companion.seconds
 
 object AstralEffects {
     fun init() = Unit
@@ -68,10 +67,14 @@ object AstralEffects {
     )
     val IMMORTAL = register(
         "immortal", AstralStatusEffect(StatusEffectType.BENEFICIAL, 0xffffff)
-            .addAttributeModifier(EntityAttributes.GENERIC_EXPLOSION_KNOCKBACK_RESISTANCE, id("effect.immortal"),
-                1.0, EntityAttributeModifier.Operation.ADD_VALUE)
-            .addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, id("effect.immortal"),
-                1.0, EntityAttributeModifier.Operation.ADD_VALUE)
+            .addAttributeModifier(
+                EntityAttributes.GENERIC_EXPLOSION_KNOCKBACK_RESISTANCE, id("effect.immortal"),
+                1.0, EntityAttributeModifier.Operation.ADD_VALUE
+            )
+            .addAttributeModifier(
+                EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, id("effect.immortal"),
+                1.0, EntityAttributeModifier.Operation.ADD_VALUE
+            )
     )
     val BLEED = register(
         "bleed", BleedStatusEffect(0x660000)
@@ -85,6 +88,14 @@ object AstralEffects {
     val STATICALLY_SLUDGED = register(
         "statically_sludged",
         ParticleStatusEffect(StatusEffectType.HARMFUL, 0xb8f4ff, ParticleTypes.ELECTRIC_SPARK)
+    )
+    val BREACHING = register(
+        "breaching",
+        BreachingStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
+    )
+    val BREACHED = register(
+        "breached",
+        BreachedStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
     )
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
@@ -107,6 +118,15 @@ object AstralEffects {
     )
     val impaled = listOf(
         IMPALED
+    )
+
+    //hexes are gonna take up a lot of space, yay
+    val hexes = listOf(
+        BREACHED
+    )
+
+    val breaching = listOf(
+        BREACHING
     )
 
     fun modifyDamage(entity: LivingEntity, damage: Float, source: DamageSource): Float {
@@ -168,6 +188,19 @@ object AstralEffects {
                 entity.removeStatusEffect(e.effectType)
             }
         }
+
+        //hexes start here, its gonna be a long one.
+        if (source.attacker is LivingEntity) {
+            val attacker = source.attacker as LivingEntity
+            val effect_breaching = attacker.statusEffects.filter { breaching.contains(it.effectType) }
+            for (effect in effect_breaching){
+                for (effects in hexes){
+                    entity.removeStatusEffect(effects)
+                }
+                entity.addStatusEffect(StatusEffectInstance(BREACHED,100,effect.amplifier))
+            }
+        }
+
         return output
     }
 
@@ -207,7 +240,10 @@ object AstralEffects {
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y, b.z).toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(a.x.toFloat(), (a.y).toFloat(), a.z.toFloat()))
+            beamRenderer.dataTracker.set(
+                BeamRenderEntity.OriginPos,
+                Vector3f(a.x.toFloat(), (a.y).toFloat(), a.z.toFloat())
+            )
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, size)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, size)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 2)

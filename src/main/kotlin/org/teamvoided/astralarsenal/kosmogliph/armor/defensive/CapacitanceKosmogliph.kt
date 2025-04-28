@@ -26,6 +26,7 @@ import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralDataComponents
+import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 import kotlin.math.max
@@ -56,6 +57,13 @@ class CapacitanceKosmogliph(id: Identifier) :
             equipmentSlot,
             stage
         )
+        val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
+        var multiplyer = 0.2
+        var dtc = 1.0
+        for (effect in effects){
+            multiplyer = min(0.2 + (0.2 * (effect.amplifier + 1)), 1.0)
+            dtc = max(0.0, 1 - (0.25 * (effect.amplifier + 1)))
+        }
         val data = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1.DEFAULT)
         val dataTwo = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2.DEFAULT)
         var dmg = data.damage
@@ -63,9 +71,9 @@ class CapacitanceKosmogliph(id: Identifier) :
         var countdownTime = dataTwo.countdownTime
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA) || source.attacker is GuardianEntity || source.attacker is ElderGuardianEntity) {
-            outputDamage = (outputDamage * 0.2).toFloat()
+            outputDamage = (outputDamage * multiplyer).toFloat()
             countdownTime = TICKS_BEFORE_DISCHARGE
-            dmg += (damage * DAMAGE_TO_CHARGE).toFloat()
+            dmg += (damage * DAMAGE_TO_CHARGE * dtc).toFloat()
             entity.world.playSound(
                 null,
                 entity.x,
@@ -79,7 +87,7 @@ class CapacitanceKosmogliph(id: Identifier) :
         } else {
             if (countdownTime > 0) {
                 countdownTime = TICKS_BEFORE_DISCHARGE
-                dmg += (damage * DAMAGE_TO_CHARGE).toFloat()
+                dmg += (damage * DAMAGE_TO_CHARGE * dtc).toFloat()
                 entity.world.playSound(
                     null,
                     entity.x,
@@ -140,6 +148,11 @@ class CapacitanceKosmogliph(id: Identifier) :
         stack.set(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2(dischargeTime, countdownTime))
         return outputDamage
     }
+
+    val breached = listOf(
+        BREACHED
+    )
+
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         if (entity is LivingEntity && entity.getEquippedStack(EquipmentSlot.CHEST) == stack) {

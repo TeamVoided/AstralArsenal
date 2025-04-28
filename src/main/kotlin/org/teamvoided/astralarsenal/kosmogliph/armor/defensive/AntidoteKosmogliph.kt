@@ -12,8 +12,10 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import kotlin.math.min
 
 class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ANTIDOTE) }) {
     override fun modifyDamage(
@@ -35,11 +37,20 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
 
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_MAGIC)) {
-            outputDamage = (outputDamage * 0.2).toFloat()
+            val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
+            var multiplyer = 0.2
+            for (effect in effects){
+                multiplyer = min(0.2 + (0.2 * (effect.amplifier + 1)), 1.0)
+            }
+            outputDamage = (outputDamage * multiplyer).toFloat()
         }
 
         return outputDamage
     }
+
+    val breached = listOf(
+        BREACHED
+    )
 
     val blacklist = listOf(
         StatusEffects.INSTANT_DAMAGE,
@@ -52,6 +63,14 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
     )
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
+        var multiplyer = 1.0
+        if (entity is LivingEntity) {
+            val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
+            for (effect in effects){
+                multiplyer = 1.0 + (0.5 * (effect.amplifier + 1))
+            }
+        }
+
         if (slot == 2) {
             if (entity is LivingEntity) {
                 if (!entity.world.isClient) {
@@ -61,22 +80,25 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
                                 !it.isInfinite
                     }
                     x.forEach { effect ->
-                        entity.statusEffects.remove(effect)
-                        entity.addStatusEffect(
-                            StatusEffectInstance(
-                                effect.effectType,
-                                effect.duration - 1, effect.amplifier,
-                                effect.isAmbient, effect.shouldShowParticles(), effect.shouldShowIcon()
+                        if ((world.time % (multiplyer)).toInt() == 0) {
+                            entity.statusEffects.remove(effect)
+                            entity.addStatusEffect(
+                                StatusEffectInstance(
+                                    effect.effectType,
+                                    effect.duration - 1, effect.amplifier,
+                                    effect.isAmbient, effect.shouldShowParticles(), effect.shouldShowIcon()
+                                )
                             )
-                        )
+                        }
                     }
+
                     val y = entity.statusEffects.filter {
                         it.effectType.value().isBeneficial &&
                                 !blacklist.contains(it.effectType) &&
                                 !it.isInfinite
                     }
                     y.forEach { effect ->
-                        if ((world.time % 2).toInt() == 0) {
+                        if ((world.time % (2 * multiplyer)).toInt() == 0) {
                             entity.statusEffects.remove(effect)
                             entity.addStatusEffect(
                                 StatusEffectInstance(

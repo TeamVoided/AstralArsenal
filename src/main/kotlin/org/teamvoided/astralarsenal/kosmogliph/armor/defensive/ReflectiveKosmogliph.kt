@@ -14,8 +14,10 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
+import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import kotlin.math.min
 
 class ReflectiveKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_REFLECTIVE) }) {
     var entitiesHit = mutableListOf<Entity>()
@@ -38,10 +40,19 @@ class ReflectiveKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
 
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_PROJECTILE)) {
-            outputDamage = (outputDamage * 0.5).toFloat()
+            val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
+            var multiplyer = 0.5
+            for (effect in effects){
+                multiplyer = min(0.5 + (0.125 * (effect.amplifier + 1)), 1.0)
+            }
+            outputDamage = (outputDamage * multiplyer).toFloat()
         }
         return outputDamage
     }
+
+    val breached = listOf(
+        BREACHED
+    )
 
     override fun inventoryTick(stack: ItemStack, world: World, barer: Entity, slot: Int, selected: Boolean) {
         if (slot == 2) {
@@ -57,9 +68,14 @@ class ReflectiveKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
             )
             for (entity in entities) {
                 if (entity is ProjectileEntity && !entitiesHit.contains(entity)) {
-                    if (entity.owner != barer && entity !is BeamOfLightArrowEntity) {
-                        val random = world.random.rangeInclusive(1, 10)
-                        if (random != 1 && random != 2 && random != 3) {
+                    if (entity.owner != barer && entity !is BeamOfLightArrowEntity && barer is LivingEntity) {
+                        val effects = barer.statusEffects.filter { breached.contains(it.effectType) }
+                        var max = 10
+                        for (effect in effects){
+                            max = 10 + (5 * (effect.amplifier + 1))
+                        }
+                        val random = world.random.rangeInclusive(1, max)
+                        if (random < 8) {
                             entity.velocity = entity.velocity.multiply(-1.0, -1.0, -1.0)
                             entity.velocityModified = true
                             world.playSound(
