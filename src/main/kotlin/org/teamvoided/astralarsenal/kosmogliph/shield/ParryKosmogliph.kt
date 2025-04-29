@@ -12,11 +12,14 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import net.minecraft.world.explosion.ExplosionBehavior
 import org.joml.Math.lerp
+import org.joml.Vector3f
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.mixin.PersistentProjectileEntityAccessor
@@ -128,6 +131,7 @@ class ParryKosmogliph(id: Identifier) :
         )
         val entities = mutableListOf<Entity>()
         val interval = (distance.times(2))
+        var finalPosition: Vec3d? = null
         for (i in 0..interval.roundToInt()) {
             entities.addAll(
                 world.getOtherEntities(
@@ -142,6 +146,11 @@ class ParryKosmogliph(id: Identifier) :
                 ).filter { it !is ProjectileEntity }
             )
             if (entities.isNotEmpty()) {
+                finalPosition = Vec3d(
+                    (lerp(player.eyePos.x, result.pos.x, i / interval)),
+                    (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
+                    (lerp(player.eyePos.z, result.pos.z, i / interval))
+                )
                 break
             }
             if (!player.world.isClient) {
@@ -236,6 +245,7 @@ class ParryKosmogliph(id: Identifier) :
                 false,
                 World.ExplosionSourceType.TNT
             )
+            finalPosition = result.pos
             if (!player.world.isClient) {
                 val serverWorld = player.world as ServerWorld
                 serverWorld.spawnParticles(
@@ -250,6 +260,20 @@ class ParryKosmogliph(id: Identifier) :
                     0.0
                 )
             }
+        }
+        if (world is ServerWorld) {
+            val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00630000)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00d69600)
+            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
+            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
+            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, finalPosition!!.toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(player.x.toFloat(), (player.y + 1).toFloat(), player.z.toFloat()))
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.3f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.3f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
+            beamRenderer.setPosition(player.x, player.y + 1, player.z)
+            world.spawnEntity(beamRenderer)
         }
     }
 }
