@@ -19,6 +19,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.DodgeData
+import org.teamvoided.astralarsenal.components.SlamData
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
@@ -50,6 +51,10 @@ class DodgeKosmogliph(id: Identifier) :
             val data = stack.getOrDefault(AstralDataComponents.DODGE_DATA, DodgeData.DEFAULT)
             val world = player.world
             if (data.uses > 0 && !player.isFallFlying) {
+                val helmet = player.getEquippedStack(EquipmentSlot.HEAD)
+                if (helmet.hasKosmogliph(AstralKosmogliphs.SLAM) && helmet.getOrDefault(AstralDataComponents.SLAM_DATA, SlamData.DEFAULT).slamming){
+                    helmet.set(AstralDataComponents.SLAM_DATA, SlamData(0.0f, false))
+                }
                 if (world !is ServerWorld) {
                     val LRbias = if (left) -1 else 0 + if (right) 1 else 0 // 1 is right, -1 is left, 0 is neither
                     var BFbias =

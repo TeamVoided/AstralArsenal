@@ -17,6 +17,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.JumpData
+import org.teamvoided.astralarsenal.components.SlamData
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
@@ -49,6 +50,10 @@ class JumpKosmogliph(id: Identifier) :
         if (player.vehicle != null) return
 
         if (data.uses > 0 && !player.isOnGround && !player.isSwimming && !player.isClimbing) {
+            val helmet = player.getEquippedStack(EquipmentSlot.HEAD)
+            if (helmet.hasKosmogliph(AstralKosmogliphs.SLAM) && helmet.getOrDefault(AstralDataComponents.SLAM_DATA, SlamData.DEFAULT).slamming){
+                helmet.set(AstralDataComponents.SLAM_DATA, SlamData(0.0f, false))
+            }
             val mult =
                 if (player.hasStatusEffect(StatusEffects.JUMP_BOOST)) ((player.getStatusEffect(StatusEffects.JUMP_BOOST)!!.amplifier)) else 0
             if (world.isClient) {

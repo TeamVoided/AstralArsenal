@@ -18,14 +18,17 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.DashData
+import org.teamvoided.astralarsenal.components.SlamData
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags.MOUNTS_WITH_DASH
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
+import org.teamvoided.astralarsenal.util.hasKosmogliph
 import org.teamvoided.astralarsenal.util.lastDamageTaken
 import kotlin.math.max
 
@@ -50,6 +53,10 @@ class DashKosmogliph(id: Identifier) :
         if (dashingEntity.isClimbing) return
 
         if (data.uses > 0 && !dashingEntity.isFallFlying) {
+            val helmet = player.getEquippedStack(EquipmentSlot.HEAD)
+            if (helmet.hasKosmogliph(AstralKosmogliphs.SLAM) && helmet.getOrDefault(AstralDataComponents.SLAM_DATA, SlamData.DEFAULT).slamming){
+                helmet.set(AstralDataComponents.SLAM_DATA, SlamData(0.0f, false))
+            }
             val boo = JUMP_FORWARD_BOOST * if (dashingEntity.health <= (dashingEntity.maxHealth * 0.25)) 0.75 else 1.0
             val boost = dashingEntity.rotationVector.multiply(1.0, 0.0, 1.0).normalize().multiply(boo)
             dashingEntity.setVelocity(dashingEntity.velocity.x + boost.x, 0.1, dashingEntity.velocity.z + boost.z)
