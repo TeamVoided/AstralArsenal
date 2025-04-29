@@ -112,7 +112,7 @@ class RicochetKosmogliph(id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            if (entity is CannonballEntity) {
+            if (entity is CannonballEntity && !entitiesHit.contains(entity)) {
                 world.createExplosion(
                     entity,
                     entity.damageSources.explosion(entity, player),
@@ -135,7 +135,6 @@ class RicochetKosmogliph(id: Identifier) :
                             player
                         ), DAMAGE.toFloat()
                     )
-                entitiesHit.add(entity)
                 if (entity is PlayerEntity) {
                     when {
                         hitOnce.contains(entity) -> {
@@ -151,6 +150,7 @@ class RicochetKosmogliph(id: Identifier) :
                     }
                 }
             }
+            entitiesHit.add(entity)
         }
         if (!player.isCreative) {
             player.itemCooldownManager.set(player.getStackInHand(hand).item, 300)
