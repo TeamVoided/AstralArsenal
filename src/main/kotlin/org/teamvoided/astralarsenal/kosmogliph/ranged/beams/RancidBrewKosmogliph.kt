@@ -62,6 +62,7 @@ class RancidBrewKosmogliph(id: Identifier) :
             world.spawnEntity(beamRenderer)
         }
         val entities = mutableListOf<Entity>()
+        val hitEntities = mutableListOf<Entity>()
         val interval = (distance.times(2))
         for (i in 0..interval.roundToInt()) {
             entities.addAll(
@@ -108,7 +109,7 @@ class RancidBrewKosmogliph(id: Identifier) :
             1.0f
         )
         for (entity in entities) {
-            if (entity is LivingEntity || entity is CannonballEntity) {
+            if (entity is LivingEntity || entity is CannonballEntity && !hitEntities.contains(entity)) {
                 entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
@@ -153,6 +154,7 @@ class RancidBrewKosmogliph(id: Identifier) :
                         )
                     )
                 }
+                hitEntities.add(entity)
             }
         }
         if (!player.isCreative) {

@@ -174,17 +174,19 @@ class CannonballEntity : ThrownItemEntity {
         if (this.getDmg() < 20) {
             this.setDmg(20)
         }
-        world.createExplosion(
-            null,
-            damageSources.explosion(null, this.owner),
-            KnockbackExplosionBehavior(this.owner!!),
-            this.x,
-            this.y,
-            this.z,
-            2.0f,
-            false,
-            World.ExplosionSourceType.TNT
-        )
+        if (this.owner != null) {
+            world.createExplosion(
+                null,
+                damageSources.explosion(null, this.owner),
+                KnockbackExplosionBehavior(this.owner!!),
+                this.x,
+                this.y,
+                this.z,
+                2.0f,
+                false,
+                World.ExplosionSourceType.TNT
+            )
+        }
         this.discard()
         super.onBlockHit(blockHitResult)
     }

@@ -179,7 +179,7 @@ class RichochetEntity : Entity {
             }
         }
         for (entity in entities) {
-            if (entity is CannonballEntity) {
+            if (entity is CannonballEntity && !entitiesHit.contains(entity)) {
                 world.createExplosion(
                     entity,
                     entity.damageSources.explosion(entity, cause),
@@ -204,7 +204,6 @@ class RichochetEntity : Entity {
                         cause
                     ), dmg.toFloat()
                 )
-                entitiesHit.add(entity)
                 if (entity is LivingEntity/*PlayerEntity*/) {
                     when {
                         hitThrice.contains(entity) -> {}
@@ -220,6 +219,7 @@ class RichochetEntity : Entity {
                     }
                 }
             }
+            entitiesHit.add(entity)
         }
         if (result.side != null && result.type != HitResult.Type.MISS) {
             val richochet = RichochetEntity(world, cause)
