@@ -27,6 +27,7 @@ import org.teamvoided.astralarsenal.effects.BleedStatusEffect
 import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
 import org.teamvoided.astralarsenal.effects.hexes.buffs.BreachingStatusEffect
 import org.teamvoided.astralarsenal.effects.hexes.debuffs.BreachedStatusEffect
+import org.teamvoided.astralarsenal.effects.hexes.debuffs.DiminishedStatusEffect
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.ConductiveEntity
 import org.teamvoided.astralarsenal.util.registerHolder
@@ -52,7 +53,7 @@ object AstralEffects {
         "hard_damage", AstralStatusEffect(StatusEffectType.NEUTRAL, 6684672)
             .addAttributeModifier(
                 EntityAttributes.GENERIC_MAX_HEALTH, id("effect.weak_hard"),
-                -0.05, EntityAttributeModifier.Operation.ADD_VALUE
+                -0.1, EntityAttributeModifier.Operation.ADD_VALUE
             )
     )
     val OVERHEAL = register(
@@ -89,6 +90,7 @@ object AstralEffects {
         "statically_sludged",
         ParticleStatusEffect(StatusEffectType.HARMFUL, 0xb8f4ff, ParticleTypes.ELECTRIC_SPARK)
     )
+
     val BREACHING = register(
         "breaching",
         BreachingStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
@@ -97,6 +99,7 @@ object AstralEffects {
         "breached",
         BreachedStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
     )
+    val DIMINISHED = register("diminished", DiminishedStatusEffect(StatusEffectType.HARMFUL, 0xcf1020))
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
         Registries.STATUS_EFFECT.registerHolder(id(id), entry)
@@ -193,11 +196,11 @@ object AstralEffects {
         if (source.attacker is LivingEntity) {
             val attacker = source.attacker as LivingEntity
             val effect_breaching = attacker.statusEffects.filter { breaching.contains(it.effectType) }
-            for (effect in effect_breaching){
-                for (effects in hexes){
+            for (effect in effect_breaching) {
+                for (effects in hexes) {
                     entity.removeStatusEffect(effects)
                 }
-                entity.addStatusEffect(StatusEffectInstance(BREACHED,100,effect.amplifier))
+                entity.addStatusEffect(StatusEffectInstance(BREACHED, 100, effect.amplifier))
             }
         }
 

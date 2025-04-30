@@ -37,7 +37,7 @@ class EnduranceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
         val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
         var multiplyer = 0.5
         for (effect in effects){
-            multiplyer = min(0.5 + (0.25 * (effect.amplifier + 1)), 1.0)
+            multiplyer = min(0.5 + (0.125 * (effect.amplifier + 1)), 1.0)
         }
         if (source.isTypeIn(AstralDamageTypeTags.IS_MELEE) && source.attacker !is GuardianEntity && source.attacker !is ElderGuardianEntity) {
             outputDamage = (outputDamage * multiplyer).toFloat()

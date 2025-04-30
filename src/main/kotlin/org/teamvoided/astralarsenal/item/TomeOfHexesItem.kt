@@ -5,6 +5,8 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.particle.ParticleTypes
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
@@ -25,6 +27,9 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
         val pitchShift = world.random.nextFloat().times(0.3f).plus(0.7f)
         if (remainingUseTicks % max(1, pageFlip) == 0){
             world.playSoundFromEntity(user, SoundEvents.ITEM_BOOK_PAGE_TURN,SoundCategory.PLAYERS,3.0f,pitchShift)
+            if (world is ServerWorld){
+                world.spawnParticles(ParticleTypes.ENCHANT,user.x,user.eyeY,user.z,10,0.0,0.0,0.0,(1.0 / pageFlip) * 3)
+            }
         }
         if (remainingUseTicks == 1){
             world.playSoundFromEntity(user, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE,SoundCategory.PLAYERS,3.0f,0.75f)
@@ -37,8 +42,9 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
         super.usageTick(world, user, stack, remainingUseTicks)
     }
 
-    override fun onStoppedUsing(stack: ItemStack?, world: World?, user: LivingEntity?, remainingUseTicks: Int) {
-        if (user is PlayerEntity){
+    override fun onStoppedUsing(stack: ItemStack, world: World?, user: LivingEntity?, remainingUseTicks: Int) {
+        if (user is PlayerEntity && !user.itemCooldownManager.isCoolingDown(stack.item)){
+            user.addStatusEffect(StatusEffectInstance(AstralEffects.BREACHED, 100, 1))
             user.itemCooldownManager.set(this, 200)
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)

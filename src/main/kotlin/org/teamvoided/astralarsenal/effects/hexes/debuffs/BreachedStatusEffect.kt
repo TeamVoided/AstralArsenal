@@ -25,7 +25,6 @@ class BreachedStatusEffect : StatusEffect {
                 entity.removeStatusEffect(effect.effectType)
             }
         }
-        entity.removeStatusEffect(AstralEffects.BLEED)
         return super.applyUpdateEffect(entity, amplifier)
     }
 
