@@ -137,7 +137,7 @@ open class NailEntity : PersistentProjectileEntity {
         BASE(0), FIRE(1), CHARGED(2), IMPALE(3);
 
         companion object {
-            fun getById(id: Int): NailType = entries.first { it.id == id }
+            fun getById(id: Int): NailType = entries.getOrNull(id) ?: BASE
         }
     }
 }
