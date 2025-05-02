@@ -156,7 +156,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.lock_off.desc",
-            "Replaces ammo with a lock-off arrow. When hitting an entity or landing on the ground it will charge up and begin reducing the max hp of entities inside. 5 second cooldown"
+            "Replaces ammo with a lock-off arrow. When hitting an entity or landing on the ground it will charge up and give entities inside bleed and charge leak, causing them to take damage and be unable to recharge their movement kosmogliphs. 5 second cooldown"
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.time_bomb.desc",
