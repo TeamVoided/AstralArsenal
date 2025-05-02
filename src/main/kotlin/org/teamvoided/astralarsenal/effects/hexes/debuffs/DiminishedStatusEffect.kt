@@ -28,7 +28,7 @@ class DiminishedStatusEffect  : StatusEffect {
 
     override fun applyUpdateEffect(entity: LivingEntity, amplifier: Int): Boolean {
         val effects = entity.statusEffects.filter { hexes.contains(it.effectType) }
-        if (effects.isNotEmpty() && (entity.world.time % 6) + 1 == 0L){
+        if (effects.isNotEmpty() && (entity.world.time % 6) == 1L){
             for (effect in effects){
                 entity.removeStatusEffect(effect.effectType)
             }

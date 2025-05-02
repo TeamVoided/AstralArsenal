@@ -11,6 +11,7 @@ class BreachedStatusEffect : StatusEffect {
     constructor(type: StatusEffectType, color: Int, particle: ParticleEffect) : super(type, color, particle)
 
     val hexes = listOf(
+        AstralEffects.DIMINISHED,
         AstralEffects.BLEED
     )
 
