@@ -34,6 +34,7 @@ object AstralArsenal {
         AstralEntities.init()
         AstralNetworking.init()
         AstralParticles.init()
+        FabricEvents.init()
 
 
         CommandRegistrationCallback.EVENT.register { dispatcher, ctx, env ->

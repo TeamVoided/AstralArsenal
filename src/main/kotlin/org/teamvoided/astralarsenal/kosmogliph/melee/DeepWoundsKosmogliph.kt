@@ -1,9 +1,11 @@
 package org.teamvoided.astralarsenal.kosmogliph.melee
 
 import net.minecraft.enchantment.Enchantment
+import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
@@ -13,6 +15,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.DeepWoundEntity
 import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.util.playSound
