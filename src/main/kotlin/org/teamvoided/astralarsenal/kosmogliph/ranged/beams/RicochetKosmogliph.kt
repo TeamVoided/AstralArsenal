@@ -108,8 +108,18 @@ class RicochetKosmogliph(id: Identifier) :
             player.z,
             AstralSounds.RAILGUN,
             SoundCategory.PLAYERS,
-            1.0F,
-            1.0f
+            6.0F,
+            2.0f
+        )
+        world.playSound(
+            null,
+            player.x,
+            player.y,
+            player.z,
+            AstralSounds.RAILGUN,
+            SoundCategory.PLAYERS,
+            5.0F,
+            0.75f
         )
         for (entity in entities) {
             if (entity is CannonballEntity && !entitiesHit.contains(entity)) {

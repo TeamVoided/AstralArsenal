@@ -29,48 +29,13 @@
       }
     ]
   },
-  "entity.beam_of_light.charge": {
-    "category": "entity",
-    "sounds": [
-      {
-        "name": "astral_arsenal:entities/beam_of_light/charge",
-        "stream": false,
-        "volume": 0.1
-      }
-    ]
-  },
-  "entity.kosmogliph.dodge": {
-    "category": "entity",
-    "sounds": [
-      {
-        "name": "astral_arsenal:entities/kosmogliph/dodge",
-        "stream": false,
-        "volume": 0.5
-      },
-      {
-        "name": "astral_arsenal:entities/kosmogliph/dodge2",
-        "stream": false,
-        "volume": 0.5
-      },
-      {
-        "name": "astral_arsenal:entities/kosmogliph/dodge3",
-        "stream": false,
-        "volume": 0.5
-      }
-    ]
-  },
   "entity.railgun.shoot": {
     "category": "entity",
     "sounds": [
       {
-        "name": "astral_arsenal:entities/railgun/railcannon1",
+        "name": "astral_arsenal:entities/railgun/railgun2",
         "stream": false,
-        "volume": 0.5
-      },
-      {
-        "name": "astral_arsenal:entities/railgun/railcannon2",
-        "stream": false,
-        "volume": 0.5
+        "volume": 1.0
       }
     ]
   }

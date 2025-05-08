@@ -51,8 +51,8 @@ class RancidBrewKosmogliph(id: Identifier) :
             val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x004b0082.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00860111.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
-            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
+            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 10)
+            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 8)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
             beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(player.x.toFloat(), (player.y + 1).toFloat(), player.z.toFloat()))
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
@@ -105,8 +105,28 @@ class RancidBrewKosmogliph(id: Identifier) :
             player.z,
             AstralSounds.RAILGUN,
             SoundCategory.PLAYERS,
-            1.0F,
-            1.0f
+            6.0F,
+            2.0f
+        )
+        world.playSound(
+            null,
+            player.x,
+            player.y,
+            player.z,
+            AstralSounds.RAILGUN,
+            SoundCategory.PLAYERS,
+            5.0F,
+            0.75f
+        )
+        world.playSound(
+            null,
+            player.x,
+            player.y,
+            player.z,
+            AstralSounds.RAILGUN,
+            SoundCategory.PLAYERS,
+            4.0F,
+            0.5f
         )
         for (entity in entities) {
             if (entity is LivingEntity || entity is CannonballEntity && !hitEntities.contains(entity)) {
