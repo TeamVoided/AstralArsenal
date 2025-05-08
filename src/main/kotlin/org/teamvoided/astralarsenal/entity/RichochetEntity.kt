@@ -47,28 +47,29 @@ class RichochetEntity : Entity {
     override fun tick() {
         if (this.COUNTDOWN <= 0) this.discard()
         else {
-            if (this.cooldown > 0) this.cooldown--
-            else {
-                if (this.owner != null) {
-                    val entities = mutableListOf<Entity>()
-                    entities.addAll(
-                        world.getOtherEntities(
-                            this,
-                            Box(
-                                Vec3d(this.x + 10, this.y + 10, this.z + 10),
-                                Vec3d(this.x - 10, this.y - 10, this.z - 10)
-                            )
+            if (this.cooldown > 0) {
+                this.cooldown--
+                val entities = mutableListOf<Entity>()
+                entities.addAll(
+                    world.getOtherEntities(
+                        this,
+                        Box(
+                            Vec3d(this.x + 10, this.y + 10, this.z + 10),
+                            Vec3d(this.x - 10, this.y - 10, this.z - 10)
                         )
-                            .filter { !hitTwice.contains(it) && !hitThrice.contains(it) && it != owner && ((it is LivingEntity && !it.isDead)|| it is CannonballEntity) }
                     )
-                    if (entities.isNotEmpty()) {
-                        repeat((entities.size - 1)) {
-                            entities.removeAt(this.world.random.rangeInclusive(0, entities.size - 1))
-                        }
-                        if (blockedByBlocks(this.pos, entities.first().pos)) {
-                            this.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, entities.first().eyePos)
-                        }
+                        .filter { !hitTwice.contains(it) && !hitThrice.contains(it) && it != owner && ((it is LivingEntity && !it.isDead)|| it is CannonballEntity) }
+                )
+                if (entities.isNotEmpty()) {
+                    repeat((entities.size - 1)) {
+                        entities.removeAt(this.world.random.rangeInclusive(0, entities.size - 1))
                     }
+                    if (blockedByBlocks(this.pos, entities.first().pos)) {
+                        this.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, entities.first().eyePos)
+                    }
+                }
+            } else {
+                if (this.owner != null) {
                     rail(world, this.owner!!, this)
                 }
                 world.playSound(
