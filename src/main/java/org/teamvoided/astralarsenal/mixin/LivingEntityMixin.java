@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.astralarsenal.util.UtilKt;
 
+import static org.teamvoided.astralarsenal.util.HexAplicationKt.removeHexes;
 import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
 @Mixin(LivingEntity.class)
@@ -83,5 +84,11 @@ public abstract class LivingEntityMixin extends Entity {
     public void tickMovement(CallbackInfo ci) {
         LivingEntity freezer = (LivingEntity) (Object) this;
         UtilKt.tickMovement(freezer);
+    }
+
+    @Inject(method = "tick", at = @At(value = "HEAD"))
+    public void tick(CallbackInfo ci){
+        LivingEntity entity = (LivingEntity) (Object) this;
+        removeHexes(entity);
     }
 }

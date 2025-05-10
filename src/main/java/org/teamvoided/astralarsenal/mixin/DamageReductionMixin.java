@@ -13,6 +13,8 @@ import org.teamvoided.astralarsenal.init.AstralEffects;
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage;
 import org.teamvoided.astralarsenal.pseudomixin.DamageReductionKt;
 
+import static org.teamvoided.astralarsenal.util.HexAplicationKt.applyHexes;
+
 @Mixin(LivingEntity.class)
 public class DamageReductionMixin {
 
@@ -32,6 +34,12 @@ public class DamageReductionMixin {
         if (AstralEffects.INSTANCE.cancelDamage(astralArsenal$self, amount, source)) {
             cir.cancel();
         }
+    }
+
+    @Inject(method = "damage", at = @At("RETURN"))
+    private void apply(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+        LivingEntity entity = (LivingEntity) (Object) this;
+        applyHexes(source, entity);
     }
 
     @ModifyVariable(

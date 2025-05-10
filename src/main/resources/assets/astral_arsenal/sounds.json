@@ -33,7 +33,7 @@
     "category": "entity",
     "sounds": [
       {
-        "name": "astral_arsenal:entities/railgun/railgun2",
+        "name": "astral_arsenal:entities/railgun/railgun3",
         "stream": false,
         "volume": 1.0
       }

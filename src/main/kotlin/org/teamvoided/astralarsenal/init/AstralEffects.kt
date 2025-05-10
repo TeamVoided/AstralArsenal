@@ -25,11 +25,9 @@ import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 import org.teamvoided.astralarsenal.effects.BleedStatusEffect
 import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
-import org.teamvoided.astralarsenal.effects.hexes.buffs.BreachingStatusEffect
-import org.teamvoided.astralarsenal.effects.hexes.debuffs.BreachedStatusEffect
-import org.teamvoided.astralarsenal.effects.hexes.debuffs.DiminishedStatusEffect
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.ConductiveEntity
+import org.teamvoided.astralarsenal.util.applyHexes
 import org.teamvoided.astralarsenal.util.registerHolder
 import kotlin.math.min
 
@@ -93,13 +91,16 @@ object AstralEffects {
 
     val BREACHING = register(
         "breaching",
-        BreachingStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
+        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
     )
     val BREACHED = register(
         "breached",
-        BreachedStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+        AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
     )
-    val DIMINISHED = register("diminished", DiminishedStatusEffect(StatusEffectType.HARMFUL, 0xcf1020))
+    val DIMINISHED = register(
+        "diminished",
+        AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+    )
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
         Registries.STATUS_EFFECT.registerHolder(id(id), entry)
@@ -121,15 +122,6 @@ object AstralEffects {
     )
     val impaled = listOf(
         IMPALED
-    )
-
-    //hexes are gonna take up a lot of space, yay
-    val hexes = listOf(
-        BREACHED
-    )
-
-    val breaching = listOf(
-        BREACHING
     )
 
     fun modifyDamage(entity: LivingEntity, damage: Float, source: DamageSource): Float {
@@ -191,19 +183,6 @@ object AstralEffects {
                 entity.removeStatusEffect(e.effectType)
             }
         }
-
-        //hexes start here, its gonna be a long one.
-        if (source.attacker is LivingEntity) {
-            val attacker = source.attacker as LivingEntity
-            val effect_breaching = attacker.statusEffects.filter { breaching.contains(it.effectType) }
-            for (effect in effect_breaching) {
-                for (effects in hexes) {
-                    entity.removeStatusEffect(effects)
-                }
-                entity.addStatusEffect(StatusEffectInstance(BREACHED, 100, effect.amplifier))
-            }
-        }
-
         return output
     }
 
