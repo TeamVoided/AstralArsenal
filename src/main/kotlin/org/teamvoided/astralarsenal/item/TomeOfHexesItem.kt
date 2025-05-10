@@ -32,7 +32,7 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
             }
         }
         if (remainingUseTicks == 1){
-            world.playSoundFromEntity(user, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE,SoundCategory.PLAYERS,3.0f,0.75f)
+            world.playSoundFromEntity(user, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE,SoundCategory.PLAYERS,3.0f,0.5f)
             if (user is PlayerEntity) {
                 user.addStatusEffect(StatusEffectInstance(AstralEffects.BREACHING, 2400, 1))
                 user.itemCooldownManager.set(stack.item, 400)
