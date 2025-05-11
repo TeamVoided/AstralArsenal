@@ -22,17 +22,13 @@ object AstralDamageTypes : RegistryBootstrapper<DamageType>(RegistryKeys.DAMAGE_
     val NAILED = register("nailed") { DamageType("nailed", DamageScalingType.NEVER, 0f) }
     val PULVERISED = register("pulverised") { DamageType("pulverised", DamageScalingType.NEVER, 0f) }
 
-    //Starsludge
-    val SLUDGED = register("sludged") { DamageType("sludged", DamageScalingType.NEVER, 0f) }
-    val ELECTROSTATICED = register("electrostaticed") { DamageType("electrostaticed", DamageScalingType.NEVER, 0f) }
+    val FROZEN = register("frozen") { DamageType("frozen", DamageScalingType.NEVER, 0f)}
+    val CHILLED = register("chilled") {DamageType("chilled", DamageScalingType.NEVER, 0f)}
 
-    //explosion
-    val FIREBOMBED = register("firebombed") { DamageType("firebombed", DamageScalingType.NEVER, 0f) }
-    val EMP = register("emp") { DamageType("emp", DamageScalingType.NEVER, 0f) }
-    val ICE_SHRAPNEL = register("ice_shrapnel") { DamageType("ice_shrapnel", DamageScalingType.NEVER, 0f) }
-    val MAGIC_BOMB = register("magic_bomb") { DamageType("magic_bomb", DamageScalingType.NEVER, 0f) }
-    val SLUDGE_BOMB = register("sludge_bomb") { DamageType("sludge_bomb", DamageScalingType.NEVER, 0f) }
-    val SLUDGE_AOE = register("sludge_aoe") { DamageType("sludge_aoe", DamageScalingType.NEVER, 0f) }
+    val INCINERATED = register("incinerated") {DamageType("incinerated", DamageScalingType.NEVER, 0f)}
+
+    //Keeping this for future use with the shotgun.
+    val ELECTROSTATICED = register("electrostaticed") { DamageType("electrostaticed", DamageScalingType.NEVER, 0f) }
 
     fun Entity.customDamage(
         type: RegistryKey<DamageType>, amount: Float, source: Entity? = null, attacker: Entity? = null

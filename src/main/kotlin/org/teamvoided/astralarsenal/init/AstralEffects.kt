@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffectType
@@ -27,6 +28,7 @@ import org.teamvoided.astralarsenal.effects.BleedStatusEffect
 import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.ConductiveEntity
+import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.util.applyHexes
 import org.teamvoided.astralarsenal.util.registerHolder
 import kotlin.math.min
@@ -93,6 +95,7 @@ object AstralEffects {
         "breaching",
         AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
     )
+
     val BREACHED = register(
         "breached",
         AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
@@ -100,6 +103,27 @@ object AstralEffects {
     val DIMINISHED = register(
         "diminished",
         AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+    )
+    val WEAKENED = register(
+        "weakened",
+        AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+    )
+    val BLAZED = register(
+        "blazed",
+        AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+    )
+    val CLEANSED = register(
+        "cleansed",
+        AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+    )
+    val IMPEDED = register(
+        "impeded",
+        AstralStatusEffect(
+            StatusEffectType.HARMFUL,
+            0xcf1020
+        ).addAttributeModifier(
+            EntityAttributes.GENERIC_MOVEMENT_SPEED,
+            id("effect.impeded"), -0.025, EntityAttributeModifier.Operation.ADD_VALUE)
     )
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
@@ -122,6 +146,12 @@ object AstralEffects {
     )
     val impaled = listOf(
         IMPALED
+    )
+    val weakened = listOf(
+        WEAKENED
+    )
+    val blazed = listOf(
+        BLAZED
     )
 
     fun modifyDamage(entity: LivingEntity, damage: Float, source: DamageSource): Float {
@@ -165,6 +195,35 @@ object AstralEffects {
                 entity.world.spawnEntity(conductivityEngine)
             }
         }
+        if (source.attacker is LivingEntity) {
+            val attacker = source.attacker as LivingEntity
+            val weakened = attacker.statusEffects.filter { weakened.contains(it.effectType) }
+            if (weakened.isNotEmpty()) {
+                for (effect in weakened) {
+                    val amplifier = effect.amplifier + 1
+                    output *= max(1 - (0.1f * amplifier), 0f)
+                }
+            }
+        }
+
+        if (source.isType(DamageTypes.ON_FIRE)) {
+            val blazed = entity.statusEffects.filter { blazed.contains(it.effectType) }
+            for (effect in blazed) {
+                output = 0f
+                val dmg = 1f + (0.5f * (effect.amplifier + 1))
+                entity.customDamage(AstralDamageTypes.INCINERATED, dmg)
+            }
+        }
+
+        if (source.isType(DamageTypes.FREEZE)) {
+            val blazed = entity.statusEffects.filter { blazed.contains(it.effectType) }
+            for (effect in blazed) {
+                output = 0f
+                val dmg = 1f + (0.5f * (effect.amplifier + 1))
+                entity.customDamage(AstralDamageTypes.FROZEN, dmg)
+            }
+        }
+
 
         // Immortal Extra Check
         if (entity.hasStatusEffect(IMMORTAL) && !source.isTypeIn(BYPASSES_INVULNERABILITY))
@@ -183,6 +242,9 @@ object AstralEffects {
                 entity.removeStatusEffect(e.effectType)
             }
         }
+
+
+
         return output
     }
 

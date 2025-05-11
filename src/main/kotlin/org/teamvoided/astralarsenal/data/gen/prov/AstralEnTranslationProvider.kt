@@ -45,12 +45,15 @@ class AstralEnTranslationProvider(
         gen.add("death.attack.non_railed", "%s was electrocuted by %s")
         gen.add("death.attack.bleed", "%s couldn't recover their blood in time")
         gen.add("death.attack.drain", "%s drained their life")
-        gen.add("death.attack.burn", "%s was incinerated by %s")
+        gen.add("death.attack.burn", "%s was seared by %s")
         gen.add("death.attack.boom", "%s was blown up by %s")
         gen.add("death.attack.parry", "%s couldn't hit %s")
         gen.add("death.attack.richochet", "%s was electrocuted by %s")
         gen.add("death.attack.nailed", "%s was nailed by %s")
         gen.add("death.attack.pulverised", "%s was pancaked by %s")
+        gen.add("death.attack.frozen", "%s was frozen to the core")
+        gen.add("death.attack.chilled", "%s was forced to chill by %s")
+        gen.add("death.attack.incinerated", "%s was incinerated")
 
         gen.add("death.attack.cannonball.item", "%s was dunked on by %s using %s")
         gen.add("death.attack.ballnt.item", "%s ain't ballin'")
@@ -58,15 +61,18 @@ class AstralEnTranslationProvider(
         gen.add("death.attack.railed.item", "%s was railed by %s using %s")
         gen.add("death.attack.non_railed.item", "%s was electrocuted by %s using %s")
         gen.add("death.attack.drain.item", "%s drained their life")
-        gen.add("death.attack.burn.item", "%s was incinerated by %s using %s")
+        gen.add("death.attack.burn.item", "%s was seared by %s using %s")
         gen.add("death.attack.boom.item", "%s was blown up by %s using %s")
         gen.add("death.attack.parry.item", "%s couldn't handle deflections from %s's %s")
         gen.add("death.attack.richochet.item", "%s was electrocuted by %s using %s")
         gen.add("death.attack.nailed.item", "%s was nailed by %s using %s")
         gen.add("death.attack.pulverised.item", "%s was pancaked by %s using %s")
+        gen.add("death.attack.chilled.item", "%s was forced to chill by %s using %s")
 
 
         gen.add("death.attack.bleed.player", "%s bled to death while fighting %s")
+        gen.add("death.attack.incinerated.player", "%s was incinerated while fighting %s")
+        gen.add("death.attack.frozen.player", "%s was frozen to the core while fighting %s")
 
         gen.add(AstralTabs.TAB, "Astral Arsenal")
 
@@ -289,6 +295,14 @@ class AstralEnTranslationProvider(
         gen.effect(AstralEffects.IMPALED, "Impaled")
         gen.effect(AstralEffects.IMMORTAL, "Immortal")
         gen.effect(AstralEffects.STATICALLY_SLUDGED, "Charge Leak")
+        gen.effect(AstralEffects.BREACHED, "Hex of Breaching")
+        gen.effect(AstralEffects.DIMINISHED, "Hex of Diminishing")
+        gen.effect(AstralEffects.BLAZED, "Hex of Blazing")
+        gen.effect(AstralEffects.CLEANSED, "Hex of Cleansing")
+        gen.effect(AstralEffects.IMPEDED, "Hex of Impeding")
+        gen.effect(AstralEffects.WEAKENED, "Hex of Weakening")
+
+        gen.effect(AstralEffects.BREACHING, "Hex of Breaching")
 
         gen.add("container.cosmic_table", "Cosmic Table")
         gen.add("entity.astral_arsenal.beam_of_light", "Cod")

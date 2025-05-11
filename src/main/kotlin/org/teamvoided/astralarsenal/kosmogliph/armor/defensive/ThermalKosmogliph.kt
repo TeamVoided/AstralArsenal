@@ -10,6 +10,7 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
+import org.teamvoided.astralarsenal.init.AstralEffects.BLAZED
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import kotlin.math.min
@@ -48,10 +49,15 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
         BREACHED
     )
 
+    val preventers = listOf(
+        BREACHED,
+        BLAZED
+    )
+
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         var bool = true
         if (entity is LivingEntity) {
-            val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
+            val effects = entity.statusEffects.filter { preventers.contains(it.effectType) }
             for (effect in effects) {
                 bool = false
             }

@@ -136,7 +136,7 @@ class RayofFrostKosmogliph(id: Identifier) :
                 }
                 entity.damage(
                     DamageSource(
-                        AstralDamageTypes.getHolder(world.registryManager, DamageTypes.FREEZE),
+                        AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CHILLED),
                         player,
                         player
                     ), 7.5f
