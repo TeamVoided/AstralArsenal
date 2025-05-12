@@ -4,12 +4,17 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
 import org.teamvoided.astralarsenal.init.AstralEffects.BLAZED
+import org.teamvoided.astralarsenal.init.AstralEffects.BLAZING
 import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
 import org.teamvoided.astralarsenal.init.AstralEffects.BREACHING
 import org.teamvoided.astralarsenal.init.AstralEffects.CLEANSED
+import org.teamvoided.astralarsenal.init.AstralEffects.CLEANSING
 import org.teamvoided.astralarsenal.init.AstralEffects.DIMINISHED
+import org.teamvoided.astralarsenal.init.AstralEffects.DIMINISHING
 import org.teamvoided.astralarsenal.init.AstralEffects.IMPEDED
+import org.teamvoided.astralarsenal.init.AstralEffects.IMPEDING
 import org.teamvoided.astralarsenal.init.AstralEffects.WEAKENED
+import org.teamvoided.astralarsenal.init.AstralEffects.WEAKENING
 
 val hexes = listOf(
     BREACHED,
@@ -21,22 +26,21 @@ val hexes = listOf(
 )
 
 val hexAppliers = listOf(
-    BREACHING
-)
-
-val breaching = listOf(
-    BREACHING
+    BREACHING,
+    DIMINISHING,
+    WEAKENING,
+    BLAZING,
+    CLEANSING,
+    IMPEDING
 )
 
 fun applyHexes(source: DamageSource, entity: LivingEntity) {
     if (source.attacker is LivingEntity) {
         val attacker = source.attacker as LivingEntity
-        val effect_breaching = attacker.statusEffects.filter { breaching.contains(it.effectType) }
-        for (effect in effect_breaching) {
-            for (effects in hexes) {
-                entity.removeStatusEffect(effects)
-            }
-            entity.addStatusEffect(StatusEffectInstance(BREACHED, 100, effect.amplifier))
+        val attackerEffects = attacker.statusEffects.filter { hexAppliers.contains(it.effectType) }
+        for (effect in attackerEffects){
+            val hexNumber = hexAppliers.indexOf(effect.effectType)
+            entity.addStatusEffect(StatusEffectInstance(hexes.get(hexNumber), 100, effect.amplifier))
         }
     }
 }

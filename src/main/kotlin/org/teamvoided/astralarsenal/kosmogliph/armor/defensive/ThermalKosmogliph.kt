@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
 import org.teamvoided.astralarsenal.init.AstralEffects.BLAZED
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
@@ -40,7 +41,13 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
             for (effect in effects) {
                 multiplyer = min(0.3 + (0.175 * (effect.amplifier + 1)), 1.0)
             }
-            outputDamage = (outputDamage * multiplyer).toFloat()
+            val blazed = entity.statusEffects.filter { blazed.contains(it.effectType) }
+            if (blazed.isEmpty() || (!source.isType(AstralDamageTypes.FROZEN) && !source.isType(AstralDamageTypes.INCINERATED))) {
+                outputDamage = (outputDamage * multiplyer).toFloat()
+            }
+            else if(source.isType(AstralDamageTypes.FROZEN) || source.isType(AstralDamageTypes.INCINERATED)){
+                outputDamage = (outputDamage * 0.8).toFloat()
+                }
         }
         return outputDamage
     }
@@ -51,6 +58,10 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
 
     val preventers = listOf(
         BREACHED,
+        BLAZED
+    )
+
+    val blazed = listOf(
         BLAZED
     )
 

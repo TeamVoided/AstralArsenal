@@ -100,21 +100,41 @@ object AstralEffects {
         "breached",
         AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
     )
+    val DIMINISHING = register(
+        "diminishing",
+        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
+    )
     val DIMINISHED = register(
         "diminished",
         AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+    )
+    val WEAKENING = register(
+        "weakening",
+        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
     )
     val WEAKENED = register(
         "weakened",
         AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
     )
+    val BLAZING = register(
+        "blazing",
+        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
+    )
     val BLAZED = register(
         "blazed",
         AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
     )
+    val CLEANSING = register(
+        "cleansing",
+        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
+    )
     val CLEANSED = register(
         "cleansed",
         AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+    )
+    val IMPEDING = register(
+        "impeding",
+        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
     )
     val IMPEDED = register(
         "impeded",

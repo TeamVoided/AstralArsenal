@@ -303,6 +303,11 @@ class AstralEnTranslationProvider(
         gen.effect(AstralEffects.WEAKENED, "Hex of Weakening")
 
         gen.effect(AstralEffects.BREACHING, "Hex of Breaching")
+        gen.effect(AstralEffects.DIMINISHING, "Hex of Diminishing")
+        gen.effect(AstralEffects.BLAZING, "Hex of Blazing")
+        gen.effect(AstralEffects.CLEANSING, "Hex of Cleansing")
+        gen.effect(AstralEffects.IMPEDING, "Hex of Impeding")
+        gen.effect(AstralEffects.WEAKENING, "Hex of Weakening")
 
         gen.add("container.cosmic_table", "Cosmic Table")
         gen.add("entity.astral_arsenal.beam_of_light", "Cod")
