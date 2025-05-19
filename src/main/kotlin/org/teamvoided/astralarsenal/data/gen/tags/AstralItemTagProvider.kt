@@ -115,6 +115,13 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_PULVERISER).add(Items.MACE)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_WIND_ERUPTION).add(Items.MACE)
 
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_HEX_OF_BREACHING).add(AstralItems.TOME_OF_HEXES)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_HEX_OF_BLAZING).add(AstralItems.TOME_OF_HEXES)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_HEX_OF_IMPEDING).add(AstralItems.TOME_OF_HEXES)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_HEX_OF_CLEANSING).add(AstralItems.TOME_OF_HEXES)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_HEX_OF_WEAKENING).add(AstralItems.TOME_OF_HEXES)
+        getOrCreateTagBuilder(AstralItemTags.SUPPORTS_HEX_OF_DIMINISHING).add(AstralItems.TOME_OF_HEXES)
+
         //getOrCreateTagBuilder(AstralItemTags.SUPPORTS_TOTEM).add(AstralItems.ASTRAL_TOTEM)
 
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_KOSMOGLIPHS)
@@ -165,6 +172,12 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_PULVERISER)
             .forceAddTag(AstralItemTags.SUPPORTS_ASTRAL_RAIN)
             .forceAddTag(AstralItemTags.SUPPORTS_TEAR)
+            .forceAddTag(AstralItemTags.SUPPORTS_HEX_OF_WEAKENING)
+            .forceAddTag(AstralItemTags.SUPPORTS_HEX_OF_BLAZING)
+            .forceAddTag(AstralItemTags.SUPPORTS_HEX_OF_IMPEDING)
+            .forceAddTag(AstralItemTags.SUPPORTS_HEX_OF_CLEANSING)
+            .forceAddTag(AstralItemTags.SUPPORTS_HEX_OF_DIMINISHING)
+            .forceAddTag(AstralItemTags.SUPPORTS_HEX_OF_BREACHING)
             .add(Items.SHIELD)
     }
 
@@ -179,5 +192,6 @@ class AstralItemTagProvider(
             .forceAddTag(ItemTags.LEG_ARMOR)
             .forceAddTag(ItemTags.FOOT_ARMOR)
             .add(Items.SHIELD)
+            .add(AstralItems.TOME_OF_HEXES)
     }
 }

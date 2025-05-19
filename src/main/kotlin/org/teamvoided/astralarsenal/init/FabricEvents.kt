@@ -11,7 +11,7 @@ object FabricEvents {
     fun init() {
         AFTER_DEATH.register { player, source ->
             if (player.hasStatusEffect(AstralEffects.UNHEALABLE_DAMAGE) && player is PlayerEntity) {
-                player.dropItem(AstralItems.ASTRAL_GREATHAMMER)
+                player.dropItem(AstralItems.CRYSTALINE_BLOOD)
             }
         }
     }

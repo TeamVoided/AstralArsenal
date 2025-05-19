@@ -27,6 +27,7 @@ object AstralItems {
     val KOSMIC_GEM = register("kosmic_gem", Item(Item.Settings().rarity(Rarity.RARE)))
     val CANNONBALL = register("cannonball", CannonballItem(Item.Settings()))
     val TOME_OF_HEXES = register("tome_of_hexes", TomeOfHexesItem(Item.Settings().rarity(Rarity.EPIC)))
+    val CRYSTALINE_BLOOD = register("crystaline_blood", Item(Item.Settings().rarity(Rarity.RARE)))
     val ASTRAL_GREATHAMMER = register(
         "astral_greathammer",
         AstralGreathammerItem(

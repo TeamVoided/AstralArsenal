@@ -30,7 +30,8 @@ class AstralModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
                 AstralItems.ASTRAL_GREATHAMMER,
                 AstralItems.RAILGUN,
                 AstralBlocks.COSMIC_TABLE.asItem(),
-                AstralItems.NAILCANNON
+                AstralItems.NAILCANNON,
+                AstralItems.TOME_OF_HEXES
             )
         AstralItems.items().filter { !excludelist.contains(it) && it !is BlockItem }
             .forEach { gen.register(it, Models.SINGLE_LAYER_ITEM) }

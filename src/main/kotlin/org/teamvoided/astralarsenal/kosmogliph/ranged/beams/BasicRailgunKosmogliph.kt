@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
@@ -43,7 +44,8 @@ class BasicRailgunKosmogliph(id: Identifier) :
         val vec3d: Vec3d = player.getLerpedEyePos(1f)
         val vec3d2: Vec3d = player.getRotationVec(1f)
         val vec3d3 = vec3d.add(vec3d2.x * 100.0, vec3d2.y * 100.0, vec3d2.z * 100.0)
-        val result = player.getWorld().raycast(RaycastContext(vec3d, vec3d3, ShapeType.COLLIDER, FluidHandling.NONE, player))
+        val result =
+            player.getWorld().raycast(RaycastContext(vec3d, vec3d3, ShapeType.COLLIDER, FluidHandling.NONE, player))
         val distance = sqrt(
             sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y - 0.5) - result.pos.y).pow(
                 2
@@ -118,7 +120,10 @@ class BasicRailgunKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 10)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 8)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(player.x.toFloat(), (player.y + 1).toFloat(), player.z.toFloat()))
+            beamRenderer.dataTracker.set(
+                BeamRenderEntity.OriginPos,
+                Vector3f(player.x.toFloat(), (player.y + 1).toFloat(), player.z.toFloat())
+            )
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)

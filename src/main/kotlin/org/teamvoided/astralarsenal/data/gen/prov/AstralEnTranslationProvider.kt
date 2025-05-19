@@ -273,6 +273,13 @@ class AstralEnTranslationProvider(
             "Hold right click to charge up an explosion. When released, explode and launch yourself upwards. Holding for longer makes it launch you further and deal more damage. 5 second cooldown."
         )
 
+        //tome
+        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_breaching.desc", "Halves the effect of your opponents armour kosmogliphs.")
+        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_blazing.desc", "Doubles the damage your opponent takes from frost and fire damage over time, and makes thermal less effective against these effects.")
+        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_impeding.desc", "Slows your opponent by 50%.")
+        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_diminishing.desc", "Slowly reduces your opponents max hp if they are not at full health.")
+        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_cleansing.desc", "Tripples the rate your opponent uses positive effects")
+        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_weakening.desc", "Reduces the damage your opponent can deal by 20%")
 
         gen.add(DEFAULT_KEY_CATEGORY, "Astral Arsenal Keys")
         keybinds.forEach { (id, name) -> gen.add(id.toTranslationKey("key"), name.titleCase()) }
@@ -295,6 +302,7 @@ class AstralEnTranslationProvider(
         gen.effect(AstralEffects.IMPALED, "Impaled")
         gen.effect(AstralEffects.IMMORTAL, "Immortal")
         gen.effect(AstralEffects.STATICALLY_SLUDGED, "Charge Leak")
+
         gen.effect(AstralEffects.BREACHED, "Hex of Breaching")
         gen.effect(AstralEffects.DIMINISHED, "Hex of Diminishing")
         gen.effect(AstralEffects.BLAZED, "Hex of Blazing")

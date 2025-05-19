@@ -7,6 +7,7 @@ import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
@@ -63,6 +64,7 @@ class FreezeShotEntity : ThrownItemEntity {
     }
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
+        playSound(SoundEvents.BLOCK_GLASS_BREAK, 1.0f, 1.5f)
         this.discard()
         super.onBlockHit(blockHitResult)
     }

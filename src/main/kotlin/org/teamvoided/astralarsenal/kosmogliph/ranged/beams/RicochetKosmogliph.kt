@@ -137,13 +137,14 @@ class RicochetKosmogliph(id: Identifier) :
                 entity.discard()
             }
             if (entity is LivingEntity && !entitiesHit.contains(entity)) {
+                val damage = if (entity is PlayerEntity) DAMAGE.toFloat() else DAMAGE.toFloat() * 2
                 if (!entitiesHit.contains(entity))
                     entity.damage(
                         DamageSource(
                             AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RICHOCHET),
                             player,
                             player
-                        ), DAMAGE.toFloat()
+                        ), damage
                     )
                 if (entity is PlayerEntity) {
                     when {

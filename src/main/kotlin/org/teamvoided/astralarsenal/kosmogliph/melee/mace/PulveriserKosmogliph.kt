@@ -62,7 +62,7 @@ class PulveriserKosmogliph(id: Identifier) :
             if (entity is LivingEntity && entity.getStackInHand(Hand.MAIN_HAND) != stack && entity.getStackInHand(Hand.OFF_HAND) != stack) {
                 stack.set(AstralDataComponents.PULVERISER_DATA, PulveriserData(0, false))
                 if (entity is PlayerEntity && !entity.isCreative) {
-                    entity.itemCooldownManager.set(stack.item, 200)
+                    entity.itemCooldownManager.set(stack.item, 100)
                 }
             }
         }

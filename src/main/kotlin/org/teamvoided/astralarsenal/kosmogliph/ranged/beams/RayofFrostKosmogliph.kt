@@ -22,6 +22,7 @@ import org.joml.Vector3f
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralParticles
 import org.teamvoided.astralarsenal.init.AstralSounds
@@ -37,7 +38,8 @@ class RayofFrostKosmogliph(id: Identifier) :
         val vec3d: Vec3d = player.getLerpedEyePos(1f)
         val vec3d2: Vec3d = player.getRotationVec(1f)
         val vec3d3 = vec3d.add(vec3d2.x * 100.0, vec3d2.y * 100.0, vec3d2.z * 100.0)
-        val result = player.getWorld().raycast(RaycastContext(vec3d, vec3d3, ShapeType.COLLIDER, FluidHandling.NONE, player))
+        val result =
+            player.getWorld().raycast(RaycastContext(vec3d, vec3d3, ShapeType.COLLIDER, FluidHandling.NONE, player))
         val distance = sqrt(
             sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y - 0.5) - result.pos.y).pow(
                 2
@@ -50,7 +52,10 @@ class RayofFrostKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 10)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 8)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(player.x.toFloat(), (player.y + 1).toFloat(), player.z.toFloat()))
+            beamRenderer.dataTracker.set(
+                BeamRenderEntity.OriginPos,
+                Vector3f(player.x.toFloat(), (player.y + 1).toFloat(), player.z.toFloat())
+            )
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
@@ -70,7 +75,7 @@ class RayofFrostKosmogliph(id: Identifier) :
                         (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
                         (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
-                )
+                ).filter { !entities.contains(it) }
             )
             if (!player.world.isClient) {
                 val serverWorld = player.world as ServerWorld
@@ -134,13 +139,27 @@ class RayofFrostKosmogliph(id: Identifier) :
                     )
                     entity.discard()
                 }
+                val damage = if (entity is PlayerEntity) 7.5f else 22.5f
                 entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.CHILLED),
                         player,
                         player
-                    ), 7.5f
+                    ), damage
                 )
+                if (entity !is PlayerEntity) {
+                    repeat(5) {
+                        val freezeBallEntity = FreezeShotEntity(entity.world, player)
+                        setPropertiesTwo(freezeBallEntity, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f)
+                        freezeBallEntity.addVelocity(
+                            entity.random.nextDouble().minus(0.5),
+                            (entity.random.nextDouble().times(0.3)) + 0.2,
+                            entity.random.nextDouble().minus(0.5)
+                        )
+                        freezeBallEntity.setPosition(entity.pos)
+                        entity.world.spawnEntity(freezeBallEntity)
+                    }
+                }
                 if (entity.frozenTicks < 400) entity.frozenTicks = 400
             }
         }

@@ -28,7 +28,7 @@ class AstralRecipeProvider(
             .pattern("DGD")
             .pattern("ONO")
             .pattern("COC")
-            .ingredient('D', Items.DIAMOND_BLOCK)
+            .ingredient('D', Items.DIAMOND)
             .ingredient('G', AstralItems.KOSMIC_GEM)
             .ingredient('O', Items.OBSIDIAN)
             .ingredient('N', Items.NETHERITE_INGOT)
@@ -37,11 +37,10 @@ class AstralRecipeProvider(
             .offerTo(this)
 
         shaped(AstralItems.RAILGUN)
-            .pattern("IKI")
-            .pattern("KCK")
+            .pattern("III")
+            .pattern("ICI")
             .pattern("IGI")
             .ingredient('I', Items.IRON_INGOT)
-            .ingredient('K', Items.DIAMOND)
             .ingredient('C', Items.CROSSBOW)
             .ingredient('G', AstralItems.KOSMIC_GEM)
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
@@ -70,23 +69,34 @@ class AstralRecipeProvider(
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
 
-        simpleShapeless(
-            AstralItems.AMERALD_BLEND,
-            RecipeCategory.MISC, 1,
-            listOf(
-                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST, AstralItems.AMETHYST_DUST,
-                AstralItems.EMERALD_DUST, Items.DIAMOND, AstralItems.EMERALD_DUST,
-                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST, AstralItems.AMETHYST_DUST,
-            )
-        ).offerTo(this)
+        shaped(AstralItems.TOME_OF_HEXES)
+            .pattern("IKI")
+            .pattern("KCK")
+            .pattern("IGI")
+            .ingredient('I', AstralItems.CRYSTALINE_BLOOD)
+            .ingredient('K', Items.DIAMOND)
+            .ingredient('C', Items.BOOK)
+            .ingredient('G', AstralItems.KOSMIC_GEM)
+            .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
+            .offerTo(this)
+
+//        simpleShapeless(
+//            AstralItems.AMERALD_BLEND,
+//            RecipeCategory.MISC, 1,
+//            listOf(
+//                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST, AstralItems.AMETHYST_DUST,
+//                AstralItems.EMERALD_DUST, Items.DIAMOND, AstralItems.EMERALD_DUST,
+//                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST, AstralItems.AMETHYST_DUST,
+//            )
+//        ).offerTo(this)
 
         simpleShapeless(
             AstralItems.LAZULICA_BLEND,
             RecipeCategory.MISC, 1,
             listOf(
-                AstralItems.QUARTZ_DUST, AstralItems.QUARTZ_DUST, AstralItems.QUARTZ_DUST,
+                AstralItems.QUARTZ_DUST, AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
                 AstralItems.LAPIS_LAZULI_DUST, Items.DIAMOND, AstralItems.LAPIS_LAZULI_DUST,
-                AstralItems.QUARTZ_DUST, AstralItems.QUARTZ_DUST, AstralItems.QUARTZ_DUST,
+                AstralItems.QUARTZ_DUST, AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
             )
         ).offerTo(this)
 
@@ -100,15 +110,15 @@ class AstralRecipeProvider(
             )
         ).offerTo(this)
 
-        simpleShapeless(
-            AstralItems.KOSMIC_GEM,
-            RecipeCategory.MISC, 1,
-            listOf(
-                AstralItems.LAZULICA, AstralItems.AMERALD, AstralItems.LAZULICA,
-                AstralItems.AMERALD, Items.DIAMOND, AstralItems.AMERALD,
-                AstralItems.LAZULICA, AstralItems.AMERALD, AstralItems.LAZULICA
-            )
-        ).offerTo(this)
+//        simpleShapeless(
+//            AstralItems.KOSMIC_GEM,
+//            RecipeCategory.MISC, 1,
+//            listOf(
+//                AstralItems.LAZULICA, AstralItems.AMERALD, AstralItems.LAZULICA,
+//                AstralItems.AMERALD, Items.DIAMOND, AstralItems.AMERALD,
+//                AstralItems.LAZULICA, AstralItems.AMERALD, AstralItems.LAZULICA
+//            )
+//        ).offerTo(this)
 
         simpleShapeless(
             AstralItems.KOSMIC_GEM,
@@ -124,18 +134,16 @@ class AstralRecipeProvider(
             AstralItems.AMETHYST_DUST,
             RecipeCategory.MISC, 1,
             listOf(
-                Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD,
-                Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD,
                 Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD
             )
 
         ).offerTo(this)
 
-        simpleShapeless(
-            AstralItems.EMERALD_DUST,
-            RecipeCategory.MISC, 1,
-            listOf(Items.EMERALD, Items.EMERALD)
-        ).offerTo(this)
+//        simpleShapeless(
+//            AstralItems.EMERALD_DUST,
+//            RecipeCategory.MISC, 1,
+//            listOf(Items.EMERALD, Items.EMERALD)
+//        ).offerTo(this)
 
         simpleShapeless(
             AstralItems.LAPIS_LAZULI_DUST,
@@ -160,20 +168,6 @@ class AstralRecipeProvider(
             RecipeCategory.MISC,
             AstralItems.AMETHYST,
             AstralItems.CONCENTRATED_AMETHYST_BLEND,
-            0.5f,
-            100
-        )
-        smelting(
-            RecipeCategory.MISC,
-            AstralItems.AMERALD,
-            AstralItems.AMERALD_BLEND,
-            0.5f,
-            200
-        )
-        blasting(
-            RecipeCategory.MISC,
-            AstralItems.AMERALD,
-            AstralItems.AMERALD_BLEND,
             0.5f,
             100
         )

@@ -135,13 +135,17 @@ class BeamOfLightEntity : Entity {
                         )
                     )
                     for (entity in entities) {
-                        if (!entitiesHit.contains(entity) && entity is LivingEntity && !entity.type.isIn(
+                        if (!entitiesHit.contains(entity) && (entity is LivingEntity || entity is CannonballEntity) && !entity.type.isIn(
                                 AstralEntityTags.UNAFFECTED_BY_LIGHT
                             )
                         ) {
-                            entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
-                            entity.addVelocity(0.0, THRUST, 0.0)
-                            entitiesHit.add(entity)
+                            if (entity is CannonballEntity) {
+                                entity.setCharged(true)
+                            } else {
+                                entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
+                                entity.addVelocity(0.0, THRUST, 0.0)
+                                entitiesHit.add(entity)
+                            }
                         }
                     }
                 }

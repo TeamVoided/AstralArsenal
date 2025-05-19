@@ -68,11 +68,9 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(DamageTypes.EXPLOSION)
             .add(DamageTypes.BAD_RESPAWN_POINT)
             .add(AstralDamageTypes.BOOM)
-            .forceAddTag(AstralDamageTypeTags.SLUDGE_EXPLOSIONS)
 
         getOrCreateTagBuilder(DamageTypeTags.IS_EXPLOSION)
             .add(AstralDamageTypes.BOOM)
-            .forceAddTag(AstralDamageTypeTags.SLUDGE_EXPLOSIONS)
 
         getOrCreateTagBuilder(AstralDamageTypeTags.STOPS_MOVEMENT)
             .add(AstralDamageTypes.ELECTROSTATICED)
@@ -119,7 +117,6 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.BURN)
             .add(AstralDamageTypes.RICHOCHET)
             .add(AstralDamageTypes.NAILED)
-            .forceAddTag(AstralDamageTypeTags.SLUDGE_EXPLOSIONS)
 
         getOrCreateTagBuilder(DamageTypeTags.AVOIDS_GUARDIAN_THORNS)
             .forceAddTag(AstralDamageTypeTags.IS_PLASMA)

@@ -41,8 +41,8 @@ class WindEruptionKosmogliph(id: Identifier) :
     override fun onStoppedUsing(stack: ItemStack, world: World, user: LivingEntity, remainingUseTicks: Int) {
         val usedTicks = getUseTicks(stack, user) - remainingUseTicks
         val explosionBehavior = (
-                if (usedTicks >= 100) MaceStrongExplosionBehavior(user)
-                else if (usedTicks >= 50) MaceExplosionBehavior(user)
+                if (usedTicks >= 70) MaceStrongExplosionBehavior(user)
+                else if (usedTicks >= 40) MaceExplosionBehavior(user)
                 else MaceWeakExplosionBehavior(user)
                 )
         val jumpPower = (
@@ -68,7 +68,7 @@ class WindEruptionKosmogliph(id: Identifier) :
             user.velocityDirty
             if (user is PlayerEntity) {
                 if (!user.isCreative) {
-                    user.itemCooldownManager.set(stack.item, 100)
+                    user.itemCooldownManager.set(stack.item, 40)
                 }
             }
         }

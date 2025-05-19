@@ -14,9 +14,11 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import org.apache.logging.log4j.core.jmx.Server
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
-import org.teamvoided.astralarsenal.init.AstralEffects.sillyLightningTime
 import org.teamvoided.astralarsenal.init.AstralEntities
+import org.teamvoided.astralarsenal.util.sillyLightningTime
+import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 
 class ConductiveEntity : Entity {
     var owner: Entity? = null
@@ -49,7 +51,11 @@ class ConductiveEntity : Entity {
                         this.y - 10,
                         this.z - 10
                     )
-                ).filter { it is LivingEntity && it != owner && it != origin }
+                ).filter {
+                    (it is LivingEntity || it is CannonballEntity) && it != owner && it != origin && ((origin != null && origin!!.distanceTo(
+                        it
+                    ) <= 10) || origin == null)
+                }
             )
             if (entities.isNotEmpty()) {
                 repeat((entities.size - maxTargets).toInt()) {
@@ -64,6 +70,21 @@ class ConductiveEntity : Entity {
                     if (entiity is PlayerEntity && tempDamage >= 2.5) {
                         tempDamage = 2.5f
                     }
+                    if (entiity is CannonballEntity) {
+                        val cause = entiity.owner ?: entiity
+                        world.createExplosion(
+                            entiity,
+                            cause.damageSources?.explosion(entiity, cause),
+                            WeakExplosionBehavior(cause),
+                            entiity.x,
+                            entiity.y,
+                            entiity.z,
+                            2.0f,
+                            false,
+                            World.ExplosionSourceType.TNT
+                        )
+                        entiity.discard()
+                    }
                     entiity.damage(
                         DamageSource(
                             AstralDamageTypes.getHolder(
@@ -75,7 +96,12 @@ class ConductiveEntity : Entity {
                         ), tempDamage
                     )
                     if (this.world is ServerWorld) {
-                        sillyLightningTime(this.eyePos, Vec3d(entiity.x, entiity.y + 1, entiity.z), ((this.world as ServerWorld)), tempDamage)
+                        sillyLightningTime(
+                            this.eyePos,
+                            Vec3d(entiity.x, entiity.y + (entiity.height / 2), entiity.z),
+                            ((this.world as ServerWorld)),
+                            3, 5, 5, 0.05f, 1.0
+                        )
                     }
                     if (this.world is ServerWorld) {
                         val sworld = this.world as ServerWorld
@@ -115,8 +141,7 @@ class ConductiveEntity : Entity {
                     1.6f
                 )
                 this.discard()
-            }
-            else{
+            } else {
                 if (this.world is ServerWorld) {
                     val sworld = this.world as ServerWorld
                     sworld.spawnParticles(
