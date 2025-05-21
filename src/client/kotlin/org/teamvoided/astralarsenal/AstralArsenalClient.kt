@@ -1,9 +1,14 @@
 package org.teamvoided.astralarsenal
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
+import net.minecraft.entity.EntityType
 import org.teamvoided.astralarsenal.block.entity.KosmicTableBlockEntityRenderer
+import org.teamvoided.astralarsenal.entity.TomeRingModel
+import org.teamvoided.astralarsenal.entity.TomeRingRenderer
 import org.teamvoided.astralarsenal.handlers.KeyHandlers
 import org.teamvoided.astralarsenal.init.*
 
@@ -21,5 +26,15 @@ object AstralArsenalClient {
 
         AstralHudRendering.init()
         BlockEntityRendererFactories.register(AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY, ::KosmicTableBlockEntityRenderer)
+
+        EntityModelLayerRegistry.registerModelLayer(
+            TomeRingModel.MODEL_LAYER,
+            TomeRingModel::createLayer
+        )
+        LivingEntityFeatureRendererRegistrationCallback.EVENT.register { type, renderer, registrationHelper, context ->
+            if (type == EntityType.PLAYER) {
+                registrationHelper!!.register(TomeRingRenderer(renderer, context!!))
+            }
+        }
     }
 }

@@ -5,6 +5,18 @@ import net.minecraft.entity.effect.StatusEffectType
 import net.minecraft.particle.ParticleEffect
 
 open class AstralStatusEffect : StatusEffect {
-    constructor(type: StatusEffectType, color: Int) : super(type, color)
-    constructor(type: StatusEffectType, color: Int, particle: ParticleEffect) : super(type, color, particle)
+
+    val showTomeRings: Boolean
+
+    constructor(type: StatusEffectType, color: Int, showTomeRings: Boolean = false) : super(type, color) {
+        this.showTomeRings = showTomeRings
+    }
+
+    constructor(type: StatusEffectType, color: Int, particle: ParticleEffect, showTomeRings: Boolean = false) : super(
+        type,
+        color,
+        particle
+    ) {
+        this.showTomeRings = showTomeRings
+    }
 }

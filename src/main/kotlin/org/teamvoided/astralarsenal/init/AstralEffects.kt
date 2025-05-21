@@ -134,13 +134,13 @@ object AstralEffects {
     )
     val IMPEDING = register(
         "impeding",
-        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
+        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698, true)
     )
     val IMPEDED = register(
         "impeded",
         AstralStatusEffect(
             StatusEffectType.HARMFUL,
-            0xcf1020
+            0xcf1020, true
         ).addAttributeModifier(
             EntityAttributes.GENERIC_MOVEMENT_SPEED,
             id("effect.impeded"), -0.025, EntityAttributeModifier.Operation.ADD_VALUE)
