@@ -35,6 +35,10 @@ open class NailEntity : PersistentProjectileEntity {
         AstralEntities.NAIL_ENTITY, owner, world, Items.ARROW.defaultStack, AstralItems.NAILCANNON.defaultStack
     )
 
+    constructor(x: Double, y: Double, z: Double, world: World) : super(
+        AstralEntities.NAIL_ENTITY, x, y, z, world, Items.ARROW.defaultStack, AstralItems.NAILCANNON.defaultStack
+            )
+
     var nailType
         get() = NailType.getById(dataTracker.get(NAIL_TYPE))
         set(value) = dataTracker.set(NAIL_TYPE, value.id)

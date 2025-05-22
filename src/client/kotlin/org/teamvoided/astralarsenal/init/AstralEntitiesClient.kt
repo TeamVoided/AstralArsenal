@@ -20,5 +20,6 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.CONDUCTIVITY_ENGINE, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.NAIL_ENTITY, ::NailEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BEAM_RENDERER, ::BeamRenderer)
+        EntityRendererRegistry.register(AstralEntities.NAILBOMB, ::EmptyEntityRenderer)
     }
 }

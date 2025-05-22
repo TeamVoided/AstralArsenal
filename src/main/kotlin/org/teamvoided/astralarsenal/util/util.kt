@@ -93,6 +93,13 @@ fun ServerCommandSource.error(text: String): Int {
     return -1
 }
 
+// Accuracy is the highest the random can go, this should most commonly be set to 100 for accuracy of 1%, but can go higher if need be.
+// Chance is just the chance, out of the accuracy, that it should succeed. e.g. if accuracy is 100, and you want a 40% chance, chance should be 40.
+fun randomBool(accuracy: Int, chance: Int, world: World) : Boolean{
+    val random = world.random.rangeInclusive(0, accuracy)
+    return chance >= random
+}
+
 fun sillyLightningTime(pos1: Vec3d, pos2: Vec3d, world: ServerWorld, minBends: Int, maxBends: Int, boltTicks: Int, thickness: Float, randMult: Double) {
     val bends = world.random.rangeInclusive(minBends, maxBends)
     val bendPos = mutableListOf<Vec3d>()

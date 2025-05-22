@@ -3,6 +3,7 @@ package org.teamvoided.astralarsenal.util
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralEffects.BLAZED
 import org.teamvoided.astralarsenal.init.AstralEffects.BLAZING
 import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
@@ -13,6 +14,8 @@ import org.teamvoided.astralarsenal.init.AstralEffects.DIMINISHED
 import org.teamvoided.astralarsenal.init.AstralEffects.DIMINISHING
 import org.teamvoided.astralarsenal.init.AstralEffects.IMPEDED
 import org.teamvoided.astralarsenal.init.AstralEffects.IMPEDING
+import org.teamvoided.astralarsenal.init.AstralEffects.MAGNETISED
+import org.teamvoided.astralarsenal.init.AstralEffects.MAGNETISING
 import org.teamvoided.astralarsenal.init.AstralEffects.WEAKENED
 import org.teamvoided.astralarsenal.init.AstralEffects.WEAKENING
 
@@ -22,7 +25,8 @@ val hexes = listOf(
     WEAKENED,
     BLAZED,
     CLEANSED,
-    IMPEDED
+    IMPEDED,
+    MAGNETISED
 )
 
 val hexAppliers = listOf(
@@ -31,7 +35,8 @@ val hexAppliers = listOf(
     WEAKENING,
     BLAZING,
     CLEANSING,
-    IMPEDING
+    IMPEDING,
+    MAGNETISING
 )
 
 fun applyHexes(source: DamageSource, entity: LivingEntity) {

@@ -25,6 +25,7 @@ import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 import org.teamvoided.astralarsenal.effects.BleedStatusEffect
+import org.teamvoided.astralarsenal.effects.MagneticStatusEffect
 import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.ConductiveEntity
@@ -98,7 +99,7 @@ object AstralEffects {
 
     val BREACHED = register(
         "breached",
-        AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+        AstralStatusEffect(StatusEffectType.HARMFUL, 0xdaa520, true)
     )
     val DIMINISHING = register(
         "diminishing",
@@ -106,7 +107,7 @@ object AstralEffects {
     )
     val DIMINISHED = register(
         "diminished",
-        AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+        AstralStatusEffect(StatusEffectType.HARMFUL, 0xae0c00, true)
     )
     val WEAKENING = register(
         "weakening",
@@ -114,7 +115,7 @@ object AstralEffects {
     )
     val WEAKENED = register(
         "weakened",
-        AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+        AstralStatusEffect(StatusEffectType.HARMFUL, 0x1d2951, true)
     )
     val BLAZING = register(
         "blazing",
@@ -122,7 +123,7 @@ object AstralEffects {
     )
     val BLAZED = register(
         "blazed",
-        AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+        AstralStatusEffect(StatusEffectType.HARMFUL, 0xff4f00, true)
     )
     val CLEANSING = register(
         "cleansing",
@@ -130,20 +131,29 @@ object AstralEffects {
     )
     val CLEANSED = register(
         "cleansed",
-        AstralStatusEffect(StatusEffectType.HARMFUL, 0xcf1020)
+        AstralStatusEffect(StatusEffectType.HARMFUL, 0xd3d3d3, true)
     )
     val IMPEDING = register(
         "impeding",
-        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698, true)
+        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
     )
     val IMPEDED = register(
         "impeded",
         AstralStatusEffect(
             StatusEffectType.HARMFUL,
-            0xcf1020, true
+            0x191970, true
         ).addAttributeModifier(
             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-            id("effect.impeded"), -0.025, EntityAttributeModifier.Operation.ADD_VALUE)
+            id("effect.impeded"), -0.025, EntityAttributeModifier.Operation.ADD_VALUE
+        )
+    )
+    val MAGNETISING = register(
+        "magnetising",
+        AstralStatusEffect(StatusEffectType.BENEFICIAL, 0x009698)
+    )
+    val MAGNETISED = register(
+        "magnetised",
+        MagneticStatusEffect(StatusEffectType.HARMFUL, 0x757575, true)
     )
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> =
@@ -205,8 +215,9 @@ object AstralEffects {
                 conductiveDamage = (output * (shareMult)).toFloat()
                 entity.removeStatusEffect(CONDUCTIVE)
                 val targets = min(3 + (CONDUCTIVE_TARGETS_PER_LEVEL * levels), CONDUCTIVE_MAX_TARGETS)
-                val conductivityEngine = ConductiveEntity(entity.world, entity.x, entity.y + (entity.height/2), entity.z)
-                conductivityEngine.setPosition(entity.x, entity.y + (entity.height/2), entity.z)
+                val conductivityEngine =
+                    ConductiveEntity(entity.world, entity.x, entity.y + (entity.height / 2), entity.z)
+                conductivityEngine.setPosition(entity.x, entity.y + (entity.height / 2), entity.z)
                 conductivityEngine.maxTargets = targets
                 conductivityEngine.origin = entity
                 conductivityEngine.owner = source.attacker

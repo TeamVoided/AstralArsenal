@@ -141,6 +141,7 @@ class BeamOfLightEntity : Entity {
                         ) {
                             if (entity is CannonballEntity) {
                                 entity.setCharged(true)
+                                entity.owner = this.owner
                             } else {
                                 entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
                                 entity.addVelocity(0.0, THRUST, 0.0)

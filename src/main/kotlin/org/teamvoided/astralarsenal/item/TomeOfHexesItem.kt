@@ -25,6 +25,8 @@ import org.teamvoided.astralarsenal.init.AstralEffects.DIMINISHED
 import org.teamvoided.astralarsenal.init.AstralEffects.DIMINISHING
 import org.teamvoided.astralarsenal.init.AstralEffects.IMPEDED
 import org.teamvoided.astralarsenal.init.AstralEffects.IMPEDING
+import org.teamvoided.astralarsenal.init.AstralEffects.MAGNETISED
+import org.teamvoided.astralarsenal.init.AstralEffects.MAGNETISING
 import org.teamvoided.astralarsenal.init.AstralEffects.WEAKENED
 import org.teamvoided.astralarsenal.init.AstralEffects.WEAKENING
 import org.teamvoided.astralarsenal.init.AstralItems
@@ -33,6 +35,7 @@ import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HEX_OF_BREACHING
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HEX_OF_CLEANSING
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HEX_OF_DIMINISHING
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HEX_OF_IMPEDING
+import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HEX_OF_MAGNETISING
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HEX_OF_WEAKENING
 import org.teamvoided.astralarsenal.util.getKosmogliphs
 import org.teamvoided.astralarsenal.util.hasKosmogliphs
@@ -49,7 +52,8 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
         WEAKENING,
         BLAZING,
         CLEANSING,
-        IMPEDING
+        IMPEDING,
+        MAGNETISING
     )
 
     val kosList = listOf(
@@ -58,7 +62,8 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
         HEX_OF_WEAKENING,
         HEX_OF_BLAZING,
         HEX_OF_CLEANSING,
-        HEX_OF_IMPEDING
+        HEX_OF_IMPEDING,
+        HEX_OF_MAGNETISING
     )
 
     val hexes = listOf(
@@ -67,7 +72,8 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
         WEAKENED,
         BLAZED,
         CLEANSED,
-        IMPEDED
+        IMPEDED,
+        MAGNETISED
     )
 
 

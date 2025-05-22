@@ -181,7 +181,7 @@ class CannonballEntity : ThrownItemEntity {
                     if (entityList.contains(entity)) {
                         number = entityList.indexOf(entity)
                         var increment = entityTime.get(number) + 1
-                        if (increment >= 15) {
+                        if (increment >= 20) {
                             entity.customDamage(
                                 if (entity is PlayerEntity) AstralDamageTypes.NON_RAILED else AstralDamageTypes.RICHOCHET,
                                 2f,
@@ -241,7 +241,7 @@ class CannonballEntity : ThrownItemEntity {
             )
         }
         if (this.owner != null && getCharged()) {
-            shockNearbyEntities(this.owner!!, this, 25f)
+            shockNearbyEntities(this.owner!!, this, getDmg().toFloat())
         }
         this.discard()
         super.onBlockHit(blockHitResult)
@@ -394,6 +394,7 @@ class CannonballEntity : ThrownItemEntity {
             for (entiity in entities) {
                 if (entiity is CannonballEntity) {
                     entiity.setCharged(true)
+                    entiity.owner = cause
                 }
                 if (base.world is ServerWorld) {
                     sillyLightningTime(

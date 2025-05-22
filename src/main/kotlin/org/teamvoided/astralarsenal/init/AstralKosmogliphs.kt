@@ -122,6 +122,7 @@ object AstralKosmogliphs {
     val HEX_OF_IMPEDING = registerSimple("hex_of_impeding", AstralItemTags.SUPPORTS_HEX_OF_IMPEDING)
     val HEX_OF_CLEANSING = registerSimple("hex_of_cleansing", AstralItemTags.SUPPORTS_HEX_OF_CLEANSING)
     val HEX_OF_WEAKENING = registerSimple("hex_of_weakening", AstralItemTags.SUPPORTS_HEX_OF_WEAKENING)
+    val HEX_OF_MAGNETISING = registerSimple("hex_of_magnetising", AstralItemTags.SUPPORTS_HEX_OF_WEAKENING)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))
