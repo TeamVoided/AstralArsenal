@@ -14,6 +14,7 @@ import net.minecraft.util.math.Axis
 import net.minecraft.util.math.MathHelper
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
+import org.teamvoided.astralarsenal.util.EntityHexAccessor
 
 class HexRingRenderer<T : LivingEntity, V : EntityModel<T>>(
     context: LivingEntityRenderer<T, V>?,
@@ -37,12 +38,8 @@ class HexRingRenderer<T : LivingEntity, V : EntityModel<T>>(
         headYaw: Float,
         headPitch: Float
     ) {
-        val tomeEffects = entity!!.statusEffects.filter { instance ->
-            val effect = instance.effectType.value()
-            return@filter effect is AstralStatusEffect && effect.showTomeRings
-        }
-
-        if (tomeEffects.isNotEmpty()) {
+        val hexColor = (entity as EntityHexAccessor).`getAstralArsenal$hexColor`()
+        if (hexColor != -1) {
             val consumer = vertexConsumers?.getBuffer(RenderLayer.getEntityCutout(TEXTURE))
             val age = entity.age + tickDelta
 
@@ -53,7 +50,7 @@ class HexRingRenderer<T : LivingEntity, V : EntityModel<T>>(
                 matrices, consumer,
                 LightmapTextureManager.pack(15, 15),
                 LivingEntityRenderer.getOverlay(entity, 0F),
-                tomeEffects.first().effectType?.value()?.color ?: -1
+                hexColor
             )
         }
     }
