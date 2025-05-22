@@ -1,27 +1,26 @@
 package org.teamvoided.astralarsenal.entity
 
 import net.minecraft.client.model.Model
-import net.minecraft.client.network.AbstractClientPlayerEntity
+import net.minecraft.client.render.LightmapTextureManager
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.EntityRendererFactory
 import net.minecraft.client.render.entity.LivingEntityRenderer
 import net.minecraft.client.render.entity.feature.FeatureRenderer
-import net.minecraft.client.render.entity.feature.FeatureRendererContext
-import net.minecraft.client.render.entity.model.PlayerEntityModel
+import net.minecraft.client.render.entity.model.EntityModel
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.entity.LivingEntity
 import net.minecraft.util.math.Axis
 import net.minecraft.util.math.MathHelper
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 
-@Suppress("UNCHECKED_CAST")
-class TomeRingRenderer(
-    context: LivingEntityRenderer<*, *>?,
+class TomeRingRenderer<T : LivingEntity, V : EntityModel<T>>(
+    context: LivingEntityRenderer<T, V>?,
     factory: EntityRendererFactory.Context
 ) :
-    FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(
-        context as FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>
+    FeatureRenderer<T, V>(
+        context
     ) {
 
     val model: Model = TomeRingModel(factory.getPart(TomeRingModel.MODEL_LAYER))
@@ -30,7 +29,7 @@ class TomeRingRenderer(
         matrices: MatrixStack?,
         vertexConsumers: VertexConsumerProvider?,
         light: Int,
-        player: AbstractClientPlayerEntity?,
+        entity: T?,
         limbAngle: Float,
         limbDistance: Float,
         tickDelta: Float,
@@ -38,18 +37,22 @@ class TomeRingRenderer(
         headYaw: Float,
         headPitch: Float
     ) {
-        val tomeEffects = player!!.statusEffects.filter { instance ->
+        val tomeEffects = entity!!.statusEffects.filter { instance ->
             val effect = instance.effectType.value()
             return@filter effect is AstralStatusEffect && effect.showTomeRings
         }
 
         if (tomeEffects.isNotEmpty()) {
             val consumer = vertexConsumers?.getBuffer(RenderLayer.getEntityCutout(TEXTURE))
-            matrices?.rotate(Axis.Y_POSITIVE.rotation((player.age + tickDelta) / 20 + (MathHelper.PI)))
+            val age = entity.age + tickDelta
+
+            matrices?.rotate(Axis.Y_POSITIVE.rotation(age / 20 + MathHelper.PI))
+            matrices?.translate(0F, MathHelper.sin(age / 10 + MathHelper.PI) * 0.1F + 0.1F, 0F)
 
             model.method_2828(
-                matrices, consumer, light,
-                LivingEntityRenderer.getOverlay(player, 0F),
+                matrices, consumer,
+                LightmapTextureManager.pack(15, 15),
+                LivingEntityRenderer.getOverlay(entity, 0F),
                 tomeEffects.first().effectType?.value()?.color ?: -1
             )
         }
