@@ -6,8 +6,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRe
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import org.teamvoided.astralarsenal.block.entity.KosmicTableBlockEntityRenderer
-import org.teamvoided.astralarsenal.entity.TomeRingModel
-import org.teamvoided.astralarsenal.entity.TomeRingRenderer
+import org.teamvoided.astralarsenal.entity.HexRingModel
+import org.teamvoided.astralarsenal.entity.HexRingRenderer
 import org.teamvoided.astralarsenal.handlers.KeyHandlers
 import org.teamvoided.astralarsenal.init.*
 
@@ -27,11 +27,11 @@ object AstralArsenalClient {
         BlockEntityRendererFactories.register(AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY, ::KosmicTableBlockEntityRenderer)
 
         EntityModelLayerRegistry.registerModelLayer(
-            TomeRingModel.MODEL_LAYER,
-            TomeRingModel::createLayer
+            HexRingModel.MODEL_LAYER,
+            HexRingModel::createLayer
         )
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register { type, renderer, registrationHelper, context ->
-            registrationHelper!!.register(TomeRingRenderer(renderer, context!!))
+            registrationHelper!!.register(HexRingRenderer(renderer, context!!))
         }
     }
 }

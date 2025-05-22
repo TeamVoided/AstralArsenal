@@ -15,7 +15,7 @@ import net.minecraft.util.math.MathHelper
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 
-class TomeRingRenderer<T : LivingEntity, V : EntityModel<T>>(
+class HexRingRenderer<T : LivingEntity, V : EntityModel<T>>(
     context: LivingEntityRenderer<T, V>?,
     factory: EntityRendererFactory.Context
 ) :
@@ -23,7 +23,7 @@ class TomeRingRenderer<T : LivingEntity, V : EntityModel<T>>(
         context
     ) {
 
-    val model: Model = TomeRingModel(factory.getPart(TomeRingModel.MODEL_LAYER))
+    val model: Model = HexRingModel(factory.getPart(HexRingModel.MODEL_LAYER))
 
     override fun render(
         matrices: MatrixStack?,
@@ -59,6 +59,6 @@ class TomeRingRenderer<T : LivingEntity, V : EntityModel<T>>(
     }
 
     companion object {
-        val TEXTURE = AstralArsenal.id("textures/entity/tome_ring.png")
+        val TEXTURE = AstralArsenal.id("textures/entity/hex_ring.png")
     }
 }

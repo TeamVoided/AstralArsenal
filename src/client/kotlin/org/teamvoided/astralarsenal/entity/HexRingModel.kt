@@ -7,7 +7,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer
 import net.minecraft.client.util.math.MatrixStack
 import org.teamvoided.astralarsenal.AstralArsenal
 
-class TomeRingModel(val rootPart: ModelPart) : Model(RenderLayer::getEntityCutout) {
+class HexRingModel(val rootPart: ModelPart) : Model(RenderLayer::getEntityCutout) {
 
     override fun method_2828(
         matrices: MatrixStack?,
@@ -20,7 +20,7 @@ class TomeRingModel(val rootPart: ModelPart) : Model(RenderLayer::getEntityCutou
     }
 
     companion object {
-        val MODEL_LAYER: EntityModelLayer = EntityModelLayer(AstralArsenal.id("tome_ring"), "main")
+        val MODEL_LAYER: EntityModelLayer = EntityModelLayer(AstralArsenal.id("hex_ring"), "main")
 
         fun createLayer(): TexturedModelData? {
             val modelData = ModelData()
