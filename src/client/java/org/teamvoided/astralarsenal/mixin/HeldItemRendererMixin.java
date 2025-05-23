@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static org.teamvoided.astralarsenal.AstralArsenalClient.invokeCustomPostRenderer;
+import static org.teamvoided.astralarsenal.utils.CustomUseAnimation.invokeCustomPostRenderer;
 
 @Mixin(HeldItemRenderer.class)
 public class HeldItemRendererMixin {
@@ -24,15 +24,10 @@ public class HeldItemRendererMixin {
         Arm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();
         var isRightHand = arm == Arm.RIGHT;
         invokeCustomPostRenderer(
-                player,
-                tickDelta,
-                pitch,
-                hand,
-                swingProgress,
-                item,
-                equipProgress,
-                matrices, vertexConsumers,
-                light,
+                player, tickDelta, pitch,
+                hand, swingProgress,
+                item, equipProgress,
+                matrices, vertexConsumers, light,
                 isRightHand ? ModelTransformationMode.FIRST_PERSON_RIGHT_HAND : ModelTransformationMode.FIRST_PERSON_LEFT_HAND,
                 !isRightHand,
                 (HeldItemRenderer) (Object) this
