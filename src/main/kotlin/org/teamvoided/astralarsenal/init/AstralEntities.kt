@@ -7,7 +7,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.entity.*
-import org.teamvoided.astralarsenal.entity.nails.NailBombEntity
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
 
 object AstralEntities {
@@ -69,11 +68,6 @@ object AstralEntities {
         "conductivity_engine",
         EntityType.Builder.create(EntityType.EntityFactory(::BeamRenderEntity), SpawnGroup.MISC)
             .setDimensions(0.0f, 0.0f).maxTrackingRange(4).build()
-    )
-    val NAILBOMB = register(
-        "nailbomb",
-        EntityType.Builder.create(EntityType.EntityFactory(::NailBombEntity), SpawnGroup.MISC)
-            .setDimensions(0.5f, 0.5f).maxTrackingRange(4).build()
     )
     val TOTEM_PROJECTILE = register(
         "totem_projectile",

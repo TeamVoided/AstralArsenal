@@ -132,7 +132,7 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
             for (hex in hexes){
                 user.removeStatusEffect(hex)
             }
-            user.addStatusEffect(StatusEffectInstance(effect, 200, amplifier))
+            user.addStatusEffect(StatusEffectInstance(effect, 200, amplifier, false, false, true))
             user.itemCooldownManager.set(this, 200)
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)

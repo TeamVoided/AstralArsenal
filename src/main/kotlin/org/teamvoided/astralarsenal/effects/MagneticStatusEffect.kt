@@ -14,6 +14,7 @@ import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import org.joml.Vector2d
 import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.mixin.PersistentProjectileEntityAccessor
 import org.teamvoided.astralarsenal.mixin.TridentEntityAccessor
 import org.teamvoided.astralarsenal.util.sillyLightningTime
@@ -24,6 +25,10 @@ class MagneticStatusEffect : AstralStatusEffect {
     constructor(type: StatusEffectType, color: Int, showTomeRing: Boolean) : super(type, color, showTomeRing)
     constructor(type: StatusEffectType, color: Int, particle: ParticleEffect) : super(type, color, particle)
 
+    val preventors = listOf(
+        AstralEffects.IMMORTAL
+    )
+
     override fun shouldApplyUpdateEffect(tick: Int, amplifier: Int): Boolean {
         return true
     }
@@ -32,37 +37,40 @@ class MagneticStatusEffect : AstralStatusEffect {
     val strength = 0.25
 
     override fun applyUpdateEffect(entity: LivingEntity, amplifier: Int): Boolean {
-        val nearbyProjectiles = mutableListOf<Entity>()
-        nearbyProjectiles.addAll(
-            entity.world.getOtherEntities(
-                entity, Box(
-                    entity.x + range,
-                    entity.eyeY + range,
-                    entity.z + range,
-                    entity.x - range,
-                    entity.eyeY - range,
-                    entity.z - range
+        val effects = entity.statusEffects.filter { preventors.contains(it.effectType) }
+        if (effects.isEmpty()) {
+            val nearbyProjectiles = mutableListOf<Entity>()
+            nearbyProjectiles.addAll(
+                entity.world.getOtherEntities(
+                    entity, Box(
+                        entity.x + range,
+                        entity.eyeY + range,
+                        entity.z + range,
+                        entity.x - range,
+                        entity.eyeY - range,
+                        entity.z - range
+                    )
                 )
-            )
-                .filter {
-                    it is ProjectileEntity && (it !is PersistentProjectileEntity || !(it as PersistentProjectileEntityAccessor).inGround) && (entity.eyePos.distanceTo(
-                        it.pos
-                    ) <= range)
-                })
-        for (projectile in nearbyProjectiles) {
-            if ((projectile !is CannonballEntity || projectile.getDmg() < 15)
-                && (projectile is ProjectileEntity && projectile.owner != entity)
-                && (projectile !is TridentEntity || !(projectile as TridentEntityAccessor).dealtDamage())
-            ) {
-                val str = strength * (amplifier + 1.0)
-                val desiredVec = entity.eyePos.subtract(projectile.eyePos)
-                val change = desiredVec.subtract(projectile.velocity).normalize().multiply(str)
-                projectile.addVelocity(change)
-                projectile.velocityModified
+                    .filter {
+                        it is ProjectileEntity && (it !is PersistentProjectileEntity || !(it as PersistentProjectileEntityAccessor).inGround) && (entity.eyePos.distanceTo(
+                            it.pos
+                        ) <= range)
+                    })
+            for (projectile in nearbyProjectiles) {
+                if ((projectile !is CannonballEntity || projectile.getDmg() < 15)
+                    && (projectile is ProjectileEntity && projectile.owner != entity)
+                    && (projectile !is TridentEntity || !(projectile as TridentEntityAccessor).dealtDamage())
+                ) {
+                    val str = strength * (amplifier + 1.0)
+                    val desiredVec = entity.eyePos.subtract(projectile.eyePos)
+                    val change = desiredVec.subtract(projectile.velocity).normalize().multiply(str)
+                    projectile.addVelocity(change)
+                    projectile.velocityModified
+                }
             }
-        }
-        if (entity.world.time % 2 == 0L) {
-            sparkNearbyEntities(entity, entity)
+            if (entity.world.time % 2 == 0L) {
+                sparkNearbyEntities(entity, entity)
+            }
         }
         return super.applyUpdateEffect(entity, amplifier)
     }

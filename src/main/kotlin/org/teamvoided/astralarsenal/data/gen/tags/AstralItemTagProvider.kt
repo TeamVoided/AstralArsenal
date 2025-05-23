@@ -179,6 +179,7 @@ class AstralItemTagProvider(
             .forceAddTag(AstralItemTags.SUPPORTS_HEX_OF_CLEANSING)
             .forceAddTag(AstralItemTags.SUPPORTS_HEX_OF_DIMINISHING)
             .forceAddTag(AstralItemTags.SUPPORTS_HEX_OF_BREACHING)
+            .forceAddTag(AstralItemTags.SUPPORTS_HEX_OF_MAGNETISING)
             .add(Items.SHIELD)
     }
 

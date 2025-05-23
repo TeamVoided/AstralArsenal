@@ -45,7 +45,7 @@ fun applyHexes(source: DamageSource, entity: LivingEntity) {
         val attackerEffects = attacker.statusEffects.filter { hexAppliers.contains(it.effectType) }
         for (effect in attackerEffects){
             val hexNumber = hexAppliers.indexOf(effect.effectType)
-            entity.addStatusEffect(StatusEffectInstance(hexes.get(hexNumber), 100, effect.amplifier))
+            entity.addStatusEffect(StatusEffectInstance(hexes.get(hexNumber), 100, effect.amplifier, false, false, true))
         }
     }
 }

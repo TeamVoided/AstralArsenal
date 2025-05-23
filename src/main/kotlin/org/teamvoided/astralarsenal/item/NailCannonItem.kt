@@ -15,7 +15,6 @@ import net.minecraft.util.UseAction
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.NailCannonCooldownData
 import org.teamvoided.astralarsenal.components.NailCannonDataV1
-import org.teamvoided.astralarsenal.entity.nails.NailBombEntity
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
@@ -86,7 +85,7 @@ class NailCannonItem(settings: Settings) : Item(settings) {
                     && USE_TICKS - remainingUseTicks > 10 && stack.hasKosmogliph(AstralKosmogliphs.STATIC_RELEASE)
                     )
         ) {
-            if (!world.isClient && false) {
+            if (!world.isClient) {
                 val nail = NailEntity(world, user)
                 val spread =
                     if (shouldBoost(remainingUseTicks, user.isSneaking)) BOOSTED_SPREAD else SLOW_SPREAD
@@ -110,17 +109,6 @@ class NailCannonItem(settings: Settings) : Item(settings) {
                         user.pos, SoundEvents.ITEM_TRIDENT_RETURN, SoundCategory.PLAYERS, 1.0F, 1.0f
                     )
                 }
-            } else{
-                val nail = NailBombEntity(world,user)
-                val spread =
-                    if (shouldBoost(remainingUseTicks, user.isSneaking)) BOOSTED_SPREAD else SLOW_SPREAD
-                val speed =
-                    if (shouldBoost(remainingUseTicks, user.isSneaking)) BOOSTED_SPEED else SLOW_SPEED
-                nail.setShootVelocity(user.pitch, user.yaw, 0.0f, speed, spread)
-                val offset = user.eyePos.add(user.rotationVector.normalize().multiply(0.6))
-                nail.setPosition(offset.x, offset.y, offset.z)
-                nail.pickupType = PickupPermission.DISALLOWED
-                world.spawnEntity(nail)
             }
             user.bodyYaw = user.yaw
             var uses = data.uses
