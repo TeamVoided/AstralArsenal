@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.context.LootContextParameterSet
+import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.screen.slot.Slot
@@ -101,6 +102,7 @@ interface Kosmogliph {
         val REGISTRY: Registry<Kosmogliph> =
             FabricRegistryBuilder.createDefaulted(REGISTRY_KEY, id("empty")).buildAndRegister()
         val CODEC: Codec<Kosmogliph> = REGISTRY.codec
-//        val PACKET_CODEC = PacketCodecs.fromCodec(REGISTRY.codec)
+        @Suppress("unused")
+        val PACKET_CODEC = PacketCodecs.fromCodec(REGISTRY.codec)
     }
 }

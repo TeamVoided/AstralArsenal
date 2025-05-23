@@ -12,6 +12,7 @@ import org.teamvoided.astralarsenal.entity.HexRingModel
 import org.teamvoided.astralarsenal.entity.HexRingRenderer
 import org.teamvoided.astralarsenal.handlers.KeyHandlers
 import org.teamvoided.astralarsenal.init.*
+import org.teamvoided.astralarsenal.utils.CustomUseAnimation
 import org.teamvoided.astralarsenal.networking.UpdateHexRingPayload
 import org.teamvoided.astralarsenal.util.EntityHexAccessor
 
@@ -26,6 +27,7 @@ object AstralArsenalClient {
         MinecraftClient.getInstance()
 
         ClientTickEvents.END_CLIENT_TICK.register(KeyHandlers.compileHandlers())
+        CustomUseAnimation.init()
 
         AstralHudRendering.init()
         BlockEntityRendererFactories.register(AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY, ::KosmicTableBlockEntityRenderer)

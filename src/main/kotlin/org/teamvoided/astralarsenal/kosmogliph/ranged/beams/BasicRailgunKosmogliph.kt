@@ -44,8 +44,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
         val vec3d: Vec3d = player.getLerpedEyePos(1f)
         val vec3d2: Vec3d = player.getRotationVec(1f)
         val vec3d3 = vec3d.add(vec3d2.x * 100.0, vec3d2.y * 100.0, vec3d2.z * 100.0)
-        val result =
-            player.getWorld().raycast(RaycastContext(vec3d, vec3d3, ShapeType.COLLIDER, FluidHandling.NONE, player))
+        val result = player.getWorld().raycast(RaycastContext(vec3d, vec3d3, ShapeType.COLLIDER, FluidHandling.NONE, player))
         val distance = sqrt(
             sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y - 0.5) - result.pos.y).pow(
                 2

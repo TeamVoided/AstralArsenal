@@ -8,6 +8,7 @@
     "CrimsonTimeMixin",
     "CrimsonTimeRendererMixin",
     "EnchantmentScreenMixin",
+    "HeldItemRendererMixin",
     "WorldRendererMixin"
   ],
   "injectors": {

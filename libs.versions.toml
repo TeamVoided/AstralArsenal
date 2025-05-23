@@ -2,19 +2,26 @@
 kotlin = "2.0.21"
 fabric-loom = "1.9-SNAPSHOT"
 iridium = "3.3.2"
-
+# Dependencies
+fzzy-config = "0.6.9+1.21"
 farrow = "1.0.0+arrow.1.2.4"
+# QoL
 modmenu = "11.0.3"
-waygl = "1.1.5+1.21"
-
-emi = "1.1.19+1.21.1"
+emi = "1.1.22+1.21.1"
+# Testing
+creative-works = "0.4.0"
+imguimc = "1.21.1-1.0.8"
 
 [libraries]
+# Dependencies
 farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
-waygl = { module = "net.wiredtomato:waygl", version.ref = "waygl" }
+fzzy-config = { module = "me.fzzyhmstrs:fzzy_config", version.ref = "fzzy-config" }
+# QoL
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
-
 emi = { module = "dev.emi:emi-fabric", version.ref = "emi" }
+# Testing
+creative-works = { module = "org.teamvoided:creative_works", version.ref = "creative-works" }
+imguimc = { module = "maven.modrinth:imgui-mc", version.ref = "imguimc" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
