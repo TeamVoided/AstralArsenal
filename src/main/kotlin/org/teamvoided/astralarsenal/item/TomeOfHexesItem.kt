@@ -77,12 +77,10 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
     )
 
 
-
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
         val pageFlip = (remainingUseTicks / 20)
         val pitchShift = world.random.nextFloat().times(0.3f).plus(0.7f)
         if (remainingUseTicks % max(1, pageFlip) == 0) {
-            world.playSoundFromEntity(user, SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.PLAYERS, 3.0f, pitchShift)
             if (world is ServerWorld) {
                 world.spawnParticles(
                     ParticleTypes.ENCHANT,
@@ -97,6 +95,9 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
                 )
             }
         }
+        if (endOfPageFlip.contains(200 - remainingUseTicks)){
+            world.playSoundFromEntity(user, SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.PLAYERS, 3.0f, pitchShift)
+        }
         if (remainingUseTicks == 1) {
             world.playSoundFromEntity(user, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 3.0f, 0.5f)
             var effect = hexAppliers.get(world.random.rangeInclusive(0, 5))
@@ -107,8 +108,8 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
                 effect = hexAppliers.get(number)
                 amplifier = 1
             }
-            if (user is PlayerEntity) {
-                for (hex in hexAppliers){
+            if (user is PlayerEntity && world is ServerWorld) {
+                for (hex in hexAppliers) {
                     user.removeStatusEffect(hex)
                 }
                 user.addStatusEffect(StatusEffectInstance(effect, 2400, amplifier))
@@ -129,10 +130,12 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
                 effect = hexes.get(number)
                 amplifier = 1
             }
-            for (hex in hexes){
-                user.removeStatusEffect(hex)
+            if (world is ServerWorld) {
+                for (hex in hexes) {
+                    user.removeStatusEffect(hex)
+                }
+                user.addStatusEffect(StatusEffectInstance(effect, 200, amplifier, false, false, true))
             }
-            user.addStatusEffect(StatusEffectInstance(effect, 200, amplifier, false, false, true))
             user.itemCooldownManager.set(this, 200)
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)
@@ -144,4 +147,17 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
     }
 
     override fun getUseAction(stack: ItemStack): UseAction = UseAction.BLOCK
+
+    val endOfPageFlip = listOf(
+        9,
+        29, 39,
+        49, 59,
+        69, 74, 79, 84,
+        89, 94, 99, 104,
+        109, 113, 117, 121, 125,
+        129, 133, 137, 141, 145,
+        149, 151, 153, 155, 157, 159, 161, 163, 165, 167,
+        169, 171, 173, 175, 177, 179, 181, 183, 185, 187,
+        189, 191, 193, 195, 197, 199, 201
+    )
 }

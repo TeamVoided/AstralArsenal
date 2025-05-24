@@ -17,12 +17,13 @@ import net.minecraft.util.Hand
 import net.minecraft.util.math.Axis
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.init.AstralItems
-import org.teamvoided.creative_works.client.DebugWidgetRegistry.addFloat
+
+//import org.teamvoided.creative_works.client.DebugWidgetRegistry.addFloat
 
 object CustomUseAnimation {
 
     // (ender) ID for model that you want to render
-    val PAGE_MODEL_ID = id("item/eat_yum_yum_page")
+    val PAGE_MODEL_ID = id("item/page_of_hexes")
 
     // (ender) model that get cashed so ity doest have to be gotten form the manager every frame
     var pageModel: BakedModel? = null
@@ -40,8 +41,8 @@ object CustomUseAnimation {
         }
         // (ender) ResourcePackReloadEvent set `pageModel` to be null when Resource packs reload so things don't break
         // if you add more model remember to also reset them
-        ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES)
-            .registerReloadListener(ResourcePackReloadEvent)
+        //ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES)
+        //.registerReloadListener(ResourcePackReloadEvent)
     }
 
     // --- DEBUGGING CODE ---
@@ -49,7 +50,7 @@ object CustomUseAnimation {
     // (ender)
     // Adds an angle widget to CW's widget menu
     // (Can be opened with `v` by default)
-    val rotation = addFloat("angle", 90f)
+    //val rotation = addFloat("angle", 90f)
 
     // --- END OF DEBUGGING CODE ---
 
@@ -76,6 +77,18 @@ object CustomUseAnimation {
         )
     }
 
+    val PageStartFlip = listOf(
+        1,
+        20, 30,
+        40, 50,
+        60, 65, 70, 75,
+        80, 85, 90, 95,
+        100, 104, 108, 112, 116,
+        120, 124, 128, 132, 136,
+        140, 142, 144, 146, 148, 150, 152, 154, 156, 158,
+        160, 162, 164, 166, 168, 170, 172, 174, 176, 178,
+        180, 182, 184, 186, 188, 190, 192, 194, 196, 198, 200
+    )
 
     private fun renderCustomPage(
         player: AbstractClientPlayerEntity,
@@ -88,30 +101,48 @@ object CustomUseAnimation {
         isLeftHand: Boolean,
     ) {
         if (stack.isEmpty) return
-        if (!stack.isOf(AstralItems.EAT_YUM_YUM)) return
+        if (!stack.isOf(AstralItems.TOME_OF_HEXES)) return
         // (ender) checks if player is using item
         if (!player.isUsingItem) return
 
-        matrices.push()
         val usageTicks = player.itemUseTimeLeft
-        // (ender) display usage ticks, if this is 0 and doesn't change you don't have use ticks implemented
-        player.sendMessage(Text.literal("UsageTicks: $usageTicks"), true)
 
-        // (ender) does the funny ration
-        matrices.rotateAround(
-            // (ender) the rotation
-            Axis.Y_NEGATIVE.rotationDegrees(rotation.get()),
-            // (ender) rotates around this point
-            0f, 0f, 0f
-        )
+        repeat(9) {
+            if (PageStartFlip.contains(200 - (usageTicks - it))) {
+                val rotationState = it
 
-        // (ender) Renders a custom model as item model
-        MinecraftClient.getInstance().itemRenderer.renderItem(
-            stack, modelTransformationMode, isLeftHand,
-            matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV,
-            pageModel
-        )
-        matrices.pop()
+                matrices.push()
+                // (ender) display usage ticks, if this is 0 and doesn't change you don't have use ticks implemented
+                //player.sendMessage(Text.literal("UsageTicks: $usageTicks"), true)
+
+                //(astra) Translates the matrix
+                matrices.translate(-0.562f, 0.27f, -0.7f)
+
+                val rotation = 22.5f + (15 * (9 - rotationState))
+
+                // (ender) does the funny ration
+                matrices.rotateAround(
+                    // (ender) the rotation
+                    Axis.X_NEGATIVE.rotationDegrees(124f),
+                    // (ender) rotates around this point
+                    0f, 0f, 0f
+                )
+                matrices.rotateAround(
+                    // (ender) the rotation
+                    Axis.Z_NEGATIVE.rotationDegrees(rotation),
+                    // (ender) rotates around this point
+                    0f, 0f, 0f
+                )
+
+                // (ender) Renders a custom model as item model
+                MinecraftClient.getInstance().itemRenderer.renderItem(
+                    stack, modelTransformationMode, isLeftHand,
+                    matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV,
+                    pageModel
+                )
+                matrices.pop()
+            }
+        }
     }
 
 }

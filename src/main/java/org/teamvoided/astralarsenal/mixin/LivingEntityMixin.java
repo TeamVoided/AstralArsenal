@@ -34,8 +34,7 @@ import org.teamvoided.astralarsenal.util.UtilKt;
 
 import java.util.Optional;
 
-import static org.teamvoided.astralarsenal.util.HexAplicationKt.removeHexes;
-import static org.teamvoided.astralarsenal.util.HexAplicationKt.tickDownPositiveEffects;
+import static org.teamvoided.astralarsenal.util.HexAplicationKt.*;
 import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmogliphs;
 
 @Mixin(LivingEntity.class)
@@ -113,6 +112,7 @@ public abstract class LivingEntityMixin extends Entity implements EntityHexAcces
     public void tick(CallbackInfo ci) {
         removeHexes(astralArsenal$me);
         tickDownPositiveEffects(astralArsenal$me);
+        tickDownHealth(astralArsenal$me);
 
         if (!astralArsenal$me.getWorld().isClient) {
             Optional<StatusEffectInstance> tomeEffects = astralArsenal$me.getStatusEffects().stream()
