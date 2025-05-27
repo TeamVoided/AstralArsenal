@@ -33,7 +33,7 @@ class PulveriserKosmogliph(id: Identifier) :
             return
         }
         val usedTicks = getUseTicks(stack, user) - remainingUseTicks
-        if (usedTicks == 20 || usedTicks == 50 || usedTicks == 100) {
+        if (usedTicks == 20 || usedTicks == 60 || usedTicks == 100) {
             world.playSound(
                 user.pos, SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.PLAYERS, 1.0F, 1.0f
             )
@@ -44,7 +44,7 @@ class PulveriserKosmogliph(id: Identifier) :
         val usedTicks = getUseTicks(stack, user) - remainingUseTicks
         val tickBoost = (
                 if (usedTicks >= 100) 2.5
-                else if (usedTicks >= 50) 2.0
+                else if (usedTicks >= 60) 2.0
                 else 1.5
                 )
         if (usedTicks >= 20) {

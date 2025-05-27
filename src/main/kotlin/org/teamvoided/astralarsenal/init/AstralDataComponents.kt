@@ -23,6 +23,8 @@ object AstralDataComponents {
     val NAILGUN_DATA = registerSimple("nailgun_data", NailCannonDataV1.CODEC)
     val NAILGUN_COOLDOWN_DATA = registerSimple("nailgun_cooldown_data", NailCannonCooldownData.CODEC)
 
+    val TOME_OF_HEXES_DATA = registerSimple("tome_of_hexes_data", TomeOfHexesData.CODEC)
+
     val ALCHEMIST_DATA = registerSimple("alchemist_data", AlchemistData.CODEC)
 
     val PULVERISER_DATA = registerSimple("pulveriser_data", PulveriserData.CODEC)

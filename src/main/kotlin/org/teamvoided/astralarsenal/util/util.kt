@@ -95,12 +95,21 @@ fun ServerCommandSource.error(text: String): Int {
 
 // Accuracy is the highest the random can go, this should most commonly be set to 100 for accuracy of 1%, but can go higher if need be.
 // Chance is just the chance, out of the accuracy, that it should succeed. e.g. if accuracy is 100, and you want a 40% chance, chance should be 40.
-fun randomBool(accuracy: Int, chance: Int, world: World) : Boolean{
+fun randomBool(accuracy: Int, chance: Int, world: World): Boolean {
     val random = world.random.rangeInclusive(0, accuracy)
     return chance >= random
 }
 
-fun sillyLightningTime(pos1: Vec3d, pos2: Vec3d, world: ServerWorld, minBends: Int, maxBends: Int, boltTicks: Int, thickness: Float, randMult: Double) {
+fun sillyLightningTime(
+    pos1: Vec3d,
+    pos2: Vec3d,
+    world: ServerWorld,
+    minBends: Int,
+    maxBends: Int,
+    boltTicks: Int,
+    thickness: Float,
+    randMult: Double
+) {
     val bends = world.random.rangeInclusive(minBends, maxBends)
     val bendPos = mutableListOf<Vec3d>()
     bendPos.add(pos1)
@@ -223,16 +232,16 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
             if (pulveriserData.slamming) {
                 val explosionBehavior = (
                         if (ticks >= 100) MaceStrongPulverise(faller)
-                        else if (ticks >= 50) MacePulverise(faller)
+                        else if (ticks >= 60) MacePulverise(faller)
                         else MaceWeakPulverise(faller)
                         )
                 val sound = (
-                        if (ticks >= 100 || (ticks >= 50 && entity.fallDistance >= 10.0)) SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY
-                        else if (ticks >= 50 || entity.fallDistance >= 10.0) SoundEvents.ITEM_MACE_SMASH_GROUND
+                        if (ticks >= 100 || (ticks >= 60 && entity.fallDistance >= 10.0)) SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY
+                        else if (ticks >= 60 || entity.fallDistance >= 10.0) SoundEvents.ITEM_MACE_SMASH_GROUND
                         else SoundEvents.ITEM_MACE_SMASH_AIR
                         )
                 val gustSize = (
-                        if (ticks >= 100 || (ticks >= 50 && entity.fallDistance >= 10.0)) ParticleTypes.GUST_EMITTER_LARGE
+                        if (ticks >= 100 || (ticks >= 60 && entity.fallDistance >= 10.0)) ParticleTypes.GUST_EMITTER_LARGE
                         else ParticleTypes.GUST_EMITTER_SMALL
                         )
                 val power = min((2.0 + (0.03 * faller.fallDistance)).toFloat(), 5.0f)
@@ -268,17 +277,18 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
             if (isSlamming) {
                 if (faller.isOnGround) {
                     faller.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
-                    faller.addStatusEffect(
-                        StatusEffectInstance(
-                            AstralEffects.SLAM_JUMP,
-                            20,
-                            //(faller.fallDistance + 2).roundToInt(),  [previous amplifier equation in case we want to bring it back - Astra]
-                            5,
-                            false,
-                            false,
-                            true
+                    if (faller.world is ServerWorld) {
+                        faller.addStatusEffect(
+                            StatusEffectInstance(
+                                AstralEffects.SLAM_JUMP,
+                                20,
+                                5,
+                                false,
+                                false,
+                                true
+                            )
                         )
-                    )
+                    }
                     stack.set(SLAM_DATA, SlamData(0.0f, false))
 //                    if(entity.world is ServerWorld){
 //                        val serverWorld = entity.world as ServerWorld

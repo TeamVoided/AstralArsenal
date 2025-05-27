@@ -6,6 +6,7 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.projectile.ArrowEntity
 import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -33,6 +34,9 @@ class ShotgunKosmogliph(id: Identifier) :
             val projectile = world.getProjectileEntity(chargedProjectiles.projectiles[0], weapon, player, canPickUp)
             if (canPickUp) projectile.setProperties(player, player.pitch, player.yaw, 0.0f, 2.0f, 0.0f)
             else projectile.setShootVelocity(player.pitch, player.yaw, 0.0f, 2.0f, 10.0f)
+            if (projectile is ArrowEntity){
+                projectile.isCritical = false
+            }
             world.spawnEntity(projectile)
         }
         world.playSound(

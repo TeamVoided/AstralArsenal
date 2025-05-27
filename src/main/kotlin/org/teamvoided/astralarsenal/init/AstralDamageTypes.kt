@@ -30,6 +30,7 @@ object AstralDamageTypes : RegistryBootstrapper<DamageType>(RegistryKeys.DAMAGE_
     //Keeping this for future use with the shotgun.
     val ELECTROSTATICED = register("electrostaticed") { DamageType("electrostaticed", DamageScalingType.NEVER, 0f) }
 
+    @JvmStatic
     fun Entity.customDamage(
         type: RegistryKey<DamageType>, amount: Float, source: Entity? = null, attacker: Entity? = null
     ): Boolean = this.damage(this.damageSources.create(type, source, attacker), amount)

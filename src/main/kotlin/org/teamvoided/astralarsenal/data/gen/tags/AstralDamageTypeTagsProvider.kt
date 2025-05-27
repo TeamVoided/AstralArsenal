@@ -117,6 +117,7 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.BURN)
             .add(AstralDamageTypes.RICHOCHET)
             .add(AstralDamageTypes.NAILED)
+            .add(AstralDamageTypes.DRAIN)
 
         getOrCreateTagBuilder(DamageTypeTags.AVOIDS_GUARDIAN_THORNS)
             .forceAddTag(AstralDamageTypeTags.IS_PLASMA)
@@ -132,6 +133,9 @@ class AstralDamageTypeTagsProvider(o: FabricDataOutput, r: CompletableFuture<Hol
             .add(AstralDamageTypes.PULVERISED)
             .add(AstralDamageTypes.FROZEN)
             .add(AstralDamageTypes.INCINERATED)
+
+        getOrCreateTagBuilder(DamageTypeTags.BYPASSES_INVULNERABILITY)
+            .add(AstralDamageTypes.DRAIN)
 
     }
 }

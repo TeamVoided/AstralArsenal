@@ -6,6 +6,7 @@
   "mixins": [
     "AbstractBlockMixin",
     "AnvilScreenHandlerMixin",
+    "ArrowEntityMixin",
     "BowKosmogliphUseEvents",
     "BowMixin",
     "DamageReductionMixin",
@@ -16,6 +17,7 @@
     "KosmogliphAirSpeedMixin",
     "LastDamageTakenAccessor",
     "LivingEntityMixin",
+    "PersistantProjectileEntityMixin",
     "PersistentProjectileEntityAccessor",
     "RangedWeaponItemMixin",
     "ServerPlayerInteractionManagerMixin",

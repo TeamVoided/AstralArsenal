@@ -24,6 +24,10 @@ class TomeRuneParticle(world: ClientWorld, x: Double, y: Double, z: Double, val 
         velocityY = 0.01
     }
 
+    override fun getBrightness(tint: Float): Int {
+        return 240
+    }
+
     override fun tick() {
         super.tick()
 

@@ -8,4 +8,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface PersistentProjectileEntityAccessor {
     @Accessor("inGround")
     boolean getInGround();
+
+    @Accessor("life")
+    int life();
 }

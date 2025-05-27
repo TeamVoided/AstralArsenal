@@ -7,7 +7,12 @@ import net.minecraft.util.StringIdentifiable
 
 enum class TomeRuneTexture(val textureName: String) : StringIdentifiable {
     IMPEDING("impeding"),
-    MAGNETISING("magnetising");
+    MAGNETISING("magnetising"),
+    BREACHING("breaching"),
+    DIMINISHING("diminishing"),
+    WEAKENING("weakening"),
+    BLAZING("blazing"),
+    CLEANSING("cleansing"),;
 
     override fun asString(): String {
         return textureName

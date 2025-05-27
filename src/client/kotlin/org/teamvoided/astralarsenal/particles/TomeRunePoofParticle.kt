@@ -29,6 +29,10 @@ class TomeRunePoofParticle(
         setSpriteForAge(provider)
     }
 
+    override fun getBrightness(tint: Float): Int {
+        return 120
+    }
+
     override fun getType(): ParticleTextureSheet? {
         return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE
     }

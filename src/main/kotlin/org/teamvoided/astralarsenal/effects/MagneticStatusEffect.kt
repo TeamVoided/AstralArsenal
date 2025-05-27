@@ -68,9 +68,7 @@ class MagneticStatusEffect : AstralStatusEffect {
                     projectile.velocityModified
                 }
             }
-            if (entity.world.time % 2 == 0L) {
-                sparkNearbyEntities(entity, entity)
-            }
+            sparkNearbyEntities(entity, entity)
         }
         return super.applyUpdateEffect(entity, amplifier)
     }
@@ -106,7 +104,7 @@ class MagneticStatusEffect : AstralStatusEffect {
                             ((base.world as ServerWorld)),
                             2,
                             5,
-                            2,
+                            1,
                             0.03f,
                             0.5
                         )

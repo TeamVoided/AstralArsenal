@@ -26,7 +26,7 @@ class ParticleStatusEffect(type: StatusEffectType, color: Int, particle: Particl
                 entity.z,
                 1,
                 width / 2.5,
-                height / 2.5,
+                height / 4.0,
                 width / 2.5,
                 0.0
             )

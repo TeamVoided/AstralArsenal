@@ -97,6 +97,21 @@ data class NailCannonCooldownData(val cooldown: Int, val fireCooldown: Int) : Si
     }
 }
 
+data class TomeOfHexesData(val beingUsed: Int) : SimpleStorageComponent {
+    override fun equals(other: Any?): Boolean {
+        return if (other == null || other !is TomeOfHexesData) return super.equals(other)
+        else true
+    }
+
+    companion object {
+        val DEFAULT: TomeOfHexesData = TomeOfHexesData(0)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> TomeOfHexesData(list[0]) },
+            { data -> listOf(data.beingUsed) }
+        )
+    }
+}
+
 data class AlchemistData(val contents: Optional<PotionContentsComponent>, val charges: Int) :
     SimpleStorageComponent {
     companion object {

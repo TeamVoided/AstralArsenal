@@ -7,6 +7,7 @@ import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.entity.effect.StatusEffectInstance
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
@@ -143,7 +144,21 @@ class BeamOfLightEntity : Entity {
                                 entity.setCharged(true)
                                 entity.owner = this.owner
                             } else {
-                                entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
+                                if (entity is PlayerEntity) {
+                                    entity.customDamage(
+                                        AstralDamageTypes.BEAM_OF_LIGHT,
+                                        this.DMG.toFloat(),
+                                        this,
+                                        owner
+                                    )
+                                } else {
+                                    entity.customDamage(
+                                        AstralDamageTypes.BEAM_OF_LIGHT,
+                                        this.DMG.toFloat() * 3f,
+                                        this,
+                                        owner
+                                    )
+                                }
                                 entity.addVelocity(0.0, THRUST, 0.0)
                                 entitiesHit.add(entity)
                             }

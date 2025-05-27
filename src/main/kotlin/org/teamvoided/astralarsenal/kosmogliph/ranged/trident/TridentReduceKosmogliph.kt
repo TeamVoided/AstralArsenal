@@ -20,9 +20,10 @@ class TridentReduceKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, Astr
         if (effects_two.isNotEmpty()) {
             effects_two.forEach {
                 val w = it.amplifier
-                bleed_levels += w + 6
+                bleed_levels += w
             }
         }
+        bleed_levels += 6
         victim.addStatusEffect(
             StatusEffectInstance(
                 AstralEffects.REDUCE,
