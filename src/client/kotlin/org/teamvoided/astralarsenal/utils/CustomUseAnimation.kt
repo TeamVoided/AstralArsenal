@@ -12,7 +12,6 @@ import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
 import net.minecraft.resource.ResourceType
-import net.minecraft.text.Text
 import net.minecraft.util.Hand
 import net.minecraft.util.math.Axis
 import org.teamvoided.astralarsenal.AstralArsenal.id
@@ -41,8 +40,8 @@ object CustomUseAnimation {
         }
         // (ender) ResourcePackReloadEvent set `pageModel` to be null when Resource packs reload so things don't break
         // if you add more model remember to also reset them
-        //ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES)
-        //.registerReloadListener(ResourcePackReloadEvent)
+        ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES)
+            .registerReloadListener(ResourcePackReloadEvent)
     }
 
     // --- DEBUGGING CODE ---
