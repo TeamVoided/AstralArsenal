@@ -14,6 +14,7 @@ import org.teamvoided.astralarsenal.util.hasKosmogliph
 object AstralHudRendering {
     private var rightIconTicks = 0
     private var leftIconTicks = 0
+    private var lowerIconTicks = 0
 
     @JvmField
     var crimsonCrosshair = false
@@ -27,12 +28,14 @@ object AstralHudRendering {
 
         if (rightIconTicks > 0) rightIconTicks--
         if (leftIconTicks > 0) leftIconTicks--
+        if (lowerIconTicks > 0) lowerIconTicks--
 
         graphics.matrices.push()
         RenderSystem.enableBlend()
 
         graphics.renderRightIcon(player)
         graphics.renderLeftIcon(player)
+        graphics.renderLowerIcon(player)
 
         RenderSystem.disableBlend()
         graphics.matrices.pop()
@@ -98,6 +101,35 @@ object AstralHudRendering {
                 (this.scaledWindowHeight / 2) - 5,
                 9,
                 9
+            )
+        }
+    }
+
+    private fun GuiGraphics.renderLowerIcon(player: ClientPlayerEntity) {
+        val chestplate = player.inventory.armor[2]
+        if (chestplate.isEmpty) return
+        if (!chestplate.hasKosmogliph(AstralKosmogliphs.ENDURANCE)) return
+        val uses = chestplate.get(AstralDataComponents.ENDURANCE_DATA)?.charges ?: return
+        if (uses < 3) lowerIconTicks = 40
+        if (lowerIconTicks <= 0) return
+
+        repeat(3){
+            val distance = (-10) + (10 * (it))
+            this.drawGuiTexture(
+                id("hud/endurance_charge_background"),
+                (this.scaledWindowWidth / 2) - 8 + 3 + distance,
+                (this.scaledWindowHeight / 2) - 5 - 12,
+                9, 9
+            )
+        }
+
+        repeat(uses){
+            val distance = (-10) + (10 * (it))
+            this.drawGuiTexture(
+                id("hud/endurance_charge"),
+                (this.scaledWindowWidth / 2) - 8 + 3 + distance,
+                (this.scaledWindowHeight / 2) - 5 - 12,
+                9, 9
             )
         }
     }

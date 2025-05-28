@@ -183,6 +183,21 @@ data class CapacitanceDataV2(
     }
 }
 
+data class EnduranceData(val charges: Int, val ticksTillCharge: Int) : SimpleStorageComponent {
+    override fun equals(other: Any?): Boolean {
+        return if (other == null || other !is EnduranceData) return super.equals(other)
+        else true
+    }
+
+    companion object {
+        val DEFAULT: EnduranceData = EnduranceData(0, 100)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> EnduranceData(list[0], list[1]) },
+            { data -> listOf(data.charges, data.ticksTillCharge) }
+        )
+    }
+}
+
 data class TotemData(val target: UUID?) : SimpleStorageComponent {
     companion object {
         val DEFAULT: TotemData = TotemData(null)

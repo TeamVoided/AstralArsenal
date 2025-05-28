@@ -6,6 +6,7 @@ import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.potion.Potion;
@@ -26,9 +27,15 @@ public class PersistantProjectileEntityMixin {
         if ((Object) this instanceof ArrowEntity arrow) {
             var potionContents = arrow.getStack().getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
             if (potionContents.hasEffects()) {
-                for (StatusEffectInstance statusEffectInstance : ((Potion) ((Holder) potionContents.potion().get()).value()).getEffects()) {
-                    var damage = i + 2 + (2 * statusEffectInstance.getAmplifier());
-                    customDamage(entityHitResult.getEntity(), DamageTypes.MAGIC, damage, arrow, arrow.getOwner());
+                for (StatusEffectInstance statusEffectInstance : ((Potion) ((Holder<?>) potionContents.potion().get()).value()).getEffects()) {
+                    if (i >= 3) {
+                        float dmg = (float) i;
+                        if (!(entityHitResult.getEntity() instanceof PlayerEntity)){
+                            dmg *= 1.5f;
+                        }
+                        var damage = dmg + 2 + (2 * statusEffectInstance.getAmplifier());
+                        customDamage(entityHitResult.getEntity(), DamageTypes.MAGIC, damage, arrow, arrow.getOwner());
+                    }
                 }
             }
         }

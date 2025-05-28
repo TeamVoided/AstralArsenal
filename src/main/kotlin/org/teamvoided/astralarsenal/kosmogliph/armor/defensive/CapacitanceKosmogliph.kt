@@ -39,9 +39,9 @@ import kotlin.math.roundToInt
 
 class CapacitanceKosmogliph(id: Identifier) :
     KosmogliphWithData(id, AstralDataComponents.CAPACITANCE_DATA_V1, AstralItemTags.SUPPORTS_CAPACITANCE) {
-    val MAX_PLAYER_DAMAGE = 15f
+    val MAX_PLAYER_DAMAGE = 10f
     val DISCHARGE_PERCENT_PER_HIT = 1.0f
-    val DAMAGE_TO_CHARGE = 0.75
+    val DAMAGE_TO_CHARGE = 1.0
     val TICKS_TO_DISCHARGE = 100
     val TICKS_BEFORE_DISCHARGE = 100
 
@@ -249,7 +249,6 @@ class CapacitanceKosmogliph(id: Identifier) :
         val targets = entities.size
         val damagePerEntity = damage / targets
         if (entities.isNotEmpty()) {
-            var count = 0
             for (entiity in entities) {
                 var tempDamageValue = damagePerEntity
                 if (entiity is PlayerEntity && tempDamageValue >= MAX_PLAYER_DAMAGE) {

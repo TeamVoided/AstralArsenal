@@ -37,6 +37,8 @@ object AstralDataComponents {
     val CAPACITANCE_DATA_V1 = registerSimple("capacitance_data_v1", CapacitanceDataV1.CODEC)
     val CAPACITANCE_DATA_V2 = registerSimple("capacitance_data_v2", CapacitanceDataV2.CODEC)
 
+    val ENDURANCE_DATA = registerSimple("endurance_data", EnduranceData.CODEC)
+
     val TOTEM_DATA = registerSimple("totem_data", TotemData.CODEC)
 
     val SLUDGE_DATA = registerSimple("sludge_data", SludgeCooldownData.CODEC)

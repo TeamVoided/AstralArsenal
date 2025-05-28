@@ -3,6 +3,7 @@ package org.teamvoided.astralarsenal.mixin;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,8 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage;
 import org.teamvoided.astralarsenal.pseudomixin.DamageReductionKt;
 
-import static org.teamvoided.astralarsenal.util.EffectDamageModifiersKt.effectCancelDamage;
-import static org.teamvoided.astralarsenal.util.EffectDamageModifiersKt.modifyDamage;
+import static org.teamvoided.astralarsenal.util.EffectDamageModifiersKt.*;
 import static org.teamvoided.astralarsenal.util.HexAplicationKt.applyHexes;
 
 @Mixin(LivingEntity.class)
@@ -27,6 +27,7 @@ public class DamageReductionMixin {
         damage = DamageReductionKt.kosmogliphDamageReductionCall(astralArsenal$self, damage, source, DamageModificationStage.PRE_EFFECT);
         damage = modifyDamage(astralArsenal$self, damage, source);
         damage = DamageReductionKt.kosmogliphDamageReductionCall(astralArsenal$self, damage, source, DamageModificationStage.POST_EFFECT);
+        cancelTomeOnHit(astralArsenal$self, source);
         return damage;
     }
 
@@ -38,7 +39,7 @@ public class DamageReductionMixin {
     }
 
     @Inject(method = "damage", at = @At("RETURN"))
-    private void apply(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+    private void apply(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity entity = (LivingEntity) (Object) this;
         applyHexes(source, entity);
     }

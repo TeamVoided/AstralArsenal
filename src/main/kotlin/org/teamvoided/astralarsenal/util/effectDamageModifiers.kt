@@ -22,6 +22,7 @@ import org.teamvoided.astralarsenal.init.AstralEffects.IMMORTAL
 import org.teamvoided.astralarsenal.init.AstralEffects.IMPALED
 import org.teamvoided.astralarsenal.init.AstralEffects.REDUCE
 import org.teamvoided.astralarsenal.init.AstralEffects.WEAKENED
+import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import kotlin.math.min
 
@@ -143,6 +144,10 @@ fun modifyDamage(entity: LivingEntity, damage: Float, source: DamageSource): Flo
         }
     }
 
+    //arrow against mob buff to compensate for power nerf
+    if (source.isType(DamageTypes.ARROW) && entity !is PlayerEntity){
+        output *= 1.5f
+    }
 
     return output
 }
@@ -157,4 +162,10 @@ fun effectCancelDamage(entity: LivingEntity, damage: Float, source: DamageSource
         return true
     }
     return false
+}
+
+fun cancelTomeOnHit(player: LivingEntity, source: DamageSource){
+    if (source.attacker is LivingEntity && player.isUsingItem && player.activeItem.item == AstralItems.TOME_OF_HEXES && player is PlayerEntity){
+        player.stopUsingItem()
+    }
 }

@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
+import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
 import org.teamvoided.astralarsenal.entity.nails.NailEntity
@@ -69,7 +70,8 @@ class ReflectiveKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
                     barer.pos.y - 1,
                     barer.pos.z - 3
                 )
-            ).filter { it !is PersistentProjectileEntity || !(it as PersistentProjectileEntityAccessor).inGround }
+            ).filter { (it !is PersistentProjectileEntity || !(it as PersistentProjectileEntityAccessor).inGround) && it.type.isIn(
+                AstralEntityTags.REFLECTABLE_PROJECTILES) }
             for (entity in entities) {
                 if (entity is ProjectileEntity && !entitiesHit.contains(entity)) {
                     if (entity.owner != barer && entity !is BeamOfLightArrowEntity && barer is LivingEntity) {

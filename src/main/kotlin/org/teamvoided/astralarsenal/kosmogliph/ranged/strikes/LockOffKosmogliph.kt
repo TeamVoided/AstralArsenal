@@ -97,7 +97,7 @@ class LockOffKosmogliph(
                 1.0f
             )
             if (!player.isCreative) {
-                player.itemCooldownManager.set(player.getStackInHand(hand).item, 100)
+                player.itemCooldownManager.set(player.getStackInHand(hand).item, 600)
             }
             if (hand == Hand.MAIN_HAND) {
                 stack.damageEquipment(1, player, EquipmentSlot.MAINHAND)

@@ -75,7 +75,7 @@ class DashKosmogliph(id: Identifier) :
                 player.addStatusEffect(
                     StatusEffectInstance(
                         AstralEffects.IMMORTAL,
-                        5, 1,
+                        3, 1,
                         false, false, false
                     )
                 )

@@ -140,7 +140,7 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
                 world.spawnParticles(
                     TomeRuneParticleEffect(AstralParticles.TOME_RUNE, textures[effectNo]),
                     user.x,
-                    user.y + 2.3,
+                    user.y + 2.6,
                     user.z,
                     1,
                     0.0,
@@ -151,12 +151,12 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
                 world.spawnParticles(
                     AstralParticles.TOME_RUNE_POOF,
                     user.x,
-                    user.y + 2.3,
+                    user.y + 2.6,
                     user.z,
-                    30,
-                    0.3,
-                    0.3,
-                    0.3,
+                    50,
+                    0.4,
+                    0.4,
+                    0.4,
                     0.02
                 )
 
@@ -226,7 +226,7 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
         return TypedActionResult(ActionResult.CONSUME_PARTIAL, player.getStackInHand(hand))
     }
 
-    override fun getUseAction(stack: ItemStack): UseAction = UseAction.BLOCK
+    override fun getUseAction(stack: ItemStack): UseAction = UseAction.NONE
 
     val endOfPageFlip = listOf(
         9,

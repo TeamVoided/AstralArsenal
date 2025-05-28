@@ -62,7 +62,7 @@ dependencies {
     modLocalRuntime(libs.emi)
 
     // Testing
-    modImplementation(libs.creative.works)
+    //modImplementation(libs.creative.works)
     modCompileOnly(libs.imguimc)
 }
 

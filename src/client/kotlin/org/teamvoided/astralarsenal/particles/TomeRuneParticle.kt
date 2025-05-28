@@ -18,7 +18,7 @@ class TomeRuneParticle(world: ClientWorld, x: Double, y: Double, z: Double, val 
 
     init {
         setSpriteForAge(0)
-        scale = 0.35F
+        scale = 0.5F
         maxAge = MAX_AGE
         collidesWithWorld = false
         velocityY = 0.01
@@ -57,7 +57,7 @@ class TomeRuneParticle(world: ClientWorld, x: Double, y: Double, z: Double, val 
     }
 
     companion object {
-        private const val FIRST_FRAME_DELAY = 20
+        private const val FIRST_FRAME_DELAY = 40
         private const val FRAME_COUNT = 9
         private const val FRAME_TIME = 2
         private const val MAX_AGE = FIRST_FRAME_DELAY + (FRAME_COUNT * FRAME_TIME)
