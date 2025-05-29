@@ -84,11 +84,11 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.endurance.desc",
-            "Reduces damage from melee sources by 50%."
+            "Reduces damage from melee sources by 30%. Gain up to 3 'defence charges' that are consumed when melee damage is taken. defence charges increase melee damage reduction to 70%."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.capacitance.desc",
-            "Reduces damage from electricity and light by 80% and stores some of the damage. After taking plasma damage, build up charge by taking damage, releasing all of it when either struck later, or after a cooldown."
+            "Reduces damage from electricity and light by 80% and stores the damage. After taking plasma damage, build up charge by taking damage, releasing all of it when either struck later, or after a cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.thermal.desc",
@@ -100,7 +100,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.reflective.desc",
-            "Reduces damage from projectiles by 50% and has a 70% chance to fling them back entirely."
+            "Reduces damage from certain projectiles such as arrows by 50% and has a 70% chance to fling them back entirely."
         )
 
         //weapons
@@ -126,7 +126,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.trident_reduce.desc",
-            "On hit, give 1 level of reduce. On ranged hit, give 6. Reduce causes entities to take 5% more damage per level. Repeated hits add levels."
+            "On hit, give 1 level of reduce. On ranged hit, give 6. Reduce causes entities to take 5% more damage per level. Repeated hits add levels. Reduce has no effect on magic and plasma damage."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.trident_bleed.desc",
@@ -162,7 +162,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.lock_off.desc",
-            "Replaces ammo with a lock-off arrow. When hitting an entity or landing on the ground it will charge up and give entities inside bleed and charge leak, causing them to take damage and be unable to recharge their movement kosmogliphs. 5 second cooldown."
+            "Replaces ammo with a lock-off arrow. When hitting an entity or landing on the ground it will charge up and give entities inside bleed and charge leak, causing them to take damage and be unable to recharge their movement kosmogliphs. 30e second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.time_bomb.desc",
@@ -275,7 +275,7 @@ class AstralEnTranslationProvider(
 
         //tome
         gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_breaching.desc", "Halves the effect of your opponents defensive kosmogliphs.")
-        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_blazing.desc", "Doubles the damage your opponent takes from frost and fire damage over time, and makes thermal less effective against these effects.")
+        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_blazing.desc", "Doubles the damage your opponent takes from frost and fire damage over time.")
         gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_impeding.desc", "Slows your opponent by 50%.")
         gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_diminishing.desc", "Slowly reduces your opponents max hp if they are not at full health.")
         gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_cleansing.desc", "Tripples the rate your opponent uses positive effects.")

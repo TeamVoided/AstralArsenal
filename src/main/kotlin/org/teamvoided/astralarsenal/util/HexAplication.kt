@@ -111,7 +111,7 @@ val hardDamage = listOf(
 fun tickDownHealth(entity: LivingEntity) {
     val effects = entity.statusEffects.filter { diminished.contains(it.effectType) }
     for (effect in effects) {
-        if (entity.world.time % (100 / (effect.amplifier + 1)) == 0L && entity.health <= entity.maxHealth - 1) {
+        if (entity.world.time % (50 / (effect.amplifier + 1)) == 0L && entity.health <= entity.maxHealth - 1) {
             val diminishedEffects = entity.statusEffects.filter { hardDamage.contains(it.effectType) }
             if (diminishedEffects.isNotEmpty()) {
                 for (hardDmg in diminishedEffects) {

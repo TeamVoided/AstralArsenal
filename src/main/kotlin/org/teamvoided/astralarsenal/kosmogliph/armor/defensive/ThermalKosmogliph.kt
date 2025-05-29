@@ -41,13 +41,7 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
             for (effect in effects) {
                 multiplyer = min(0.3 + (0.175 * (effect.amplifier + 1)), 1.0)
             }
-            val blazed = entity.statusEffects.filter { blazed.contains(it.effectType) }
-            if (blazed.isEmpty() || (!source.isType(AstralDamageTypes.FROZEN) && !source.isType(AstralDamageTypes.INCINERATED))) {
-                outputDamage = (outputDamage * multiplyer).toFloat()
-            }
-            else if(source.isType(AstralDamageTypes.FROZEN) || source.isType(AstralDamageTypes.INCINERATED)){
-                outputDamage = (outputDamage * 0.8).toFloat()
-                }
+            outputDamage = (outputDamage * multiplyer).toFloat()
         }
         return outputDamage
     }
@@ -57,12 +51,7 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
     )
 
     val preventers = listOf(
-        BREACHED,
-        BLAZED
-    )
-
-    val blazed = listOf(
-        BLAZED
+        BREACHED
     )
 
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {

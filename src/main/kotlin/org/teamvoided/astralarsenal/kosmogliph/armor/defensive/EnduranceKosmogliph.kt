@@ -81,7 +81,7 @@ class EnduranceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
                     charges++
                     world.playSoundFromEntity(
                         entity,
-                        SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE,
+                        SoundEvents.ITEM_ARMOR_EQUIP_CHAIN.value(),
                         SoundCategory.PLAYERS,
                         1.0f,
                         1.0f

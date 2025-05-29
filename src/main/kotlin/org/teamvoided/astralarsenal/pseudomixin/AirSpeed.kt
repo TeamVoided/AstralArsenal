@@ -17,7 +17,7 @@ fun airSpeedKosmogliphCall(entity: LivingEntity, speed: Float): Float {
     }
     val effects = entity.statusEffects.filter { impeded.contains(it.effectType) }
     for (effect in effects){
-        val reduction = max(1 - (0.25f * (effect.amplifier + 1)), 0f)
+        val reduction = max(1 - (0.125f * (effect.amplifier + 1)), 0f)
         speedOut *= reduction
     }
 

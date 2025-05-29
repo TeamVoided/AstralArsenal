@@ -144,7 +144,7 @@ object AstralEffects {
             0x191970, true
         ).addAttributeModifier(
             EntityAttributes.GENERIC_MOVEMENT_SPEED,
-            id("effect.impeded"), -0.025, EntityAttributeModifier.Operation.ADD_VALUE
+            id("effect.impeded"), -0.0125, EntityAttributeModifier.Operation.ADD_VALUE
         )
     )
     val MAGNETISING = register(

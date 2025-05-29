@@ -60,7 +60,7 @@ class MagneticStatusEffect : AstralStatusEffect {
                 if ((projectile !is CannonballEntity || projectile.getDmg() < 15)
                     && (projectile is ProjectileEntity && projectile.owner != entity)
                     && (projectile !is TridentEntity || !(projectile as TridentEntityAccessor).dealtDamage())
-                    //&& (projectile !is ArrowEntity || projectile.age <= 60) might come back -astra
+                    && (projectile !is ArrowEntity || projectile.age <= 40)
                 ) {
                     val str = strength * (amplifier + 1.0)
                     val desiredVec = entity.eyePos.subtract(projectile.eyePos)
@@ -89,7 +89,7 @@ class MagneticStatusEffect : AstralStatusEffect {
             ).filter {
                 it is ProjectileEntity && (it !is PersistentProjectileEntity || !(it as PersistentProjectileEntityAccessor).inGround) && it != cause && it != base && base.eyePos.distanceTo(
                     it.pos
-                ) <= range
+                ) <= range && (it !is ArrowEntity || it.age <= 40)
             }
         )
         if (entities.isNotEmpty()) {
