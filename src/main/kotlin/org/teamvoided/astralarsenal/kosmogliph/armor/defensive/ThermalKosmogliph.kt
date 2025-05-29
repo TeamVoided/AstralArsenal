@@ -9,8 +9,12 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
+import org.teamvoided.astralarsenal.init.AstralEffects.BLAZED
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
+import kotlin.math.min
 
 class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_THERMAL) }) {
     override fun modifyDamage(
@@ -32,13 +36,33 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
 
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_ICE) || source.isTypeIn(AstralDamageTypeTags.IS_FIRE)) {
-            outputDamage = (outputDamage * 0.3).toFloat()
+            val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
+            var multiplyer = 0.3
+            for (effect in effects) {
+                multiplyer = min(0.3 + (0.175 * (effect.amplifier + 1)), 1.0)
+            }
+            outputDamage = (outputDamage * multiplyer).toFloat()
         }
         return outputDamage
     }
 
+    val breached = listOf(
+        BREACHED
+    )
+
+    val preventers = listOf(
+        BREACHED
+    )
+
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
-        if (slot == 2) {
+        var bool = true
+        if (entity is LivingEntity) {
+            val effects = entity.statusEffects.filter { preventers.contains(it.effectType) }
+            for (effect in effects) {
+                bool = false
+            }
+        }
+        if (slot == 2 && bool) {
             if (entity.frozenTicks > 0) {
                 entity.frozenTicks = 0
             }

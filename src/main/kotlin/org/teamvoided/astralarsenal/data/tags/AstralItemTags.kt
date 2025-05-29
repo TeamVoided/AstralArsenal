@@ -74,11 +74,15 @@ object AstralItemTags {
     val SUPPORTS_PULVERISER = supports("pulveriser")
     val SUPPORTS_WIND_ERUPTION = supports("wind_eruption")
 
-    val SUPPORTS_GENERATOR = supports("generator")
-    val SUPPORTS_QUICKSHOT = supports("quickshot")
-    val SUPPORTS_TARGET = supports("target")
-
     val SUPPORTS_TOTEM = supports("totem")
+
+    val SUPPORTS_HEX_OF_BREACHING = supports("hex_of_breaching")
+    val SUPPORTS_HEX_OF_IMPEDING = supports("hex_of_impeding")
+    val SUPPORTS_HEX_OF_WEAKENING = supports("hex_of_weakening")
+    val SUPPORTS_HEX_OF_DIMINISHING = supports("hex_of_diminishing")
+    val SUPPORTS_HEX_OF_CLEANSING = supports("hex_of_cleansing")
+    val SUPPORTS_HEX_OF_BLAZING = supports("hex_of_blazing")
+    val SUPPORTS_HEX_OF_MAGNETISING = supports("hex_of_magnetising")
 
     val KOSMIC_TABLE_LEFT_FACING = create("kosmic_table/left_facing")
     val KOSMIC_TABLE_STRAIGHT = create("kosmic_table/straight")

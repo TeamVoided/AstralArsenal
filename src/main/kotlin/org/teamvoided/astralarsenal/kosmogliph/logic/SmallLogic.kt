@@ -4,6 +4,7 @@ import net.minecraft.component.DataComponentTypes
 import net.minecraft.item.*
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.item.NailCannonItem
+import org.teamvoided.astralarsenal.item.TomeOfHexesItem
 import org.teamvoided.astralarsenal.util.hasKosmogliph
 
 // (ender)
@@ -19,6 +20,7 @@ fun modifyItemUseSlowdown(stack: ItemStack): Float {
         is NailCannonItem -> 0.8f
         is MaceItem -> 0.7f
         is PotionItem -> 0.4f
+        is TomeOfHexesItem -> 0.1f
         else -> if (stack.get(DataComponentTypes.FOOD) != null) 0.4f else 0.5f
     }
 }

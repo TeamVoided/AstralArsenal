@@ -19,11 +19,13 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
+import org.apache.logging.log4j.core.jmx.Server
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralItems
+import org.teamvoided.astralarsenal.mixin.PersistentProjectileEntityAccessor
 import org.teamvoided.astralarsenal.util.playSound
 
 open class NailEntity : PersistentProjectileEntity {
@@ -33,6 +35,10 @@ open class NailEntity : PersistentProjectileEntity {
 
     constructor(world: World, owner: LivingEntity) : super(
         AstralEntities.NAIL_ENTITY, owner, world, Items.ARROW.defaultStack, AstralItems.NAILCANNON.defaultStack
+    )
+
+    constructor(x: Double, y: Double, z: Double, world: World) : super(
+        AstralEntities.NAIL_ENTITY, x, y, z, world, Items.ARROW.defaultStack, AstralItems.NAILCANNON.defaultStack
     )
 
     var nailType
@@ -54,15 +60,16 @@ open class NailEntity : PersistentProjectileEntity {
                 var effectLevel = 0
                 val currentEffect = hit.statusEffects.find { it.effectType == AstralEffects.CONDUCTIVE }
                 currentEffect?.let { effectLevel = it.amplifier + 1 }
-
-                hit.removeStatusEffect(AstralEffects.CONDUCTIVE)
-                hit.addStatusEffect(
-                    StatusEffectInstance(
-                        AstralEffects.CONDUCTIVE,
-                        400, effectLevel,
-                        false, false, true
+                if (hit.world is ServerWorld) {
+                    hit.removeStatusEffect(AstralEffects.CONDUCTIVE)
+                    hit.addStatusEffect(
+                        StatusEffectInstance(
+                            AstralEffects.CONDUCTIVE,
+                            400, effectLevel,
+                            false, false, true
+                        )
                     )
-                )
+                }
             } else if (nailType == NailType.IMPALE) {
                 var effectLevel = 0
                 val currentEffect = hit.statusEffects.find { it.effectType == AstralEffects.IMPALED }
@@ -91,6 +98,13 @@ open class NailEntity : PersistentProjectileEntity {
                 NailType.IMPALE -> Unit
             }
             this.world.playSound(this.pos, SoundEvents.ITEM_TRIDENT_HIT, SoundCategory.PLAYERS, 1.0F, 1.0f)
+            this.discard()
+        }
+    }
+
+    override fun age() {
+        super.age()
+        if ((this as PersistentProjectileEntityAccessor).life() >= 300) {
             this.discard()
         }
     }

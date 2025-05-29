@@ -135,7 +135,7 @@ class RancidBrewKosmogliph(id: Identifier) :
                         AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),
                         player,
                         player
-                    ), 8f
+                    ), if (entity is PlayerEntity) 8f else 16f
                 )
                 if (entity is CannonballEntity) {
                     world.createExplosion(
@@ -151,25 +151,26 @@ class RancidBrewKosmogliph(id: Identifier) :
                     )
                     entity.discard()
                 }
+                val duration = if(entity is PlayerEntity) 200 else 1000
                 if (entity is LivingEntity) {
                     entity.addStatusEffect(
                         StatusEffectInstance(
                             StatusEffects.SLOWNESS,
-                            200, 0,
+                            duration, 0,
                             false, true, true
                         )
                     )
                     entity.addStatusEffect(
                         StatusEffectInstance(
                             StatusEffects.WEAKNESS,
-                            200, 0,
+                            duration, 0,
                             false, true, true
                         )
                     )
                     entity.addStatusEffect(
                         StatusEffectInstance(
                             AstralEffects.BLEED,
-                            200, 0,
+                            duration, 0,
                             false, true, true
                         )
                     )

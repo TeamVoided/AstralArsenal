@@ -1,16 +1,177 @@
 package org.teamvoided.astralarsenal.item
 
+import net.minecraft.entity.Entity
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.particle.ParticleTypes
+import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundCategory
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.UseAction
+import net.minecraft.util.math.Box
+import net.minecraft.util.math.Vec3d
+import net.minecraft.world.RaycastContext
+import net.minecraft.world.RaycastContext.FluidHandling
+import net.minecraft.world.RaycastContext.ShapeType
 import net.minecraft.world.World
+import org.joml.Math.lerp
+import org.joml.Vector3f
+import org.teamvoided.astralarsenal.entity.BeamRenderEntity
+import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralEffects
+import org.teamvoided.astralarsenal.init.AstralSounds
+import org.teamvoided.astralarsenal.util.hasKosmogliphs
+import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
+import kotlin.math.pow
+import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 class RailgunItem(settings: Settings) : Item(settings) {
-    override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
-        return super.use(world, user, hand)
+
+    val unhealable = listOf(
+        AstralEffects.UNHEALABLE_DAMAGE
+    )
+
+    override fun use(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
+        if (!player.getStackInHand(hand).hasKosmogliphs()) {
+            val vec3d: Vec3d = player.getLerpedEyePos(1f)
+            val vec3d2: Vec3d = player.getRotationVec(1f)
+            val vec3d3 = vec3d.add(vec3d2.x * 100.0, vec3d2.y * 100.0, vec3d2.z * 100.0)
+            val result =
+                player.getWorld().raycast(RaycastContext(vec3d, vec3d3, ShapeType.COLLIDER, FluidHandling.NONE, player))
+            val distance = sqrt(
+                sqrt((player.eyePos.x - result.pos.x).pow(2) + (player.eyePos.z - result.pos.z).pow(2)).pow(2) + ((player.eyePos.y - 0.5) - result.pos.y).pow(
+                    2
+                )
+            )
+            val entities = mutableListOf<Entity>()
+            val hitEntities = mutableListOf<Entity>()
+            val interval = (distance.times(2))
+            for (i in 0..interval.roundToInt()) {
+                entities.addAll(
+                    world.getOtherEntities(
+                        player, Box(
+                            (lerp(player.eyePos.x, result.pos.x, i / interval)) + 0.5,
+                            (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) + 0.5,
+                            (lerp(player.eyePos.z, result.pos.z, i / interval)) + 0.5,
+                            (lerp(player.eyePos.x, result.pos.x, i / interval)) - 0.5,
+                            (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
+                            (lerp(player.eyePos.z, result.pos.z, i / interval)) - 0.5
+                        )
+                    )
+                )
+                if (!player.world.isClient) {
+                    val serverWorld = player.world as ServerWorld
+                    serverWorld.spawnParticles(
+                        ParticleTypes.END_ROD,
+                        (lerp(player.eyePos.x, result.pos.x, i / interval)),
+                        (lerp(player.eyePos.y - 0.5, result.pos.y, i / interval)),
+                        (lerp(player.eyePos.z, result.pos.z, i / interval)),
+                        1,
+                        0.2,
+                        0.2,
+                        0.2,
+                        0.0
+                    )
+
+                }
+            }
+            world.playSound(
+                null,
+                player.x,
+                player.y,
+                player.z,
+                AstralSounds.RAILGUN,
+                SoundCategory.PLAYERS,
+                6.0F,
+                2.0f
+            )
+            world.playSound(
+                null,
+                player.x,
+                player.y,
+                player.z,
+                AstralSounds.RAILGUN,
+                SoundCategory.PLAYERS,
+                5.0F,
+                0.75f
+            )
+            world.playSound(
+                null,
+                player.x,
+                player.y,
+                player.z,
+                AstralSounds.RAILGUN,
+                SoundCategory.PLAYERS,
+                4.0F,
+                0.5f
+            )
+            if (world is ServerWorld) {
+                val beamRenderer = BeamRenderEntity(world, player.x, player.y + 1, player.z)
+                beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x007df9ff)
+                beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab)
+                beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 10)
+                beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 8)
+                beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
+                beamRenderer.dataTracker.set(
+                    BeamRenderEntity.OriginPos,
+                    Vector3f(player.x.toFloat(), (player.y + 1).toFloat(), player.z.toFloat())
+                )
+                beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
+                beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
+                beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
+                beamRenderer.setPosition(player.x, player.y + 1, player.z)
+                world.spawnEntity(beamRenderer)
+            }
+            for (entity in entities) {
+                if (!hitEntities.contains(entity)) {
+                    if (entity is CannonballEntity) {
+                        world.createExplosion(
+                            entity,
+                            entity.damageSources.explosion(entity, player),
+                            StrongExplosionBehavior(player),
+                            entity.x,
+                            entity.y,
+                            entity.z,
+                            2.0f,
+                            false,
+                            World.ExplosionSourceType.TNT
+                        )
+                        entity.discard()
+                    }
+                    val rand = world.random.rangeInclusive(1, 10)
+                    if (entity is PlayerEntity) {
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.NON_RAILED),
+                                player,
+                                player
+                            ), 2.5f
+                        )
+                    } else if (entity is LivingEntity) {
+                        entity.addStatusEffect(StatusEffectInstance(AstralEffects.CONDUCTIVE, 20, 3))
+                        entity.damage(
+                            DamageSource(
+                                AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),
+                                player,
+                                player
+                            ), 5f
+                        )
+                    }
+                    hitEntities.add(entity)
+                }
+            }
+            if (!player.isCreative) {
+                player.itemCooldownManager.set(player.getStackInHand(hand).item, 600)
+            }
+        }
+        return super.use(world, player, hand)
     }
 
     override fun getUseAction(stack: ItemStack?): UseAction {

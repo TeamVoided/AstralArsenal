@@ -1,18 +1,19 @@
 package org.teamvoided.astralarsenal.init
 
+import net.minecraft.item.FoodComponent
 import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraft.item.ToolMaterials
 import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderLookup.RegistryLookup
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.util.Rarity
+import net.minecraft.util.UseAction
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.AstralArsenal.id
-import org.teamvoided.astralarsenal.item.AstralGreathammerItem
-import org.teamvoided.astralarsenal.item.CannonballItem
-import org.teamvoided.astralarsenal.item.NailCannonItem
-import org.teamvoided.astralarsenal.item.RailgunItem
+import org.teamvoided.astralarsenal.item.*
+import java.util.*
 import java.util.stream.Stream
 
 @Suppress("unused")
@@ -29,6 +30,8 @@ object AstralItems {
     val AMETHYST = register("amethyst", Item(Item.Settings().rarity(Rarity.UNCOMMON)))
     val KOSMIC_GEM = register("kosmic_gem", Item(Item.Settings().rarity(Rarity.RARE)))
     val CANNONBALL = register("cannonball", CannonballItem(Item.Settings()))
+    val TOME_OF_HEXES = register("tome_of_hexes", TomeOfHexesItem(Item.Settings().rarity(Rarity.EPIC).maxCount(1)))
+    val CRYSTALINE_BLOOD = register("crystaline_blood", Item(Item.Settings().rarity(Rarity.RARE).maxCount(1)))
     val ASTRAL_GREATHAMMER = register(
         "astral_greathammer",
         AstralGreathammerItem(

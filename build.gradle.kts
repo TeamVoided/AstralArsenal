@@ -20,9 +20,22 @@ val modrinth_id: String? by project
 val curse_id: String? by project
 
 repositories {
-    maven("https://maven.teamvoided.org/releases")
-    maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
-    maven("https://maven.isxander.dev/releases") { name = "Xander Maven" }
+    maven("https://teamvoided.org/releases") {
+        content {
+            includeGroup("org.teamvoided")
+            includeGroup("net.wiredtomato")
+        }
+    }
+    maven("https://teamvoided.org/snapshots") { content { includeGroup("org.teamvoided") } }
+    maven("https://maven.fzzyhmstrs.me/") { name = "FzzyMaven"; content { includeGroup("me.fzzyhmstrs") } }
+    maven("https://maven.terraformersmc.com/") {
+        name = "Terraformers"
+        content {
+            includeGroup("com.terraformersmc")
+            includeGroup("dev.emi")
+        }
+    }
+    maven("https://api.modrinth.com/maven") { content { includeGroup("maven.modrinth") } }
     mavenCentral()
 }
 
@@ -48,9 +61,9 @@ dependencies {
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
 
-    /*if (org.gradle.internal.os.OperatingSystem.current().isLinux) {
-        modRuntimeOnly(libs.waygl)
-    }*/
+    // Testing
+    //modImplementation(libs.creative.works)
+    modCompileOnly(libs.imguimc)
 }
 
 loom {
@@ -118,12 +131,12 @@ uploadConfig {
 
     changeLog = File("changelog.md").readText()
 
-    // FabricApi
+// FabricApi
     modrinthDependency("P7dR8mSH", REQUIRED)
     curseDependency("fabric-api", REQUIRED)
-    // Fabric Language Kotlin
+// Fabric Language Kotlin
     modrinthDependency("Ha28R6CL", REQUIRED)
     curseDependency("fabric-language-kotlin", REQUIRED)
-    //Farrow
+//Farrow
     modrinthDependency("uH6SVTfs", EMBEDDED)
 }

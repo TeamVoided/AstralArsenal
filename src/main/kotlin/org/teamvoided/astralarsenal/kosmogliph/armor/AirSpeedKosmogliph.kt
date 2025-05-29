@@ -34,20 +34,6 @@ interface AirSpeedKosmogliph : Kosmogliph {
             entity.fallTime = 0
         else {
             entity.fallTime += 1
-//            if (entity.fallTime == TICKS_BEFORE_MODIFIED && entity is ServerPlayerEntity) {
-//                entity.networkHandler.send(
-//                    SoundPlayS2CPacket(
-//                        Holder.createDirect(SoundEvents.ENTITY_BREEZE_SLIDE),
-//                        SoundCategory.PLAYERS,
-//                        entity.x,
-//                        entity.y,
-//                        entity.z,
-//                        1.0F,
-//                        1.0F,
-//                        world.getRandom().nextLong()
-//                    )
-//                )
-//            }
         }
     }
 }

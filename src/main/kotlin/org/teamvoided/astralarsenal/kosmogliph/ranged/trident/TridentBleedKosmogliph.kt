@@ -10,6 +10,7 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralEffects
+import kotlin.math.min
 
 class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, AstralItemTags.SUPPORTS_TRIDENT_BLEED) {
     val over = listOf(AstralEffects.BLEED)
@@ -20,13 +21,14 @@ class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, Astra
         if (effects_two.isNotEmpty()) {
             effects_two.forEach {
                 val w = it.amplifier
-                bleed_levels += w + 5
+                bleed_levels += w
             }
         }
+        bleed_levels += 3
         victim.addStatusEffect(
             StatusEffectInstance(
                 AstralEffects.BLEED,
-                400, bleed_levels,
+                200, min(9, bleed_levels),
                 false, false, true
             )
         )
@@ -44,7 +46,7 @@ class TridentBleedKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, Astra
         target.addStatusEffect(
             StatusEffectInstance(
                 AstralEffects.BLEED,
-                400, bleed_levels,
+                200, min(9, bleed_levels),
                 false, false, true
             )
         )

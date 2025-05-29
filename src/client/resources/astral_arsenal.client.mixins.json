@@ -8,10 +8,11 @@
     "CrimsonTimeMixin",
     "CrimsonTimeRendererMixin",
     "EnchantmentScreenMixin",
+    "HeldItemRendererMixin",
+    "ParticleManagerAccessor",
     "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "mixins": []
+  }
 }

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
@@ -118,7 +119,10 @@ class BasicRailgunKosmogliph(id: Identifier) :
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 10)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 8)
             beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(player.x.toFloat(), (player.y + 1).toFloat(), player.z.toFloat()))
+            beamRenderer.dataTracker.set(
+                BeamRenderEntity.OriginPos,
+                Vector3f(player.x.toFloat(), (player.y + 1).toFloat(), player.z.toFloat())
+            )
             beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
             beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)

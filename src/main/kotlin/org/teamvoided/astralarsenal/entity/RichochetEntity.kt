@@ -198,12 +198,13 @@ class RichochetEntity : Entity {
                     entity
                 ))
             ) {
+                val damage = if (entity is PlayerEntity) dmg.toFloat() else dmg.toFloat() * 2
                 entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RICHOCHET),
                         cause,
                         cause
-                    ), dmg.toFloat()
+                    ), damage
                 )
                 if (entity is LivingEntity/*PlayerEntity*/) {
                     when {

@@ -7,6 +7,7 @@ import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.entity.effect.StatusEffectInstance
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
@@ -113,7 +114,8 @@ class BeamOfLightEntity : Entity {
                 )
                 beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, this.side.div(2).toFloat())
                 beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, this.side.div(2).toFloat())
-                beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, this.side.div(2).plus(1))
+                val innerCubes = if (DOT) 3 else this.side.div(2).plus(1)
+                beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, innerCubes)
                 beamRenderer.dataTracker.set(BeamRenderEntity.Opacity, 0.3f)
                 beamRenderer.setPosition(this.x, this.y, this.z)
                 world.spawnEntity(beamRenderer)
@@ -135,13 +137,32 @@ class BeamOfLightEntity : Entity {
                         )
                     )
                     for (entity in entities) {
-                        if (!entitiesHit.contains(entity) && entity is LivingEntity && !entity.type.isIn(
+                        if (!entitiesHit.contains(entity) && (entity is LivingEntity || entity is CannonballEntity) && !entity.type.isIn(
                                 AstralEntityTags.UNAFFECTED_BY_LIGHT
                             )
                         ) {
-                            entity.customDamage(AstralDamageTypes.BEAM_OF_LIGHT, this.DMG.toFloat(), this, owner)
-                            entity.addVelocity(0.0, THRUST, 0.0)
-                            entitiesHit.add(entity)
+                            if (entity is CannonballEntity) {
+                                entity.setCharged(true)
+                                entity.owner = this.owner
+                            } else {
+                                if (entity is PlayerEntity) {
+                                    entity.customDamage(
+                                        AstralDamageTypes.BEAM_OF_LIGHT,
+                                        this.DMG.toFloat(),
+                                        this,
+                                        owner
+                                    )
+                                } else {
+                                    entity.customDamage(
+                                        AstralDamageTypes.BEAM_OF_LIGHT,
+                                        this.DMG.toFloat() * 3f,
+                                        this,
+                                        owner
+                                    )
+                                }
+                                entity.addVelocity(0.0, THRUST, 0.0)
+                                entitiesHit.add(entity)
+                            }
                         }
                     }
                 }

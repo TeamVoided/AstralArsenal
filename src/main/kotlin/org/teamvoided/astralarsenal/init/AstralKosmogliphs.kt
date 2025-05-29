@@ -86,11 +86,11 @@ object AstralKosmogliphs {
     val HEAVY = register("heavy", ::HeavyKosmogliph)
     val REFLECTIVE = register("reflective", ::ReflectiveKosmogliph)
 
-    val BASIC_RAILGUN = register("basic_railgun", ::BasicRailgunKosmogliph)
+    val UNSTABLE_DISCHARGE = register("unstable_discharge", ::BasicRailgunKosmogliph)
     val EXPLOSIVE_BEAM = register("explosive_beam", ::ExplosiveBeamKosmogliph)
     val RAY_OF_FROST = register("ray_of_frost", ::RayofFrostKosmogliph)
     val RANCID_BREW = register("rancid_brew", ::RancidBrewKosmogliph)
-    val SNIPE = register("snipe", ::SnipeKosmogliph)
+    val DUAL_CALIBER = register("dual_caliber", ::SnipeKosmogliph)
     val RICOCHET = register("ricochet", ::RicochetKosmogliph)
 
     val CANNONBALL_LAUNCHER = register("cannonball_launcher", ::CannonballLauncherKosmogliph)
@@ -116,9 +116,13 @@ object AstralKosmogliphs {
     val PULVERISER = register("pulveriser", ::PulveriserKosmogliph)
     val WIND_ERUPTION = register("wind_eruption", ::WindEruptionKosmogliph)
 
-    val GENERATOR = registerSimple("generator", AstralItemTags.SUPPORTS_GENERATOR)
-    val QUICKSHOT = registerSimple("quickshot", AstralItemTags.SUPPORTS_QUICKSHOT)
-    val TARGET = registerSimple("target", AstralItemTags.SUPPORTS_TARGET)
+    val HEX_OF_BREACHING = registerSimple("hex_of_breaching", AstralItemTags.SUPPORTS_HEX_OF_BREACHING)
+    val HEX_OF_BLAZING = registerSimple("hex_of_blazing", AstralItemTags.SUPPORTS_HEX_OF_BLAZING)
+    val HEX_OF_DIMINISHING = registerSimple("hex_of_diminishing", AstralItemTags.SUPPORTS_HEX_OF_DIMINISHING)
+    val HEX_OF_IMPEDING = registerSimple("hex_of_impeding", AstralItemTags.SUPPORTS_HEX_OF_IMPEDING)
+    val HEX_OF_CLEANSING = registerSimple("hex_of_cleansing", AstralItemTags.SUPPORTS_HEX_OF_CLEANSING)
+    val HEX_OF_WEAKENING = registerSimple("hex_of_weakening", AstralItemTags.SUPPORTS_HEX_OF_WEAKENING)
+    val HEX_OF_MAGNETISING = registerSimple("hex_of_magnetising", AstralItemTags.SUPPORTS_HEX_OF_WEAKENING)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))

@@ -97,6 +97,21 @@ data class NailCannonCooldownData(val cooldown: Int, val fireCooldown: Int) : Si
     }
 }
 
+data class TomeOfHexesData(val beingUsed: Int) : SimpleStorageComponent {
+    override fun equals(other: Any?): Boolean {
+        return if (other == null || other !is TomeOfHexesData) return super.equals(other)
+        else true
+    }
+
+    companion object {
+        val DEFAULT: TomeOfHexesData = TomeOfHexesData(0)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> TomeOfHexesData(list[0]) },
+            { data -> listOf(data.beingUsed) }
+        )
+    }
+}
+
 data class AlchemistData(val contents: Optional<PotionContentsComponent>, val charges: Int) :
     SimpleStorageComponent {
     companion object {
@@ -164,6 +179,21 @@ data class CapacitanceDataV2(
         val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
             { list -> CapacitanceDataV2(list[0], list[1]) },
             { data -> listOf(data.dischargeTime, data.countdownTime) }
+        )
+    }
+}
+
+data class EnduranceData(val charges: Int, val ticksTillCharge: Int) : SimpleStorageComponent {
+    override fun equals(other: Any?): Boolean {
+        return if (other == null || other !is EnduranceData) return super.equals(other)
+        else true
+    }
+
+    companion object {
+        val DEFAULT: EnduranceData = EnduranceData(0, 100)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> EnduranceData(list[0], list[1]) },
+            { data -> listOf(data.charges, data.ticksTillCharge) }
         )
     }
 }

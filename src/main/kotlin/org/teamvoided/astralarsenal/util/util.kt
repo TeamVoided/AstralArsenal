@@ -28,9 +28,11 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import org.joml.Math.lerp
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.components.PulveriserData
 import org.teamvoided.astralarsenal.components.SlamData
+import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDataComponents.PULVERISER_DATA
@@ -89,6 +91,69 @@ fun ServerCommandSource.message(string: String): Int {
 fun ServerCommandSource.error(text: String): Int {
     this.sendError(Text.literal(text))
     return -1
+}
+
+// Accuracy is the highest the random can go, this should most commonly be set to 100 for accuracy of 1%, but can go higher if need be.
+// Chance is just the chance, out of the accuracy, that it should succeed. e.g. if accuracy is 100, and you want a 40% chance, chance should be 40.
+fun randomBool(accuracy: Int, chance: Int, world: World): Boolean {
+    val random = world.random.rangeInclusive(0, accuracy)
+    return chance >= random
+}
+
+fun sillyLightningTime(
+    pos1: Vec3d,
+    pos2: Vec3d,
+    world: ServerWorld,
+    minBends: Int,
+    maxBends: Int,
+    boltTicks: Int,
+    thickness: Float,
+    randMult: Double
+) {
+    val bends = world.random.rangeInclusive(minBends, maxBends)
+    val bendPos = mutableListOf<Vec3d>()
+    bendPos.add(pos1)
+    for (i in 0..<bends) {
+        val maxlerp: Double = (1.0 / bends) * i
+        val xrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0, 1)))).times(randMult)
+        val yrand = Math.pow(-1.0, i.toDouble()).times(randMult)
+        val zrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0, 1)))).times(randMult)
+        val ymin = 0 //((pos1.y - pos2.y) / (bends)) * i
+        bendPos.add(
+            Vec3d(
+                (lerp(pos1.x, pos2.x, maxlerp) + world.random.nextDouble().minus(0.5).times(xrand)),
+                lerp(pos1.y, pos2.y, maxlerp) + ymin + world.random.nextDouble()
+                    .minus(0.5).times(yrand),
+                lerp(pos1.z, pos2.z, maxlerp) + world.random.nextDouble().minus(0.5).times(zrand)
+            )
+        )
+    }
+    bendPos.add(pos2)
+    var count = 0
+    for (i in 0..<(bendPos.size - 1)) {
+        if (count > bendPos.size) {
+            break
+        }
+        count++
+        val a = bendPos[i]
+        val b = bendPos[i + 1]
+        val distance = a.distanceTo(b)
+        val beamRenderer = BeamRenderEntity(world, a.x, a.y, a.z)
+        beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x007df9ff.toInt())
+        beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
+        beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, boltTicks)
+        beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, boltTicks - 1)
+        beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y, b.z).toVector3f())
+        beamRenderer.dataTracker.set(
+            BeamRenderEntity.OriginPos,
+            Vector3f(a.x.toFloat(), (a.y).toFloat(), a.z.toFloat())
+        )
+        beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, thickness)
+        beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, thickness)
+        beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 2)
+        beamRenderer.setPosition(a.x, a.y, a.z)
+        world.spawnEntity(beamRenderer)
+    }
 }
 
 
@@ -167,16 +232,16 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
             if (pulveriserData.slamming) {
                 val explosionBehavior = (
                         if (ticks >= 100) MaceStrongPulverise(faller)
-                        else if (ticks >= 50) MacePulverise(faller)
+                        else if (ticks >= 60) MacePulverise(faller)
                         else MaceWeakPulverise(faller)
                         )
                 val sound = (
-                        if (ticks >= 100 || (ticks >= 50 && entity.fallDistance >= 10.0)) SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY
-                        else if (ticks >= 50 || entity.fallDistance >= 10.0) SoundEvents.ITEM_MACE_SMASH_GROUND
+                        if (ticks >= 100 || (ticks >= 60 && entity.fallDistance >= 10.0)) SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY
+                        else if (ticks >= 60 || entity.fallDistance >= 10.0) SoundEvents.ITEM_MACE_SMASH_GROUND
                         else SoundEvents.ITEM_MACE_SMASH_AIR
                         )
                 val gustSize = (
-                        if (ticks >= 100 || (ticks >= 50 && entity.fallDistance >= 10.0)) ParticleTypes.GUST_EMITTER_LARGE
+                        if (ticks >= 100 || (ticks >= 60 && entity.fallDistance >= 10.0)) ParticleTypes.GUST_EMITTER_LARGE
                         else ParticleTypes.GUST_EMITTER_SMALL
                         )
                 val power = min((2.0 + (0.03 * faller.fallDistance)).toFloat(), 5.0f)
@@ -212,17 +277,18 @@ fun fall(fallDistance: Double, onGround: Boolean, entity: LivingEntity, landedPo
             if (isSlamming) {
                 if (faller.isOnGround) {
                     faller.playSound(SoundEvents.ITEM_MACE_SMASH_GROUND)
-                    faller.addStatusEffect(
-                        StatusEffectInstance(
-                            AstralEffects.SLAM_JUMP,
-                            20,
-                            //(faller.fallDistance + 2).roundToInt(),  [previous amplifier equation in case we want to bring it back - Astra]
-                            5,
-                            false,
-                            false,
-                            true
+                    if (faller.world is ServerWorld) {
+                        faller.addStatusEffect(
+                            StatusEffectInstance(
+                                AstralEffects.SLAM_JUMP,
+                                20,
+                                5,
+                                false,
+                                false,
+                                true
+                            )
                         )
-                    )
+                    }
                     stack.set(SLAM_DATA, SlamData(0.0f, false))
 //                    if(entity.world is ServerWorld){
 //                        val serverWorld = entity.world as ServerWorld

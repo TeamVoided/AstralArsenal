@@ -17,42 +17,6 @@ import org.teamvoided.astralarsenal.util.playSound
 
 class AstralSlashKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ASTRAL_SLASH) && it.item !is AstralGreathammerItem }) {
-//    override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
-//        if (!world.isClient) {
-//            var w = -20
-//            repeat(40) {
-//                val snowballEntity = SlashEntity(world, player)
-//                snowballEntity.setDmg(5f)
-//                setPropertiesTwo(snowballEntity, player.pitch, player.yaw + w, 0.0f, 2.0f, 0.0f)
-//                world.spawnEntity(snowballEntity)
-//                w++
-//            }
-//            world.playSound(
-//                null,
-//                player.x,
-//                player.y,
-//                player.z,
-//                SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP,
-//                SoundCategory.PLAYERS,
-//                1.0F,
-//                1.0f
-//            )
-//            world.playSound(
-//                null,
-//                player.x,
-//                player.y,
-//                player.z,
-//                SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE,
-//                SoundCategory.PLAYERS,
-//                1.0F,
-//                1.0f
-//            )
-//            if (!player.isCreative) {
-//                player.itemCooldownManager.set(player.getStackInHand(hand).item, 200)
-//            }
-//        }
-//        return null
-//    }
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         player.setCurrentHand(hand)

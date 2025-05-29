@@ -2,6 +2,7 @@ package org.teamvoided.astralarsenal.data.gen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.registry.HolderLookup
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
@@ -26,6 +27,13 @@ class AstralEntityTagProvider(
             .add(EntityType.ENDER_PEARL)
             .add(EntityType.EYE_OF_ENDER)
             //.add(AstralEntities.NAIL_ENTITY)
+
+        getOrCreateTagBuilder(AstralEntityTags.REFLECTABLE_PROJECTILES)
+            .add(EntityType.ARROW)
+            .add(EntityType.TRIDENT)
+            .add(AstralEntities.NAIL_ENTITY)
+            .add(AstralEntities.CANNONBALL_ENTITY)
+            .add(EntityType.SPECTRAL_ARROW)
 
         getOrCreateTagBuilder(AstralEntityTags.UNAFFECTED_BY_LIGHT)
 //            .add(AstralEntities.ASTRAL_STRIKER)

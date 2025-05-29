@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.kosmogliph.armor.defensive
 
+import net.minecraft.block.enums.Thickness
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -16,6 +17,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import org.apache.logging.log4j.core.jmx.Server
 import org.joml.Math.lerp
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.components.CapacitanceDataV1
@@ -23,20 +25,23 @@ import org.teamvoided.astralarsenal.components.CapacitanceDataV2
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
+import org.teamvoided.astralarsenal.entity.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralDataComponents
+import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
+import org.teamvoided.astralarsenal.util.sillyLightningTime
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
 class CapacitanceKosmogliph(id: Identifier) :
     KosmogliphWithData(id, AstralDataComponents.CAPACITANCE_DATA_V1, AstralItemTags.SUPPORTS_CAPACITANCE) {
-    val MAX_PLAYER_DAMAGE = 15f
+    val MAX_PLAYER_DAMAGE = 10f
     val DISCHARGE_PERCENT_PER_HIT = 1.0f
-    val DAMAGE_TO_CHARGE = 0.75
+    val DAMAGE_TO_CHARGE = 1.0
     val TICKS_TO_DISCHARGE = 100
     val TICKS_BEFORE_DISCHARGE = 100
 
@@ -56,6 +61,13 @@ class CapacitanceKosmogliph(id: Identifier) :
             equipmentSlot,
             stage
         )
+        val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
+        var multiplyer = 0.2
+        var dtc = 1.0
+        for (effect in effects) {
+            multiplyer = min(0.2 + (0.2 * (effect.amplifier + 1)), 1.0)
+            dtc = max(0.0, 1 - (0.25 * (effect.amplifier + 1)))
+        }
         val data = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1.DEFAULT)
         val dataTwo = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V2, CapacitanceDataV2.DEFAULT)
         var dmg = data.damage
@@ -63,9 +75,9 @@ class CapacitanceKosmogliph(id: Identifier) :
         var countdownTime = dataTwo.countdownTime
         var outputDamage = damage
         if (source.isTypeIn(AstralDamageTypeTags.IS_PLASMA) || source.attacker is GuardianEntity || source.attacker is ElderGuardianEntity) {
-            outputDamage = (outputDamage * 0.2).toFloat()
+            outputDamage = (outputDamage * multiplyer).toFloat()
             countdownTime = TICKS_BEFORE_DISCHARGE
-            dmg += (damage * DAMAGE_TO_CHARGE).toFloat()
+            dmg += (damage * DAMAGE_TO_CHARGE * dtc).toFloat()
             entity.world.playSound(
                 null,
                 entity.x,
@@ -79,7 +91,7 @@ class CapacitanceKosmogliph(id: Identifier) :
         } else {
             if (countdownTime > 0) {
                 countdownTime = TICKS_BEFORE_DISCHARGE
-                dmg += (damage * DAMAGE_TO_CHARGE).toFloat()
+                dmg += (damage * DAMAGE_TO_CHARGE * dtc).toFloat()
                 entity.world.playSound(
                     null,
                     entity.x,
@@ -102,7 +114,16 @@ class CapacitanceKosmogliph(id: Identifier) :
                         damageToDeal = attacker.health
                     }
                     attacker.customDamage(AstralDamageTypes.RICHOCHET, damageToDeal, entity, entity)
-                    sillyLightningTime(entity.pos, attacker.pos, world)
+                    sillyLightningTime(
+                        Vec3d(entity.pos.x, entity.pos.y + (entity.height / 2f), entity.pos.z),
+                        Vec3d(attacker.pos.x, attacker.pos.y + (attacker.height / 2f), attacker.pos.z),
+                        world,
+                        3,
+                        5,
+                        6,
+                        0.1f,
+                        5.0
+                    )
                     if (dmg != damageToDeal) {
                         shockNearbyEntities(entity, attacker, dmg - damageToDeal)
                     } else {
@@ -141,6 +162,11 @@ class CapacitanceKosmogliph(id: Identifier) :
         return outputDamage
     }
 
+    val breached = listOf(
+        BREACHED
+    )
+
+
     override fun inventoryTick(stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean) {
         if (entity is LivingEntity && entity.getEquippedStack(EquipmentSlot.CHEST) == stack) {
             val data = stack.getOrDefault(AstralDataComponents.CAPACITANCE_DATA_V1, CapacitanceDataV1.DEFAULT)
@@ -157,7 +183,7 @@ class CapacitanceKosmogliph(id: Identifier) :
                         entity.x,
                         entity.y + (height / 2),
                         entity.z,
-                        max(1.0, (data.damage * 0.2)).roundToInt(),
+                        min(max(1.0, (data.damage * 0.2)), 4.0).roundToInt(),
                         width / 2.5,
                         height / 2.5,
                         width / 2.5,
@@ -182,6 +208,18 @@ class CapacitanceKosmogliph(id: Identifier) :
                 }
             } else if (dischargeTime > 0) {
                 dischargeTime--
+                if (world is ServerWorld && world.time % 2 == 0L) {
+                    repeat(2){
+                    sillyLightningTime(
+                        Vec3d(entity.pos.x, entity.pos.y + (entity.height / 2f), entity.pos.z),
+                        Vec3d(
+                            entity.x + (world.random.nextDouble().minus(0.5) * 5),
+                            entity.y + (world.random.nextDouble().minus(0.5) * 5) + (entity.height / 2f),
+                            entity.z + (world.random.nextDouble().minus(0.5) * 5)
+                        ), world, 1, 9, 2, 0.05f, 0.75
+                    )}
+                    sparkNearbyEntities(entity, entity)
+                }
                 if (dischargeTime <= 0) {
                     shockNearbyEntities(entity, entity, damage)
                     damage = 0.0f
@@ -206,12 +244,11 @@ class CapacitanceKosmogliph(id: Identifier) :
                     base.y - 10,
                     base.z - 10
                 )
-            ).filter { it is LivingEntity && it != cause && it != base }
+            ).filter { it is LivingEntity && it != cause && it != base && base.distanceTo(it) <= 10 }
         )
         val targets = entities.size
         val damagePerEntity = damage / targets
         if (entities.isNotEmpty()) {
-            var count = 0
             for (entiity in entities) {
                 var tempDamageValue = damagePerEntity
                 if (entiity is PlayerEntity && tempDamageValue >= MAX_PLAYER_DAMAGE) {
@@ -228,7 +265,16 @@ class CapacitanceKosmogliph(id: Identifier) :
                     ), tempDamageValue
                 )
                 if (base.world is ServerWorld) {
-                    sillyLightningTime(base.pos, entiity.pos, ((base.world as ServerWorld)))
+                    sillyLightningTime(
+                        Vec3d(base.pos.x, base.pos.y + (base.height / 2f), base.pos.z),
+                        Vec3d(entiity.pos.x, entiity.pos.y + (entiity.height / 2f), entiity.pos.z),
+                        ((base.world as ServerWorld)),
+                        3,
+                        5,
+                        6,
+                        0.2f,
+                        0.5
+                    )
                 }
             }
             cause.world.playSound(
@@ -252,6 +298,19 @@ class CapacitanceKosmogliph(id: Identifier) :
                 1.0F,
                 1.4f
             )
+            if (base.world is ServerWorld) {
+                val world = base.world as ServerWorld
+                repeat(10) {
+                    sillyLightningTime(
+                        Vec3d(base.pos.x, base.pos.y + (base.height / 2f), base.pos.z),
+                        Vec3d(
+                            base.x + (world.random.nextDouble().minus(0.5) * 9),
+                            base.y + (world.random.nextDouble().minus(0.5) * 9) + (base.height / 2f),
+                            base.z + (world.random.nextDouble().minus(0.5) * 9)
+                        ), world, 4, 5, 10, 0.05f, 1.0
+                    )
+                }
+            }
         }
         if (cause.world is ServerWorld) {
             val sworld = cause.world as ServerWorld
@@ -269,47 +328,52 @@ class CapacitanceKosmogliph(id: Identifier) :
         }
     }
 
-    fun sillyLightningTime(pos1: Vec3d, pos2: Vec3d, world: ServerWorld) {
-        val bends = world.random.rangeInclusive(3, 5)
-        val bendPos = mutableListOf<Vec3d>()
-        bendPos.add(pos1)
-        for (i in 0..<bends) {
-            val maxlerp: Double = (1.0 / bends) * i
-            val xrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0, 1)))).times(5)
-            val yrand = Math.pow(-1.0, i.toDouble()).times(5)
-            val zrand = Math.pow(-1.0, (i.toDouble().plus(world.random.rangeInclusive(0, 1)))).times(5)
-            val ymin = ((pos1.y - pos2.y) / (bends)) * i
-            bendPos.add(
-                Vec3d(
-                    (lerp(pos1.x, pos2.x, maxlerp) + world.random.nextDouble().minus(0.5).times(xrand)),
-                    lerp(pos1.y, pos2.y, maxlerp) + ymin + world.random.nextDouble()
-                        .minus(0.5).times(yrand),
-                    lerp(pos1.z, pos2.z, maxlerp) + world.random.nextDouble().minus(0.5).times(zrand)
+    fun sparkNearbyEntities(cause: Entity, base: Entity) {
+        val entities = mutableListOf<Entity>()
+        entities.addAll(
+            base.world.getOtherEntities(
+                cause, Box(
+                    base.x + 10,
+                    base.y + 10,
+                    base.z + 10,
+                    base.x - 10,
+                    base.y - 10,
+                    base.z - 10
                 )
-            )
-        }
-        bendPos.add(pos2)
-        var count = 0
-        for (i in 0..<(bendPos.size - 1)) {
-            if (count > bendPos.size) {
-                break
+            ).filter { (it is LivingEntity || it is CannonballEntity) && it != cause && it != base && base.distanceTo(it) <= 10 }
+        )
+        if (entities.isNotEmpty()) {
+            for (entiity in entities) {
+                if (base.world is ServerWorld) {
+                    sillyLightningTime(
+                        Vec3d(base.pos.x, base.pos.y + (base.height / 2f), base.pos.z),
+                        Vec3d(entiity.pos.x, entiity.pos.y + (entiity.height / 2f), entiity.pos.z),
+                        ((base.world as ServerWorld)),
+                        2,
+                        5,
+                        2,
+                        0.03f,
+                        0.5
+                    )
+                    if (entiity is CannonballEntity){
+                        entiity.setCharged(true)
+                    }
+                }
             }
-            count++
-            val a = bendPos[i]
-            val b = bendPos[i + 1]
-            val distance = a.distanceTo(b)
-            val beamRenderer = BeamRenderEntity(world, a.x, a.y + 1, a.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x007df9ff.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ababab.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
-            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
-            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, Vec3d(b.x, b.y + 1, b.z).toVector3f())
-            beamRenderer.dataTracker.set(BeamRenderEntity.OriginPos, Vector3f(a.x.toFloat(), (a.y + 1).toFloat(), a.z.toFloat()))
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.1f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.1f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 2)
-            beamRenderer.setPosition(a.x, a.y + 1, a.z)
-            world.spawnEntity(beamRenderer)
+        }
+        if (cause.world is ServerWorld && cause.world.time % 3.0 == 0.0) {
+            val sworld = cause.world as ServerWorld
+            sworld.spawnParticles(
+                ParticleTypes.END_ROD,
+                cause.x,
+                cause.eyeY,
+                cause.z,
+                1,
+                0.0,
+                0.0,
+                0.0,
+                0.3
+            )
         }
     }
 }

@@ -77,7 +77,7 @@ class DodgeKosmogliph(id: Identifier) :
                     player.addStatusEffect(
                         StatusEffectInstance(
                             AstralEffects.IMMORTAL,
-                            5, 1,
+                            3, 1,
                             false, false, false
                         )
                     )
@@ -196,7 +196,7 @@ class DodgeKosmogliph(id: Identifier) :
                 cooldown += 15
             }
         }
-        if (source.isType(AstralDamageTypes.EMP) || source.isType(AstralDamageTypes.ELECTROSTATICED)) {
+        if (source.isTypeIn(AstralDamageTypeTags.STOPS_MOVEMENT)) {
             uses = 0
             cooldown = 20
         }

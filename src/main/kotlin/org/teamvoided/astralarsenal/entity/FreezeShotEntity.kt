@@ -7,9 +7,11 @@ import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralParticles
@@ -33,7 +35,7 @@ class FreezeShotEntity : ThrownItemEntity {
         super.onEntityHit(entityHitResult)
         if (entityHitResult.entity != owner && entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity
-            hit.customDamage(DamageTypes.FREEZE, 3.0f, this, owner)
+            hit.customDamage(AstralDamageTypes.CHILLED, 3.0f, this, owner)
             if(hit.frozenTicks < 140){
                 hit.frozenTicks = 140
             }
@@ -62,6 +64,7 @@ class FreezeShotEntity : ThrownItemEntity {
     }
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
+        playSound(SoundEvents.BLOCK_GLASS_BREAK, 1.0f, 1.5f)
         this.discard()
         super.onBlockHit(blockHitResult)
     }
