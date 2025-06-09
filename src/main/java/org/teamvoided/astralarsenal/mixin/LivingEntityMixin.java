@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -126,22 +127,39 @@ public abstract class LivingEntityMixin extends Entity implements EntityHexAcces
             );
 
             if (astralArsenal$hexColor != astralArsenal$oldHexColor) {
-                astralArsenal$oldHexColor = astralArsenal$hexColor;
-
+                boolean packetSent = false;
                 UpdateHexRingPayload payload = new UpdateHexRingPayload(astralArsenal$me.getId(), astralArsenal$hexColor);
+
                 for (ServerPlayerEntity player : PlayerLookup.tracking(astralArsenal$me)) {
                     if (player.equals(astralArsenal$me)) {
                         continue;
                     }
 
-                    ServerPlayNetworking.send(player, payload);
+                    if (trySend(player, payload)) {
+                        packetSent = true;
+                    }
                 }
 
                 if (astralArsenal$me instanceof ServerPlayerEntity serverPlayer) {
-                    ServerPlayNetworking.send(serverPlayer, payload);
+                    if (trySend(serverPlayer, payload)) {
+                        packetSent = true;
+                    }
+                }
+
+                if (packetSent) {
+                    astralArsenal$oldHexColor = astralArsenal$hexColor;
                 }
             }
         }
+    }
+
+    @Unique
+    private boolean trySend(ServerPlayerEntity player, CustomPayload payload) {
+        if (ServerPlayNetworking.canSend(player, payload.getId())) {
+            ServerPlayNetworking.send(player, payload);
+            return true;
+        }
+        return false;
     }
 
     @Override
