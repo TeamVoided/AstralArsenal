@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.entity
+package org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShitDontWork
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -14,7 +14,9 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import org.apache.logging.log4j.core.jmx.Server
+import org.teamvoided.astralarsenal.entity.Arrows.ChargedArrow
+import org.teamvoided.astralarsenal.entity.Arrows.ChargedSpectralArrow
+import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.util.sillyLightningTime
@@ -52,7 +54,7 @@ class ConductiveEntity : Entity {
                         this.z - 10
                     )
                 ).filter {
-                    (it is LivingEntity || it is CannonballEntity) && it != owner && it != origin && ((origin != null && origin!!.distanceTo(
+                    (it is LivingEntity || it is CannonballEntity || it is ChargedArrow || it is ChargedSpectralArrow) && it != owner && it != origin && ((origin != null && origin!!.distanceTo(
                         it
                     ) <= 10) || origin == null)
                 }
@@ -84,6 +86,19 @@ class ConductiveEntity : Entity {
                             World.ExplosionSourceType.TNT
                         )
                         entiity.discard()
+                    }
+                    if (entiity is ChargedArrow) {
+                        entiity.isCharged = true
+                        entiity.chargeDamage = tempDamage
+                        entiity.ticksBeforeDischarge = 5
+                        owner?.let { entiity.chargeChain.add(it) }
+                        sillyLightningTime(this.eyePos, entiity.eyePos, this.world as ServerWorld, 3, 5, 2, 0.1f, 0.5)
+                    } else if (entiity is ChargedSpectralArrow) {
+                        entiity.isCharged = true
+                        entiity.chargeDamage = tempDamage
+                        entiity.ticksBeforeDischarge = 5
+                        owner?.let { entiity.chargeChain.add(it) }
+                        sillyLightningTime(this.eyePos, entiity.eyePos, this.world as ServerWorld, 3, 5, 2, 0.1f, 0.5)
                     }
                     entiity.damage(
                         DamageSource(

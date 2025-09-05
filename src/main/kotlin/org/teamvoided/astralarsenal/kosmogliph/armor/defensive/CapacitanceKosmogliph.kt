@@ -24,8 +24,10 @@ import org.teamvoided.astralarsenal.components.CapacitanceDataV1
 import org.teamvoided.astralarsenal.components.CapacitanceDataV2
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
+import org.teamvoided.astralarsenal.entity.Arrows.ChargedArrow
+import org.teamvoided.astralarsenal.entity.Arrows.ChargedSpectralArrow
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
-import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralDataComponents
@@ -244,7 +246,7 @@ class CapacitanceKosmogliph(id: Identifier) :
                     base.y - 10,
                     base.z - 10
                 )
-            ).filter { it is LivingEntity && it != cause && it != base && base.distanceTo(it) <= 10 }
+            ).filter { it is LivingEntity && it != cause && it != base && base.distanceTo(it) <= 10 || (it is ChargedArrow || it is ChargedSpectralArrow)}
         )
         val targets = entities.size
         val damagePerEntity = damage / targets
@@ -264,6 +266,19 @@ class CapacitanceKosmogliph(id: Identifier) :
                         cause,
                     ), tempDamageValue
                 )
+                if (entiity is ChargedArrow) {
+                    entiity.isCharged = true
+                    entiity.chargeDamage = tempDamageValue
+                    entiity.ticksBeforeDischarge = 5
+                    cause.let { entiity.chargeChain.add(it) }
+                    sillyLightningTime(cause.eyePos, entiity.eyePos, cause.world as ServerWorld, 3, 5, 2, 0.1f, 0.5)
+                } else if (entiity is ChargedSpectralArrow) {
+                    entiity.isCharged = true
+                    entiity.chargeDamage = tempDamageValue
+                    entiity.ticksBeforeDischarge = 5
+                    cause.let { entiity.chargeChain.add(it) }
+                    sillyLightningTime(cause.eyePos, entiity.eyePos, cause.world as ServerWorld, 3, 5, 2, 0.1f, 0.5)
+                }
                 if (base.world is ServerWorld) {
                     sillyLightningTime(
                         Vec3d(base.pos.x, base.pos.y + (base.height / 2f), base.pos.z),

@@ -21,6 +21,7 @@ object AstralDamageTypes : RegistryBootstrapper<DamageType>(RegistryKeys.DAMAGE_
     val RICHOCHET = register("richochet") { DamageType("richochet", DamageScalingType.NEVER, 0f) }
     val NAILED = register("nailed") { DamageType("nailed", DamageScalingType.NEVER, 0f) }
     val PULVERISED = register("pulverised") { DamageType("pulverised", DamageScalingType.NEVER, 0f) }
+    val DEMOLISHED = register("demolished") { DamageType("demolished", DamageScalingType.NEVER, 0f) }
 
     val FROZEN = register("frozen") { DamageType("frozen", DamageScalingType.NEVER, 0f)}
     val CHILLED = register("chilled") {DamageType("chilled", DamageScalingType.NEVER, 0f)}

@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.mob.ElderGuardianEntity
 import net.minecraft.entity.mob.GuardianEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
@@ -48,9 +49,15 @@ class EnduranceKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astra
             val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
             val data = stack.getOrDefault(AstralDataComponents.ENDURANCE_DATA, EnduranceData.DEFAULT)
             var multiplyer = 0.7
+            if (source.attacker !is PlayerEntity){
+                multiplyer = 0.5
+            }
             var charges = data.charges
             if (charges > 0) {
                 multiplyer = 0.3
+                if (source.attacker !is PlayerEntity){
+                    multiplyer = 0.1
+                }
                 charges -=1
                 entity.world.playSoundFromEntity(
                     entity,

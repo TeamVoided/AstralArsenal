@@ -8,7 +8,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 
 class CannonballItem(settings: Settings) : Item(settings) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {

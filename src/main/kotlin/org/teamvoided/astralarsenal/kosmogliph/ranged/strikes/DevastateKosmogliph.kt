@@ -14,7 +14,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
+import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightArrowEntity
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.RangedWeaponKosmogliph
 import org.teamvoided.astralarsenal.util.hasMultiShot

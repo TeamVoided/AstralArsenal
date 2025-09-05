@@ -3,12 +3,13 @@ package org.teamvoided.astralarsenal.kosmogliph.melee
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.components.AstralStrikeData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.entity.BeamOfLightEntity
+import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightEntity
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 
@@ -19,10 +20,10 @@ class AstralStrikeKosmogliph(id: Identifier) :
     val STRIKES_TO_TRIGGER = 8
 
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
-        val data = stack.getOrDefault(AstralDataComponents.ASTRAL_STRIKE_DATA, AstralStrikeData.DEFAULT)
-        var hitTimes = data.hitTimes
-        hitTimes++
-        if (hitTimes >= STRIKES_TO_TRIGGER) {
+        //val data = stack.getOrDefault(AstralDataComponents.ASTRAL_STRIKE_DATA, AstralStrikeData.DEFAULT)
+        //var hitTimes = data.hitTimes
+        //hitTimes++
+        if (attacker is PlayerEntity && !attacker.itemCooldownManager.isCoolingDown(stack.item)) {
             val beam = BeamOfLightEntity(attacker.world, attacker)
             beam.setPosition(target.pos)
             beam.WINDUP = 20
@@ -35,9 +36,10 @@ class AstralStrikeKosmogliph(id: Identifier) :
             beam.trackTime = 15
             beam.hard_damage = 0
             attacker.world.spawnEntity(beam)
-            hitTimes = 0
+            //hitTimes = 0
+            attacker.itemCooldownManager.set(stack.item, 200)
         }
-        stack.set(AstralDataComponents.ASTRAL_STRIKE_DATA, AstralStrikeData(hitTimes))
+        //stack.set(AstralDataComponents.ASTRAL_STRIKE_DATA, AstralStrikeData(hitTimes))
         return super.postHit(stack, target, attacker)
     }
 

@@ -1,6 +1,7 @@
 package org.teamvoided.astralarsenal.init
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.minecraft.client.render.entity.ArrowEntityRenderer
 import net.minecraft.client.render.entity.EmptyEntityRenderer
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import org.teamvoided.astralarsenal.entity.BeamRenderer
@@ -20,5 +21,7 @@ object AstralEntitiesClient {
         EntityRendererRegistry.register(AstralEntities.CONDUCTIVITY_ENGINE, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.NAIL_ENTITY, ::NailEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BEAM_RENDERER, ::BeamRenderer)
+        EntityRendererRegistry.register(AstralEntities.ASTRAL_PROJECTION, ::EmptyEntityRenderer)
+        EntityRendererRegistry.register(AstralEntities.VOID_SHARD, ::FlyingItemEntityRenderer)
     }
 }

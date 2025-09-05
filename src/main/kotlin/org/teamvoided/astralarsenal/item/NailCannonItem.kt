@@ -15,7 +15,7 @@ import net.minecraft.util.UseAction
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.NailCannonCooldownData
 import org.teamvoided.astralarsenal.components.NailCannonDataV1
-import org.teamvoided.astralarsenal.entity.nails.NailEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.NailEntity
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs
 import org.teamvoided.astralarsenal.kosmogliph.logic.setShootVelocity

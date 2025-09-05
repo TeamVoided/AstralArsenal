@@ -27,6 +27,7 @@ import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.LockOffKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.OrbitalKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.strikes.TimeBombKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.AstralRainKosmogliph
+import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.TensionKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.TridentBleedKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.trident.TridentReduceKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.shield.ParryKosmogliph
@@ -62,7 +63,7 @@ object AstralKosmogliphs {
 
     val ASTRAL_STRIKE = register("astral_strike", ::AstralStrikeKosmogliph)
     val FREEZE = register("freeze", ::FreezeKosmogliph)
-    val FLAME_BURST = register("flame_burst", ::FlameBurstKosmogliph)
+    val ASTRAL_PROJECTION = register("astral_projection", ::FlameBurstKosmogliph)
     val ASTRAL_SLASH = register("astral_slash", ::AstralSlashKosmogliph)
     val DEEP_WOUNDS = register("deep_wounds", ::DeepWoundsKosmogliph)
 
@@ -101,6 +102,7 @@ object AstralKosmogliphs {
     val LOCK_OFF = register("lock_off", ::LockOffKosmogliph)
     val TIME_BOMB = register("time_bomb", ::TimeBombKosmogliph)
 
+    val TENSION = register("tension", ::TensionKosmogliph)
     val TRIDENT_REDUCE = register("trident_reduce", ::TridentReduceKosmogliph)
     val TRIDENT_BLEED = register("trident_bleed", ::TridentBleedKosmogliph)
 
@@ -123,6 +125,15 @@ object AstralKosmogliphs {
     val HEX_OF_CLEANSING = registerSimple("hex_of_cleansing", AstralItemTags.SUPPORTS_HEX_OF_CLEANSING)
     val HEX_OF_WEAKENING = registerSimple("hex_of_weakening", AstralItemTags.SUPPORTS_HEX_OF_WEAKENING)
     val HEX_OF_MAGNETISING = registerSimple("hex_of_magnetising", AstralItemTags.SUPPORTS_HEX_OF_WEAKENING)
+
+    @JvmField
+    val ANTIPHASE = registerSimple("antiphase", AstralItemTags.SUPPORTS_ANTIPHASE)
+
+    @JvmField
+    val MAGNETIC = registerSimple("magnetic", AstralItemTags.SUPPORTS_MAGNETIC)
+
+    @JvmField
+    val CONDUCTIVE = registerSimple("conductive", AstralItemTags.SUPPORTS_CONDUCTIVE)
 
     fun <T : Kosmogliph> register(name: String, kosmogliphProvider: (Identifier) -> T): T =
         Registry.register(Kosmogliph.REGISTRY, AstralArsenal.id(name), kosmogliphProvider(AstralArsenal.id(name)))

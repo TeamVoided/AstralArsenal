@@ -32,6 +32,9 @@ object AstralItemTags {
     val SUPPORTS_FROST_THORNS = supports("frost_thorns")
 
     val SUPPORTS_ALCHEMIST = supports("alchemist")
+    val SUPPORTS_ANTIPHASE = supports("alchemist")
+    val SUPPORTS_MAGNETIC = supports("alchemist")
+    val SUPPORTS_CONDUCTIVE = supports("alchemist")
 
     val SUPPORTS_ASTRAL_STRIKE = supports("astral_strike")
     val SUPPORTS_FREEZE = supports("freeze")

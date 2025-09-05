@@ -80,11 +80,11 @@ class AstralEnTranslationProvider(
         // chestplate
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.antidote.desc",
-            "Reduces damage from magic by 80%, half the time negitive effects last on you, and doubles the time positive effects last on you."
+            "Reduces damage from magic by 80%. half the time negative effects last on you, and doubles the time positive effects last on you."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.endurance.desc",
-            "Reduces damage from melee sources by 30%. Gain up to 3 'defence charges' that are consumed when melee damage is taken. defence charges increase melee damage reduction to 70%."
+            "Reduces damage from melee sources by 30%. Gain up to 3 'defence charges' that are consumed when melee damage is taken. defence charges increase melee damage reduction to 70%. bonus 20% damage reduction from non-player melee sources."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.capacitance.desc",
@@ -92,7 +92,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.thermal.desc",
-            "Reduces damage from fire and ice by 70% and makes it so frost and fire cant stick to you."
+            "Reduces damage from fire and ice by 70%. makes it so frost and fire cannot stick to you."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.heavy.desc",
@@ -106,15 +106,15 @@ class AstralEnTranslationProvider(
         //weapons
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.astral_strike.desc",
-            "Every 8th hit, strike the target with an astral beam of light for 5 damage. beam deals 3x damage to non-players."
+            "On hit, summon a beam of light that deals 5 damage. goes on cooldown for 10 seconds. beam deals 3x damage to non-players."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.freeze.desc",
             "Entities hit are frozen for a short time, stacking with every hit. On kill, the entity will release ice shards."
         )
         gen.add(
-            "kosmogliph.tooltip.astral_arsenal.flame_burst.desc",
-            "Entities hit are set alight for a short time, stacking with every hit. On kill, the entity will release fire balls."
+            "kosmogliph.tooltip.astral_arsenal.astral_projection.desc",
+            "On hit, summon 2 astral projections of swords that deal 5 damage each. 2.5 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.astral_slash.desc",
@@ -142,7 +142,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.alchemist.desc",
-            "Right click in the inventory with a potion to store 4 potion charges. Potion charges tip the next arrow fired. Holds up to 64."
+            "Right click in the inventory with a potion to store 4 potion charges. Potion charges tip the next arrow fired. Holds up to 64 charges."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.cannonball_launcher.desc",
@@ -162,7 +162,7 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.lock_off.desc",
-            "Replaces ammo with a lock-off arrow. When hitting an entity or landing on the ground it will charge up and give entities inside bleed and charge leak, causing them to take damage and be unable to recharge their movement kosmogliphs. 30e second cooldown."
+            "Replaces ammo with a lock-off arrow. When hitting an entity or landing on the ground it will charge up and give entities inside bleed and charge leak, causing them to take damage and be unable to recharge their movement kosmogliphs. 30 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.time_bomb.desc",
@@ -176,19 +176,19 @@ class AstralEnTranslationProvider(
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.ankle_guard.desc",
-            "Prevents fall and kinetic damage from taking you to less then 25% of your max hp."
+            "Prevents fall and kinetic damage from taking you to less then 25% of your max hp. Reduces fall and kinetic damage by 25%."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.dash.desc",
-            "Pressing a keybind[default R] lets you dash forward. Dashes recharge over a second. You can hold up to 3. Dashing gives immunity frames."
+            "Pressing a keybind [default R] lets you dash forward. Dashes recharge over a second. You can hold up to 3. Dashing gives immunity frames."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.dodge.desc",
-            "Pressing a keybind[default R] lets you dodge in the direction you are moving. Dodges recharge over a second. You can hold up to 3. Dodging gives immunity frames."
+            "Pressing a keybind [default R] lets you dodge in the direction you are moving. Dodges recharge over a second. You can hold up to 3. Dodging gives immunity frames."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.jump.desc",
-            "Gives you 3 mid-air jumps. Jumps start recharging when you hit the ground, each take 1 second to recharge. applies jump boost."
+            "Gives you 3 mid-air jumps. Jumps start recharging when you hit the ground, each take 1 second to recharge. jump boost increases the height."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.step_up.desc",
@@ -266,17 +266,31 @@ class AstralEnTranslationProvider(
         //mace :3
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.pulveriser.desc",
-            "Hold right click to charge up a leap. Landing after a leap causes an explosion that deals more damage the longer its charged and has a higher radius the further you fall. Negates fall damage. 5 second cooldown."
+            "Hold right click to charge up a leap, launching you further the longer it's held. Landing after a leap causes an explosion that deals more damage the longer its charged and has a higher radius the further you fall. Negates fall damage. 5 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.wind_eruption.desc",
             "Hold right click to charge up an explosion. When released, explode and launch yourself upwards. Holding for longer makes it launch you further and deal more damage. 2 second cooldown."
         )
 
+        //bow
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.antiphase.desc",
+            "Allows arrows to pass through blocks and have no gravity for 2 seconds. reduces arrow damage by 10%."
+        )
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.magnetic.desc",
+            "Magnetises arrows, making them attract to entities. Reduces arrow damage by 25%."
+        )
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.conductive.desc",
+            "Arrows fired will be able to conduct electricity from certain sources."
+        )
+
         //tome
         gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_breaching.desc", "Halves the effect of your opponents defensive kosmogliphs.")
         gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_blazing.desc", "Doubles the damage your opponent takes from frost and fire damage over time.")
-        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_impeding.desc", "Slows your opponent by 50%.")
+        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_impeding.desc", "Slows your opponent by 25%.")
         gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_diminishing.desc", "Slowly reduces your opponents max hp if they are not at full health.")
         gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_cleansing.desc", "Tripples the rate your opponent uses positive effects.")
         gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_weakening.desc", "Reduces the damage your opponent can deal by 20%.")

@@ -10,30 +10,25 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.VoidIceShardEntity
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
 class FreezeKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_FREEZE) }) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         if(target.frozenTicks < 140) target.frozenTicks = 140
         if(target.frozenTicks + 50 < 540) target.frozenTicks += 50
-        val bursts: Int
-        if (target !is PlayerEntity || !target.isAlive) {
+        if (attacker !is PlayerEntity || !attacker.itemCooldownManager.isCoolingDown(stack.item)) {
             if (!target.isAlive) {
-                bursts = 20
                 target.playSound(SoundEvents.BLOCK_GLASS_BREAK, 1.0f, 1.0f)
             } else {
-                bursts = 3
                 target.playSound(SoundEvents.BLOCK_POWDER_SNOW_STEP, 1.0f, 1.0f)
             }
-            repeat(bursts) {
-                val freezeBallEntity = FreezeShotEntity(target.world, attacker)
+            val velocity = target.pos.subtract(attacker.pos).normalize().multiply(0.25)
+            repeat(1) {
+                val freezeBallEntity = VoidIceShardEntity(target.world, attacker)
                 setPropertiesTwo(freezeBallEntity, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f)
-                freezeBallEntity.addVelocity(
-                    target.random.nextDouble().minus(0.5),
-                    target.random.nextDouble().times(0.5),
-                    target.random.nextDouble().minus(0.5)
-                )
-                freezeBallEntity.setPosition(target.pos)
+                freezeBallEntity.addVelocity(velocity)
+                freezeBallEntity.setPosition(target.pos.x, target.eyePos.y, target.pos.z)
                 target.world.spawnEntity(freezeBallEntity)
             }
         }

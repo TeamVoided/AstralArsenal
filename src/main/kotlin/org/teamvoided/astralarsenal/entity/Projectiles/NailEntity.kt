@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.entity.nails
+package org.teamvoided.astralarsenal.entity.Projectiles
 
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
@@ -19,7 +19,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
-import org.apache.logging.log4j.core.jmx.Server
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEffects

@@ -7,7 +7,13 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.entity.*
-import org.teamvoided.astralarsenal.entity.nails.NailEntity
+import org.teamvoided.astralarsenal.entity.Arrows.AntiphaseArrow
+import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightArrowEntity
+import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.NailEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.VoidIceShardEntity
+import org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShitDontWork.RichochetEntity
 
 object AstralEntities {
 
@@ -68,6 +74,16 @@ object AstralEntities {
         "conductivity_engine",
         EntityType.Builder.create(EntityType.EntityFactory(::BeamRenderEntity), SpawnGroup.MISC)
             .setDimensions(0.0f, 0.0f).maxTrackingRange(4).build()
+    )
+    val ASTRAL_PROJECTION = register(
+        "astral_projection",
+        EntityType.Builder.create(EntityType.EntityFactory(::AstralProjectionEntity), SpawnGroup.MISC)
+            .setDimensions(0.2f, 0.2f).maxTrackingRange(4).build()
+    )
+    val VOID_SHARD = register(
+        "void_shard",
+        EntityType.Builder.create(EntityType.EntityFactory(::VoidIceShardEntity), SpawnGroup.MISC)
+            .setDimensions(0.2f, 0.2f).maxTrackingRange(4).build()
     )
     val TOTEM_PROJECTILE = register(
         "totem_projectile",

@@ -21,6 +21,7 @@ fun modifyItemUseSlowdown(stack: ItemStack): Float {
         is MaceItem -> 0.7f
         is PotionItem -> 0.4f
         is TomeOfHexesItem -> 0.1f
+        is BrushItem -> 0f
         else -> if (stack.get(DataComponentTypes.FOOD) != null) 0.4f else 0.5f
     }
 }

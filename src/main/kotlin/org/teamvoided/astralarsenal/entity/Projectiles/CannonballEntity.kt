@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.entity
+package org.teamvoided.astralarsenal.entity.Projectiles
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType

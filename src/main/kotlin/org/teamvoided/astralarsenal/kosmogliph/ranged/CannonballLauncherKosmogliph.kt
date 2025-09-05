@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import org.joml.Quaternionf
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.entity.CannonballEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.util.hasMultiShot
 import org.teamvoided.astralarsenal.util.setVelocity

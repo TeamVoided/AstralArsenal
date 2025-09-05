@@ -14,6 +14,7 @@ import org.teamvoided.astralarsenal.util.playSound
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceStrongExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceWeakExplosionBehavior
+import kotlin.math.min
 
 class WindEruptionKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_PULVERISER) }) {

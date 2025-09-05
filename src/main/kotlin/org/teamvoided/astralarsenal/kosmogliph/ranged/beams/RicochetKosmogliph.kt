@@ -20,8 +20,8 @@ import org.joml.Math.lerp
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
-import org.teamvoided.astralarsenal.entity.CannonballEntity
-import org.teamvoided.astralarsenal.entity.RichochetEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
+import org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShitDontWork.RichochetEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph

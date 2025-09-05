@@ -28,7 +28,7 @@ import org.teamvoided.astralarsenal.effects.BleedStatusEffect
 import org.teamvoided.astralarsenal.effects.MagneticStatusEffect
 import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
-import org.teamvoided.astralarsenal.entity.ConductiveEntity
+import org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShitDontWork.ConductiveEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.util.applyHexes
 import org.teamvoided.astralarsenal.util.registerHolder

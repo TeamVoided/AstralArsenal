@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Axis
 import net.minecraft.util.math.MathHelper
 import org.teamvoided.astralarsenal.AstralArsenal.id
-import org.teamvoided.astralarsenal.entity.nails.NailEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.NailEntity
 
 class NailEntityRenderer<T : NailEntity>(context: EntityRendererFactory.Context?) :
     EntityRenderer<T>(context) {

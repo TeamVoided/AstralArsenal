@@ -15,8 +15,8 @@ import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.entity.BeamOfLightArrowEntity
-import org.teamvoided.astralarsenal.entity.nails.NailEntity
+import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightArrowEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.NailEntity
 import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph

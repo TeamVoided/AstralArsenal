@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.entity
+package org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShitDontWork
 
 import net.minecraft.block.ShapeContext
 import net.minecraft.command.argument.EntityAnchorArgumentType
@@ -19,15 +19,16 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
-import org.joml.Math.lerp
+import org.joml.Math
 import org.joml.Vector3f
+import org.teamvoided.astralarsenal.entity.BeamRenderEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
-
 
 class RichochetEntity : Entity {
     var owner: PlayerEntity? = null
@@ -133,18 +134,18 @@ class RichochetEntity : Entity {
         )
         if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, caster.x, caster.y + 1, caster.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x00757575.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00ffd700.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
-            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
-            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.OuterColour, 0x00757575.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.InterColour, 0x00ffd700.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.LiveTime, 6)
+            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.ShrinkTime, 5)
+            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.TargetPos, result.pos.toVector3f())
             beamRenderer.dataTracker.set(
-                BeamRenderEntity.OriginPos,
+                BeamRenderEntity.Companion.OriginPos,
                 Vector3f(caster.x.toFloat(), (caster.eyePos.y).toFloat(), caster.z.toFloat())
             )
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.5f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.5f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 4)
+            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.OuterThickness, 0.5f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.MaxOuterThickness, 0.5f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.InnerCubes, 4)
             beamRenderer.setPosition(caster.eyePos.x, caster.eyePos.y, caster.eyePos.z)
             world.spawnEntity(beamRenderer)
         }
@@ -154,12 +155,12 @@ class RichochetEntity : Entity {
             entities.addAll(
                 world.getOtherEntities(
                     caster, Box(
-                        (lerp(caster.eyePos.x, result.pos.x, i / interval)) + 0.5,
-                        (lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)) + 0.5,
-                        (lerp(caster.eyePos.z, result.pos.z, i / interval)) + 0.5,
-                        (lerp(caster.eyePos.x, result.pos.x, i / interval)) - 0.5,
-                        (lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
-                        (lerp(caster.eyePos.z, result.pos.z, i / interval)) - 0.5
+                        (Math.lerp(caster.eyePos.x, result.pos.x, i / interval)) + 0.5,
+                        (Math.lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)) + 0.5,
+                        (Math.lerp(caster.eyePos.z, result.pos.z, i / interval)) + 0.5,
+                        (Math.lerp(caster.eyePos.x, result.pos.x, i / interval)) - 0.5,
+                        (Math.lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
+                        (Math.lerp(caster.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
                 )
             )
@@ -167,9 +168,9 @@ class RichochetEntity : Entity {
                 val serverWorld = caster.world as ServerWorld
                 serverWorld.spawnParticles(
                     ParticleTypes.END_ROD,
-                    (lerp(caster.eyePos.x, result.pos.x, i / interval)),
-                    (lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)),
-                    (lerp(caster.eyePos.z, result.pos.z, i / interval)),
+                    (Math.lerp(caster.eyePos.x, result.pos.x, i / interval)),
+                    (Math.lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)),
+                    (Math.lerp(caster.eyePos.z, result.pos.z, i / interval)),
                     1,
                     0.2,
                     0.2,

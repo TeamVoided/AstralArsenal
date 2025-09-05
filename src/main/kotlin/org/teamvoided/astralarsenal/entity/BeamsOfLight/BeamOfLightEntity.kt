@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.entity
+package org.teamvoided.astralarsenal.entity.BeamsOfLight
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -15,11 +15,14 @@ import net.minecraft.util.math.Box
 import net.minecraft.world.World
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.data.tags.AstralEntityTags
+import org.teamvoided.astralarsenal.entity.BeamRenderEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.init.AstralSounds
+import kotlin.math.min
 
 class BeamOfLightEntity : Entity {
 
@@ -100,23 +103,23 @@ class BeamOfLightEntity : Entity {
             this.playSound(AstralSounds.BEAM_BOOM, 1.0f, 1.0f)
             if (world is ServerWorld) {
                 val beamRenderer = BeamRenderEntity(world, this.x, this.y + 1, this.z)
-                beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, outerColour)
-                beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, innerColour)
-                beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, (this.TIMEACTIVE + 20))
-                beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, (20))
+                beamRenderer.dataTracker.set(BeamRenderEntity.Companion.OuterColour, outerColour)
+                beamRenderer.dataTracker.set(BeamRenderEntity.Companion.InterColour, innerColour)
+                beamRenderer.dataTracker.set(BeamRenderEntity.Companion.LiveTime, (this.TIMEACTIVE + 20))
+                beamRenderer.dataTracker.set(BeamRenderEntity.Companion.ShrinkTime, (20))
                 beamRenderer.dataTracker.set(
-                    BeamRenderEntity.TargetPos,
+                    BeamRenderEntity.Companion.TargetPos,
                     Vector3f(this.x.toFloat(), this.y.toFloat() + 1000f, this.z.toFloat())
                 )
                 beamRenderer.dataTracker.set(
-                    BeamRenderEntity.OriginPos,
+                    BeamRenderEntity.Companion.OriginPos,
                     Vector3f(this.x.toFloat(), -64f, this.z.toFloat())
                 )
-                beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, this.side.div(2).toFloat())
-                beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, this.side.div(2).toFloat())
+                beamRenderer.dataTracker.set(BeamRenderEntity.Companion.OuterThickness, this.side.div(2).toFloat())
+                beamRenderer.dataTracker.set(BeamRenderEntity.Companion.MaxOuterThickness, this.side.div(2).toFloat())
                 val innerCubes = if (DOT) 3 else this.side.div(2).plus(1)
-                beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, innerCubes)
-                beamRenderer.dataTracker.set(BeamRenderEntity.Opacity, 0.3f)
+                beamRenderer.dataTracker.set(BeamRenderEntity.Companion.InnerCubes, innerCubes)
+                beamRenderer.dataTracker.set(BeamRenderEntity.Companion.Opacity, 0.3f)
                 beamRenderer.setPosition(this.x, this.y, this.z)
                 world.spawnEntity(beamRenderer)
             }
@@ -190,7 +193,7 @@ class BeamOfLightEntity : Entity {
                                 effects.forEach {
                                     val w = it.amplifier
                                     hard_levels = w
-                                    val u = kotlin.math.min(it.duration, 100)
+                                    val u = min(it.duration, 100)
                                     duration += u
                                 }
                             }

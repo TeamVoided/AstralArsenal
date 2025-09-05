@@ -11,7 +11,11 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import org.joml.Math.max
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
-import org.teamvoided.astralarsenal.entity.ConductiveEntity
+import org.teamvoided.astralarsenal.entity.Arrows.AntiphaseArrow
+import org.teamvoided.astralarsenal.entity.Arrows.AntiphaseSpectralArrow
+import org.teamvoided.astralarsenal.entity.Arrows.MagneticArrow
+import org.teamvoided.astralarsenal.entity.Arrows.MagneticSpectralArrow
+import org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShitDontWork.ConductiveEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEffects
@@ -125,11 +129,6 @@ fun modifyDamage(entity: LivingEntity, damage: Float, source: DamageSource): Flo
         }
     }
 
-
-    // Immortal Extra Check
-    if (entity.hasStatusEffect(IMMORTAL) && !source.isTypeIn(BYPASSES_INVULNERABILITY))
-        output = 0f
-
     //Impaled starts here
     val effects_impaled = entity.statusEffects.filter { impaled.contains(it.effectType) }
     if (effects_impaled.isNotEmpty() && source.isTypeIn(AstralDamageTypeTags.IS_MELEE)) {
@@ -145,8 +144,13 @@ fun modifyDamage(entity: LivingEntity, damage: Float, source: DamageSource): Flo
     }
 
     //arrow against mob buff to compensate for power nerf
-    if (source.isType(DamageTypes.ARROW) && entity !is PlayerEntity){
+    if (source.isType(DamageTypes.ARROW) && entity !is PlayerEntity) {
         output *= 1.5f
+    }
+    if (source.source is AntiphaseArrow || source.source is AntiphaseSpectralArrow) {
+        output *= 0.9f
+    } else if (source.source is MagneticArrow || source.source is MagneticSpectralArrow) {
+        output *= 0.75f
     }
 
     return output
@@ -154,18 +158,20 @@ fun modifyDamage(entity: LivingEntity, damage: Float, source: DamageSource): Flo
 
 fun effectCancelDamage(entity: LivingEntity, damage: Float, source: DamageSource): Boolean {
     if (entity.hasStatusEffect(IMMORTAL) && !source.isTypeIn(BYPASSES_INVULNERABILITY)) {
-        if (!(source.isTypeIn(DamageTypeTags.IS_FIRE) && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))
-            entity.world.playSoundFromEntity(
-                null, entity, SoundEvents.BLOCK_AMETHYST_BLOCK_FALL, SoundCategory.NEUTRAL,
-                1.0f, 0.8f
-            )
-        return true
+        if (!source.isType(AstralDamageTypes.DEMOLISHED) || source.source != entity) {
+            if (!(source.isTypeIn(DamageTypeTags.IS_FIRE) && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))
+                entity.world.playSoundFromEntity(
+                    null, entity, SoundEvents.BLOCK_AMETHYST_BLOCK_FALL, SoundCategory.NEUTRAL,
+                    1.0f, 0.8f
+                )
+            return true
+        }
     }
     return false
 }
 
-fun cancelTomeOnHit(player: LivingEntity, source: DamageSource){
-    if (source.attacker is LivingEntity && player.isUsingItem && player.activeItem.item == AstralItems.TOME_OF_HEXES && player is PlayerEntity){
+fun cancelTomeOnHit(player: LivingEntity, source: DamageSource) {
+    if (source.attacker is LivingEntity && player.isUsingItem && player.activeItem.item == AstralItems.TOME_OF_HEXES && player is PlayerEntity) {
         player.stopUsingItem()
     }
 }

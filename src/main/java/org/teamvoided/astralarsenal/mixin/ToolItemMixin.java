@@ -12,7 +12,7 @@ import static org.teamvoided.astralarsenal.util.KosmogliphsStackUtilsKt.getKosmo
 @Mixin({SwordItem.class, MiningToolItem.class, MaceItem.class, TridentItem.class})
 public class ToolItemMixin {
 
-    @Inject(method = "postHit", at = @At("TAIL"))
+    @Inject(method = "postHit", at = @At("RETURN"))
     public void kosmogliphPostHit(ItemStack stack, LivingEntity target, LivingEntity attacker, CallbackInfoReturnable<Boolean> cir) {
         getKosmogliphs(stack).forEach((kosmogliph) -> kosmogliph.postHit(stack, target, attacker));
     }

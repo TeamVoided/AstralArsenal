@@ -1,4 +1,4 @@
-package org.teamvoided.astralarsenal.entity
+package org.teamvoided.astralarsenal.entity.BeamsOfLight
 
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
@@ -8,6 +8,7 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightEntity
 import org.teamvoided.astralarsenal.init.AstralEntities
 
 class BeamOfLightArrowEntity : ArrowEntity {
