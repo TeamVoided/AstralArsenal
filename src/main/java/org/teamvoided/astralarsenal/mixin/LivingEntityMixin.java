@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -11,6 +12,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShieldItem;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.network.packet.payload.CustomPayload;
@@ -50,6 +52,8 @@ public abstract class LivingEntityMixin extends Entity implements EntityHexAcces
     @Shadow
     public abstract ItemStack getStackInHand(Hand hand);
 
+    @Shadow
+    protected ItemStack activeItemStack;
     @Unique
     LivingEntity astralArsenal$me = (LivingEntity) (Object) this;
 
@@ -96,6 +100,17 @@ public abstract class LivingEntityMixin extends Entity implements EntityHexAcces
     private int setShieldUseDelay(int constant) {
         return 0;
     }
+
+    @ModifyReturnValue(method = "isBlocking", at = @At("RETURN"))
+    boolean fixBlockingAnimBug(boolean original) {
+        if (original) {
+            if (!(activeItemStack.getItem() instanceof ShieldItem)) {
+                return false;
+            }
+        }
+        return original;
+    }
+
 
     @Inject(method = "fall", at = @At(value = "HEAD"))
     public void fall(double fallDistance, boolean onGround, BlockState landedState, BlockPos landedPosition, CallbackInfo ci) {
