@@ -51,6 +51,8 @@ dependencies {
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
 
+    modImplementation(libs.fzzy.config)
+
     // Testing
     //modImplementation(libs.creative.works)
     modCompileOnly(libs.imguimc)
@@ -130,12 +132,13 @@ uploadConfig {
 
     changeLog = File("changelog.md").readText()
 
-// FabricApi
+    // FabricApi
     modrinthDependency("P7dR8mSH", REQUIRED)
     curseDependency("fabric-api", REQUIRED)
-// Fabric Language Kotlin
+    // Fabric Language Kotlin
     modrinthDependency("Ha28R6CL", REQUIRED)
     curseDependency("fabric-language-kotlin", REQUIRED)
-//Farrow
-    modrinthDependency("uH6SVTfs", EMBEDDED)
+    // Fzzy Config
+    modrinthDependency("hYykXjDp", REQUIRED)
+    curseDependency("fzzy-config", REQUIRED)
 }
