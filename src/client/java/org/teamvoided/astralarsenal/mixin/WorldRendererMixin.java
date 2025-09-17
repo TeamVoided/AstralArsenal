@@ -54,6 +54,6 @@ public abstract class WorldRendererMixin {
     private void modifyBreakingInfoStack(DeltaTracker tracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f modelViewMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
         var positions = getPositions(client);
         if (positions.size() < 2) return;
-        addExtraBreakingInfo(client, positions, this.blockBreakingProgressions);
+        addExtraBreakingInfo(client, positions, blockBreakingProgressions);
     }
 }

@@ -15,6 +15,7 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.KosmogliphsComponent
+import org.teamvoided.astralarsenal.data.tags.AstralBlockTags.REAPABLE_CROPS
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HAMMER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.REAPER
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.VEIN_MINER
@@ -80,7 +81,7 @@ fun getOutlineShape(client: MinecraftClient): Pair<VoxelShape, BlockPos>? {
 
 fun addExtraBreakingInfo(
     client: MinecraftClient, positions: MutableSet<BlockPos>,
-    blockBreakingProgressions: Long2ObjectMap<SortedSet<BlockBreakingInfo>>
+    blockBreakingProgressions: Long2ObjectMap<SortedSet<BlockBreakingInfo>>,
 ) {
     if (client.crosshairTarget !is BlockHitResult) return
     val mainPos = (client.crosshairTarget as BlockHitResult).blockPos
@@ -88,7 +89,24 @@ fun addExtraBreakingInfo(
     val info = blockBreakingProgressions.get(mainPos.asLong())
     if (info == null || info.isEmpty()) return
 
+    if (shouldReaperHaveBreaking(client, mainPos)) return
+
     for (pos in breakingPos) blockBreakingProgressions.put(pos.asLong(), info)
+}
+
+fun shouldReaperHaveBreaking(client: MinecraftClient, mainPos: BlockPos): Boolean {
+    val player = client.player ?: return false
+    val world = client.world ?: return false
+
+    if (player.isSneaking) return false
+
+    val stack = player.mainHandStack
+    val comp = stack.getKosmogliphs()
+    if (comp.isEmpty()) return false
+
+    if (!comp.contains(REAPER)) return false
+
+    return !world.getBlockState(mainPos).isIn(REAPABLE_CROPS)
 }
 
 
@@ -98,7 +116,7 @@ else if (this.contains(VEIN_MINER)) VEIN_MINER
 else null
 
 fun Kosmogliph.getBlocks(
-    stack: ItemStack, world: World, pos: BlockPos, state: BlockState, player: PlayerEntity
+    stack: ItemStack, world: World, pos: BlockPos, state: BlockState, player: PlayerEntity,
 ): Set<BlockPos> {
     return when (this) {
         HAMMER -> queryMineableHammerPositions(stack, world, pos, state, player)
@@ -112,7 +130,7 @@ fun Kosmogliph.getBlocks(
 }
 
 fun queryReaperOutline(
-    stack: ItemStack, world: World, pos: BlockPos, state: BlockState, player: PlayerEntity
+    stack: ItemStack, world: World, pos: BlockPos, state: BlockState, player: PlayerEntity,
 ): Set<BlockPos> {
     val mineable = queryReaperMineablePositions(stack, world, pos, state)
     if (mineable.size > 1) return mineable
