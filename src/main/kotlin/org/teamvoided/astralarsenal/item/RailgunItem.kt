@@ -132,18 +132,7 @@ class RailgunItem(settings: Settings) : Item(settings) {
             for (entity in entities) {
                 if (!hitEntities.contains(entity)) {
                     if (entity is CannonballEntity) {
-                        world.createExplosion(
-                            entity,
-                            entity.damageSources.explosion(entity, player),
-                            StrongExplosionBehavior(player),
-                            entity.x,
-                            entity.y,
-                            entity.z,
-                            2.0f,
-                            false,
-                            World.ExplosionSourceType.TNT
-                        )
-                        entity.discard()
+                        entity.setCharged(true)
                     }
                     val rand = world.random.rangeInclusive(1, 10)
                     if (entity is PlayerEntity) {

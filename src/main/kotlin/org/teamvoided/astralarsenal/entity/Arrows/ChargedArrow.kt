@@ -20,6 +20,7 @@ import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.apache.logging.log4j.core.jmx.Server
+import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralItems

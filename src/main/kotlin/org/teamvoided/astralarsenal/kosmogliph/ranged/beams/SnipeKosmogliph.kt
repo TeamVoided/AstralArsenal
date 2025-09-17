@@ -198,18 +198,7 @@ class SnipeKosmogliph(id: Identifier) :
             if (!hitEntities.contains(entity)) {
                 if (entity is LivingEntity || entity is CannonballEntity) {
                     if (entity is CannonballEntity) {
-                        world.createExplosion(
-                            entity,
-                            entity.damageSources.explosion(entity, player),
-                            WeakExplosionBehavior(player),
-                            entity.x,
-                            entity.y,
-                            entity.z,
-                            2.0f,
-                            false,
-                            World.ExplosionSourceType.TNT
-                        )
-                        entity.discard()
+                        entity.setCharged(true)
                     } else if (entity is PlayerEntity) {
                         val rand = world.random.rangeInclusive(1, 10)
                         if (rand == 1) {

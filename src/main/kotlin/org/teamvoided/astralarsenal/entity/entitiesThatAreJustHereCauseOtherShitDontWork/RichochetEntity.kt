@@ -182,18 +182,7 @@ class RichochetEntity : Entity {
         }
         for (entity in entities) {
             if (entity is CannonballEntity && !entitiesHit.contains(entity)) {
-                world.createExplosion(
-                    entity,
-                    entity.damageSources.explosion(entity, cause),
-                    WeakExplosionBehavior(cause),
-                    entity.x,
-                    entity.y,
-                    entity.z,
-                    2.0f,
-                    false,
-                    World.ExplosionSourceType.TNT
-                )
-                entity.discard()
+                entity.setCharged(true)
             }
             if (entity is LivingEntity && !entitiesHit.contains(entity) && (entity !is PlayerEntity || !hitThrice.contains(
                     entity

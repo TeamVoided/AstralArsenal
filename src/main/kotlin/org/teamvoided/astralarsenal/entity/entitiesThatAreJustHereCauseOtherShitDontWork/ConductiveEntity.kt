@@ -73,19 +73,7 @@ class ConductiveEntity : Entity {
                         tempDamage = 2.5f
                     }
                     if (entiity is CannonballEntity) {
-                        val cause = entiity.owner ?: entiity
-                        world.createExplosion(
-                            entiity,
-                            cause.damageSources?.explosion(entiity, cause),
-                            WeakExplosionBehavior(cause),
-                            entiity.x,
-                            entiity.y,
-                            entiity.z,
-                            2.0f,
-                            false,
-                            World.ExplosionSourceType.TNT
-                        )
-                        entiity.discard()
+                        entiity.setCharged(true)
                     }
                     if (entiity is ChargedArrow) {
                         entiity.isCharged = true

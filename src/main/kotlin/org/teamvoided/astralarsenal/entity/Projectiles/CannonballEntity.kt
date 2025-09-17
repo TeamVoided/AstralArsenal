@@ -161,7 +161,9 @@ class CannonballEntity : ThrownItemEntity {
                     ), world as ServerWorld, 1, 9, 2, 0.05f, 0.75
                 )
             }
-            sparkNearbyEntities(if (this.owner != null) this.owner!! else this, this)
+            if (world.time % 2 == 0L) {
+                sparkNearbyEntities(if (this.owner != null) this.owner!! else this, this)
+            }
             val entities = mutableListOf<Entity>()
             entities.addAll(
                 this.world.getOtherEntities(

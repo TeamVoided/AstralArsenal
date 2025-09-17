@@ -123,18 +123,7 @@ class RicochetKosmogliph(id: Identifier) :
         )
         for (entity in entities) {
             if (entity is CannonballEntity && !entitiesHit.contains(entity)) {
-                world.createExplosion(
-                    entity,
-                    entity.damageSources.explosion(entity, player),
-                    WeakExplosionBehavior(player),
-                    entity.x,
-                    entity.y,
-                    entity.z,
-                    2.0f,
-                    false,
-                    World.ExplosionSourceType.TNT
-                )
-                entity.discard()
+                entity.setCharged(true)
             }
             if (entity is LivingEntity && !entitiesHit.contains(entity)) {
                 val damage = if (entity is PlayerEntity) DAMAGE.toFloat() else DAMAGE.toFloat() * 2
