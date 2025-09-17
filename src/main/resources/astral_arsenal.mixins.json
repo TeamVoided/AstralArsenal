@@ -11,6 +11,7 @@
     "BowMixin",
     "DamageReductionMixin",
     "EnchantmentScreenHandlerMixin",
+    "GrindstoneScreenHandlerMixin",
     "HoeItemMixin",
     "ItemMixin",
     "ItemStackMixin",
