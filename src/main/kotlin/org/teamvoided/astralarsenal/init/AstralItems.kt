@@ -1,19 +1,15 @@
 package org.teamvoided.astralarsenal.init
 
-import net.minecraft.item.FoodComponent
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
 import net.minecraft.item.ToolMaterials
 import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderLookup.RegistryLookup
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.util.Rarity
-import net.minecraft.util.UseAction
 import org.teamvoided.astralarsenal.AstralArsenal
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.item.*
-import java.util.*
 import java.util.stream.Stream
 
 @Suppress("unused")

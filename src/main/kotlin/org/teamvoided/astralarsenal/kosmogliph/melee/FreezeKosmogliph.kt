@@ -9,7 +9,6 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
-import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.entity.Projectiles.VoidIceShardEntity
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 

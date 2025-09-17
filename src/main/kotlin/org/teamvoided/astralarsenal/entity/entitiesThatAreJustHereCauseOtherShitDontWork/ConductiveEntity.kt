@@ -20,7 +20,6 @@ import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.util.sillyLightningTime
-import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 
 class ConductiveEntity : Entity {
     var owner: Entity? = null

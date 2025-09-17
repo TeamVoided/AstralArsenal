@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.entity.Arrows
 
-import net.minecraft.block.BlockState
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity

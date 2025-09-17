@@ -15,7 +15,9 @@ import net.minecraft.util.math.Vec3d
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.util.toVec3d
 import java.awt.Color
-import kotlin.math.*
+import kotlin.math.acos
+import kotlin.math.atan2
+import kotlin.math.floor
 
 class BeamRenderer(context: EntityRendererFactory.Context?) :
     EntityRenderer<BeamRenderEntity>(context) {

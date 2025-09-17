@@ -3,12 +3,7 @@ package org.teamvoided.astralarsenal.init
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.entity.EquipmentSlot
-import net.minecraft.network.listener.ClientPlayPacketListener
-import org.teamvoided.astralarsenal.networking.DashKosmogliphPayload
-import org.teamvoided.astralarsenal.networking.DodgeKosmogliphPayload
-import org.teamvoided.astralarsenal.networking.JumpKosmogliphPayload
-import org.teamvoided.astralarsenal.networking.SlamKosmogliphPayload
-import org.teamvoided.astralarsenal.networking.UpdateHexRingPayload
+import org.teamvoided.astralarsenal.networking.*
 import org.teamvoided.astralarsenal.util.hasKosmogliph
 
 object AstralNetworking {

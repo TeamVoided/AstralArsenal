@@ -5,12 +5,10 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Vec3d
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.AstralProjectionEntity
-import org.teamvoided.astralarsenal.entity.FlameShotEntity
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
 class FlameBurstKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_FLAME_BURST) }) {

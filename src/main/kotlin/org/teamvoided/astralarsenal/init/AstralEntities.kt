@@ -7,7 +7,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.entity.*
-import org.teamvoided.astralarsenal.entity.Arrows.AntiphaseArrow
 import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightArrowEntity
 import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightEntity
 import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity

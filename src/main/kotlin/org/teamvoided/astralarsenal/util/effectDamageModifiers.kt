@@ -18,16 +18,13 @@ import org.teamvoided.astralarsenal.entity.Arrows.MagneticSpectralArrow
 import org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShitDontWork.ConductiveEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
-import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralEffects.BLAZED
 import org.teamvoided.astralarsenal.init.AstralEffects.CONDUCTIVE
-import org.teamvoided.astralarsenal.init.AstralEffects.HARD_DAMAGE
 import org.teamvoided.astralarsenal.init.AstralEffects.IMMORTAL
 import org.teamvoided.astralarsenal.init.AstralEffects.IMPALED
 import org.teamvoided.astralarsenal.init.AstralEffects.REDUCE
 import org.teamvoided.astralarsenal.init.AstralEffects.WEAKENED
 import org.teamvoided.astralarsenal.init.AstralItems
-import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import kotlin.math.min
 
 val REDUCE_MULT = 0.05

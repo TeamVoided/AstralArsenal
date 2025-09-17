@@ -7,7 +7,6 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
-import org.teamvoided.astralarsenal.components.AstralStrikeData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightEntity
 import org.teamvoided.astralarsenal.init.AstralDataComponents

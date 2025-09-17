@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph.armor.defensive
 
-import net.minecraft.block.enums.Thickness
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -17,16 +16,12 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import org.apache.logging.log4j.core.jmx.Server
-import org.joml.Math.lerp
-import org.joml.Vector3f
 import org.teamvoided.astralarsenal.components.CapacitanceDataV1
 import org.teamvoided.astralarsenal.components.CapacitanceDataV2
 import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.Arrows.ChargedArrow
 import org.teamvoided.astralarsenal.entity.Arrows.ChargedSpectralArrow
-import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage

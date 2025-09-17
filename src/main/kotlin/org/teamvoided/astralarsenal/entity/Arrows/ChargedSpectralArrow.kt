@@ -3,11 +3,9 @@ package org.teamvoided.astralarsenal.entity.Arrows
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.ai.brain.sensor.NearestBedSensor
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.projectile.ArrowEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.entity.projectile.SpectralArrowEntity
 import net.minecraft.item.ItemStack
@@ -20,7 +18,6 @@ import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import org.apache.logging.log4j.core.jmx.Server
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralItems

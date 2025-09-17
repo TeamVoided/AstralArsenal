@@ -1,10 +1,6 @@
 package org.teamvoided.astralarsenal
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.asCoroutineDispatcher
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.minecraft.server.command.CommandManager.literal
 import net.minecraft.util.Identifier
 import org.slf4j.Logger

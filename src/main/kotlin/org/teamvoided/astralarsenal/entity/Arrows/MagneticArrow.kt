@@ -4,19 +4,13 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.ArrowEntity
-import net.minecraft.entity.projectile.PersistentProjectileEntity
-import net.minecraft.entity.projectile.ProjectileEntity
-import net.minecraft.entity.projectile.TridentEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralItems
-import org.teamvoided.astralarsenal.mixin.PersistentProjectileEntityAccessor
-import org.teamvoided.astralarsenal.mixin.TridentEntityAccessor
 import org.teamvoided.astralarsenal.util.sillyLightningTime
 
 class MagneticArrow : ArrowEntity {

@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
@@ -28,7 +27,6 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt

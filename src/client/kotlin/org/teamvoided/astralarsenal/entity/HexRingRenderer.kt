@@ -13,7 +13,6 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.util.math.Axis
 import net.minecraft.util.math.MathHelper
 import org.teamvoided.astralarsenal.AstralArsenal
-import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 import org.teamvoided.astralarsenal.util.EntityHexAccessor
 
 class HexRingRenderer<T : LivingEntity, V : EntityModel<T>>(

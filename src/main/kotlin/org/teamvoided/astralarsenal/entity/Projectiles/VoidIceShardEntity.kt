@@ -1,13 +1,11 @@
 package org.teamvoided.astralarsenal.entity.Projectiles
 
-import net.fabricmc.fabric.impl.`object`.builder.FabricEntityTypeImpl
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
-import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes

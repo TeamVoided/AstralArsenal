@@ -25,7 +25,6 @@ import org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShit
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
-import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt

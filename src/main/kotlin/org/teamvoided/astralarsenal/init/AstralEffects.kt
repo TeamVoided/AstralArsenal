@@ -1,38 +1,18 @@
 package org.teamvoided.astralarsenal.init
 
-import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
-import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.effect.StatusEffect
-import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffectType
-import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registries
-import net.minecraft.registry.tag.DamageTypeTags
-import net.minecraft.registry.tag.DamageTypeTags.BYPASSES_INVULNERABILITY
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.math.Vec3d
-import org.joml.Math.*
-import org.joml.Vector3f
 import org.teamvoided.astralarsenal.AstralArsenal.id
-import org.teamvoided.astralarsenal.data.tags.AstralDamageTypeTags
 import org.teamvoided.astralarsenal.effects.AstralStatusEffect
 import org.teamvoided.astralarsenal.effects.BleedStatusEffect
 import org.teamvoided.astralarsenal.effects.MagneticStatusEffect
 import org.teamvoided.astralarsenal.effects.ParticleStatusEffect
-import org.teamvoided.astralarsenal.entity.BeamRenderEntity
-import org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShitDontWork.ConductiveEntity
-import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
-import org.teamvoided.astralarsenal.util.applyHexes
 import org.teamvoided.astralarsenal.util.registerHolder
-import kotlin.math.min
 
 object AstralEffects {
     fun init() = Unit

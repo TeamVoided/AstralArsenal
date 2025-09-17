@@ -1,7 +1,6 @@
 package org.teamvoided.astralarsenal.init
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
-import net.minecraft.client.render.entity.ArrowEntityRenderer
 import net.minecraft.client.render.entity.EmptyEntityRenderer
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import org.teamvoided.astralarsenal.entity.BeamRenderer

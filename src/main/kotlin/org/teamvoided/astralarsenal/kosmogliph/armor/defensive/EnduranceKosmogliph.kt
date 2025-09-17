@@ -8,7 +8,6 @@ import net.minecraft.entity.mob.ElderGuardianEntity
 import net.minecraft.entity.mob.GuardianEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier

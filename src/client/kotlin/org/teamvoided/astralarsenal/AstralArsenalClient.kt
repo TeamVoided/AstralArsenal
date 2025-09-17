@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import org.teamvoided.astralarsenal.block.entity.KosmicTableBlockEntityRenderer
@@ -12,9 +11,9 @@ import org.teamvoided.astralarsenal.entity.HexRingModel
 import org.teamvoided.astralarsenal.entity.HexRingRenderer
 import org.teamvoided.astralarsenal.handlers.KeyHandlers
 import org.teamvoided.astralarsenal.init.*
-import org.teamvoided.astralarsenal.utils.CustomUseAnimation
 import org.teamvoided.astralarsenal.networking.UpdateHexRingPayload
 import org.teamvoided.astralarsenal.util.EntityHexAccessor
+import org.teamvoided.astralarsenal.utils.CustomUseAnimation
 
 @Suppress("unused")
 object AstralArsenalClient {

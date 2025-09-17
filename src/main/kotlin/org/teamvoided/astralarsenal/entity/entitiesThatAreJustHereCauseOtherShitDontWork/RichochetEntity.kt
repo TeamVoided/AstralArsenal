@@ -25,7 +25,6 @@ import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEntities
-import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt

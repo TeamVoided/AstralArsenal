@@ -17,7 +17,6 @@ import net.minecraft.util.UseAction
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.components.TomeOfHexesData
 import org.teamvoided.astralarsenal.init.AstralDataComponents
-import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralEffects.BLAZED
 import org.teamvoided.astralarsenal.init.AstralEffects.BLAZING
 import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED
@@ -32,7 +31,6 @@ import org.teamvoided.astralarsenal.init.AstralEffects.MAGNETISED
 import org.teamvoided.astralarsenal.init.AstralEffects.MAGNETISING
 import org.teamvoided.astralarsenal.init.AstralEffects.WEAKENED
 import org.teamvoided.astralarsenal.init.AstralEffects.WEAKENING
-import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HEX_OF_BLAZING
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HEX_OF_BREACHING
 import org.teamvoided.astralarsenal.init.AstralKosmogliphs.HEX_OF_CLEANSING

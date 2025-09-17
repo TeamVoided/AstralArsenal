@@ -1,10 +1,8 @@
 package org.teamvoided.astralarsenal.entity.Arrows
 
-import net.minecraft.block.BlockState
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.projectile.ArrowEntity
 import net.minecraft.entity.projectile.SpectralArrowEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items

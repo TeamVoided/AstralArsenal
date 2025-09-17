@@ -19,8 +19,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.teamvoided.astralarsenal.entity.Arrows.AntiphaseArrow;
 import org.teamvoided.astralarsenal.entity.Arrows.AntiphaseSpectralArrow;
-import org.teamvoided.astralarsenal.entity.Arrows.MagneticArrow;
-import org.teamvoided.astralarsenal.entity.Arrows.MagneticSpectralArrow;
 
 import static org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage;
 

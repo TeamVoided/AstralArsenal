@@ -3,8 +3,6 @@ package org.teamvoided.astralarsenal.util
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.world.World
-import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralEffects.BLAZED
 import org.teamvoided.astralarsenal.init.AstralEffects.BLAZING
 import org.teamvoided.astralarsenal.init.AstralEffects.BREACHED

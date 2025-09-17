@@ -3,7 +3,6 @@ package org.teamvoided.astralarsenal.kosmogliph.ranged.beams
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.damage.DamageTypes
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.server.world.ServerWorld
@@ -21,8 +20,8 @@ import org.joml.Math.lerp
 import org.joml.Vector3f
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
-import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.entity.FreezeShotEntity
+import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralParticles
 import org.teamvoided.astralarsenal.init.AstralSounds

@@ -6,11 +6,8 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.item.ItemStack
-import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.RegistryKey
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
-import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralEffects
 import kotlin.math.min

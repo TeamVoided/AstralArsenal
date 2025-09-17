@@ -13,16 +13,12 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
-import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.Box
-import net.minecraft.util.math.Direction
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 import org.joml.Math
 import org.joml.Vector3f
-import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightEntity
 import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
-import org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShitDontWork.RichochetEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEntities
 import org.teamvoided.astralarsenal.world.explosion.WeakExplosionBehavior

@@ -27,7 +27,6 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.util.hasKosmogliphs
-import org.teamvoided.astralarsenal.world.explosion.StrongExplosionBehavior
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
