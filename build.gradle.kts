@@ -54,7 +54,7 @@ dependencies {
     modImplementation(libs.fzzy.config)
 
     // Testing
-    //modImplementation(libs.creative.works)
+    modImplementation(libs.creative.works)
     modCompileOnly(libs.imguimc)
 }
 
