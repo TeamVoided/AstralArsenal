@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph.ranged
 
-import arrow.core.collectionSizeOrDefault
 import net.minecraft.client.item.TooltipConfig
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.PotionContentsComponent
@@ -27,6 +26,7 @@ import org.teamvoided.astralarsenal.components.AlchemistData
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.init.AstralDataComponents
 import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
+import org.teamvoided.astralarsenal.util.collectionSizeOrDefault
 import java.util.*
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull

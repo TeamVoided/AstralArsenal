@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph
 
-import arrow.core.Predicate
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
@@ -8,6 +7,7 @@ import net.minecraft.entity.damage.DamageType
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
+import org.teamvoided.astralarsenal.util.Predicate
 
 class DamageReductionKosmogliph(
     id: Identifier,

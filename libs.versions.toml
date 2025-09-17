@@ -4,7 +4,6 @@ fabric-loom = "1.11-SNAPSHOT"
 iridium = "3.5.0"
 # Dependencies
 fzzy-config = "0.7.2+1.21"
-farrow = "1.0.0+arrow.1.2.4"
 # QoL
 modmenu = "11.0.3"
 emi = "1.1.22+1.21.1"
@@ -14,7 +13,6 @@ imguimc = "1.21.1-1.0.8"
 
 [libraries]
 # Dependencies
-farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
 fzzy-config = { module = "me.fzzyhmstrs:fzzy_config", version.ref = "fzzy-config" }
 # QoL
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }

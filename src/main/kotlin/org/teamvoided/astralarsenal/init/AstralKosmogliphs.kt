@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.init
 
-import arrow.core.Predicate
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.Item
@@ -34,6 +33,7 @@ import org.teamvoided.astralarsenal.kosmogliph.shield.ParryKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.tools.ReaperKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.tools.SmelterKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.tools.VeinmineKosmogliph
+import org.teamvoided.astralarsenal.util.Predicate
 
 @Suppress("unused")
 object AstralKosmogliphs {

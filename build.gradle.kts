@@ -48,9 +48,6 @@ dependencies {
     modImplementation(fileTree("libs"))
     modImplementation(libs.modmenu)
 
-    modImplementation(libs.farrow)
-    include(libs.farrow)
-
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
 

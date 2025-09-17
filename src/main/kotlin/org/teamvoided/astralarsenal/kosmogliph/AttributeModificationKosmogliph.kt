@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.kosmogliph
 
-import arrow.core.Predicate
 import net.minecraft.entity.Entity
 import net.minecraft.entity.attribute.EntityAttribute
 import net.minecraft.entity.attribute.EntityAttributeInstance
@@ -10,6 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.registry.Holder
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
+import org.teamvoided.astralarsenal.util.Predicate
 
 class AttributeModificationKosmogliph(
     id: Identifier,

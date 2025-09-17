@@ -1,11 +1,11 @@
 package org.teamvoided.astralarsenal.kosmogliph
 
-import arrow.core.Predicate
 import net.minecraft.component.DataComponentType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
+import org.teamvoided.astralarsenal.util.Predicate
 
 open class KosmogliphWithData(
     id: Identifier, val dataType: DataComponentType<*>, applicationPredicate: Predicate<ItemStack>,

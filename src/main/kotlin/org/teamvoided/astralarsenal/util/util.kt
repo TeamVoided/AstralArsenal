@@ -1,6 +1,5 @@
 package org.teamvoided.astralarsenal.util
 
-import arrow.core.Predicate
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
@@ -10,7 +9,7 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registry
@@ -48,6 +47,11 @@ import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MacePulverise
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceStrongPulverise
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceWeakPulverise
 import kotlin.math.min
+
+
+typealias Predicate<T> = (T) -> Boolean
+public fun <T> Iterable<T>.collectionSizeOrDefault(default: Int): Int =
+    if (this is Collection<*>) this.size else default
 
 fun <T, R : Registry<T>> RegistryKey<R>.tag(id: Identifier) = TagKey.of(this, id)
 
@@ -109,7 +113,7 @@ fun sillyLightningTime(
     maxBends: Int,
     boltTicks: Int,
     thickness: Float,
-    randMult: Double
+    randMult: Double,
 ) {
     val bends = world.random.rangeInclusive(minBends, maxBends)
     val bendPos = mutableListOf<Vec3d>()
@@ -354,7 +358,7 @@ fun tickMovement(freezer: LivingEntity) {
 }
 
 fun setPropertiesTwo(
-    entity: ProjectileEntity, pitch: Float, yaw: Float, roll: Float, speed: Float, modifierXYZ: Float
+    entity: ProjectileEntity, pitch: Float, yaw: Float, roll: Float, speed: Float, modifierXYZ: Float,
 ) {
     val f = -MathHelper.sin(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
     val g = -MathHelper.sin((pitch + roll) * (Math.PI.toFloat() / 180))
