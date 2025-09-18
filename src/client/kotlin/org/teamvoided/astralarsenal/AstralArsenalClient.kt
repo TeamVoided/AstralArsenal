@@ -25,7 +25,7 @@ object AstralArsenalClient {
     var config = ConfigApi.registerAndLoadConfig(::AAClientConfig, RegisterType.CLIENT)
 
     fun init() {
-        AstralHandledScreens
+        AstralHandledScreens.init()
         AstralKeyBindings.init()
         AstralEntitiesClient.clientInit()
         AstralParticlesClient.init()

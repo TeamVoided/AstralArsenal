@@ -37,6 +37,8 @@ import org.teamvoided.astralarsenal.util.Predicate
 
 @Suppress("unused")
 object AstralKosmogliphs {
+    fun init() = Unit
+
     //    val STUPID_FUCKING_GLIPH = registerSimple("stupid_fucking_gliph") { true }
     val EMPTY = registerSimple("empty") { false }
 

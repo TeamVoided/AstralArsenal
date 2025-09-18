@@ -23,14 +23,13 @@ object AstralArsenal {
     fun init() {
         //Referencing object will initialize them
         AstralBlocks.init()
-        AstralItems
+        AstralItems.init()
         AstralDataComponents.init()
-        AstralScreenHandlers
         AstralMenus.init()
-        AstralTabs
-        AstralKosmogliphs
+        AstralTabs.init()
+        AstralKosmogliphs.init()
         AstralDamageTypes
-        AstralSounds
+        AstralSounds.init()
         AstralEffects.init()
         AstralEntities.init()
         AstralNetworking.init()
@@ -44,6 +43,5 @@ object AstralArsenal {
         }
     }
 
-    fun id(path: String): Identifier =
-        Identifier.of(MOD_ID, path)
+    fun id(path: String): Identifier = Identifier.of(MOD_ID, path)
 }

@@ -14,6 +14,8 @@ import java.util.stream.Stream
 
 @Suppress("unused")
 object AstralItems {
+    fun init() = Unit
+
     val AMETHYST_DUST = register("amethyst_dust", Item(Item.Settings()))
     val EMERALD_DUST = register("emerald_dust", Item(Item.Settings()))
     val LAPIS_LAZULI_DUST = register("lapis_lazuli_dust", Item(Item.Settings()))

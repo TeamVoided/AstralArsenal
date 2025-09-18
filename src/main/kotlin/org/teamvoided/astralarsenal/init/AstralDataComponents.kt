@@ -8,6 +8,8 @@ import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.components.*
 
 object AstralDataComponents {
+    fun init() = Unit
+
     @JvmField
     val KOSMOGLIPHS = register("kosmogliphs") { builder -> builder.codec(KosmogliphsComponent.CODEC).build() }
 
@@ -50,6 +52,4 @@ object AstralDataComponents {
         name: String, build: (DataComponentType.Builder<T>) -> DataComponentType<T>
     ): DataComponentType<T> =
         Registry.register(Registries.DATA_COMPONENT_TYPE, id(name), build(DataComponentType.builder()))
-
-    fun init() {}
 }

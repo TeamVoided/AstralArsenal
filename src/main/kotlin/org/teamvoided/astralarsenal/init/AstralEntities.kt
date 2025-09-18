@@ -15,9 +15,7 @@ import org.teamvoided.astralarsenal.entity.Projectiles.VoidIceShardEntity
 import org.teamvoided.astralarsenal.entity.entitiesThatAreJustHereCauseOtherShitDontWork.RichochetEntity
 
 object AstralEntities {
-
-    fun init() {
-    }
+    fun init() = Unit
 
     val CANNONBALL_ENTITY = register(
         "cannonball",
