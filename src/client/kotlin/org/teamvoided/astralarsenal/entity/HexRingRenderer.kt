@@ -17,11 +17,8 @@ import org.teamvoided.astralarsenal.util.EntityHexAccessor
 
 class HexRingRenderer<T : LivingEntity, V : EntityModel<T>>(
     context: LivingEntityRenderer<T, V>?,
-    factory: EntityRendererFactory.Context
-) :
-    FeatureRenderer<T, V>(
-        context
-    ) {
+    factory: EntityRendererFactory.Context,
+) : FeatureRenderer<T, V>(context) {
 
     val model: Model = HexRingModel(factory.getPart(HexRingModel.MODEL_LAYER))
 
@@ -35,7 +32,7 @@ class HexRingRenderer<T : LivingEntity, V : EntityModel<T>>(
         tickDelta: Float,
         animationProgress: Float,
         headYaw: Float,
-        headPitch: Float
+        headPitch: Float,
     ) {
         val hexColor = (entity as EntityHexAccessor).`getAstralArsenal$hexColor`()
         if (hexColor != -1) {

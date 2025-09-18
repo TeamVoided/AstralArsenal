@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.InputUtil
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBind
 import org.lwjgl.glfw.GLFW
-import org.teamvoided.astralarsenal.AstralArsenal
+import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.data.gen.prov.AstralEnTranslationProvider
 import org.teamvoided.astralarsenal.util.DEFAULT_KEY_CATEGORY
 
@@ -18,7 +18,7 @@ object AstralKeyBindings {
         keycode: Int,
         category: String = DEFAULT_KEY_CATEGORY
     ): KeyBind {
-        val id = AstralArsenal.id(name)
+        val id = id(name)
         val bind = KeyBind(id.toTranslationKey("key"), type, keycode, category)
         AstralEnTranslationProvider.registerKeybindForDataGen(id, name)
         return KeyBindingHelper.registerKeyBinding(bind)

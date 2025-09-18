@@ -8,7 +8,7 @@ import org.teamvoided.astralarsenal.entity.NailEntityRenderer
 
 
 object AstralEntitiesClient {
-    fun clientInit() {
+    fun init() {
         EntityRendererRegistry.register(AstralEntities.CANNONBALL_ENTITY, ::FlyingItemEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BEAM_OF_LIGHT, ::EmptyEntityRenderer)
         EntityRendererRegistry.register(AstralEntities.BEAM_OF_LIGHT_ARROW, ::EmptyEntityRenderer)
