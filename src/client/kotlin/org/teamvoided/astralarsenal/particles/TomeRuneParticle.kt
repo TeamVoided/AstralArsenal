@@ -5,6 +5,7 @@ import net.minecraft.client.particle.Particle
 import net.minecraft.client.particle.ParticleFactory
 import net.minecraft.client.particle.ParticleTextureSheet
 import net.minecraft.client.particle.SpriteBillboardParticle
+import net.minecraft.client.particle.SpriteProvider
 import net.minecraft.client.texture.SpriteAtlasTexture
 import net.minecraft.client.world.ClientWorld
 import org.teamvoided.astralarsenal.AstralArsenal
@@ -63,7 +64,7 @@ class TomeRuneParticle(world: ClientWorld, x: Double, y: Double, z: Double, val 
         private const val MAX_AGE = FIRST_FRAME_DELAY + (FRAME_COUNT * FRAME_TIME)
     }
 
-    class Factory() : ParticleFactory<TomeRuneParticleEffect> {
+    class Factory(val provider: SpriteProvider) : ParticleFactory<TomeRuneParticleEffect> {
 
         override fun createParticle(
             effect: TomeRuneParticleEffect,

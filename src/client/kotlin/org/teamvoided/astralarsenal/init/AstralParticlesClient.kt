@@ -13,9 +13,9 @@ object AstralParticlesClient {
 
     fun init() {
         register(AstralParticles.SNOWFLAKE, DusksSnowFlakeParticle::Factory)
-        register(AstralParticles.TOME_RUNE_EMITTER) { TomeRuneParticleEmitter.Factory(it) }
-        register(AstralParticles.TOME_RUNE) { TomeRuneParticle.Factory() }
-        register(AstralParticles.TOME_RUNE_POOF) { TomeRunePoofParticle.Factory(it) }
+        register(AstralParticles.TOME_RUNE_EMITTER, TomeRuneParticleEmitter::Factory)
+        register(AstralParticles.TOME_RUNE, TomeRuneParticle::Factory)
+        register(AstralParticles.TOME_RUNE_POOF, TomeRunePoofParticle::Factory)
     }
 
     fun <T : ParticleEffect> register(type: ParticleType<T>, constructor: PendingParticleFactory<T>) =
