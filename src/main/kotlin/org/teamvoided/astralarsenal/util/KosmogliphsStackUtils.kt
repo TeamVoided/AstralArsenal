@@ -16,6 +16,12 @@ fun ItemStack.setKosmogliphs(vararg kosmogliphs: Kosmogliph): ItemStack {
     return this
 }
 
+fun ItemStack.removeKosmogliphs(): ItemStack {
+    this.getKosmogliphs().forEach { it.onUnapply(this) }
+    this.remove(KOSMOGLIPHS)
+    return this
+}
+
 fun ItemStack.setEmpty(): ItemStack {
     this.getKosmogliphs().forEach { it.onUnapply(this) }
     this.set(KOSMOGLIPHS, KosmogliphsComponent(AstralKosmogliphs.EMPTY))
