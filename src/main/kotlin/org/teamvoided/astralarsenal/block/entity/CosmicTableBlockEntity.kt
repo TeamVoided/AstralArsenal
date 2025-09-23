@@ -45,12 +45,8 @@ class CosmicTableBlockEntity(
         world?.updateListeners(pos, cachedState, cachedState, Block.NOTIFY_ALL)
     }
 
-    override fun createScreenHandler(
-        syncId: Int,
-        playerInventory: PlayerInventory
-    ): ScreenHandler {
-        return CosmicTableMenu(syncId, playerInventory, CosmicTableData(this))
-    }
+    override fun createScreenHandler(syncId: Int, playerInventory: PlayerInventory): ScreenHandler =
+        CosmicTableMenu(syncId, playerInventory, CosmicTableData(this))
 
     override fun size(): Int = inventory.size
 
@@ -59,9 +55,7 @@ class CosmicTableBlockEntity(
         markDirty()
     }
 
-    override fun toUpdatePacket(): Packet<ClientPlayPacketListener>? {
-        return BlockEntityUpdateS2CPacket.of(this)
-    }
+    override fun toUpdatePacket(): Packet<ClientPlayPacketListener> = BlockEntityUpdateS2CPacket.of(this)
 
     override fun toSyncedNbt(lookupProvider: HolderLookup.Provider?): NbtCompound {
         return Inventories.writeNbt(NbtCompound(), inventory, lookupProvider)
@@ -78,9 +72,7 @@ class CosmicTableBlockEntity(
         Inventories.readNbt(nbt, inventory, lookupProvider)
     }
 
-    override fun getScreenOpeningData(player: ServerPlayerEntity): CosmicTableData {
-        return CosmicTableData(this)
-    }
+    override fun getScreenOpeningData(player: ServerPlayerEntity): CosmicTableData = CosmicTableData(this)
 
     companion object {
         fun tick(world: World, pos: BlockPos, ignore: BlockState, entity: CosmicTableBlockEntity) {

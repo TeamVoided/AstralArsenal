@@ -15,6 +15,8 @@ object AstralNetworking {
             if (!stack.hasKosmogliph(AstralKosmogliphs.JUMP)) return@registerGlobalReceiver
             AstralKosmogliphs.JUMP.handleJump(stack, player)
         }
+
+
         PayloadTypeRegistry.playC2S().register(DashKosmogliphPayload.ID, DashKosmogliphPayload.CODEC)
         ServerPlayNetworking.registerGlobalReceiver(DashKosmogliphPayload.ID) { _, ctx ->
             val player = ctx.player()
@@ -22,6 +24,8 @@ object AstralNetworking {
             if (!stack.hasKosmogliph(AstralKosmogliphs.DASH)) return@registerGlobalReceiver
             AstralKosmogliphs.DASH.handleJump(stack, player)
         }
+
+
         PayloadTypeRegistry.playC2S().register(DodgeKosmogliphPayload.ID, DodgeKosmogliphPayload.CODEC)
         ServerPlayNetworking.registerGlobalReceiver(DodgeKosmogliphPayload.ID) { _, ctx ->
             val player = ctx.player()
@@ -29,6 +33,8 @@ object AstralNetworking {
             if (!stack.hasKosmogliph(AstralKosmogliphs.DODGE)) return@registerGlobalReceiver
             AstralKosmogliphs.DODGE.handleJump(stack, player, false, false, false, false)
         }
+
+
         PayloadTypeRegistry.playC2S().register(SlamKosmogliphPayload.ID, SlamKosmogliphPayload.CODEC)
         ServerPlayNetworking.registerGlobalReceiver(SlamKosmogliphPayload.ID) { _, ctx ->
             val player = ctx.player()

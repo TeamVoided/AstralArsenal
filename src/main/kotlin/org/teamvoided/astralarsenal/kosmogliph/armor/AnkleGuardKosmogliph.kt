@@ -11,24 +11,17 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
-class AnkleGuardKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ANKLE_GUARD) }) {
-
+class AnkleGuardKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUPPORTS_ANKLE_GUARD) {
     override fun modifyDamage(
         stack: ItemStack,
         entity: LivingEntity,
         damage: Float,
         source: DamageSource,
         equipmentSlot: EquipmentSlot,
-        stage: DamageModificationStage
+        stage: DamageModificationStage,
     ): Float {
-        if (stage != DamageModificationStage.POST_ENCHANT) return super.modifyDamage(
-            stack,
-            entity,
-            damage,
-            source,
-            equipmentSlot,
-            stage
-        )
+        if (stage != DamageModificationStage.POST_ENCHANT)
+            return super.modifyDamage(stack, entity, damage, source, equipmentSlot, stage)
 
         var outputDamage = damage
         if ((source.isTypeIn(DamageTypeTags.IS_FALL) || source.isType(DamageTypes.FLY_INTO_WALL)) && equipmentSlot == EquipmentSlot.HEAD) {

@@ -23,7 +23,5 @@ class RancidExplosionBehavior : BlockSafeExplosionBehavior() {
     }
 
     fun LivingEntity.addEffect(type: Holder<StatusEffect>, duration: Int = 600, amplifier: Int = 0) =
-        this.addStatusEffect(
-            StatusEffectInstance(type, duration, amplifier, false, true, true)
-        )
+        addStatusEffect(StatusEffectInstance(type, duration, amplifier, false, true, true))
 }

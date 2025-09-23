@@ -9,7 +9,5 @@ import org.teamvoided.astralarsenal.util.Predicate
 open class SimpleKosmogliph(val id: Identifier, val applicationPredicate: Predicate<ItemStack>) : Kosmogliph {
     constructor(id: Identifier, tag: TagKey<Item>) : this(id, { it.isIn(tag) })
 
-    override fun canBeAppliedTo(stack: ItemStack): Boolean {
-        return applicationPredicate(stack)
-    }
+    override fun canBeAppliedTo(stack: ItemStack): Boolean = applicationPredicate(stack)
 }

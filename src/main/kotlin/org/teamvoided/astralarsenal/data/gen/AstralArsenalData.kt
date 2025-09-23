@@ -33,6 +33,7 @@ object AstralArsenalData : DataGeneratorEntrypoint {
         pack.addProvider(::AstralItemTagProvider)
         pack.addProvider(::AstralEntityTagProvider)
 
+        // Data
         pack.addProvider(::AstralRegistryProvider)
     }
 

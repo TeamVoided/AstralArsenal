@@ -41,9 +41,7 @@ class CannonballEntity : ThrownItemEntity {
     constructor(world: World?, x: Double, y: Double, z: Double) :
             super(AstralEntities.CANNONBALL_ENTITY, x, y, z, world)
 
-    override fun getDefaultItem(): Item {
-        return AstralItems.CANNONBALL
-    }
+    override fun getDefaultItem(): Item = AstralItems.CANNONBALL
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         val entity = entityHitResult.entity

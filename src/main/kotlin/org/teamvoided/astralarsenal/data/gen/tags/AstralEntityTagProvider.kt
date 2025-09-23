@@ -17,15 +17,14 @@ class AstralEntityTagProvider(
             .add(EntityType.CAMEL)
             .add(EntityType.HORSE)
             .add(EntityType.SKELETON_HORSE)
+            .add(EntityType.ZOMBIE_HORSE)
             .add(EntityType.DONKEY)
             .add(EntityType.MULE)
-            .add(EntityType.ZOMBIE_HORSE)
 
         getOrCreateTagBuilder(AstralEntityTags.PROTECTED_FROM_DEL)
             .add(EntityType.TRIDENT)
             .add(EntityType.ENDER_PEARL)
             .add(EntityType.EYE_OF_ENDER)
-            //.add(AstralEntities.NAIL_ENTITY)
 
         getOrCreateTagBuilder(AstralEntityTags.REFLECTABLE_PROJECTILES)
             .add(EntityType.ARROW)
@@ -35,7 +34,6 @@ class AstralEntityTagProvider(
             .add(EntityType.SPECTRAL_ARROW)
 
         getOrCreateTagBuilder(AstralEntityTags.UNAFFECTED_BY_LIGHT)
-//            .add(AstralEntities.ASTRAL_STRIKER)
 
         getOrCreateTagBuilder(AstralEntityTags.WEAK_PARRYABLES)
             .add(EntityType.ARROW)

@@ -24,7 +24,7 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
         damage: Float,
         source: DamageSource,
         equipmentSlot: EquipmentSlot,
-        stage: DamageModificationStage
+        stage: DamageModificationStage,
     ): Float {
         if (stage != DamageModificationStage.POST_ARMOR) return super.modifyDamage(
             stack,
@@ -39,7 +39,7 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
         if (source.isTypeIn(AstralDamageTypeTags.IS_MAGIC)) {
             val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
             var multiplyer = 0.2
-            for (effect in effects){
+            for (effect in effects) {
                 multiplyer = min(0.2 + (0.2 * (effect.amplifier + 1)), 1.0)
             }
             outputDamage = (outputDamage * multiplyer).toFloat()
@@ -48,9 +48,7 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
         return outputDamage
     }
 
-    val breached = listOf(
-        BREACHED
-    )
+    val breached = listOf(BREACHED)
 
     val blacklist = listOf(
         StatusEffects.INSTANT_DAMAGE,
@@ -66,7 +64,7 @@ class AntidoteKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astral
         var multiplyer = 1.0
         if (entity is LivingEntity) {
             val effects = entity.statusEffects.filter { breached.contains(it.effectType) }
-            for (effect in effects){
+            for (effect in effects) {
                 multiplyer = 1.0 + (0.5 * (effect.amplifier + 1))
             }
         }

@@ -16,8 +16,7 @@ import org.teamvoided.astralarsenal.init.AstralItems
 import java.util.concurrent.CompletableFuture
 
 class AstralRecipeProvider(
-    output: FabricDataOutput,
-    registriesFuture: CompletableFuture<HolderLookup.Provider>
+    output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>
 ) : FabricRecipeProvider(output, registriesFuture) {
     override fun generateRecipes(exporter: RecipeExporter) = with(exporter) {
         generateCraftingRecipes()
@@ -80,16 +79,6 @@ class AstralRecipeProvider(
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
 
-//        simpleShapeless(
-//            AstralItems.AMERALD_BLEND,
-//            RecipeCategory.MISC, 1,
-//            listOf(
-//                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST, AstralItems.AMETHYST_DUST,
-//                AstralItems.EMERALD_DUST, Items.DIAMOND, AstralItems.EMERALD_DUST,
-//                AstralItems.AMETHYST_DUST, AstralItems.EMERALD_DUST, AstralItems.AMETHYST_DUST,
-//            )
-//        ).offerTo(this)
-
         simpleShapeless(
             AstralItems.LAZULICA_BLEND,
             RecipeCategory.MISC, 1,
@@ -110,16 +99,6 @@ class AstralRecipeProvider(
             )
         ).offerTo(this)
 
-//        simpleShapeless(
-//            AstralItems.KOSMIC_GEM,
-//            RecipeCategory.MISC, 1,
-//            listOf(
-//                AstralItems.LAZULICA, AstralItems.AMERALD, AstralItems.LAZULICA,
-//                AstralItems.AMERALD, Items.DIAMOND, AstralItems.AMERALD,
-//                AstralItems.LAZULICA, AstralItems.AMERALD, AstralItems.LAZULICA
-//            )
-//        ).offerTo(this)
-
         simpleShapeless(
             AstralItems.KOSMIC_GEM,
             RecipeCategory.MISC, 1,
@@ -138,12 +117,6 @@ class AstralRecipeProvider(
             )
 
         ).offerTo(this)
-
-//        simpleShapeless(
-//            AstralItems.EMERALD_DUST,
-//            RecipeCategory.MISC, 1,
-//            listOf(Items.EMERALD, Items.EMERALD)
-//        ).offerTo(this)
 
         simpleShapeless(
             AstralItems.LAPIS_LAZULI_DUST,

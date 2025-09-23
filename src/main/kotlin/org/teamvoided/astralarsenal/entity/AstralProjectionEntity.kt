@@ -29,7 +29,7 @@ import kotlin.math.sqrt
 class AstralProjectionEntity : Entity {
 
     var countdown = 0
-    var dmg = 5
+    var damage = 5
     var owner: LivingEntity? = null
 
     constructor(entityType: EntityType<out AstralProjectionEntity?>?, world: World?) :
@@ -119,18 +119,18 @@ class AstralProjectionEntity : Entity {
         )
         if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, caster.x, caster.y + 1, caster.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.OuterColour, 0x0065000b.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.InterColour, 0x00000000.toInt())
-            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.LiveTime, 6)
-            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.ShrinkTime, 5)
-            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.TargetPos, result.pos.toVector3f())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x0065000b.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00000000.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
+            beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
+            beamRenderer.dataTracker.set(BeamRenderEntity.TargetPos, result.pos.toVector3f())
             beamRenderer.dataTracker.set(
-                BeamRenderEntity.Companion.OriginPos,
+                BeamRenderEntity.OriginPos,
                 Vector3f(caster.x.toFloat(), (caster.eyePos.y).toFloat(), caster.z.toFloat())
             )
-            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.OuterThickness, 0.2f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.MaxOuterThickness, 0.2f)
-            beamRenderer.dataTracker.set(BeamRenderEntity.Companion.InnerCubes, 2)
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterThickness, 0.2f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.MaxOuterThickness, 0.2f)
+            beamRenderer.dataTracker.set(BeamRenderEntity.InnerCubes, 2)
             beamRenderer.setPosition(caster.eyePos.x, caster.eyePos.y, caster.eyePos.z)
             world.spawnEntity(beamRenderer)
         }
@@ -140,12 +140,12 @@ class AstralProjectionEntity : Entity {
             entities.addAll(
                 world.getOtherEntities(
                     caster, Box(
-                        (org.joml.Math.lerp(caster.eyePos.x, result.pos.x, i / interval)) + 0.5,
-                        (org.joml.Math.lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)) + 0.5,
-                        (org.joml.Math.lerp(caster.eyePos.z, result.pos.z, i / interval)) + 0.5,
-                        (org.joml.Math.lerp(caster.eyePos.x, result.pos.x, i / interval)) - 0.5,
-                        (org.joml.Math.lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
-                        (org.joml.Math.lerp(caster.eyePos.z, result.pos.z, i / interval)) - 0.5
+                        (Math.lerp(caster.eyePos.x, result.pos.x, i / interval)) + 0.5,
+                        (Math.lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)) + 0.5,
+                        (Math.lerp(caster.eyePos.z, result.pos.z, i / interval)) + 0.5,
+                        (Math.lerp(caster.eyePos.x, result.pos.x, i / interval)) - 0.5,
+                        (Math.lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)) - 0.5,
+                        (Math.lerp(caster.eyePos.z, result.pos.z, i / interval)) - 0.5
                     )
                 )
             )
@@ -153,8 +153,8 @@ class AstralProjectionEntity : Entity {
                 val serverWorld = caster.world as ServerWorld
                 serverWorld.spawnParticles(
                     ParticleTypes.END_ROD,
-                    (org.joml.Math.lerp(caster.eyePos.x, result.pos.x, i / interval)),
-                    (org.joml.Math.lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)),
+                    (Math.lerp(caster.eyePos.x, result.pos.x, i / interval)),
+                    (Math.lerp(caster.eyePos.y - 0.5, result.pos.y, i / interval)),
                     (Math.lerp(caster.eyePos.z, result.pos.z, i / interval)),
                     1,
                     0.2,
@@ -182,7 +182,7 @@ class AstralProjectionEntity : Entity {
             }
             if (entity is LivingEntity && !entitiesHit.contains(entity)
             ) {
-                val damage = if (entity is PlayerEntity) dmg.toFloat() else dmg.toFloat() * 2
+                val damage = if (entity is PlayerEntity) damage.toFloat() else damage.toFloat() * 2
                 entity.damage(
                     DamageSource(
                         AstralDamageTypes.getHolder(world.registryManager, DamageTypes.MAGIC),

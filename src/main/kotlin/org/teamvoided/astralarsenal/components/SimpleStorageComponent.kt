@@ -20,17 +20,6 @@ data class ONE_VALUE(val VALUE: Int) : SimpleStorageComponent {
     }
 }
 
-// You should try not to use this for simple values anymore, use MULTI_VALUE instead
-data class LIST_VALUES(val VALUE: Int, val VALU2: Int) : SimpleStorageComponent {
-    companion object {
-        val DEFAULT: LIST_VALUES = LIST_VALUES(0, 0)
-        val CODEC = Codec.INT.listOf().xmap(
-            { intList -> LIST_VALUES(intList[0], intList[1]) },
-            { component -> listOf(component.VALUE, component.VALU2) }
-        )
-    }
-}
-
 // For Multi Value Components you can always add more values to the end,
 // just look at commented out boolean for how to do it.
 // Be careful to not miss the commas!

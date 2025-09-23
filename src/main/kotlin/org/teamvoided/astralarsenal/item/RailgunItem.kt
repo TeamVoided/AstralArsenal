@@ -24,6 +24,7 @@ import org.joml.Vector3f
 import org.teamvoided.astralarsenal.entity.BeamRenderEntity
 import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.init.AstralDamageTypes
+import org.teamvoided.astralarsenal.init.AstralDamageTypes.customDamage
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralSounds
 import org.teamvoided.astralarsenal.util.hasKosmogliphs
@@ -32,11 +33,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class RailgunItem(settings: Settings) : Item(settings) {
-
-    val unhealable = listOf(
-        AstralEffects.UNHEALABLE_DAMAGE
-    )
-
+    override fun getUseAction(stack: ItemStack?): UseAction = UseAction.CROSSBOW
     override fun use(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         if (!player.getStackInHand(hand).hasKosmogliphs()) {
             val vec3d: Vec3d = player.getLerpedEyePos(1f)
@@ -133,7 +130,6 @@ class RailgunItem(settings: Settings) : Item(settings) {
                     if (entity is CannonballEntity) {
                         entity.setCharged(true)
                     }
-                    val rand = world.random.rangeInclusive(1, 10)
                     if (entity is PlayerEntity) {
                         entity.damage(
                             DamageSource(
@@ -160,9 +156,5 @@ class RailgunItem(settings: Settings) : Item(settings) {
             }
         }
         return super.use(world, player, hand)
-    }
-
-    override fun getUseAction(stack: ItemStack?): UseAction {
-        return UseAction.CROSSBOW
     }
 }

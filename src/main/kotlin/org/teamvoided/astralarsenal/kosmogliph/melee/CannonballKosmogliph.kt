@@ -11,22 +11,22 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
-class CannonballKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_CANNONBALL) }) {
+class CannonballKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUPPORTS_CANNONBALL) {
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
         if (!world.isClient) {
-            val snowballEntity = CannonballEntity(world, player)
-            snowballEntity.setProperties(player, player.pitch, player.yaw, 0.0f, 0.1f, 0.0f)
-            snowballEntity.addVelocity(0.0, 0.1, 0.0)
-            world.spawnEntity(snowballEntity)
+            CannonballEntity(world, player).apply {
+                setProperties(player, player.pitch, player.yaw, 0.0f, 0.1f, 0.0f)
+                addVelocity(0.0, 0.1, 0.0)
+                world.spawnEntity(this)
+            }
+
             if (!player.isCreative) {
                 player.itemCooldownManager.set(player.getStackInHand(hand).item, 40)
             }
-            val stack = player.getStackInHand(hand)
-            if (hand == Hand.MAIN_HAND) {
-                stack.damageEquipment(20, player, EquipmentSlot.MAINHAND)
-            } else if (hand == Hand.OFF_HAND) {
-                stack.damageEquipment(20, player, EquipmentSlot.OFFHAND)
-            }
+            player.getStackInHand(hand).damageEquipment(
+                20, player,
+                if (hand == Hand.MAIN_HAND) EquipmentSlot.MAINHAND else EquipmentSlot.OFFHAND
+            )
         }
         return null
     }

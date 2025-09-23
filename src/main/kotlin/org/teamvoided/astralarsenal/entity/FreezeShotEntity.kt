@@ -2,7 +2,6 @@ package org.teamvoided.astralarsenal.entity
 
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
@@ -26,26 +25,20 @@ class FreezeShotEntity : ThrownItemEntity {
     constructor(world: World?, x: Double, y: Double, z: Double) :
             super(AstralEntities.FREEZE_SHOT_ENTITY as EntityType<out ThrownItemEntity?>, x, y, z, world)
 
-    override fun getDefaultItem(): Item {
-        return Items.COD
-    }
+    override fun getDefaultItem(): Item = Items.SNOWBALL
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         super.onEntityHit(entityHitResult)
         if (entityHitResult.entity != owner && entityHitResult.entity is LivingEntity) {
             val hit = entityHitResult.entity
             hit.customDamage(AstralDamageTypes.CHILLED, 3.0f, this, owner)
-            if(hit.frozenTicks < 140){
+            if (hit.frozenTicks < 140) {
                 hit.frozenTicks = 140
             }
-            if(hit.frozenTicks < 540){
+            if (hit.frozenTicks < 540) {
                 hit.frozenTicks.plus(100)
             }
         }
-    }
-
-    override fun initDataTracker(builder: DataTracker.Builder) {
-        super.initDataTracker(builder)
     }
 
     override fun tick() {

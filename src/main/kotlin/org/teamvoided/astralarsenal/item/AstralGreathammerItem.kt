@@ -18,16 +18,12 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class AstralGreathammerItem(settings: Settings) : ToolItem(ToolMaterials.NETHERITE, settings) {
-
-    override fun isEnchantable(stack: ItemStack?): Boolean {
-        return true
-    }
-
+    override fun isEnchantable(stack: ItemStack?): Boolean = true
     override fun postHit(stack: ItemStack?, target: LivingEntity?, attacker: LivingEntity): Boolean {
         val world = attacker.world
         if (world is ServerWorld) {
             world.playSound(
-                null as PlayerEntity?,
+                null,
                 attacker.x,
                 attacker.y,
                 attacker.z,
@@ -53,7 +49,7 @@ class AstralGreathammerItem(settings: Settings) : ToolItem(ToolMaterials.NETHERI
         fun createAttributes(
             material: ToolMaterial,
             baseAttackDamageModifier: Int,
-            attackSpeedModifier: Float
+            attackSpeedModifier: Float,
         ): AttributeModifiersComponent {
             return AttributeModifiersComponent.builder().add(
                 EntityAttributes.GENERIC_ATTACK_DAMAGE, EntityAttributeModifier(

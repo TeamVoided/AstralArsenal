@@ -29,8 +29,7 @@ import org.teamvoided.astralarsenal.util.playSound
 
 open class NailEntity : PersistentProjectileEntity {
 
-    constructor(entityType: EntityType<out NailEntity>, world: World) :
-            super(entityType, world)
+    constructor(entityType: EntityType<out NailEntity>, world: World) : super(entityType, world)
 
     constructor(world: World, owner: LivingEntity) : super(
         AstralEntities.NAIL_ENTITY, owner, world, Items.ARROW.defaultStack, AstralItems.NAILCANNON.defaultStack

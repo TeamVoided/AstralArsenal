@@ -15,15 +15,11 @@ import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceExplosion
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceStrongExplosionBehavior
 import org.teamvoided.astralarsenal.world.explosion.maceExplosions.MaceWeakExplosionBehavior
 
-class WindEruptionKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_PULVERISER) }) {
-
+class WindEruptionKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_PULVERISER) }) {
+    override fun getUseAction(stack: ItemStack): UseAction = UseAction.SPEAR
     override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int {
         return 72000
     }
-
-    override fun getUseAction(stack: ItemStack): UseAction = UseAction.SPEAR
-
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         player.setCurrentHand(hand)
         return TypedActionResult(ActionResult.CONSUME_PARTIAL, player.getStackInHand(hand))

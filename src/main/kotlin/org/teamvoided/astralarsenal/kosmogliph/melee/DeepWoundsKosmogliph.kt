@@ -1,11 +1,9 @@
 package org.teamvoided.astralarsenal.kosmogliph.melee
 
-import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.*
@@ -19,14 +17,11 @@ import org.teamvoided.astralarsenal.util.playSound
 
 class DeepWoundsKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_DEEP_WOUNDS) && it.item !is AstralGreathammerItem }) {
-
+    override fun getUseAction(stack: ItemStack): UseAction = UseAction.BOW
+    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = 72000
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         player.setCurrentHand(hand)
         return TypedActionResult(ActionResult.CONSUME_PARTIAL, player.getStackInHand(hand))
-    }
-
-    override fun getUseAction(stack: ItemStack): UseAction {
-        return UseAction.BOW
     }
 
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
@@ -42,12 +37,10 @@ class DeepWoundsKosmogliph(id: Identifier) :
     override fun onStoppedUsing(stack: ItemStack, world: World, user: LivingEntity, remainingUseTicks: Int) {
         val ticks = getUseTicks(stack, user) - remainingUseTicks
         if (!world.isClient && ticks >= 40) {
-            var w = -20
             repeat(40) {
                 val snowballEntity = DeepWoundEntity(world, user)
-                setPropertiesTwo(snowballEntity, user.pitch, user.yaw + w, 0.0f, 1.0f, 0.0f)
+                setPropertiesTwo(snowballEntity, user.pitch, user.yaw + it - 20, 0.0f, 1.0f, 0.0f)
                 world.spawnEntity(snowballEntity)
-                w++
             }
             world.playSound(
                 null,
@@ -80,13 +73,7 @@ class DeepWoundsKosmogliph(id: Identifier) :
         super.onStoppedUsing(stack, world, user, remainingUseTicks)
     }
 
-    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int {
-        return 72000
-    }
-
-    val over = listOf(
-        AstralEffects.OVERHEAL
-    )
+    val over = listOf(AstralEffects.OVERHEAL)
 
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         attacker.absorptionAmount += 0.5f
@@ -109,13 +96,5 @@ class DeepWoundsKosmogliph(id: Identifier) :
             attacker.absorptionAmount += (over_levels * 0.25f)
         }
         super.postHit(stack, target, attacker)
-    }
-
-    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf()
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
     }
 }

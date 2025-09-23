@@ -6,8 +6,7 @@ import net.minecraft.registry.HolderLookup
 import java.util.concurrent.CompletableFuture
 
 class AstralRegistryProvider(
-    output: FabricDataOutput,
-    registriesFuture: CompletableFuture<HolderLookup.Provider>
+    output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>
 ) : FabricDynamicRegistryProvider(output, registriesFuture) {
     override fun getName() = "astral_arsenal::generic_registry_provider"
 

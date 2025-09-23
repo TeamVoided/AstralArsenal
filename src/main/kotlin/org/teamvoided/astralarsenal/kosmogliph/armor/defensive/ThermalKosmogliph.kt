@@ -21,7 +21,7 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
         damage: Float,
         source: DamageSource,
         equipmentSlot: EquipmentSlot,
-        stage: DamageModificationStage
+        stage: DamageModificationStage,
     ): Float {
         if (stage != DamageModificationStage.POST_ARMOR) return super.modifyDamage(
             stack,
@@ -61,12 +61,8 @@ class ThermalKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralI
             }
         }
         if (slot == 2 && bool) {
-            if (entity.frozenTicks > 0) {
-                entity.frozenTicks = 0
-            }
-            if (entity.fireTicks > 0) {
-                entity.fireTicks = 0
-            }
+            entity.frozenTicks = 0
+            entity.fireTicks = 0
         }
         super.inventoryTick(stack, world, entity, slot, selected)
     }

@@ -12,17 +12,15 @@ enum class TomeRuneTexture(val textureName: String) : StringIdentifiable {
     DIMINISHING("diminishing"),
     WEAKENING("weakening"),
     BLAZING("blazing"),
-    CLEANSING("cleansing"),;
+    CLEANSING("cleansing");
 
-    override fun asString(): String {
-        return textureName
-    }
+    override fun asString() = textureName
 
     companion object {
         val CODEC: Codec<TomeRuneTexture> = StringIdentifiable.createEnumCodec(TomeRuneTexture::values)
 
-        val PACKET_CODEC: PacketCodec<PacketByteBuf?, TomeRuneTexture> =
-            PacketCodec.create(PacketByteBuf::writeEnumConstant)
-            { buf: PacketByteBuf -> buf.readEnumConstant(TomeRuneTexture::class.java) }
+        val PACKET_CODEC: PacketCodec<PacketByteBuf, TomeRuneTexture> =
+            PacketCodec.create<PacketByteBuf, TomeRuneTexture>(PacketByteBuf::writeEnumConstant)
+            { it.readEnumConstant(TomeRuneTexture::class.java) }
     }
 }

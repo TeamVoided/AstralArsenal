@@ -40,7 +40,7 @@ public class RangedWeaponItemMixin {
         if (shouldCancel.get()) ci.cancel();
     }
 
-    @WrapOperation(method = "getProjectile*", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ArrowItem;createArrowEntity(Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/entity/projectile/PersistentProjectileEntity;"))
+    @WrapOperation(method = "getProjectile(Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;Z)Lnet/minecraft/entity/projectile/ProjectileEntity;", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ArrowItem;createArrowEntity(Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/entity/projectile/PersistentProjectileEntity;"))
     private PersistentProjectileEntity changeArrowType(
             ArrowItem arrowItem,
             World world,

@@ -16,19 +16,14 @@ import org.teamvoided.astralarsenal.util.VEINMINE_RANGE
 import org.teamvoided.astralarsenal.util.VEINMINE_VOLUME
 import kotlin.math.min
 
-class VeinmineKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_VEIN_MINER) }) {
+class VeinmineKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUPPORTS_VEIN_MINER) {
     override fun postMine(stack: ItemStack, world: World, state: BlockState, pos: BlockPos, miner: LivingEntity) {
         if (world.isClient() || world !is ServerWorld) return
         if (miner.isSneaking) return
-        val mineablePositions =
-            queryMineableVeinPositions(
-                stack,
-                world,
-                state,
-                pos,
-                VEINMINE_RANGE,
-                min(VEINMINE_VOLUME, stack.maxDamage - (stack.damage - 1))
-            )
+        val mineablePositions = queryMineableVeinPositions(
+            stack, world, state, pos,
+            VEINMINE_RANGE, min(VEINMINE_VOLUME, stack.maxDamage - (stack.damage - 1))
+        )
         if (mineablePositions.isEmpty()) return
         mineablePositions.breakAndDropStacksAt(world, pos, miner, stack)
 

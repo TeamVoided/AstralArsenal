@@ -20,11 +20,8 @@ import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.util.DEFAULT_KEY_CATEGORY
 import java.util.concurrent.CompletableFuture
 
-@Suppress("unused")
-class AstralEnTranslationProvider(
-    o: FabricDataOutput,
-    r: CompletableFuture<HolderLookup.Provider>
-) : FabricLanguageProvider(o, r) {
+class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+    FabricLanguageProvider(o, r) {
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         AstralItems.items(lookup.getLookupOrThrow(RegistryKeys.ITEM))
             .distinctBy { it.translationKey }
@@ -288,13 +285,31 @@ class AstralEnTranslationProvider(
         )
 
         //tome
-        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_breaching.desc", "Halves the effect of your opponents defensive kosmogliphs.")
-        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_blazing.desc", "Doubles the damage your opponent takes from frost and fire damage over time.")
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.hex_of_breaching.desc",
+            "Halves the effect of your opponents defensive kosmogliphs."
+        )
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.hex_of_blazing.desc",
+            "Doubles the damage your opponent takes from frost and fire damage over time."
+        )
         gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_impeding.desc", "Slows your opponent by 25%.")
-        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_diminishing.desc", "Slowly reduces your opponents max hp if they are not at full health.")
-        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_cleansing.desc", "Tripples the rate your opponent uses positive effects.")
-        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_weakening.desc", "Reduces the damage your opponent can deal by 20%.")
-        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_magnetising.desc", "Attracts projectiles towards your opponent.")
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.hex_of_diminishing.desc",
+            "Slowly reduces your opponents max hp if they are not at full health."
+        )
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.hex_of_cleansing.desc",
+            "Tripples the rate your opponent uses positive effects."
+        )
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.hex_of_weakening.desc",
+            "Reduces the damage your opponent can deal by 20%."
+        )
+        gen.add(
+            "kosmogliph.tooltip.astral_arsenal.hex_of_magnetising.desc",
+            "Attracts projectiles towards your opponent."
+        )
 
         gen.add(DEFAULT_KEY_CATEGORY, "Astral Arsenal Keys")
         keybinds.forEach { (id, name) -> gen.add(id.toTranslationKey("key"), name.titleCase()) }

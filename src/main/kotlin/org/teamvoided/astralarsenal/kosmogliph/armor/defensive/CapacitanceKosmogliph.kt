@@ -34,6 +34,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
+@Suppress("PropertyName")
 class CapacitanceKosmogliph(id: Identifier) :
     KosmogliphWithData(id, AstralDataComponents.CAPACITANCE_DATA_V1, AstralItemTags.SUPPORTS_CAPACITANCE) {
     val MAX_PLAYER_DAMAGE = 10f

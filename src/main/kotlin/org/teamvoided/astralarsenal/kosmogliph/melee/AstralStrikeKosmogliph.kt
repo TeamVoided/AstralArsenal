@@ -9,40 +9,29 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.BeamsOfLight.BeamOfLightEntity
-import org.teamvoided.astralarsenal.init.AstralDataComponents
-import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
+import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
-// I will fix this - Astra
-class AstralStrikeKosmogliph(id: Identifier) :
-    KosmogliphWithData(id, AstralDataComponents.ASTRAL_STRIKE_DATA, AstralItemTags.SUPPORTS_ASTRAL_STRIKE) {
-
-    val STRIKES_TO_TRIGGER = 8
-
+class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUPPORTS_ASTRAL_STRIKE) {
+    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> = listOf(Enchantments.FIRE_ASPECT)
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
-        //val data = stack.getOrDefault(AstralDataComponents.ASTRAL_STRIKE_DATA, AstralStrikeData.DEFAULT)
-        //var hitTimes = data.hitTimes
-        //hitTimes++
         if (attacker is PlayerEntity && !attacker.itemCooldownManager.isCoolingDown(stack.item)) {
-            val beam = BeamOfLightEntity(attacker.world, attacker)
-            beam.setPosition(target.pos)
-            beam.WINDUP = 20
-            beam.TIMEACTIVE = 10
-            beam.side = 2
-            beam.THRUST = 1.0
-            beam.targetEntity = target
-            beam.DOT = false
-            beam.DMG = 5
-            beam.trackTime = 15
-            beam.hard_damage = 0
-            attacker.world.spawnEntity(beam)
-            //hitTimes = 0
-            attacker.itemCooldownManager.set(stack.item, 200)
+            BeamOfLightEntity(attacker.world, attacker).apply {
+                setPosition(target.pos)
+                WINDUP = 20
+                TIMEACTIVE = 10
+                side = 2
+                THRUST = 1.0
+                targetEntity = target
+                DOT = false
+                DMG = 5
+                trackTime = 15
+                hard_damage = 0
+                attacker.world.spawnEntity(this)
+            }
+            if (attacker.isCreative) {
+                attacker.itemCooldownManager.set(stack.item, 200)
+            }
         }
-        //stack.set(AstralDataComponents.ASTRAL_STRIKE_DATA, AstralStrikeData(hitTimes))
         return super.postHit(stack, target, attacker)
-    }
-
-    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf(Enchantments.FIRE_ASPECT)
     }
 }

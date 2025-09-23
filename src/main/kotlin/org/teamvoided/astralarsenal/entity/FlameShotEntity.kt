@@ -25,9 +25,7 @@ class FlameShotEntity : ThrownItemEntity {
     constructor(world: World?, x: Double, y: Double, z: Double) :
             super(AstralEntities.FLAME_SHOT_ENTITY as EntityType<out ThrownItemEntity?>, x, y, z, world)
 
-    override fun getDefaultItem(): Item {
-        return Items.COD
-    }
+    override fun getDefaultItem(): Item = Items.FIRE_CHARGE
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         super.onEntityHit(entityHitResult)

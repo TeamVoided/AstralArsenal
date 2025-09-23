@@ -16,7 +16,6 @@ object AstralDamageTypeTags {
     val IS_ICE = create("is_ice")
     val KEEPS_MOVEMENT = create("keeps_movement")
     val STOPS_MOVEMENT = create("stops_movement")
-    val SLUDGE_EXPLOSIONS = create("sludge_explosions")
 
     private fun create(id: String): TagKey<DamageType> = RegistryKeys.DAMAGE_TYPE.tag(id(id))
 }

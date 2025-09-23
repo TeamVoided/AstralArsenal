@@ -9,6 +9,7 @@ import org.teamvoided.astralarsenal.util.tag
 object AstralEntityTags {
     val MOUNTS_WITH_DASH = create("mounts_with_dash")
     val PROTECTED_FROM_DEL = create("protected_from_del")
+    @Deprecated("Idk what it do")
     val UNAFFECTED_BY_LIGHT = create("unaffected_by_light")
 
     val REFLECTABLE_PROJECTILES = create("reflectable_projectiles")

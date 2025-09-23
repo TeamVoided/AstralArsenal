@@ -45,10 +45,10 @@ object AstralEffects {
             )
     )
     val REDUCE = register(
-        "reduce", AstralStatusEffect(StatusEffectType.HARMFUL, 0x660000)
+        "reduce", AstralStatusEffect(StatusEffectType.HARMFUL, 0x660000) // (ender) change color
     )
     val IMMORTAL = register(
-        "immortal", AstralStatusEffect(StatusEffectType.BENEFICIAL, 0xffffff)
+        "immortal", AstralStatusEffect(StatusEffectType.BENEFICIAL, 0xffffff) //(ender) make amethyst colors
             .addAttributeModifier(
                 EntityAttributes.GENERIC_EXPLOSION_KNOCKBACK_RESISTANCE, id("effect.immortal"),
                 1.0, EntityAttributeModifier.Operation.ADD_VALUE
@@ -67,7 +67,7 @@ object AstralEffects {
     val IMPALED = register(
         "impaled", ParticleStatusEffect(StatusEffectType.HARMFUL, 0x590000, ParticleTypes.CRIMSON_SPORE)
     )
-    val STATICALLY_SLUDGED = register(
+    val STATICALLY_SLUDGED = register( // (ender) rename this
         "statically_sludged",
         ParticleStatusEffect(StatusEffectType.HARMFUL, 0xb8f4ff, ParticleTypes.ELECTRIC_SPARK)
     )

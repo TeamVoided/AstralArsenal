@@ -1,30 +1,23 @@
 package org.teamvoided.astralarsenal.kosmogliph.melee
 
-import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.*
 import net.minecraft.world.World
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.SlashEntity
-import org.teamvoided.astralarsenal.item.AstralGreathammerItem
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.util.playSound
 
-class AstralSlashKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_ASTRAL_SLASH) && it.item !is AstralGreathammerItem }) {
-
+class AstralSlashKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUPPORTS_ASTRAL_SLASH) {
+    override fun getUseAction(stack: ItemStack): UseAction = UseAction.BOW
+    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = 72000
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         player.setCurrentHand(hand)
         return TypedActionResult(ActionResult.CONSUME_PARTIAL, player.getStackInHand(hand))
-    }
-
-    override fun getUseAction(stack: ItemStack): UseAction {
-        return UseAction.BOW
     }
 
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
@@ -75,17 +68,5 @@ class AstralSlashKosmogliph(id: Identifier) :
             }
         }
         super.onStoppedUsing(stack, world, user, remainingUseTicks)
-    }
-
-    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int {
-        return 72000
-    }
-
-    override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {
-        return listOf()
-    }
-
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
     }
 }

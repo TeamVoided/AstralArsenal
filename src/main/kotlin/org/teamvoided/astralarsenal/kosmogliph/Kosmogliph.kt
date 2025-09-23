@@ -1,6 +1,7 @@
 package org.teamvoided.astralarsenal.kosmogliph
 
 import com.mojang.serialization.Codec
+import io.netty.buffer.ByteBuf
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.minecraft.block.BlockState
@@ -18,6 +19,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.context.LootContextParameterSet
+import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -81,7 +83,7 @@ interface Kosmogliph {
     fun id() = REGISTRY.getId(this)!!
     fun translationText(tooltip: Boolean = false) = id().path.toString()
 
-    fun translationKey(tooltip: Boolean = false) =
+    fun translationKey(tooltip: Boolean = false): String =
         id().toTranslationKey("kosmogliph${if (tooltip) ".tooltip" else ".name"}")
 
     fun setPropertiesTwo(
@@ -98,11 +100,12 @@ interface Kosmogliph {
     fun modifyAirStrafeSpeed(entity: LivingEntity, speed: Float) = speed
 
     companion object {
+        // (ender) if we get a 2nd registry then these should be moved to a reg file
         val REGISTRY_KEY: RegistryKey<Registry<Kosmogliph>> = RegistryKey.ofRegistry(id("kosmogliphs"))
         val REGISTRY: Registry<Kosmogliph> =
             FabricRegistryBuilder.createDefaulted(REGISTRY_KEY, id("empty")).buildAndRegister()
         val CODEC: Codec<Kosmogliph> = REGISTRY.codec
         @Suppress("unused")
-        val PACKET_CODEC = PacketCodecs.fromCodec(REGISTRY.codec)
+        val PACKET_CODEC: PacketCodec<ByteBuf, Kosmogliph> = PacketCodecs.fromCodec(REGISTRY.codec)
     }
 }

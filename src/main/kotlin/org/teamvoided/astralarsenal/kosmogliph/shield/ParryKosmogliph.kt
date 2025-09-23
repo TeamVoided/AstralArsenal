@@ -31,8 +31,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 
-class ParryKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_PARRY) }) {
+class ParryKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_PARRY) }) {
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
         if (user.itemUseTime < 6) {
             val result = user.raycast(1.0, 1f, false)
@@ -66,9 +65,7 @@ class ParryKosmogliph(id: Identifier) :
                             blowTheFuckUp(
                                 ParryWeakExplosionBehavior(entity),
                                 ParryStrongExplosionBehavior(entity),
-                                2f,
-                                user,
-                                world
+                                2f, user, world
                             )
                             break
                         } else if (entity.type.isIn(AstralEntityTags.STRONG_PARRYABLES)) {
@@ -76,9 +73,7 @@ class ParryKosmogliph(id: Identifier) :
                             blowTheFuckUp(
                                 ParryStrongExplosionBehavior(entity),
                                 ParryBustedExplosionBehavior(entity),
-                                2f,
-                                user,
-                                world
+                                2f, user, world
                             )
                             break
                         } else if (entity.type.isIn(AstralEntityTags.VERY_STRONG_PARRYABLES)) {
@@ -86,9 +81,7 @@ class ParryKosmogliph(id: Identifier) :
                             blowTheFuckUp(
                                 ParryBustedExplosionBehavior(entity),
                                 ParryBustedExplosionBehavior(entity),
-                                2f,
-                                user,
-                                world
+                                2f, user, world
                             )
                             break
                         } else {
@@ -96,9 +89,7 @@ class ParryKosmogliph(id: Identifier) :
                             blowTheFuckUp(
                                 ParryWeakExplosionBehavior(entity),
                                 ParryStrongExplosionBehavior(entity),
-                                1f,
-                                user,
-                                world
+                                1f, user, world
                             )
                             break
                         }
@@ -117,11 +108,8 @@ class ParryKosmogliph(id: Identifier) :
     }
 
     fun blowTheFuckUp(
-        explosionBehavior: ExplosionBehavior,
-        strongExplosionBehavior: ExplosionBehavior,
-        power: Float,
-        player: PlayerEntity,
-        world: World
+        explosionBehavior: ExplosionBehavior, strongExplosionBehavior: ExplosionBehavior,
+        power: Float, player: PlayerEntity, world: World,
     ) {
         val result = player.raycast(100.0, 1f, false)
         val distance = sqrt(

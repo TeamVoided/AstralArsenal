@@ -29,14 +29,11 @@ import org.teamvoided.astralarsenal.kosmogliph.DamageModificationStage
 import org.teamvoided.astralarsenal.kosmogliph.KosmogliphWithData
 import org.teamvoided.astralarsenal.util.hasKosmogliph
 import org.teamvoided.astralarsenal.util.lastDamageTaken
+import kotlin.math.atan2
 import kotlin.math.max
-import kotlin.math.sqrt
 
 class DodgeKosmogliph(id: Identifier) :
     KosmogliphWithData(id, AstralDataComponents.DODGE_DATA, AstralItemTags.SUPPORTS_DODGE), AirSpeedKosmogliph {
-    val JUMP_FORWARD_BOOST = 5.0
-    val SPEED_CAP = 1.0
-    val SPEED_MULT = sqrt(2 * SPEED_CAP * SPEED_CAP)
 
     fun handleJump(
         stack: ItemStack,

@@ -164,12 +164,7 @@ class ConductiveEntity : Entity {
         super.tick()
     }
 
-    override fun initDataTracker(builder: DataTracker.Builder?) {
-    }
-
-    override fun readCustomDataFromNbt(nbt: NbtCompound?) {
-    }
-
-    override fun writeCustomDataToNbt(nbt: NbtCompound?) {
-    }
+    override fun initDataTracker(builder: DataTracker.Builder?) = Unit
+    override fun readCustomDataFromNbt(nbt: NbtCompound?) = Unit
+    override fun writeCustomDataToNbt(nbt: NbtCompound?) = Unit
 }

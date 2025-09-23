@@ -8,21 +8,18 @@ import net.minecraft.particle.ParticleEffect
 import net.minecraft.particle.ParticleType
 
 class TomeRuneParticleEffect(val particleType: ParticleType<*>, val texture: TomeRuneTexture) : ParticleEffect {
-
-    override fun getType(): ParticleType<*> {
-        return particleType
-    }
+    override fun getType(): ParticleType<*> = particleType
 
     companion object {
         fun codec(type: ParticleType<TomeRuneParticleEffect>): MapCodec<TomeRuneParticleEffect> {
             return RecordCodecBuilder.mapCodec {
                 it.group(
-                    TomeRuneTexture.CODEC.fieldOf("texture").forGetter { it -> it.texture }
+                    TomeRuneTexture.CODEC.fieldOf("texture").forGetter(TomeRuneParticleEffect::texture)
                 ).apply(it) { id -> TomeRuneParticleEffect(type, id) }
             }
         }
 
-        fun packetCodec(type: ParticleType<TomeRuneParticleEffect>): PacketCodec<PacketByteBuf?, TomeRuneParticleEffect?>? {
+        fun packetCodec(type: ParticleType<TomeRuneParticleEffect>): PacketCodec<PacketByteBuf, TomeRuneParticleEffect> {
             return TomeRuneTexture.PACKET_CODEC.map(
                 { texture -> TomeRuneParticleEffect(type, texture) },
                 TomeRuneParticleEffect::texture

@@ -171,8 +171,8 @@ data class CapacitanceDataV1(val damage: Float) : SimpleStorageComponent {
 }
 
 data class CapacitanceDataV2(
-    val dischargeTime: Int, // dischargeTime is the time during witch discharge is possible, countdown time is time until the discharge starts
-    val countdownTime: Int,
+    val dischargeTime: Int, // dischargeTime is the time during witch discharge is possible
+    val countdownTime: Int, // countdown time is time until the discharge starts
 ) : SimpleStorageComponent {
     companion object {
         val DEFAULT: CapacitanceDataV2 = CapacitanceDataV2(0, 0)

@@ -202,9 +202,7 @@ class CosmicTableMenu(
     override fun canUse(player: PlayerEntity): Boolean = true
 }
 
-data class CosmicTableData(
-    val inventory: Inventory = SimpleInventory(2),
-) {
+data class CosmicTableData(val inventory: Inventory = SimpleInventory(2)) {
     companion object {
         val PACKET_CODEC: PacketCodec<PacketByteBuf, CosmicTableData> =
             PacketCodec.create(::encode, ::decode)

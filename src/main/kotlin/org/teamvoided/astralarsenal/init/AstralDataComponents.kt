@@ -36,6 +36,7 @@ object AstralDataComponents {
 
     val SNIPE_DATA_V1 = registerSimple("snipe_data_v1", SnipeDataV1.CODEC)
 
+    // (ender) When Cap is updated v3 should include all of v1 and v2 data and they should be deleted
     val CAPACITANCE_DATA_V1 = registerSimple("capacitance_data_v1", CapacitanceDataV1.CODEC)
     val CAPACITANCE_DATA_V2 = registerSimple("capacitance_data_v2", CapacitanceDataV2.CODEC)
 

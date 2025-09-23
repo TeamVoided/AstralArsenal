@@ -10,9 +10,7 @@ class ParticleStatusEffect(type: StatusEffectType, color: Int, particle: Particl
 
     var particleEffect: ParticleEffect = particle
 
-    override fun shouldApplyUpdateEffect(tick: Int, amplifier: Int): Boolean {
-        return true
-    }
+    override fun shouldApplyUpdateEffect(tick: Int, amplifier: Int): Boolean = true
 
     override fun applyUpdateEffect(entity: LivingEntity, amplifier: Int): Boolean {
         val height = entity.height
@@ -31,6 +29,6 @@ class ParticleStatusEffect(type: StatusEffectType, color: Int, particle: Particl
                 0.0
             )
         }
-        return true
+        return  super.applyUpdateEffect(entity, amplifier)
     }
 }

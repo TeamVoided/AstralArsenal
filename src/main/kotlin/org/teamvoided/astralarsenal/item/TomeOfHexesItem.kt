@@ -46,9 +46,8 @@ import org.teamvoided.astralarsenal.util.hasKosmogliphs
 import kotlin.math.max
 
 class TomeOfHexesItem(settings: Settings) : Item(settings) {
-    override fun getUseTicks(stack: ItemStack?, entity: LivingEntity?): Int {
-        return 200
-    }
+    override fun getUseTicks(stack: ItemStack?, entity: LivingEntity?): Int = 200
+    override fun getUseAction(stack: ItemStack): UseAction = UseAction.NONE
 
     val hexAppliers = listOf(
         BREACHING,
@@ -89,7 +88,18 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
         TomeRuneTexture.IMPEDING,
         TomeRuneTexture.MAGNETISING
     )
-
+    val endOfPageFlip = listOf(
+        9,
+        29, 39,
+        49, 59,
+        69, 74, 79, 84,
+        89, 94, 99, 104,
+        109, 113, 117, 121, 125,
+        129, 133, 137, 141, 145,
+        149, 151, 153, 155, 157, 159, 161, 163, 165, 167,
+        169, 171, 173, 175, 177, 179, 181, 183, 185, 187,
+        189, 191, 193, 195, 197, 199, 201
+    )
 
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
         val pageFlip = (remainingUseTicks / 20)
@@ -126,7 +136,7 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
         if (remainingUseTicks == 1) {
             world.playSoundFromEntity(user, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 3.0f, 0.5f)
             if (world is ServerWorld) {
-                var number= world.random.rangeInclusive(0, 6)
+                var number = world.random.rangeInclusive(0, 6)
                 var amplifier = 0
                 if (stack.hasKosmogliphs()) {
                     val kosmogliph = stack.getKosmogliphs().first()
@@ -195,7 +205,7 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
 
     override fun inventoryTick(stack: ItemStack, world: World, user: Entity, slot: Int, selected: Boolean) {
         val data = stack.getOrDefault(AstralDataComponents.TOME_OF_HEXES_DATA, TomeOfHexesData.DEFAULT)
-        if (data.beingUsed == 1 && user is PlayerEntity && user.activeItem != stack){
+        if (data.beingUsed == 1 && user is PlayerEntity && user.activeItem != stack) {
             if (!user.itemCooldownManager.isCoolingDown(stack.item)) {
                 var effect = hexes.get(world.random.rangeInclusive(0, 5))
                 var amplifier = 0
@@ -223,19 +233,4 @@ class TomeOfHexesItem(settings: Settings) : Item(settings) {
         player.getStackInHand(hand).set(AstralDataComponents.TOME_OF_HEXES_DATA, TomeOfHexesData(1))
         return TypedActionResult(ActionResult.CONSUME_PARTIAL, player.getStackInHand(hand))
     }
-
-    override fun getUseAction(stack: ItemStack): UseAction = UseAction.NONE
-
-    val endOfPageFlip = listOf(
-        9,
-        29, 39,
-        49, 59,
-        69, 74, 79, 84,
-        89, 94, 99, 104,
-        109, 113, 117, 121, 125,
-        129, 133, 137, 141, 145,
-        149, 151, 153, 155, 157, 159, 161, 163, 165, 167,
-        169, 171, 173, 175, 177, 179, 181, 183, 185, 187,
-        189, 191, 193, 195, 197, 199, 201
-    )
 }
