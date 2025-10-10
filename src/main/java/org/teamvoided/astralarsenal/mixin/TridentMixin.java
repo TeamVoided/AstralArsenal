@@ -17,7 +17,7 @@ public class TridentMixin {
     private void kosmogliphPostDamageEntity(EntityHitResult entityHitResult, CallbackInfo info) {
         TridentEntity entity = (TridentEntity) (Object) this;
         var stack = entity.getWeaponStack();
-        if (entityHitResult.getEntity() instanceof LivingEntity target && stack != null) {
+        if (stack != null && entityHitResult.getEntity() instanceof LivingEntity target) {
             getKosmogliphs(stack).forEach(kosmogliph -> {
                 if (kosmogliph instanceof ThrownTridentKosmogliph tridentKosmogliph) {
                     tridentKosmogliph.onHit(entity.getOwner(), target);

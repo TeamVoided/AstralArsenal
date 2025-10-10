@@ -41,7 +41,7 @@ class NailEntityRenderer<T : NailEntity>(context: EntityRendererFactory.Context?
         matrices.rotate(Axis.X_POSITIVE.rotationDegrees(45.0f))
         matrices.scale(0.05625f, 0.05625f, 0.05625f)
         val vertexConsumer =
-            vertexConsumers.getBuffer(RenderLayer.getEntityCutout(this.getTexture(persistentProjectileEntity)))
+            vertexConsumers.getBuffer(RenderLayer.getEntityCutout(getTexture(persistentProjectileEntity)))
         val entry = matrices.peek()
 
         for (u in 0..3) {
@@ -54,15 +54,15 @@ class NailEntityRenderer<T : NailEntity>(context: EntityRendererFactory.Context?
 
         matrices.rotate(Axis.X_POSITIVE.rotationDegrees(45.0f))
         matrices.translate(0f, -0.5f, -0.5f)
-        this.vertex(entry, vertexConsumer, -2, -1, -1, 0.375f, 0.0f, -1, 0, 0, i)
-        this.vertex(entry, vertexConsumer, -2, -1, 2, 0.75f, 0.0f, -1, 0, 0, i)
-        this.vertex(entry, vertexConsumer, -2, 2, 2, 0.75f, 0.375f, -1, 0, 0, i)
-        this.vertex(entry, vertexConsumer, -2, 2, -1, 0.375f, 0.375f, -1, 0, 0, i)
+        vertex(entry, vertexConsumer, -2, -1, -1, 0.375f, 0.0f, -1, 0, 0, i)
+        vertex(entry, vertexConsumer, -2, -1, 2, 0.75f, 0.0f, -1, 0, 0, i)
+        vertex(entry, vertexConsumer, -2, 2, 2, 0.75f, 0.375f, -1, 0, 0, i)
+        vertex(entry, vertexConsumer, -2, 2, -1, 0.375f, 0.375f, -1, 0, 0, i)
 
-        this.vertex(entry, vertexConsumer, -2, 2, -1, 0.375f, 0.0f, 1, 0, 0, i)
-        this.vertex(entry, vertexConsumer, -2, 2, 2, 0.75f, 0.0f, 1, 0, 0, i)
-        this.vertex(entry, vertexConsumer, -2, -1, 2, 0.75f, 0.375f, 1, 0, 0, i)
-        this.vertex(entry, vertexConsumer, -2, -1, -1, 0.375f, 0.375f, 1, 0, 0, i)
+        vertex(entry, vertexConsumer, -2, 2, -1, 0.375f, 0.0f, 1, 0, 0, i)
+        vertex(entry, vertexConsumer, -2, 2, 2, 0.75f, 0.0f, 1, 0, 0, i)
+        vertex(entry, vertexConsumer, -2, -1, 2, 0.75f, 0.375f, 1, 0, 0, i)
+        vertex(entry, vertexConsumer, -2, -1, -1, 0.375f, 0.375f, 1, 0, 0, i)
 
         matrices.pop()
         super.render(persistentProjectileEntity, f, g, matrices, vertexConsumers, i)

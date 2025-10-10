@@ -29,8 +29,7 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-class RicochetKosmogliph(id: Identifier) :
-    SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_BASIC_RAILGUN) }) {
+class RicochetKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_BASIC_RAILGUN) }) {
 
     //Modify this to change how many times it richochets
     val COUNTDOWN = 20

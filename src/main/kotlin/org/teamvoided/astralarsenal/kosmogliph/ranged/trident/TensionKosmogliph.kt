@@ -13,22 +13,18 @@ import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 class TensionKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, AstralItemTags.SUPPORTS_TRIDENT_BLEED) {
     override fun onHit(attacker: Entity?, victim: LivingEntity) {
         if (attacker != null && attacker is LivingEntity) {
-            val pos1 = attacker.eyePos
-            val pos2 = victim.eyePos
-            val moveVec = pos1.subtract(pos2)
+            val moveVec = attacker.eyePos.subtract(victim.eyePos)
             victim.velocity = moveVec.multiply(0.3, 0.1, 0.3)
                 .multiply(1 - victim.attributes.getBaseValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE))
-            victim.velocityModified
+            victim.velocityModified = true
         }
     }
 
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
-        val pos1 = attacker.eyePos
-        val pos2 = target.eyePos
-        val moveVec = pos1.subtract(pos2)
+        val moveVec = attacker.eyePos.subtract(target.eyePos)
         target.velocity = moveVec.multiply(0.3, 0.1, 0.3)
             .multiply(1 - target.attributes.getBaseValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE))
-        target.velocityModified
+        target.velocityModified = true
         super.postHit(stack, target, attacker)
     }
 

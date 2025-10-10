@@ -144,10 +144,6 @@ class AlchemistKosmogliph(id: Identifier) :
         return listOf(Enchantments.INFINITY)
     }
 
-    override fun requiredEnchantments(): List<RegistryKey<Enchantment>> {
-        return listOf()
-    }
-
     companion object {
         fun potionsAreEqual(a: PotionContentsComponent, b: PotionContentsComponent): Boolean {
             if (a.effects.collectionSizeOrDefault(0) != b.effects.collectionSizeOrDefault(9)) return false

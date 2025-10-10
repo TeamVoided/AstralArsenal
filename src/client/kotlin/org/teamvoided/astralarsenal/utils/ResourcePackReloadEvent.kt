@@ -8,10 +8,8 @@ import org.teamvoided.astralarsenal.AstralArsenal.id
 import org.teamvoided.astralarsenal.utils.CustomUseAnimation.pageModel
 
 object ResourcePackReloadEvent : SynchronousResourceReloader, IdentifiableResourceReloadListener {
-
+    override fun getFabricId(): Identifier = id("generic_reload_listener")
     override fun reload(manager: ResourceManager?) {
         pageModel = null
     }
-
-    override fun getFabricId(): Identifier = id("generic_reload_listener")
 }

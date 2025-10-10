@@ -77,8 +77,6 @@ object AstralItemTags {
     val SUPPORTS_PULVERISER = supports("pulveriser")
     val SUPPORTS_WIND_ERUPTION = supports("wind_eruption")
 
-    val SUPPORTS_TOTEM = supports("totem")
-
     val SUPPORTS_HEX_OF_BREACHING = supports("hex_of_breaching")
     val SUPPORTS_HEX_OF_IMPEDING = supports("hex_of_impeding")
     val SUPPORTS_HEX_OF_WEAKENING = supports("hex_of_weakening")

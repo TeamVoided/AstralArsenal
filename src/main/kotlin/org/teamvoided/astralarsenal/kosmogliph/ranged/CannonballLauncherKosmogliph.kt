@@ -6,19 +6,16 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.registry.RegistryKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
-import org.joml.Quaternionf
 import org.teamvoided.astralarsenal.data.tags.AstralItemTags
 import org.teamvoided.astralarsenal.entity.Projectiles.CannonballEntity
 import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.util.hasMultiShot
-import org.teamvoided.astralarsenal.util.setVelocity
 
 class CannonballLauncherKosmogliph(id: Identifier) :
     SimpleKosmogliph(id, AstralItemTags.SUPPORTS_CANNONBALL_LAUNCHER), RangedWeaponKosmogliph {
@@ -53,17 +50,6 @@ class CannonballLauncherKosmogliph(id: Identifier) :
             if (hand == Hand.MAIN_HAND) stack.damageEquipment(count, player, EquipmentSlot.MAINHAND)
             else if (hand == Hand.OFF_HAND) stack.damageEquipment(count, player, EquipmentSlot.OFFHAND)
         }
-    }
-
-    fun setVelocity(
-        projectile: ProjectileEntity, shooter: PlayerEntity, speed: Float, yawOffset: Float, divergence: Float
-    ) {
-        val invRotVec = shooter.getOppositeRotationVector(1.0f)
-        val rotQat = Quaternionf().setAngleAxis(yawOffset * 0.017453292, invRotVec.x, invRotVec.y, invRotVec.z)
-        val rotVec = shooter.getRotationVec(1.0f)
-        val output = rotVec.toVector3f().rotate(rotQat)
-
-        projectile.setVelocity(output, speed, divergence)
     }
 
     override fun disallowedEnchantment(): List<RegistryKey<Enchantment>> {

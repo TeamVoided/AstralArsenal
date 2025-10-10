@@ -18,9 +18,7 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 import org.teamvoided.astralarsenal.kosmogliph.ranged.RangedWeaponKosmogliph
 import org.teamvoided.astralarsenal.util.hasMultiShot
 
-class TimeBombKosmogliph(
-    id: Identifier,
-) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_TIME_BOMB) }),
+class TimeBombKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(AstralItemTags.SUPPORTS_TIME_BOMB) }),
     RangedWeaponKosmogliph {
     override fun preUse(world: World, player: PlayerEntity, hand: Hand) {
         if (world.isClient) return

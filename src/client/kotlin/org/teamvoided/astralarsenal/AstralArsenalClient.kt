@@ -6,14 +6,14 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
-import org.teamvoided.astralarsenal.block.entity.KosmicTableBlockEntityRenderer
+import net.minecraft.client.gui.screen.ingame.HandledScreens
 import org.teamvoided.astralarsenal.config.AAClientConfig
 import org.teamvoided.astralarsenal.entity.HexRingModel
 import org.teamvoided.astralarsenal.entity.HexRingRenderer
 import org.teamvoided.astralarsenal.handlers.KeyHandlers
 import org.teamvoided.astralarsenal.init.*
 import org.teamvoided.astralarsenal.networking.UpdateHexRingPayload
+import org.teamvoided.astralarsenal.screens.CosmicTableScreen
 import org.teamvoided.astralarsenal.util.EntityHexAccessor
 import org.teamvoided.astralarsenal.utils.CustomUseAnimation
 
@@ -24,17 +24,14 @@ object AstralArsenalClient {
     var config = ConfigApi.registerAndLoadConfig(::AAClientConfig, RegisterType.CLIENT)
 
     fun init() {
-        AstralHandledScreens.init()
+        HandledScreens.register(AstralMenus.COSMIC_TABLE, ::CosmicTableScreen)
         AstralKeyBindings.init()
-        AstralEntitiesClient.init()
+        AstralRenderers.init()
         AstralParticlesClient.init()
-
         ClientTickEvents.END_CLIENT_TICK.register(KeyHandlers.compileHandlers())
         CustomUseAnimation.init()
-
         AstralHudRendering.init()
 
-        BlockEntityRendererFactories.register(AstralBlocks.COSMIC_TABLE_BLOCK_ENTITY, ::KosmicTableBlockEntityRenderer)
         EntityModelLayerRegistry.registerModelLayer(HexRingModel.MODEL_LAYER, HexRingModel::createLayer)
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register { type, renderer, helper, ctx ->
             helper.register(HexRingRenderer(renderer, ctx))
