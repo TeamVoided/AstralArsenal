@@ -221,7 +221,6 @@ class SnipeKosmogliph(id: Identifier) :
                             )
                         }
                     } else if (entity is LivingEntity) {
-                        entity.addStatusEffect(StatusEffectInstance(AstralEffects.CONDUCTIVE, 20, 19))
                         entity.damage(
                             DamageSource(
                                 AstralDamageTypes.getHolder(world.registryManager, AstralDamageTypes.RAILED),

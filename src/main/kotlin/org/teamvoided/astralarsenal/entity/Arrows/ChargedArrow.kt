@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.entity.Arrows
 
+import com.google.common.primitives.Ints.min
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
@@ -22,6 +23,7 @@ import org.teamvoided.astralarsenal.init.AstralDamageTypes
 import org.teamvoided.astralarsenal.init.AstralEffects
 import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.util.sillyLightningTime
+import kotlin.math.max
 
 class ChargedArrow : ArrowEntity {
 
@@ -70,11 +72,11 @@ class ChargedArrow : ArrowEntity {
             } else if (this.world is ServerWorld && checkNearbyArrows(this.world as ServerWorld)) {
                 var bool = false
                 if (this.owner != null) {
-                    bool = shockNearbyEntities(this.owner!!, this, chargeDamage * 0.5f)
+                    bool = shockNearbyEntities(this.owner!!, this, chargeDamage)
                 } else {
-                    bool = shockNearbyEntities(this, this, chargeDamage * 0.5f)
+                    bool = shockNearbyEntities(this, this, chargeDamage)
                 }
-                val preservedDamage = if (bool) chargeDamage * 0.5f else chargeDamage
+                val preservedDamage = if (bool) chargeDamage * 0.8f else chargeDamage
                 val nearestArrow = getNearestArrow(this.world as ServerWorld)
                 chargeChain.add(this)
                 if (nearestArrow is ChargedArrow) {
@@ -83,6 +85,9 @@ class ChargedArrow : ArrowEntity {
                     nearestArrow.chargeChain = chargeChain
                     nearestArrow.ticksBeforeDischarge = 5
                     shocksBeforeDiscard--
+                    if (!this.inGround){
+                        shocksBeforeDiscard = 0
+                    }
                     sillyLightningTime(this.eyePos, nearestArrow.eyePos, this.world as ServerWorld, 3, 5, 2, 0.01f, 0.5)
                     isCharged = false
                     chargeChain = mutableListOf<Entity>()
@@ -93,6 +98,9 @@ class ChargedArrow : ArrowEntity {
                     nearestArrow.chargeChain = chargeChain
                     nearestArrow.ticksBeforeDischarge = 5
                     shocksBeforeDiscard--
+                    if (!this.inGround){
+                        shocksBeforeDiscard = 0
+                    }
                     sillyLightningTime(this.eyePos, nearestArrow.eyePos, this.world as ServerWorld, 3, 5, 2, 0.01f, 0.5)
                     isCharged = false
                     chargeChain = mutableListOf<Entity>()
@@ -177,7 +185,7 @@ class ChargedArrow : ArrowEntity {
             }
         )
         val targets = entities.size
-        val damagePerEntity = damage / targets
+        val damagePerEntity = damage / (max(targets / 3f, 1f))
         if (entities.isNotEmpty()) {
             bool = true
             for (entiity in entities) {

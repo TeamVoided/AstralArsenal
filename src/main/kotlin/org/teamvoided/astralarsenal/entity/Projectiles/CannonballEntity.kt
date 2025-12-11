@@ -173,7 +173,7 @@ class CannonballEntity : ThrownItemEntity {
                         this.y - 10,
                         this.z - 10
                     )
-                ).filter { it is LivingEntity && it != this.owner && it != this && this.distanceTo(it) <= 10 }
+                ).filter { it is LivingEntity && it.isAlive && it != this.owner && it != this && this.distanceTo(it) <= 10 }
             )
             if (entities.isNotEmpty()) {
                 for (entity in entities) {
@@ -275,7 +275,7 @@ class CannonballEntity : ThrownItemEntity {
                     base.y - 10,
                     base.z - 10
                 )
-            ).filter { it is LivingEntity && it != cause && it != base && base.distanceTo(it) <= 10 }
+            ).filter { it is LivingEntity && it.isAlive && it != cause && it != base && base.distanceTo(it) <= 10 }
         )
         val targets = entities.size
         val damagePerEntity = damage / targets
@@ -385,7 +385,7 @@ class CannonballEntity : ThrownItemEntity {
                     base.z - 10
                 )
             ).filter {
-                (it is LivingEntity || it is CannonballEntity) && it != cause && it != base && base.distanceTo(
+                ((it is LivingEntity && it.isAlive) || it is CannonballEntity) && it != cause && it != base && base.distanceTo(
                     it
                 ) <= 10
             }

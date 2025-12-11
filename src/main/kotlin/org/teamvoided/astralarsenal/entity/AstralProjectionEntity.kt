@@ -29,7 +29,7 @@ import kotlin.math.sqrt
 class AstralProjectionEntity : Entity {
 
     var countdown = 0
-    var damage = 5
+    var damage = 3
     var owner: LivingEntity? = null
 
     constructor(entityType: EntityType<out AstralProjectionEntity?>?, world: World?) :

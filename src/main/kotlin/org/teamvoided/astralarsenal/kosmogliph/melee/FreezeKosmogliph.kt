@@ -23,12 +23,6 @@ class FreezeKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUP
             } else {
                 target.playSound(SoundEvents.BLOCK_POWDER_SNOW_STEP, 1.0f, 1.0f)
             }
-            val velocity = target.pos.subtract(attacker.pos).normalize().multiply(0.25)
-            val freezeBallEntity = VoidIceShardEntity(target.world, attacker)
-            setPropertiesTwo(freezeBallEntity, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f)
-            freezeBallEntity.addVelocity(velocity)
-            freezeBallEntity.setPosition(target.pos.x, target.eyePos.y, target.pos.z)
-            target.world.spawnEntity(freezeBallEntity)
         }
         super.postHit(stack, target, attacker)
     }

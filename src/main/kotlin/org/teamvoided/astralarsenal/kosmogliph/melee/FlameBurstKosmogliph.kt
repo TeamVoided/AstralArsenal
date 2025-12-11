@@ -24,7 +24,7 @@ class FlameBurstKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags
                 target.world.spawnEntity(flameBurstEntity)
             }
             if (attacker is PlayerEntity) {
-                attacker.itemCooldownManager.set(stack.item, 50)
+                attacker.itemCooldownManager.set(stack.item, 100)
             }
         }
         super.postHit(stack, target, attacker)

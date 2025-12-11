@@ -97,25 +97,25 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.reflective.desc",
-            "Reduces damage from certain projectiles such as arrows by 50% and has a 70% chance to fling them back entirely."
+            "Reduces damage from certain projectiles such as arrows by 50% and has a high chance to fling them back entirely."
         )
 
         //weapons
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.astral_strike.desc",
-            "On hit, summon a beam of light that deals 5 damage. goes on cooldown for 10 seconds. beam deals 3x damage to non-players."
+            "On hit, summon a beam of light that deals damage. goes on cooldown for 10 seconds. deals more damage to non-players."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.freeze.desc",
-            "Entities hit are frozen for a short time, stacking with every hit. On kill, the entity will release ice shards."
+            "Entities hit are frozen for a short time, stacking with every hit."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.astral_projection.desc",
-            "On hit, summon 2 astral projections of swords that deal 5 damage each. 2.5 second cooldown."
+            "On hit, summon 2 astral projections of swords that lunge towards the nearest target. 2.5 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.astral_slash.desc",
-            "Hold right click to charge an astral blade for 6 magic damage, x2.5 on non-players. 10 second cooldown."
+            "Hold right click to charge an astral blade that fires on release, x2.5 damage on non-players. 10 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.deep_wounds.desc",
@@ -123,11 +123,11 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.trident_reduce.desc",
-            "On hit, give 1 level of reduce. On ranged hit, give 6. Reduce causes entities to take 5% more damage per level. Repeated hits add levels. Reduce has no effect on magic and plasma damage."
+            "On melee hit, give reduce. On ranged hit, give a higher amount of reduce. Reduce causes entities to take more damage, increasing per level. Repeated hits add levels. Reduce has no effect on magic and plasma damage."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.trident_bleed.desc",
-            "on hit, give 1 level of bleed. on ranged hit, give 3. Bleed causes entities to take 0.4 damage per level every second. Repeated hits add levels up to level 10."
+            "on melee hit, give bleed. On ranged hit, give a higher amount of bleed. Bleed causes entities to take damage over time, increasing in damage per level. Repeated hits add levels up to a cap."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.astral_rain.desc",
@@ -135,7 +135,7 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.cannonball.desc",
-            "Right clicking summons a cannonball that can be struck. The cannonball deals 10 damage and bounces off 1 target. every time it hits something, it increases in damage. Cannonballs can be 'charged'. 2 second cooldown."
+            "Right clicking summons a cannonball that can be struck. The cannonball bounces off of one target. every time it hits something, it increases in damage. Cannonballs can be 'charged'. 2 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.alchemist.desc",
@@ -143,7 +143,7 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.cannonball_launcher.desc",
-            "Replaces ammo with cannonballs when fired. Cannonballs deal 10 damage and bounce off of 1 entity, increasing in damage every time it hits an entity."
+            "Replaces ammo with cannonballs when fired. Cannonballs bounce off one target, increasing in damage every time it hits an entity. Cannonballs can be 'charged'."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.shotgun.desc",
@@ -151,11 +151,11 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.orbital.desc",
-            "Replaces ammo with an orbital arrow. When hitting an entity or landing it will charge up and strike for 4 damage. Deals 3x damage to non-players. 5 second cooldown."
+            "Replaces ammo with an orbital arrow. When hitting an entity or landing it will charge up and strike, dealing damage and launching targets upwards. Deals 3x damage to non-players. 5 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.devastate.desc",
-            "Replaces ammo with a devastate arrow. When hitting an entity or landing it will charge up and strike for 8 damage with less area than orbital. Deals 3x damage to non-players. 5 second cooldown."
+            "Replaces ammo with a devastate arrow. When hitting an entity or landing it will charge up and strike for higher damage, but a smaller area. Deals 3x damage to non-players. 5 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.lock_off.desc",
@@ -163,13 +163,13 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.time_bomb.desc",
-            "Replaces ammo with a time-bomb arrow. When hitting an entity or landing on the ground it will charge up and strike for 50 damage, taking a long time to strike. Deals 3x damage to non-players. 20 second cooldown."
+            "Replaces ammo with a time-bomb arrow. When hitting an entity or landing on the ground it will charge up and strike for very high damage, taking a long time to strike. Deals 3x damage to non-players. 20 second cooldown."
         )
 
         //other armor and shield
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.slam.desc",
-            "Crouching mid-air lets you slam, taking no fall damage. Gives a short-lasting jump-boost when slamming, letting you jump 5 blocks."
+            "Crouching mid-air lets you slam, taking no fall damage. Gives a short-lasting jump-boost when slamming, letting you jump higher."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.ankle_guard.desc",
@@ -193,7 +193,7 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.parry.desc",
-            "Holding up your shield will parry incoming attacks and projectiles, healing you for 2hp. Missing a parry will put the shield on cooldown for 5 seconds. Projectiles parried will launch an explosive in the direction you are facing. Other attacks will deal 1.25x damage onto the attacker."
+            "Holding up your shield will parry incoming attacks and projectiles, healing you a small amount. Missing a parry will put the shield on cooldown for 5 seconds. Projectiles parried will launch an explosive in the direction you are facing. Other attacks will reflect more damage onto the attacker."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.frost_thorns.desc",
@@ -221,19 +221,19 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         //railgun and nailcannon
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.unstable_discharge.desc",
-            "Increases damage by 4x and decreases cooldown by 50% at the cost of dealing 5 damage to yourself and loosing 2.5 hearts of max hp for 20 seconds."
+            "Heavily increases damage and decreases cooldown by 50% at the cost of dealing 5 damage to yourself and loosing 2.5 hearts of max hp for 20 seconds."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.explosive_beam.desc",
-            "Changes ammo to fire an explosive beam, causing the first entity hit to explode, or the ground if it misses, dealing 15 damage and 2x damage to non-players. 30 second cooldown."
+            "Changes ammo to fire an explosive beam, causing the first entity hit to explode, or the ground if it misses, deals 2x damage to non-players. 30 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.ray_of_frost.desc",
-            "Changes ammo to fire a ray of frost, dealing 7.5 ice damage and freezing entities. Spreads frost projectiles on non-player hits and deals 3x damage to them. 30 second cooldown."
+            "Changes ammo to fire a ray of frost, dealing ice damage and freezing entities. Spreads frost projectiles on non-player hits and deals 3x damage to them. 30 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.rancid_brew.desc",
-            "Changes ammo to fire an enchanted beam that deals 8 damage, giving entities a set of negative effects for 15 seconds. Deals 2x damage to non-players 20 second cooldown."
+            "Changes ammo to fire an enchanted beam that deals damage, giving entities a set of negative effects for 15 seconds. Deals 2x damage to non-players 20 second cooldown."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.dual_caliber.desc",
@@ -241,7 +241,7 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.ricochet.desc",
-            "Changes ammo to fire a bouncing beam that deals 5 damage per hit and bounces 20 times. 15 second cooldown. Maximum 15 damage on players. When it hits a block near an entity, it will home in on them. This effect will not occur on entities that have been hit twice by this beam."
+            "Changes ammo to fire a bouncing beam that bounces 20 times. 15 second cooldown. Maximum 3 hits on players. When it hits a block near an entity, it will home in on them. This effect will not occur on entities that have been hit twice by this beam."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.capacity.desc",
@@ -249,15 +249,15 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.over_heat.desc",
-            "After firing for 3 seconds, nails are set ablaze, dealing 0.25 fire damage instead of nail damage and setting entities on fire."
+            "After firing for 3 seconds, nails are set ablaze, dealing fire damage instead of nail damage and setting entities on fire."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.static_release.desc",
-            "Every second fire an extra nail that deals 1 electric damage. This nail does take from your supply. Electric damage causes Conductive to trigger, causing chain lightning effects."
+            "Every second fire an extra nail that deals electric damage. This nail does take from your supply. Electric damage causes Conductive to trigger, causing chain lightning effects."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.tear.desc",
-            "Replaces Conductive with Impaled. When dealing melee damage to an impaled entity, deal 0.5 more per nail impaled into them, to a maximum of 15."
+            "Replaces Conductive with Impaled. When dealing melee damage to an impaled entity, deal slightly more per nail impaled into them, to a maximum of 30 nails."
         )
 
         //mace :3
@@ -293,7 +293,7 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
             "kosmogliph.tooltip.astral_arsenal.hex_of_blazing.desc",
             "Doubles the damage your opponent takes from frost and fire damage over time."
         )
-        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_impeding.desc", "Slows your opponent by 25%.")
+        gen.add("kosmogliph.tooltip.astral_arsenal.hex_of_impeding.desc", "Slows your opponent heavily.")
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.hex_of_diminishing.desc",
             "Slowly reduces your opponents max hp if they are not at full health."
