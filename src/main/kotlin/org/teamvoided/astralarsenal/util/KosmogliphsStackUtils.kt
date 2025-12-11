@@ -32,6 +32,6 @@ fun ItemStack.setEmpty(): ItemStack {
 fun ItemStack.hasKosmogliph(kosmogliph: Kosmogliph) = this.getKosmogliphs().contains(kosmogliph)
 fun ItemStack.hasKosmogliphs(): Boolean {
     val gliphs = this.getKosmogliphs()
-    return gliphs.isNotEmpty() && gliphs.has(AstralKosmogliphs.EMPTY)
+    return gliphs.isNotEmpty() || gliphs.has(AstralKosmogliphs.EMPTY)
 }
 
