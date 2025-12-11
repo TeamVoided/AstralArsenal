@@ -28,7 +28,7 @@ class AstralModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     )
 
     override fun generateItemModels(gen: ItemModelGenerator) {
-        AstralItems.items().filter(hasModel::contains).forEach { gen.register(it, Models.SINGLE_LAYER_ITEM) }
+        AstralItems.items().filterNot(hasModel::contains).forEach { gen.register(it, Models.SINGLE_LAYER_ITEM) }
     }
 
     private fun Block.blockModel(): Identifier = Registries.BLOCK.getId(this).withPrefix("block/")
