@@ -30,7 +30,7 @@ class AstralRecipeProvider(
             .ingredient('D', Items.DIAMOND)
             .ingredient('G', AstralItems.KOSMIC_GEM)
             .ingredient('O', Items.OBSIDIAN)
-            .ingredient('N', Items.NETHERITE_INGOT)
+            .ingredient('N', Items.IRON_BLOCK)
             .ingredient('C', Items.CRYING_OBSIDIAN)
             .criterion(hasItem(AstralItems.KOSMIC_GEM), conditionsFromItem(AstralItems.KOSMIC_GEM))
             .offerTo(this)
@@ -83,9 +83,7 @@ class AstralRecipeProvider(
             AstralItems.LAZULICA_BLEND,
             RecipeCategory.MISC, 1,
             listOf(
-                AstralItems.QUARTZ_DUST, AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
-                AstralItems.LAPIS_LAZULI_DUST, Items.DIAMOND, AstralItems.LAPIS_LAZULI_DUST,
-                AstralItems.QUARTZ_DUST, AstralItems.LAPIS_LAZULI_DUST, AstralItems.QUARTZ_DUST,
+                AstralItems.QUARTZ_DUST, AstralItems.LAPIS_LAZULI_DUST
             )
         ).offerTo(this)
 
@@ -93,9 +91,7 @@ class AstralRecipeProvider(
             AstralItems.CONCENTRATED_AMETHYST_BLEND,
             RecipeCategory.MISC, 1,
             listOf(
-                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
-                AstralItems.AMETHYST_DUST, Items.DIAMOND, AstralItems.AMETHYST_DUST,
-                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST,
+                AstralItems.AMETHYST_DUST, AstralItems.AMETHYST_DUST
             )
         ).offerTo(this)
 
@@ -113,7 +109,7 @@ class AstralRecipeProvider(
             AstralItems.AMETHYST_DUST,
             RecipeCategory.MISC, 1,
             listOf(
-                Items.AMETHYST_SHARD, Items.AMETHYST_SHARD, Items.AMETHYST_SHARD
+                Items.AMETHYST_SHARD, Items.AMETHYST_SHARD
             )
 
         ).offerTo(this)
