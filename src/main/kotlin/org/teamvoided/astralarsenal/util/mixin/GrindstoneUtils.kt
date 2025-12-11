@@ -2,7 +2,7 @@ package org.teamvoided.astralarsenal.util.mixin
 
 import net.minecraft.item.ItemStack
 import org.teamvoided.astralarsenal.util.getKosmogliphs
-import org.teamvoided.astralarsenal.util.hasKosmogliphs
+import org.teamvoided.astralarsenal.util.kosmogliphsCapable
 import org.teamvoided.astralarsenal.util.setEmpty
 
 fun grindOffGliphs(input0: ItemStack, input1: ItemStack, output: ItemStack): ItemStack? {
@@ -17,7 +17,7 @@ fun grindOffGliphs(input0: ItemStack, input1: ItemStack, output: ItemStack): Ite
         if (list.size != 1) return null
 
         val newStack = list[0]
-        if (newStack.hasKosmogliphs())
+        if (newStack.kosmogliphsCapable())
             return newStack.copy().setEmpty()
     }
 

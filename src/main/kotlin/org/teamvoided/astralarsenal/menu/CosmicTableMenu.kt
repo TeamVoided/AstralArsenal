@@ -19,7 +19,7 @@ import org.teamvoided.astralarsenal.init.AstralItems
 import org.teamvoided.astralarsenal.init.AstralMenus
 import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.util.getKosmogliphs
-import org.teamvoided.astralarsenal.util.hasKosmogliphs
+import org.teamvoided.astralarsenal.util.kosmogliphsCapable
 import org.teamvoided.astralarsenal.util.setKosmogliphs
 import kotlin.jvm.optionals.getOrNull
 
@@ -53,7 +53,7 @@ class CosmicTableMenu(
         val applicationSlot = getSlot(0)
         val kosmicGemSlot = getSlot(1)
         if ((!kosmicGemSlot.hasStack() || !kosmicGemSlot.stack.isOf(AstralItems.KOSMIC_GEM))
-            && !(applicationSlot.stack.hasKosmogliphs() || player.isCreative)
+            && !(applicationSlot.stack.kosmogliphsCapable() || player.isCreative)
         ) return false
         val stack = applicationSlot.stack
         val kosmicGemStack = kosmicGemSlot.stack

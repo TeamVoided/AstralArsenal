@@ -12,7 +12,7 @@ import org.teamvoided.astralarsenal.kosmogliph.Kosmogliph
 import org.teamvoided.astralarsenal.menu.CosmicTableMenu
 import org.teamvoided.astralarsenal.screens.widget.KosmogliphWidget
 import org.teamvoided.astralarsenal.screens.widget.KosmogliphWidget.Companion.SIZE
-import org.teamvoided.astralarsenal.util.hasKosmogliphs
+import org.teamvoided.astralarsenal.util.kosmogliphsCapable
 
 class CosmicTableScreen(
     handler: CosmicTableMenu, inventory: PlayerInventory, title: Text
@@ -48,7 +48,7 @@ class CosmicTableScreen(
             return
         }
 
-        if (!(applicationSlot.hasStack() && (gemSlot.hasStack() || applicationSlot.stack.hasKosmogliphs() || handler.playerInventory.player.isCreative) && (lastTickStack == applicationSlot.stack))) {
+        if (!(applicationSlot.hasStack() && (gemSlot.hasStack() || applicationSlot.stack.kosmogliphsCapable() || handler.playerInventory.player.isCreative) && (lastTickStack == applicationSlot.stack))) {
             currentWidgets.forEach(::remove)
             currentWidgets.clear()
         }
