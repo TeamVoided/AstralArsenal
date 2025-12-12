@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.entity.projectile.ProjectileEntity
+import net.minecraft.entity.projectile.TridentEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -70,8 +71,11 @@ class ReflectiveKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
                     barer.pos.y - 1,
                     barer.pos.z - 3
                 )
-            ).filter { (it !is PersistentProjectileEntity || !(it as PersistentProjectileEntityAccessor).inGround) && it.type.isIn(
-                AstralEntityTags.REFLECTABLE_PROJECTILES) }
+            ).filter {
+                (it !is PersistentProjectileEntity || !(it as PersistentProjectileEntityAccessor).inGround) && it.type.isIn(
+                    AstralEntityTags.REFLECTABLE_PROJECTILES
+                )
+            }
             for (entity in entities) {
                 if (entity is ProjectileEntity && !entitiesHit.contains(entity)) {
                     if (entity.owner != barer && entity !is BeamOfLightArrowEntity && barer is LivingEntity) {
@@ -83,8 +87,12 @@ class ReflectiveKosmogliph(id: Identifier) : SimpleKosmogliph(id, { it.isIn(Astr
                         if (randomBool(1000, chance, world)) {
                             entity.velocity = entity.velocity.multiply(-1.0, -1.0, -1.0)
                             entity.velocityModified = true
-                            entity.owner = barer
-                            if (entity is NailEntity){
+                            if (entity !is TridentEntity) {
+                                entity.owner = barer
+                            } else {
+                                entitiesHit.add(entity)
+                            }
+                            if (entity is NailEntity) {
                                 entity.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED
                             }
                             world.playSound(

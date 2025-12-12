@@ -11,7 +11,7 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 
 class FlameBurstKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUPPORTS_FLAME_BURST) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
-        if (target !is PlayerEntity && (attacker !is PlayerEntity || !attacker.itemCooldownManager.isCoolingDown(stack.item))) {
+        if (attacker !is PlayerEntity || !attacker.itemCooldownManager.isCoolingDown(stack.item)) {
             val bursts = 2
             repeat(bursts) {
                 val random = target.world.random

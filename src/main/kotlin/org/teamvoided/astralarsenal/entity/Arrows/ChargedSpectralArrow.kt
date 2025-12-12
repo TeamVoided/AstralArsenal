@@ -41,7 +41,7 @@ class ChargedSpectralArrow : SpectralArrowEntity {
     var isCharged = false
     var chargeDamage: Float = 0f
     var ticksBeforeDischarge = 1
-    val MAX_PLAYER_DAMAGE = 10f
+    val MAX_PLAYER_DAMAGE = 1f
     var shocksBeforeDiscard = 3
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {

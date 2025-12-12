@@ -14,7 +14,7 @@ class TensionKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, AstralItem
     override fun onHit(attacker: Entity?, victim: LivingEntity) {
         if (attacker != null && attacker is LivingEntity) {
             val moveVec = attacker.eyePos.subtract(victim.eyePos)
-            victim.velocity = moveVec.multiply(0.3, 0.1, 0.3)
+            victim.velocity = moveVec.multiply(0.4, 0.1, 0.4)
                 .multiply(1 - victim.attributes.getBaseValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE))
             victim.velocityModified = true
         }

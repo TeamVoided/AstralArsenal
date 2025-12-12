@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
@@ -39,6 +40,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
     )
 
     override fun onUse(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack>? {
+        var shouldMakeSounds = false
         val vec3d: Vec3d = player.getLerpedEyePos(1f)
         val vec3d2: Vec3d = player.getRotationVec(1f)
         val vec3d3 = vec3d.add(vec3d2.x * 100.0, vec3d2.y * 100.0, vec3d2.z * 100.0)
@@ -134,6 +136,7 @@ class BasicRailgunKosmogliph(id: Identifier) :
                 }
                 val rand = world.random.rangeInclusive(1, 10)
                 if (entity is PlayerEntity) {
+                    shouldMakeSounds = true
                     if (rand == 1) {
                         entity.damage(
                             DamageSource(
@@ -188,6 +191,18 @@ class BasicRailgunKosmogliph(id: Identifier) :
                     400, hard_levels,
                     false, true, true
                 )
+            )
+        }
+        if (world.isClient){
+            world.playSound(
+                null,
+                player.x,
+                player.y,
+                player.z,
+                SoundEvents.ENTITY_ARROW_HIT_PLAYER,
+                SoundCategory.PLAYERS,
+                6.0F,
+                1.0f
             )
         }
         return null

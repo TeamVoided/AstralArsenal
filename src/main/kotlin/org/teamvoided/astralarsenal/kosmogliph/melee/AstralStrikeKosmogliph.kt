@@ -28,9 +28,7 @@ class AstralStrikeKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTa
                 hard_damage = 0
                 attacker.world.spawnEntity(this)
             }
-            if (attacker.isCreative) {
-                attacker.itemCooldownManager.set(stack.item, 200)
-            }
+            attacker.itemCooldownManager.set(stack.item, 200)
         }
         return super.postHit(stack, target, attacker)
     }
