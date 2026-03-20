@@ -235,3 +235,15 @@ fun ProjectileEntity.setShootVelocity(pitch: Float, yaw: Float, roll: Float, spe
     val h = MathHelper.cos(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
     this.setVelocity(f.toDouble(), g.toDouble(), h.toDouble(), speed, modifierXYZ)
 }
+
+fun getXFromPitchAndYaw(pitch: Float, yaw: Float): Float {
+    return -MathHelper.sin(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
+}
+
+fun getYFromPitchAndRoll(pitch: Float, roll: Float): Float {
+    return -MathHelper.sin((pitch + roll) * (Math.PI.toFloat() / 180))
+}
+
+fun getZFromPitchAndYaw(pitch: Float, yaw: Float): Float {
+    return MathHelper.cos(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
+}

@@ -128,6 +128,12 @@ object AstralKosmogliphs {
     val HEX_OF_WEAKENING = registerSimple("hex_of_weakening", AstralItemTags.SUPPORTS_HEX_OF_WEAKENING)
     val HEX_OF_MAGNETISING = registerSimple("hex_of_magnetising", AstralItemTags.SUPPORTS_HEX_OF_WEAKENING)
 
+    val STRONGSHOT = registerSimple("strongshot", AstralItemTags.SUPPORTS_STRONGSHOT)
+    val CRAZED = registerSimple("crazed", AstralItemTags.SUPPORTS_CRAZED)
+    val DISCHARGE = registerSimple("discharge", AstralItemTags.SUPPORTS_DISCHARGE)
+    val STATIC_SHOT = registerSimple("static_shot", AstralItemTags.SUPPORTS_STATIC_SHOT)
+    val BLOWBACK = registerSimple("blowback", AstralItemTags.SUPPORTS_BLOWBACK)
+
     @JvmField
     val ANTIPHASE = registerSimple("antiphase", AstralItemTags.SUPPORTS_ANTIPHASE)
 

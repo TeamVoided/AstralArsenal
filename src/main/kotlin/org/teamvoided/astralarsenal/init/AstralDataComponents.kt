@@ -31,6 +31,8 @@ object AstralDataComponents {
 
     val PULVERISER_DATA = registerSimple("pulveriser_data", PulveriserData.CODEC)
 
+    val STARSCATTER_DATA = registerSimple("starscatter_data", StarScatterDataV1.CODEC)
+
     @JvmField
     val ASTRAL_RAIN_DATA = registerSimple("astral_rain_data", AstralRainData.CODEC)
 

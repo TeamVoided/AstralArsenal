@@ -126,6 +126,8 @@ class AstralItemTagProvider(
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_HEX_OF_DIMINISHING).add(AstralItems.TOME_OF_HEXES)
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_HEX_OF_MAGNETISING).add(AstralItems.TOME_OF_HEXES)
 
+
+
         getOrCreateTagBuilder(AstralItemTags.SUPPORTS_KOSMOGLIPHS)
             .forceAddTag(AstralItemTags.SUPPORTS_VEIN_MINER)
             .forceAddTag(AstralItemTags.SUPPORTS_HAMMER)

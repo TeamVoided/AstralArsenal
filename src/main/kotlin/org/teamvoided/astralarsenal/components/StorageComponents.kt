@@ -82,6 +82,21 @@ data class NailCannonDataV1(val uses: Int, val beingUsed: Int) : SimpleStorageCo
     }
 }
 
+data class StarScatterDataV1(val bullets: Int, val spreadStage: Int, val spreadStageCooldown: Int) : SimpleStorageComponent {
+    override fun equals(other: Any?): Boolean {
+        return if (other == null || other !is StarScatterDataV1) return super.equals(other)
+        else true
+    }
+
+    companion object {
+        val DEFAULT: StarScatterDataV1 = StarScatterDataV1(0, 0, 0)
+        val CODEC = Codecs.NONNEGATIVE_INT.listOf().xmap(
+            { list -> StarScatterDataV1(list[0], list[1], list[2]) },
+            { data -> listOf(data.bullets, data.spreadStage, data.spreadStageCooldown) }
+        )
+    }
+}
+
 data class NailCannonCooldownData(val cooldown: Int, val fireCooldown: Int) : SimpleStorageComponent {
     override fun equals(other: Any?): Boolean {
         return if (other == null || other !is NailCannonCooldownData) return super.equals(other)

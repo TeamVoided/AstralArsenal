@@ -245,7 +245,7 @@ class AstralEnTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hold
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.capacity.desc",
-            "Doubles the capacity of the nailcannon and reduces how long it takes for each nail to charge by 30%."
+            "Doubles the capacity of the weapon, also decreases time it takes for the nailcannon to recharge nails."
         )
         gen.add(
             "kosmogliph.tooltip.astral_arsenal.over_heat.desc",

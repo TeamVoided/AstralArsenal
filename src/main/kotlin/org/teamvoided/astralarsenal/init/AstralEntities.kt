@@ -82,11 +82,11 @@ object AstralEntities {
         EntityType.Builder.create(EntityType.EntityFactory(::VoidIceShardEntity), SpawnGroup.MISC)
             .setDimensions(0.2f, 0.2f).maxTrackingRange(4).build()
     )
-    val TOTEM_PROJECTILE = register(
-        "totem_projectile",
-        EntityType.Builder.create(EntityType.EntityFactory(::TotemProjectileEntity), SpawnGroup.MISC)
-            .setDimensions(0.2f, 0.2f).maxTrackingRange(4).build()
-    )
+//    val TOTEM_PROJECTILE = register(
+//        "totem_projectile",
+//        EntityType.Builder.create(EntityType.EntityFactory(::TotemProjectileEntity), SpawnGroup.MISC)
+//            .setDimensions(0.2f, 0.2f).maxTrackingRange(4).build()
+//    )
 
     private fun <T : Entity> register(path: String, entry: EntityType<T>): EntityType<T> {
         return Registry.register(Registries.ENTITY_TYPE, id(path), entry)

@@ -85,6 +85,12 @@ object AstralItemTags {
     val SUPPORTS_HEX_OF_BLAZING = supports("hex_of_blazing")
     val SUPPORTS_HEX_OF_MAGNETISING = supports("hex_of_magnetising")
 
+    val SUPPORTS_STRONGSHOT = supports("strongshot")
+    val SUPPORTS_CRAZED = supports("crazed")
+    val SUPPORTS_DISCHARGE = supports("discharge")
+    val SUPPORTS_STATIC_SHOT = supports("static_shot")
+    val SUPPORTS_BLOWBACK = supports("blowback")
+
     val KOSMIC_TABLE_LEFT_FACING = create("kosmic_table/left_facing")
     val KOSMIC_TABLE_STRAIGHT = create("kosmic_table/straight")
 

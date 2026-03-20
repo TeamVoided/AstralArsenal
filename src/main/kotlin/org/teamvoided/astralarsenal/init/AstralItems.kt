@@ -1,5 +1,6 @@
 package org.teamvoided.astralarsenal.init
 
+import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.item.Item
 import net.minecraft.item.ToolMaterials
 import net.minecraft.registry.Holder
@@ -29,7 +30,7 @@ object AstralItems {
     val KOSMIC_GEM = register("kosmic_gem", Item(Item.Settings().rarity(Rarity.RARE)))
     val CANNONBALL = register("cannonball", CannonballItem(Item.Settings()))
     val TOME_OF_HEXES = register("tome_of_hexes", TomeOfHexesItem(Item.Settings().rarity(Rarity.EPIC).maxCount(1)))
-    val CRYSTALINE_BLOOD = register("crystaline_blood", Item(Item.Settings().rarity(Rarity.RARE).maxCount(1)))
+    val CRYSTALINE_BLOOD = register("crystaline_blood", Item(Item.Settings().rarity(Rarity.RARE).maxCount(4)))
     val ASTRAL_GREATHAMMER = register(
         "astral_greathammer",
         AstralGreathammerItem(
@@ -41,6 +42,11 @@ object AstralItems {
         "nailcannon",
         NailCannonItem((Item.Settings()).fireproof().rarity(Rarity.EPIC).maxCount(1))
     )
+//    val STARSCATTER = register(
+//        "starscatter",
+//        StarScatterItem((Item.Settings().fireproof().rarity(Rarity.EPIC).maxCount(1).attributeModifiersComponent(
+//            StarScatterItem.createAttributes(5, -3f))))
+//    )
 
     val RAILGUN = register("railgun", RailgunItem(Item.Settings().fireproof().maxCount(1).rarity(Rarity.EPIC)))
 

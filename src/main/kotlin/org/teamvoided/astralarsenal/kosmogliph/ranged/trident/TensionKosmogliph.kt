@@ -5,6 +5,7 @@ import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.EntityAttributes
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
@@ -14,7 +15,11 @@ class TensionKosmogliph(id: Identifier) : ThrownTridentKosmogliph(id, AstralItem
     override fun onHit(attacker: Entity?, victim: LivingEntity) {
         if (attacker != null && attacker is LivingEntity) {
             val moveVec = attacker.eyePos.subtract(victim.eyePos)
-            victim.velocity = moveVec.multiply(0.4, 0.1, 0.4)
+            var pull = 0.4
+            if (victim is PlayerEntity){
+                pull = 0.5
+            }
+            victim.velocity = moveVec.multiply(pull, 0.1, pull)
                 .multiply(1 - victim.attributes.getBaseValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE))
             victim.velocityModified = true
         }

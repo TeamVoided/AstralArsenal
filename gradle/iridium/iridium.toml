@@ -4,7 +4,7 @@ modVersion = "5.0.0-beta7"
 group = "org.teamvoided"
 githubRepo = "Teamvoided/AstralArsenal"
 discordServerInviteId = "KZ5Q364hEg"
-authors = [ "Astratine", "WiredTomato", "TheEnderCore", "Blurr", "Mincrafteinstein" ]
+authors = [ "Astratene", "WiredTomato", "TheEnderCore", "Blurr", "Mincrafteinstein" ]
 majorMinecraftVersion = ">=1.21.1"
 minecraftVersion = "1.21.1"
 fabricLoaderVersion = "0.17.2"
