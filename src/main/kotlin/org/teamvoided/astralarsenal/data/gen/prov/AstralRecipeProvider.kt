@@ -99,7 +99,9 @@ class AstralRecipeProvider(
             AstralItems.KOSMIC_GEM,
             RecipeCategory.MISC, 1,
             listOf(
-                Items.DIRT
+                AstralItems.LAZULICA, AstralItems.AMETHYST, AstralItems.LAZULICA,
+                AstralItems.AMETHYST, Items.DIAMOND, AstralItems.AMETHYST,
+                AstralItems.LAZULICA, AstralItems.AMETHYST, AstralItems.LAZULICA
             )
         ).offerTo(this, AstralItems.KOSMIC_GEM.id.extendPath("_amethyst"))
 

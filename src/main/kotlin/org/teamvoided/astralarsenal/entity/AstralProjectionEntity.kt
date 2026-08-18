@@ -27,7 +27,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class AstralProjectionEntity : Entity {
-
+    //TODO(ender)
     var countdown = 0
     var damage = 3
     var owner: LivingEntity? = null
