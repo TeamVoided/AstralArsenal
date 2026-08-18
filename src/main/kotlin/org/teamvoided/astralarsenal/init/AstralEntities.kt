@@ -75,7 +75,7 @@ object AstralEntities {
     val ASTRAL_PROJECTION = register(
         "astral_projection",
         EntityType.Builder.create(EntityType.EntityFactory(::AstralProjectionEntity), SpawnGroup.MISC)
-            .setDimensions(0.2f, 0.2f).maxTrackingRange(4).build()
+            .setDimensions(0.2f, 0.2f).setEyeHeight(0.1f).maxTrackingRange(4).build()
     )
     val VOID_SHARD = register(
         "void_shard",

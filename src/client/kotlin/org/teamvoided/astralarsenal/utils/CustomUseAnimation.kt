@@ -22,7 +22,9 @@ import org.teamvoided.astralarsenal.init.AstralItems
 object CustomUseAnimation {
 
     // (ender) ID for model that you want to render
-    val PAGE_MODEL_ID = id("item/page_of_hexes")
+    val PAGE_MODEL_ID = id("item/custom/page_of_hexes")
+    val ASTRAL_BLADE_ID = id("item/custom/astral_blade")
+
 
     // (ender) model that get cashed so ity doest have to be gotten form the manager every frame
     var pageModel: BakedModel? = null
@@ -33,10 +35,21 @@ object CustomUseAnimation {
             return field
         }
 
+    var astralBladeModel: BakedModel? = null
+        get() {
+            if (field == null) {
+                field = MinecraftClient.getInstance().bakedModelManager.getModel(ASTRAL_BLADE_ID)
+            }
+            return field
+        }
+
     fun init() {
         ModelLoadingPlugin.register {
             // (ender) Loads the custom model so it can be accessed from the manager
-            it.addModels(PAGE_MODEL_ID /*(ender) it's a vararg so you can just add more right here if needed*/)
+            it.addModels(
+                PAGE_MODEL_ID,/*(ender) it's a vararg so you can just add more right here if needed*/
+                ASTRAL_BLADE_ID
+            )
         }
         // (ender) ResourcePackReloadEvent set `pageModel` to be null when Resource packs reload so things don't break
         // if you add more model remember to also reset them
