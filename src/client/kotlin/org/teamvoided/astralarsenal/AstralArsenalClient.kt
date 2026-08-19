@@ -1,13 +1,10 @@
 package org.teamvoided.astralarsenal
 
-import me.fzzyhmstrs.fzzy_config.api.ConfigApi
-import me.fzzyhmstrs.fzzy_config.api.RegisterType
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback
 import net.minecraft.client.gui.screen.ingame.HandledScreens
-import org.teamvoided.astralarsenal.config.AAClientConfig
 import org.teamvoided.astralarsenal.entity.HexRingModel
 import org.teamvoided.astralarsenal.entity.HexRingRenderer
 import org.teamvoided.astralarsenal.handlers.KeyHandlers
@@ -19,9 +16,6 @@ import org.teamvoided.astralarsenal.utils.CustomUseAnimation
 
 @Suppress("unused")
 object AstralArsenalClient {
-
-    @JvmField
-    var config = ConfigApi.registerAndLoadConfig(::AAClientConfig, RegisterType.CLIENT)
 
     fun init() {
         HandledScreens.register(AstralMenus.COSMIC_TABLE, ::CosmicTableScreen)

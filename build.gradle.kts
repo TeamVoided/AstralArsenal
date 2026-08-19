@@ -51,8 +51,6 @@ dependencies {
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
 
-    modImplementation(libs.fzzy.config)
-
     // Testing
     modImplementation(libs.creative.works)
     modCompileOnly(libs.imguimc)

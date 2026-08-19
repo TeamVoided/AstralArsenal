@@ -1,13 +1,11 @@
 package org.teamvoided.astralarsenal
 
-import me.fzzyhmstrs.fzzy_config.api.ConfigApi
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.server.command.CommandManager.literal
 import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.astralarsenal.command.KosmogliphCommand
-import org.teamvoided.astralarsenal.config.AAConfig
 import org.teamvoided.astralarsenal.init.*
 
 @Suppress("unused")
@@ -16,9 +14,6 @@ object AstralArsenal {
 
     @JvmField
     val LOGGER: Logger = LoggerFactory.getLogger(AstralArsenal::class.simpleName)
-
-    @JvmField
-    var config = ConfigApi.registerAndLoadConfig(::AAConfig)
 
     fun init() {
         //Referencing object will initialize them
