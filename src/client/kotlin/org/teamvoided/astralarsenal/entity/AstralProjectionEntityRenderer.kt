@@ -26,6 +26,9 @@ class AstralProjectionEntityRenderer(ctx: Context) : EntityRenderer<AstralProjec
 
         posStack.rotate(Axis.Y_NEGATIVE.rotationDegrees(entity.getYaw(tickDelta) + 90f))
         posStack.rotate(Axis.Z_NEGATIVE.rotationDegrees(entity.getPitch(tickDelta) + 135f))
+        if (entity.countdown != null && entity.countdown!! < 5) {
+            posStack.rotate(Axis.X_NEGATIVE.rotationDegrees(entity.getPitch(tickDelta) + (60f * (6 - entity.countdown!!))))
+        }
 
         itemRenderer.renderItem(
             DUMMY_STACK, ModelTransformationMode.FIXED, false,

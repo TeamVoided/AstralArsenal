@@ -12,13 +12,11 @@ import org.teamvoided.astralarsenal.kosmogliph.SimpleKosmogliph
 class FlameBurstKosmogliph(id: Identifier) : SimpleKosmogliph(id, AstralItemTags.SUPPORTS_FLAME_BURST) {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         if (attacker !is PlayerEntity || !attacker.itemCooldownManager.isCoolingDown(stack.item)) {
-            val bursts = 2
+            val bursts = 4
             repeat(bursts) {
                 val random = target.world.random
-                val x = if (random.nextInt() == 1) 1 else -1
-                val z = if (random.nextInt() == 1) 1 else -1
                 val flameBurstEntity = AstralProjectionEntity(target.world, attacker)
-                flameBurstEntity.setPosition(Vec3d(target.x + x + (random.nextFloat() * 2) , target.y + 1 + (random.nextFloat() * 2), target.z + z + (random.nextFloat() * 2)))
+                flameBurstEntity.setPosition(Vec3d(target.x + ((random.nextFloat() - 0.5f) * 4) , target.y + 1 + ((random.nextFloat() - 0.5f) * 2), target.z + ((random.nextFloat() - 0.5f) * 4)))
                 flameBurstEntity.countdown = 20 + ((10 + random.rangeInclusive(0,10)) * it)
                 flameBurstEntity.owner = attacker
                 target.world.spawnEntity(flameBurstEntity)

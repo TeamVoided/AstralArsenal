@@ -27,9 +27,9 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class AstralProjectionEntity : Entity {
-    var countdown = 0
     var damage = 3
     var owner: LivingEntity? = null
+    var countdown: Int? = null
 
     constructor(entityType: EntityType<out AstralProjectionEntity?>?, world: World?) :
             super(entityType as EntityType<out Entity?>?, world)
@@ -40,51 +40,57 @@ class AstralProjectionEntity : Entity {
     }
 
     override fun tick() {
-        this.countdown--
-        if (countdown > 5) {
-            val entities = world.getOtherEntities(
-                null, Box(
-                    pos.x + 10,
-                    pos.y + 10,
-                    pos.z + 10,
-                    pos.x - 10,
-                    pos.y - 10,
-                    pos.z - 10
-                )
-            ).filter { it != this.owner && it is LivingEntity }
-            var closestEntity: LivingEntity? = null
-            for (entity in entities) {
-                if (closestEntity != null) {
-                    val e1d = this.distanceTo(closestEntity)
-                    val e2d = this.distanceTo(entity)
-                    if (e2d < e1d) {
+        if (this.owner == null && !this.world.isClient){
+            this.discard()
+        }
+        if (countdown != null) {
+            this.countdown = this.countdown!! - 1
+            if (countdown!! > 5) {
+                val entities = world.getOtherEntities(
+                    null, Box(
+                        pos.x + 10,
+                        pos.y + 10,
+                        pos.z + 10,
+                        pos.x - 10,
+                        pos.y - 10,
+                        pos.z - 10
+                    )
+                ).filter { it != this.owner && it is LivingEntity }
+                var closestEntity: LivingEntity? = null
+                for (entity in entities) {
+                    if (closestEntity != null) {
+                        val e1d = this.distanceTo(closestEntity)
+                        val e2d = this.distanceTo(entity)
+                        if (e2d < e1d) {
+                            closestEntity = entity as LivingEntity
+                        }
+                    } else {
                         closestEntity = entity as LivingEntity
                     }
-                } else {
-                    closestEntity = entity as LivingEntity
+                }
+                if (closestEntity != null) {
+                    this.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, closestEntity.eyePos)
+
                 }
             }
-            if (closestEntity != null) {
-                this.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, closestEntity.eyePos)
-            }
-        }
-        if (countdown < 1) {
-            if (this.owner is PlayerEntity) {
-                rail(this.world, this.owner as PlayerEntity, this)
-                if (this.world is ServerWorld) {
-                    world.playSound(
-                        null,
-                        this.x,
-                        this.y,
-                        this.z,
-                        SoundEvents.BLOCK_TRIAL_SPAWNER_SPAWN_ITEM,
-                        SoundCategory.PLAYERS,
-                        1.0F,
-                        2.0f
-                    )
+            if (countdown!! < 1) {
+                if (this.owner is PlayerEntity) {
+                    rail(this.world, this.owner as PlayerEntity, this)
+                    if (this.world is ServerWorld) {
+                        world.playSound(
+                            null,
+                            this.x,
+                            this.y,
+                            this.z,
+                            SoundEvents.BLOCK_TRIAL_SPAWNER_SPAWN_ITEM,
+                            SoundCategory.PLAYERS,
+                            1.0F,
+                            2.0f
+                        )
+                    }
                 }
+                this.discard()
             }
-//            this.discard()
         }
         super.tick()
     }
@@ -118,7 +124,7 @@ class AstralProjectionEntity : Entity {
         )
         if (world is ServerWorld) {
             val beamRenderer = BeamRenderEntity(world, caster.x, caster.y + 1, caster.z)
-            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x0065000b.toInt())
+            beamRenderer.dataTracker.set(BeamRenderEntity.OuterColour, 0x7d34ebb.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.InterColour, 0x00000000.toInt())
             beamRenderer.dataTracker.set(BeamRenderEntity.LiveTime, 6)
             beamRenderer.dataTracker.set(BeamRenderEntity.ShrinkTime, 5)
